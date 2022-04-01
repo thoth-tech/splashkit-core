@@ -5,10 +5,10 @@ if (APPLE)
     include(CheckCXXCompilerFlag)
     check_cxx_compiler_flag("-arch arm64" armSupported)
 
-    # Temporarily force x86_64 via Rosetta on M1 macs until
-    # precompiled external libraries have symbols added for arm64.
     if (armSupported)
-        set(CMAKE_OSX_ARCHITECTURES "x86_64")
+        set(SK_MAC_LIB_DIR "mac-arm")
+    else ()
+        set(SK_MAC_LIB_DIR "mac")
     endif()
 endif()
 
@@ -27,7 +27,7 @@ endif()
 #### SETUP ####
 if (APPLE)
     # MAC OS PROJECT FLAGS
-    set(LIB_FLAGS "-L${SK_LIB}/mac \
+    set(LIB_FLAGS "-L${SK_LIB}/${SK_MAC_LIB_DIR} \
                    -framework IOKit \
                    -framework ForceFeedback \
                    -framework CoreFoundation \
@@ -195,13 +195,15 @@ if (MSYS)
 elseif(APPLE)
     # To make a universal single static library from dependent
     # static libraries, run libtool on SplashKitBackend
-    file(GLOB APPLE_STATIC_LIBS
-        "${SK_LIB}/mac/*.a"
+    if (NOT armSupported)
+        file(GLOB APPLE_STATIC_LIBS
+            "${SK_LIB}/${SK_MAC_LIB_DIR}/*.a"
+        )
+        add_custom_command(TARGET SplashKitBackend POST_BUILD
+        COMMAND /usr/bin/libtool -static -o $<TARGET_FILE:SplashKitBackend>
+        $<TARGET_FILE:SplashKitBackend> ${APPLE_STATIC_LIBS}
     )
-    add_custom_command(TARGET SplashKitBackend POST_BUILD
-      COMMAND /usr/bin/libtool -static -o $<TARGET_FILE:SplashKitBackend>
-      $<TARGET_FILE:SplashKitBackend> ${APPLE_STATIC_LIBS}
-    )
+    endif ()
 endif()
 
 
