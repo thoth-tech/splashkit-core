@@ -100,22 +100,22 @@ namespace splashkit_lib
             if (input_is_phone_number(input))
             {
                 write_line("Input is phone number.");
+                break;
             }
             else if (input_is_email(input))
             {
                 write_line("Input is email.");
+                break;
             }
             else if (input_is_time(input))
             {
                 write_line("Input is time.");
+                break;
             }
             else if (input_is_valid_url(input))
             {
                 write_line("Input is a URL.");
-            }
-            else
-            {
-                write_line("Input does not pass validation checks.");
+                break;
             }
 
         default:
