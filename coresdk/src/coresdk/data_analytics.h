@@ -1,26 +1,26 @@
-#ifndef data_analytics_h
-#define data_analytics_h
+#ifndef data_analytics_hpp
+#define data_analytics_hpp
 
 #include <string>
 #include <vector>
 #include <sstream>
 using namespace std;
 
-string set_decimal_places(string input);
+//string set_decimal_places(string input);
 
-string get_file_name(string original_file_path);
+// string get_file_name(string original_file_path);
 
 void save_file(string input, string path);
 
-void save_file_as(string input);
+// void save_file_as(string input);
 
 bool input_has_symbol(string input);
 
-bool input_has_char(string input);
+// bool input_has_char(string input);
 
 bool input_is_valid_url(string input);
 
-bool input_is_empty(string input);
+// bool input_is_empty(string input);
 
 bool input_is_email(string input);
 
@@ -28,7 +28,7 @@ bool input_is_phone_number(string& input);
 
 bool input_is_time(string input);
 
-string text_validation(string input);
+void text_validation(string input);
 
 //DataFrames
 /*
