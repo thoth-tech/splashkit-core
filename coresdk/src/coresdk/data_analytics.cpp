@@ -93,34 +93,6 @@ namespace splashkit_lib
             cout << "Unable to save file";
     }
 
-
-    // <<<< COMMENTED OUT FOR RELIANCE ON PORTABLE FILE DIALOGS >>>>
-
-    // // Save file at different location and custom name
-    // void save_file_as(string original_file_path, string data)
-    // {
-    //     write_line("Choose a destination folder to save file:");
-
-    //     // Open selection dialog
-    //     auto destination_path = pfd::select_folder("Select a folder").result();
-    //     if (!destination_path.empty())
-    //         cout << "User selected folder " << destination_path << "\n";
-
-    //     string file_name = get_file_name(original_file_path);
-
-    //     string destination_file = destination_path + "/" + file_name;
-
-    //     ofstream file(destination_file);
-
-    //     if (file.is_open())
-    //     {
-    //         file << data;
-    //         file.close();
-    //     }
-    //     else
-    //         cout << "Unable to save file";
-    // }
-
     bool input_has_symbol(string input)
     {
         return regex_match(input, symbols_pattern);
@@ -148,7 +120,7 @@ namespace splashkit_lib
     }
 
     // Provides a set of options for text validation. Returns input type.
-    std::string text_validation(string input)
+    void text_validation(string input)
     {
         // Output menu with validation option
         write_line('== Text Validation ===\n1. Blank\n2. Email \n3. Phone number\n4. All\nSelect an option: ');
@@ -162,15 +134,15 @@ namespace splashkit_lib
             write_line('== Validating blank input ==');
             if (input.empty())
             {
-                return to_string('blank');
-            } 
+                write_line('Input is empty.');
+            }
             break;
 
         case 2:
             write_line('== Validating email ==');
             if (input_is_email(input))
             {
-                return to_string('email');
+                write_line('Input is valid email.');
             }
             break;
 
@@ -178,7 +150,7 @@ namespace splashkit_lib
             write_line('== Validating phone number ==');
             if (input_is_phone_number)
             {
-                return to_string('phone');
+                write_line('Input is a valid phone number.');
             }
             break;
 
@@ -186,12 +158,27 @@ namespace splashkit_lib
             write_line('== Validating text with validation set ==');
             if (input_is_phone_number(input))
             {
-                
+                write_line('Input is phone number.');
             }
-         
+            else if (input_is_email)
+            {
+                write_line('Input is email.');
+            }
+            else if (input_is_time)
+            {
+                write_line('Input is time.');
+            }
+            else if (input_is_valid_url)
+            {
+                write_line('Input is a URL.');
+            }
+            else
+            {
+                write_line('Input does not pass validation checks.');
+            }
+
         default:
             write_line('Your option is not valid! Please try again!');
-            return to_string('INVALID');
         }
     }
 }
