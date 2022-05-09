@@ -68,7 +68,7 @@ namespace splashkit_lib
     void text_validation(string input)
     {
         // Output menu with validation option
-        write_line("== Text Validation ===\n1. Blank\n2. Email \n3. Phone number\n4. All\nSelect an option: ");
+        write_line("== Text Validation ===\n1. Blank\n2. Email \n3. Phone number\n4. URL\n5. All\nSelect an option: ");
 
         int choice = convert_to_integer(read_line());
 
@@ -81,7 +81,10 @@ namespace splashkit_lib
             {
                 write_line("Input is empty.");
             }
-            write_line("Your option is not valid! Please try again!");
+            else
+            {
+                write_line("Your option is not valid! Please try again!");
+            }
             break;
 
         case 2:
@@ -90,7 +93,10 @@ namespace splashkit_lib
             {
                 write_line("Input is valid email.");
             }
-            write_line("Your option is not valid! Please try again!");
+            else
+            {
+                write_line("Your option is not valid! Please try again!");
+            }
             break;
 
         case 3:
@@ -99,19 +105,29 @@ namespace splashkit_lib
             {
                 write_line("Input is a valid phone number.");
             }
-            write_line("Your option is not valid! Please try again!");
+            else
+            {
+                write_line("Your option is not valid! Please try again!");
+            }
             break;
 
         case 4:
+            write_line("== Validating URL ==");
+            if (input_is_valid_url(input))
+            {
+                write_line("Input is a valid URL");
+            }
+
+        case 5:
             write_line("== Validating text with validation set ==");
             if (input_is_phone_number(input))
             {
-                write_line("Input is phone number.");
+                write_line("Input is a phone number.");
                 break;
             }
             else if (input_is_email(input))
             {
-                write_line("Input is email.");
+                write_line("Input is an email address.");
                 break;
             }
             else if (input_is_time(input))
