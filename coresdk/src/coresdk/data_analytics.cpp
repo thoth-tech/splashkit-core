@@ -44,19 +44,23 @@ namespace splashkit_lib
         return regex_match(input, ABC_pattern);
     }
 
-    bool input_is_valid_url(string input) {
+    bool input_is_valid_url(string input)
+    {
         return regex_match(input, URL_pattern);
     }
 
-    bool input_is_email(string input) {
+    bool input_is_email(string input)
+    {
         return regex_match(input, email_pattern);
     }
 
-    bool input_is_phone_number(string& input) {
+    bool input_is_phone_number(string &input)
+    {
         return regex_match(input, phone_number_pattern);
     }
 
-    bool input_is_time(string input) {
+    bool input_is_time(string input)
+    {
         return regex_match(input, time_pattern);
     }
 
@@ -77,6 +81,7 @@ namespace splashkit_lib
             {
                 write_line("Input is empty.");
             }
+            write_line("Your option is not valid! Please try again!");
             break;
 
         case 2:
@@ -85,6 +90,7 @@ namespace splashkit_lib
             {
                 write_line("Input is valid email.");
             }
+            write_line("Your option is not valid! Please try again!");
             break;
 
         case 3:
@@ -93,6 +99,7 @@ namespace splashkit_lib
             {
                 write_line("Input is a valid phone number.");
             }
+            write_line("Your option is not valid! Please try again!");
             break;
 
         case 4:
@@ -117,9 +124,10 @@ namespace splashkit_lib
                 write_line("Input is a URL.");
                 break;
             }
-
-        default:
-            write_line("Your option is not valid! Please try again!");
+            else
+            {
+                write_line("Input does not match any validation tests.");
+            }
         }
     }
 }
