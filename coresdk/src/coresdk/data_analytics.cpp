@@ -13,7 +13,7 @@ using namespace std;
 // REGEX PATTERNS
 const regex symbols_pattern("^(?=.*[-+_!@#$%^&*., ?]).+$");
 const regex ABC_pattern("^(?=.*[A-z]).+$");
-const regex URL_pattern("^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$");
+const regex URL_pattern("^http[s]?:\/\/(www\.)?(.*)?\/?(.)*");
 const regex phone_number_pattern("^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$");
 const regex email_pattern("[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}");
 const regex time_pattern("([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])");
@@ -64,15 +64,15 @@ namespace splashkit_lib
         return regex_match(input, time_pattern);
     }
 
-    // Provides a set of options for text validation. Returns input type.
+    // Provides a set of options for text validation.
     void text_validation(string input)
     {
-        // Output menu with validation option
+        // Output menu with validation options
         write_line("== Text Validation ===\n1. Blank\n2. Email \n3. Phone number\n4. URL\n5. All\nSelect an option: ");
 
         int choice = convert_to_integer(read_line());
 
-        // Switch validation option to cases
+        // Run different validations depending on choice
         switch (choice)
         {
         case 1:
@@ -83,7 +83,7 @@ namespace splashkit_lib
             }
             else
             {
-                write_line("Your option is not valid! Please try again!");
+                write_line("Input is invalid.");
             }
             break;
 
@@ -95,7 +95,7 @@ namespace splashkit_lib
             }
             else
             {
-                write_line("Your option is not valid! Please try again!");
+                write_line("Input is invalid.");
             }
             break;
 
@@ -107,7 +107,7 @@ namespace splashkit_lib
             }
             else
             {
-                write_line("Your option is not valid! Please try again!");
+                write_line("Input is invalid.");
             }
             break;
 
@@ -116,7 +116,12 @@ namespace splashkit_lib
             if (input_is_valid_url(input))
             {
                 write_line("Input is a valid URL");
+            } 
+            else
+            {
+                write_line("Input is invalid.");
             }
+            break;
 
         case 5:
             write_line("== Validating text with validation set ==");
