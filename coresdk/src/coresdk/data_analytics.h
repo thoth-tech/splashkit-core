@@ -32,8 +32,6 @@ namespace splashkit_lib
 
     bool input_is_time(string input);
 
-    //void text_validation(string input);
-
     // DataFrames
     /*
     DataFrame stores tables of data which can be used by other modules.
