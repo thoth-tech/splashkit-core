@@ -32,7 +32,7 @@ namespace splashkit_lib
 
     bool input_is_time(string input);
 
-    void text_validation(string input);
+    //void text_validation(string input);
 
     // DataFrames
     /*
