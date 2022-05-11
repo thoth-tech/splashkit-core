@@ -34,12 +34,13 @@ namespace splashkit_lib
             cout << "Unable to save file";
     }
 
+    // Input validation functions
     bool input_has_symbol(string input)
     {
         return regex_match(input, symbols_pattern);
     }
 
-    bool input_has_char(string input)
+    bool input_has_alphabet_char(string input)
     {
         return regex_match(input, ABC_pattern);
     }
@@ -54,7 +55,7 @@ namespace splashkit_lib
         return regex_match(input, email_pattern);
     }
 
-    bool input_is_phone_number(string &input)
+    bool input_is_phone_number(string input)
     {
         return regex_match(input, phone_number_pattern);
     }
@@ -62,5 +63,30 @@ namespace splashkit_lib
     bool input_is_time(string input)
     {
         return regex_match(input, time_pattern);
+    }
+
+    // Run all validation checks attempting to identify and return input type
+    int identify_input_type(string input)
+    {
+        if (input_is_phone_number(input))
+        {
+            return 1;
+        }
+        else if (input_is_email(input))
+        {
+            return 2;
+        }
+        else if (input_is_time(input))
+        {
+            return 3;
+        }
+        else if (input_is_valid_url(input))
+        {
+            return 4;
+        }
+        else
+        {
+            return -1;
+        }
     }
 }

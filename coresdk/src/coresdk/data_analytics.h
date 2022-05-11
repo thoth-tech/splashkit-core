@@ -20,17 +20,17 @@ namespace splashkit_lib
 
     bool input_has_symbol(string input);
 
-    // bool input_has_char(string input);
+    bool input_has_alphabet_char(string input);
 
     bool input_is_valid_url(string input);
 
-    // bool input_is_empty(string input);
-
     bool input_is_email(string input);
 
-    bool input_is_phone_number(string &input);
+    bool input_is_phone_number(string input);
 
     bool input_is_time(string input);
+
+    int identify_input_type(string input);
 
     // DataFrames
     /*

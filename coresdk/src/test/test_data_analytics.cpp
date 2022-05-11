@@ -12,30 +12,20 @@
 using namespace std;
 using namespace splashkit_lib;
 
-// Provides a set of options for text validation.
-void text_validation(string input)
+void run_data_analytics_test()
 {
     // Output menu with validation options
-    write_line("== Text Validation ===\n1. Blank\n2. Email \n3. Phone number\n4. URL\n5. All\nSelect an option: ");
+    write_line("== Text Validation ===\n1. Email \n2. Phone number\n3. URL\n4. All\nSelect an option: ");
 
     int choice = convert_to_integer(read_line());
+    // Get input text (to validate)
+    write_line("Enter text to validate:");
+    string input = read_line();
 
     // Run different validations depending on choice
     switch (choice)
     {
     case 1:
-        write_line("== Validating blank input ==");
-        if (input.empty())
-        {
-            write_line("Input is empty.");
-        }
-        else
-        {
-            write_line("Input is invalid.");
-        }
-        break;
-
-    case 2:
         write_line("== Validating email ==");
         if (input_is_email(input))
         {
@@ -43,11 +33,11 @@ void text_validation(string input)
         }
         else
         {
-            write_line("Input is invalid.");
+            write_line("Input is not a valid email.");
         }
         break;
 
-    case 3:
+    case 2:
         write_line("== Validating phone number ==");
         if (input_is_phone_number(input))
         {
@@ -55,11 +45,11 @@ void text_validation(string input)
         }
         else
         {
-            write_line("Input is invalid.");
+            write_line("Input is not a valid phone number.");
         }
         break;
 
-    case 4:
+    case 3:
         write_line("== Validating URL ==");
         if (input_is_valid_url(input))
         {
@@ -67,42 +57,34 @@ void text_validation(string input)
         }
         else
         {
-            write_line("Input is invalid.");
+            write_line("Input is not a valid URL.");
         }
         break;
-
-    case 5:
+    
+    // Run all validation tests in attempt to identify input type.
+    case 4:
         write_line("== Validating text with validation set ==");
-        if (input_is_phone_number(input))
+        int input_type = identify_input_type(input);
+        switch (input_type)
         {
-            write_line("Input is a phone number.");
-            break;
-        }
-        else if (input_is_email(input))
-        {
-            write_line("Input is an email address.");
-            break;
-        }
-        else if (input_is_time(input))
-        {
-            write_line("Input is time.");
-            break;
-        }
-        else if (input_is_valid_url(input))
-        {
-            write_line("Input is a URL.");
-            break;
-        }
-        else
-        {
-            write_line("Input does not match any validation tests.");
+            case 1:
+                write_line("Input is a phone number.");
+                break;
+
+            case 2:
+                write_line("Input is an email address.");
+                break;
+            
+            case 3:
+                write_line("Input is time.");
+                break;
+
+            case 4:
+                write_line("Input is a URL.");
+                break;
+
+            case -1: 
+                write_line("Input does not match any validation tests.");
         }
     }
-}
-
-void run_data_analytics_test()
-{
-    write_line("Enter text to validate:");
-    string input = read_line();
-    text_validation(input);
 }
