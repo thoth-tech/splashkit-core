@@ -10,14 +10,6 @@
 
 using namespace std;
 
-// REGEX PATTERNS
-const regex symbols_pattern("^(?=.*[-+_!@#$%^&*., ?]).+$");
-const regex ABC_pattern("^(?=.*[A-z]).+$");
-const regex URL_pattern("^http[s]?:\/\/(www\.)?(.*)?\/?(.)*");
-const regex phone_number_pattern("^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$");
-const regex email_pattern("[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}");
-const regex time_pattern("([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])");
-
 namespace splashkit_lib
 {
     // Save data into current file
