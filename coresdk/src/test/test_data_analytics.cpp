@@ -12,6 +12,18 @@
 using namespace std;
 using namespace splashkit_lib;
 
+// Uses SplaskKit inbuilt functions to ensure input is able to be converted to integer as non-integer conversions broke the program.
+int integer_convert_check(string s)
+{
+    if (is_integer(s))
+    { 
+        return convert_to_integer(s);
+    }
+    write_line("Input was not an integer");
+    return -1; 
+}
+
+
 void test_data_validation()
 {
     // Output menu with validation options
@@ -22,19 +34,18 @@ void test_data_validation()
                "4. All\n"
                "Select an option: ");
 
-    int choice = convert_to_integer(read_line());
-
-    // Get input text to validate
-    write_line("Enter text to validate:");
-    string input = read_line();
+    int choice = integer_convert_check(read_line());
 
     // Run different validations depending on choice
     switch (choice)
     {
         case 1:
         {
-            write_line("== Validating email ==");
-            if (input_is_email(input))
+            write_line("== Validating email ==\n");
+
+            // Get input text to validate
+            write_line("Enter text to validate:");
+            if (input_is_email(read_line()))
             {
                 write_line("Input is valid email.");
             }
@@ -47,8 +58,11 @@ void test_data_validation()
 
         case 2:
         {
-            write_line("== Validating phone number ==");
-            if (input_is_phone_number(input))
+            write_line("== Validating phone number ==\n");
+
+            // Get input text to validate
+            write_line("Enter text to validate:");
+            if (input_is_phone_number(read_line()))
             {
                 write_line("Input is a valid phone number.");
             }
@@ -60,8 +74,11 @@ void test_data_validation()
         }
         case 3:
         {
-            write_line("== Validating URL ==");
-            if (input_is_valid_url(input))
+            write_line("== Validating URL ==\n");
+
+            // Get input text to validate
+            write_line("Enter text to validate:");
+            if (input_is_valid_url(read_line()))
             {
                 write_line("Input is a valid URL");
             }
@@ -76,7 +93,10 @@ void test_data_validation()
         case 4:
         {
             write_line("== Validating text with validation set ==");
-            int input_type = identify_input_type(input);
+
+            // Get input text to validate
+            write_line("Enter text to validate:");
+            int input_type = identify_input_type(read_line());
 
             switch (input_type)
             {
@@ -100,30 +120,45 @@ void test_data_validation()
                     write_line("Input does not match any validation tests.");
                     break;
             }
+            break;
         }
         default:
             write_line("Invalid option.");
     }
 }
 
+
 void run_data_analytics_test()
 {
-    write_line("== Data Analytics Module ==\n"
-               "1. Data Validation\n"
-               "Select an option: ");
+    int test = 0;
+    do {
+        write_line("== Data Analytics Module ==\n"
+        "-1. Quit Data Analytics Module\n"
+        "0. Data Validation\n"
+        "Select an option: ");
 
-    int test = convert_to_integer(read_line());
+        
+        test = integer_convert_check(read_line());
 
-    switch (test)
-    {
-        case 1:
+        switch (test)
         {
-            test_data_validation();
-            break;
+            case -1:
+            {
+                write_line("Return to SplashKit Test Main");
+                break;
+            }
+            case 0:
+            {
+                test_data_validation();
+                break;
+            }
+            default:
+            {
+                write_line("Invalid option.");
+                break;
+            }    
         }
-        default:
-        {
-            write_line("Invalid option.");
-        }
-    }
+
+    } while (test != -1);
+    
 }
