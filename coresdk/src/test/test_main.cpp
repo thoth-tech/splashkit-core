@@ -34,6 +34,7 @@ void setup_tests()
     add_test("Bundles", run_bundle_test);
     add_test("Camera", run_camera_test);
     add_test("Database", run_database_tests);
+    add_test("DataFrame", run_data_frame_test);
     add_test("Geometry", run_geometry_test);
     add_test("Graphics", run_graphics_test);
     add_test("Input", run_input_test);
