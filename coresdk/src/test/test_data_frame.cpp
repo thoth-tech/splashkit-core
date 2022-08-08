@@ -28,4 +28,6 @@ void run_data_frame_test()
 
     // Display
     display(df);
+
+    cout << "Run './skunit_tests' to view unit tests" << endl;
 }
