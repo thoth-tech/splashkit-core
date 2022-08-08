@@ -31,11 +31,13 @@ namespace splashkit_lib
 
     std::vector<data_element> get_col(data_frame &df, int idx)
     {
+        validate_col(df, idx);
         return df->data[idx];
     }
 
     std::vector<data_element> get_row(data_frame &df, int idx)
     {
+        validate_row(df, idx);
         std::vector<data_element> row;
         for (int col = 0; col < num_cols(df); col++)
             row.push_back(df->data[col][idx]);
@@ -44,6 +46,8 @@ namespace splashkit_lib
 
     data_element get_cell(data_frame &df, int row, int col)
     {
+        validate_row(df, row);
+        validate_col(df, col);
         return df->data[col][row];
     }
 
@@ -61,12 +65,12 @@ namespace splashkit_lib
     {
         // Validate column length
         if (num_cols(df) != 0 && data.size() != num_rows(df))
-            throw std::runtime_error("Number of rows in the inserted column (" + std::to_string(data.size()) + ") does not match the number of rows in the data frame (" + std::to_string(num_rows(df)) + ")");
+            throw std::invalid_argument("Number of rows in the inserted column (" + std::to_string(data.size()) + ") does not match the number of rows in the data frame (" + std::to_string(num_rows(df)) + ")");
 
         // Validate same type within column
         for (int row = 1; row < data.size(); row++)
             if (data[row].index() != data[row-1].index())
-                throw std::runtime_error("Not all data elements in the inserted column are the same type");
+                throw std::invalid_argument("Not all data elements in the inserted column are the same type");
 
         // Insert
         df->col_names.insert(df->col_names.begin() + idx, col_name);
@@ -77,13 +81,13 @@ namespace splashkit_lib
     {
         // Validate row length
         if (data.size() != num_cols(df))
-            throw std::runtime_error("Number of columns in the inserted row (" + std::to_string(data.size()) + ") does not match the number of columns in the data frame (" + std::to_string(num_cols(df)) + ")");
+            throw std::invalid_argument("Number of columns in the inserted row (" + std::to_string(data.size()) + ") does not match the number of columns in the data frame (" + std::to_string(num_cols(df)) + ")");
 
         // Validate elements match column types
         if (num_rows(df) != 0)
             for (int col = 0; col < num_cols(df); col++)
                 if (data[col].index() != df->data[col][0].index())
-                    throw std::runtime_error("Not all data elements in the inserted row match the type of their respective column");
+                    throw std::invalid_argument("Not all data elements in the inserted row match the type of their respective column");
 
         // Insert
         for (int col = 0; col < num_cols(df); col++)
@@ -105,15 +109,9 @@ namespace splashkit_lib
         return row;
     }
 
-    /**
-     * Allows data elements to be printed
-     *
-     * @param stream            Output stream to print to
-     * @param data              data element to print
-     * @return std::ostream&    Output stream to print to
-     */
     std::ostream &operator << (std::ostream &stream, data_element &data)
     {
+        // Print underlying value of a data_element
         std::visit([&stream](auto&& d) { stream << d; }, data);
         return stream;
     }
@@ -148,5 +146,17 @@ namespace splashkit_lib
         // TODO
         data_frame df = new _data_frame_data();
         return df;
+    }
+
+    void validate_col(data_frame &df, int idx)
+    {
+        if (idx < 0 || idx >= num_cols(df))
+            throw std::out_of_range("column " + std::to_string(idx) + " is out of range");
+    }
+
+    void validate_row(data_frame &df, int idx)
+    {
+        if (idx < 0 || idx >= num_rows(df))
+            throw std::out_of_range("row " + std::to_string(idx) + " is out of range");
     }
 }

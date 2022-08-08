@@ -128,6 +128,15 @@ namespace splashkit_lib
     std::vector<data_element> delete_row(data_frame &df, int idx);
 
     /**
+     * Allows data elements to be printed
+     *
+     * @param stream            Output stream to print to
+     * @param data              data element to print
+     * @return std::ostream&    Output stream to print to
+     */
+    std::ostream &operator << (std::ostream &stream, data_element &data);
+
+    /**
      * Displays the contents of a data frame in the console.
      *
      * @param df    The data frame to display.
@@ -160,6 +169,22 @@ namespace splashkit_lib
      * @return data_frame   The new data frame containing the file's data.
      */
     data_frame read_csv(std::string filepath, char sep = ',', char line_break = '\n', bool header = true);
+
+    /**
+     * Raises an out_of_range exception if an invalid column index is requested.
+     *
+     * @param df    The data frame
+     * @param idx   Index of the column
+     */
+    void validate_col(data_frame &df, int idx);
+
+    /**
+     * Raises an out_of_range exception if an invalid row index is requested.
+     *
+     * @param df    The data frame
+     * @param idx   Index of the row
+     */
+    void validate_row(data_frame &df, int idx);
 }
 
 #endif
