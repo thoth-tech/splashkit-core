@@ -29,18 +29,6 @@ namespace splashkit_lib
         return df->col_names.size();
     }
 
-    void display(data_frame &df)
-    {
-        // Display column names
-        for (std::string col_name : df->col_names)
-            std::cout << col_name << '\t';
-        std::cout << std::endl;
-
-        // Display data
-        for (int row = 0; row < num_rows(df); row++)
-            display_row(df, row);
-    }
-
     std::vector<data_element> get_col(data_frame &df, int idx)
     {
         return df->data[idx];
@@ -128,6 +116,18 @@ namespace splashkit_lib
     {
         std::visit([&stream](auto&& d) { stream << d; }, data);
         return stream;
+    }
+
+    void display(data_frame &df)
+    {
+        // Display column names
+        for (std::string col_name : df->col_names)
+            std::cout << col_name << '\t';
+        std::cout << std::endl;
+
+        // Display data
+        for (int row = 0; row < num_rows(df); row++)
+            display_row(df, row);
     }
 
     void display_row(data_frame &df, int idx)
