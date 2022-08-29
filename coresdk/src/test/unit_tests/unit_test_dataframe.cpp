@@ -232,4 +232,42 @@ TEST_CASE( "Dataframe", "[dataframe]" )
             REQUIRE_THROWS_AS( dataframe_insert_row(df, 0, demo_row), std::invalid_argument );
         }
     }
+
+    SECTION( "Null values" )
+    {   
+        SECTION( "Creating null element" ) 
+        {   
+            nullelement elem;
+            data_element data_elem = elem;
+            REQUIRE_NOTHROW(get<nullelement>(data_elem));
+            REQUIRE_THROWS(get<int>(data_elem));
+        }
+
+        SECTION( "Insert Column with null value" ) 
+        {   
+            dataframe df = create_demo_dataframe();
+            nullelement elem;
+            vector<data_element> demo_col1 = {9,elem,8};
+            dataframe_append_col(df,demo_col1,"my col");
+        }
+
+        SECTION( "Insert Row with null value" ) 
+        {   
+            nullelement elem;
+            vector<data_element> demo_row1 = {1,elem,2};
+        }
+        
+        SECTION( "Insert Row with first element of column is null" ) 
+        {   
+            nullelement elem;
+            vector<data_element> demo_row1 = {elem,2,3};
+        }
+
+        SECTION( "Insert new column with first element null")
+        {
+            dataframe df = create_demo_dataframe();
+            nullelement elem;
+            vector<data_element> demo_col1 = {elem,8,9};
+        }
+    }
 }

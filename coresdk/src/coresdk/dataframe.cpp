@@ -69,9 +69,16 @@ namespace splashkit_lib
 
         // Validate same type within column
         for (int row = 1; row < data.size(); row++)
+        {
             if (data[row].index() != data[row-1].index())
+            {   
+                if (std::holds_alternative<nullelement>(data[row]) || std::holds_alternative<nullelement>(data[row-1]))
+                {
+                    return;
+                }
                 throw std::invalid_argument("Not all data elements in the inserted column are the same type");
-
+            }
+        }
         // Insert
         df->col_names.insert(df->col_names.begin() + idx, col_name);
         df->data.insert(df->data.begin() + idx, data);
@@ -107,6 +114,12 @@ namespace splashkit_lib
         for (int col = 0; col < dataframe_num_cols(df); col++)
             df->data[col].erase(df->data[col].begin() + idx);
         return row;
+    }
+
+    std::ostream &operator << (std::ostream &stream, nullelement &elem)
+    {
+        stream << "null";
+        return stream;
     }
 
     std::ostream &operator << (std::ostream &stream, data_element &data)

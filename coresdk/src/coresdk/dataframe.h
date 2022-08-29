@@ -5,13 +5,17 @@
 #include <variant>
 
 namespace splashkit_lib
-{
+{   
+    struct nullelement{};
+
+    std::ostream &operator << (std::ostream &stream, nullelement &elem);
+
     /**
      * A data element is an element that can be stored in the cell of a
      * dataframe. Its type must be one of the variant types listed in the
      * signature below.
      */
-    typedef std::variant<std::string,int,float,bool,char> data_element;
+    typedef std::variant<std::string,int,float,bool,char,nullelement> data_element;
 
     /**
      * Dataframes contain a table of information about a data set. Data
