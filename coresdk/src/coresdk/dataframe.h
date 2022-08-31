@@ -128,6 +128,16 @@ namespace splashkit_lib
     std::vector<data_element> dataframe_delete_row(dataframe &df, int idx);
 
     /**
+     * Updates the data in a column.
+     *
+     * @param df        The dataframe
+     * @param idx       Index in which the column should be updated
+     * @param data      The new column data that is replacing the old data
+     * @param col_name  The new name of the column
+     */
+    void dataframe_update_col(dataframe &df, int idx, std::vector<data_element> &data, std::string col_name);
+
+    /**
      * Allows data elements to be printed
      *
      * @param stream            Output stream to print to

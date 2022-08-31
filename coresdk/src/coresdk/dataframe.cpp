@@ -109,6 +109,13 @@ namespace splashkit_lib
         return row;
     }
 
+    void dataframe_update_col(dataframe &df, int idx, std::vector<data_element> &data, std::string col_name)
+    {
+        dataframe_validate_col(df, idx);
+        dataframe_insert_col(df, idx, data, col_name); // Insert first to validate new column before old column is deleted
+        dataframe_delete_col(df, idx+1);
+    }
+
     std::ostream &operator << (std::ostream &stream, data_element &data)
     {
         // Print underlying value of a data_element
