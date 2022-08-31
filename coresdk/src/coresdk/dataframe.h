@@ -179,22 +179,6 @@ namespace splashkit_lib
      * @return dataframe   The new dataframe containing the file's data.
      */
     dataframe dataframe_read_csv(std::string filepath, char sep = ',', char line_break = '\n', bool header = true);
-
-    /**
-     * Raises an out_of_range exception if an invalid column index is requested.
-     *
-     * @param df    The dataframe
-     * @param idx   Index of the column
-     */
-    void dataframe_validate_col(dataframe &df, int idx);
-
-    /**
-     * Raises an out_of_range exception if an invalid row index is requested.
-     *
-     * @param df    The dataframe
-     * @param idx   Index of the row
-     */
-    void dataframe_validate_row(dataframe &df, int idx);
 }
 
 #endif
