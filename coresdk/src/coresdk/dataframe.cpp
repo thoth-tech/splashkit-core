@@ -29,15 +29,39 @@ namespace splashkit_lib
         return df->col_names.size();
     }
 
+    /**
+     * Raises an out_of_range exception if an invalid column index is requested.
+     *
+     * @param df    The dataframe
+     * @param idx   Index of the column
+     */
+    inline void dataframe_validate_col_idx(dataframe &df, int idx)
+    {
+        if (idx < 0 || idx >= dataframe_num_cols(df))
+            throw std::out_of_range("column " + std::to_string(idx) + " is out of range");
+    }
+
+    /**
+     * Raises an out_of_range exception if an invalid row index is requested.
+     *
+     * @param df    The dataframe
+     * @param idx   Index of the row
+     */
+    inline void dataframe_validate_row_idx(dataframe &df, int idx)
+    {
+        if (idx < 0 || idx >= dataframe_num_rows(df))
+            throw std::out_of_range("row " + std::to_string(idx) + " is out of range");
+    }
+
     std::vector<data_element> dataframe_get_col(dataframe &df, int idx)
     {
-        dataframe_validate_col(df, idx);
+        dataframe_validate_col_idx(df, idx);
         return df->data[idx];
     }
 
     std::vector<data_element> dataframe_get_row(dataframe &df, int idx)
     {
-        dataframe_validate_row(df, idx);
+        dataframe_validate_row_idx(df, idx);
         std::vector<data_element> row;
         for (int col = 0; col < dataframe_num_cols(df); col++)
             row.push_back(df->data[col][idx]);
@@ -46,8 +70,8 @@ namespace splashkit_lib
 
     data_element dataframe_get_cell(dataframe &df, int row, int col)
     {
-        dataframe_validate_row(df, row);
-        dataframe_validate_col(df, col);
+        dataframe_validate_row_idx(df, row);
+        dataframe_validate_col_idx(df, col);
         return df->data[col][row];
     }
 
@@ -109,6 +133,13 @@ namespace splashkit_lib
         return row;
     }
 
+    void dataframe_update_col(dataframe &df, int idx, std::vector<data_element> &data, std::string col_name)
+    {
+        dataframe_validate_col_idx(df, idx);
+        dataframe_insert_col(df, idx, data, col_name); // Insert first to validate new column before old column is deleted
+        dataframe_delete_col(df, idx+1);
+    }
+
     std::ostream &operator << (std::ostream &stream, data_element &data)
     {
         // Print underlying value of a data_element
@@ -146,17 +177,5 @@ namespace splashkit_lib
         // TODO
         dataframe df = new _dataframe_data();
         return df;
-    }
-
-    void dataframe_validate_col(dataframe &df, int idx)
-    {
-        if (idx < 0 || idx >= dataframe_num_cols(df))
-            throw std::out_of_range("column " + std::to_string(idx) + " is out of range");
-    }
-
-    void dataframe_validate_row(dataframe &df, int idx)
-    {
-        if (idx < 0 || idx >= dataframe_num_rows(df))
-            throw std::out_of_range("row " + std::to_string(idx) + " is out of range");
     }
 }

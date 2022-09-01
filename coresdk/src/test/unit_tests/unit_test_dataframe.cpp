@@ -232,4 +232,34 @@ TEST_CASE( "Dataframe", "[dataframe]" )
             REQUIRE_THROWS_AS( dataframe_insert_row(df, 0, demo_row), std::invalid_argument );
         }
     }
+
+    SECTION( "Updating columns" )
+    {
+        dataframe df = create_demo_dataframe();
+
+        SECTION( "Updating with valid column data" )
+        {
+            vector<data_element> demo_col = {9, 8, 7};
+            dataframe_update_col(df, 2, demo_col, "Col X");
+            vector<data_element> extract_col = dataframe_get_col(df, 2);
+            REQUIRE( get<int>(extract_col[0]) == 9 );
+            REQUIRE( get<int>(extract_col[1]) == 8 );
+            extract_col = dataframe_get_col(df, 3);
+            REQUIRE( get<float>(extract_col[0]) == 1.1f );
+            REQUIRE( get<float>(extract_col[1]) == 2.2f );
+        }
+
+        SECTION( "Updating at invalid column indexes" )
+        {
+            vector<data_element> demo_col = {9, 8, 7};
+            REQUIRE_THROWS_AS( dataframe_update_col(df, -1, demo_col, "Col X"), std::out_of_range );
+            REQUIRE_THROWS_AS( dataframe_update_col(df, 5, demo_col, "Col X"), std::out_of_range );
+        }
+
+        SECTION( "Updating column with incorrect column types")
+        {
+            vector<data_element> demo_col = {9, 8, '7'};
+            REQUIRE_THROWS_AS( dataframe_update_col(df, 2, demo_col, "Col X"), std::invalid_argument );
+        }
+    }
 }
