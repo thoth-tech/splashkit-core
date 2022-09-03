@@ -4,14 +4,22 @@
 #include <vector>
 #include <variant>
 
+#define DATAFRAME_NULL dataframe_get_null()
+
 namespace splashkit_lib
 {
+    typedef struct _dataframe_null_data *dataframe_null;
+
+    std::ostream &operator << (std::ostream &stream, dataframe_null &elem);
+
+    dataframe_null dataframe_get_null();
+
     /**
      * A data element is an element that can be stored in the cell of a
      * dataframe. Its type must be one of the variant types listed in the
      * signature below.
      */
-    typedef std::variant<std::string,int,float,bool,char> data_element;
+    typedef std::variant<std::string,int,float,bool,char,dataframe_null> data_element;
 
     /**
      * Dataframes contain a table of information about a data set. Data

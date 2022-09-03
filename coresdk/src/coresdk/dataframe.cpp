@@ -4,7 +4,26 @@
 #include "dataframe.h"
 
 namespace splashkit_lib
-{
+{   
+    struct _dataframe_null_data
+    {
+        public:
+            static _dataframe_null_data &get_instance()
+            {
+                static _dataframe_null_data instance;
+                return instance;
+            }
+            _dataframe_null_data(_dataframe_null_data const&) = delete;
+            _dataframe_null_data(_dataframe_null_data&&) = delete;
+        private:
+            _dataframe_null_data() {}
+    };
+
+    dataframe_null dataframe_get_null()
+    {
+        return &_dataframe_null_data::get_instance();
+    }
+
     struct _dataframe_data
     {
         std::vector<std::vector<data_element>> data;    // Dataframe data, data[i][j] = col i row j
@@ -140,6 +159,12 @@ namespace splashkit_lib
         dataframe_delete_col(df, idx+1);
     }
 
+    std::ostream &operator << (std::ostream &stream, dataframe_null &elem)
+    {
+        stream << "null";
+        return stream;
+    }
+    
     std::ostream &operator << (std::ostream &stream, data_element &data)
     {
         // Print underlying value of a data_element
