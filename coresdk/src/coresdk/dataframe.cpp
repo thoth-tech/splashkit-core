@@ -4,7 +4,7 @@
 #include "dataframe.h"
 
 namespace splashkit_lib
-{   
+{
     struct _dataframe_null_data
     {
         public:
@@ -161,10 +161,11 @@ namespace splashkit_lib
 
     std::ostream &operator << (std::ostream &stream, dataframe_null &elem)
     {
+        // Print a null data element
         stream << "null";
         return stream;
     }
-    
+
     std::ostream &operator << (std::ostream &stream, data_element &data)
     {
         // Print underlying value of a data_element

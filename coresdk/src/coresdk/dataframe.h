@@ -8,10 +8,28 @@
 
 namespace splashkit_lib
 {
+    /**
+     * A dataframe_null is a null element that can be represent a
+     * missing value in a dataframe
+     *
+     * @attribute class dataframe_null
+     */
     typedef struct _dataframe_null_data *dataframe_null;
 
+    /**
+     * Allows null data elements to be printed
+     *
+     * @param stream            Output stream to print to
+     * @param data              Null data element to print
+     * @return std::ostream&    Output stream to print to
+     */
     std::ostream &operator << (std::ostream &stream, dataframe_null &elem);
 
+    /**
+     * Returns an instance of a null element for a dataframe
+     *
+     * @return dataframe_null   Instance of a null element
+     */
     dataframe_null dataframe_get_null();
 
     /**
