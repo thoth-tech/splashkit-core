@@ -262,4 +262,15 @@ TEST_CASE( "Dataframe", "[dataframe]" )
             REQUIRE_THROWS_AS( dataframe_update_col(df, 2, demo_col, "Col X"), std::invalid_argument );
         }
     }
+
+    SECTION( "Null values" )
+    {   
+        SECTION( "Creating null element" ) 
+        {   
+            dataframe_null elem;
+            data_element data_elem = elem;
+            REQUIRE_NOTHROW(get<dataframe_null>(data_elem));
+            REQUIRE_THROWS(get<int>(data_elem));
+        }
+    }
 }
