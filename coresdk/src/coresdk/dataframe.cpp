@@ -5,47 +5,6 @@
 
 namespace splashkit_lib
 {
-    enum data_element_type
-    {
-        DATA_ELEMENT_STRING,
-        DATA_ELEMENT_INT,
-        DATA_ELEMENT_FLOAT,
-        DATA_ELEMENT_BOOL,
-        DATA_ELEMENT_CHAR,
-        DATA_ELEMENT_NULL
-    };
-
-    data_element_type data_element_to_data_element_type(data_element &elem)
-    {
-        if (std::holds_alternative<std::string>(elem))
-            return DATA_ELEMENT_STRING;
-        if (std::holds_alternative<int>(elem))
-            return DATA_ELEMENT_INT;
-        if (std::holds_alternative<float>(elem))
-            return DATA_ELEMENT_FLOAT;
-        if (std::holds_alternative<bool>(elem))
-            return DATA_ELEMENT_BOOL;
-        if (std::holds_alternative<char>(elem))
-            return DATA_ELEMENT_CHAR;
-        if (std::holds_alternative<dataframe_null>(elem))
-            return DATA_ELEMENT_NULL;
-        throw std::invalid_argument("No implemented conversion of data_element to data_element_type");
-    }
-
-    std::string data_element_type_to_string(data_element_type &type)
-    {
-        switch (type)
-        {
-            case DATA_ELEMENT_STRING:   return "string";
-            case DATA_ELEMENT_INT:      return "int";
-            case DATA_ELEMENT_FLOAT:    return "float";
-            case DATA_ELEMENT_BOOL:     return "bool";
-            case DATA_ELEMENT_CHAR:     return "char";
-            case DATA_ELEMENT_NULL:     return "null";
-            default:                    throw std::invalid_argument("No implemented conversion of data_element_type to string");
-        }
-    }
-
     struct _dataframe_null_data
     {
         public:
@@ -60,17 +19,40 @@ namespace splashkit_lib
             _dataframe_null_data() {}
     };
 
+    /**
+     * Returns an instance of a null element that can be used anywhere in a dataframe
+     *
+     * @return dataframe_null   Instance of a null element
+     */
     dataframe_null dataframe_get_null()
     {
         return &_dataframe_null_data::get_instance();
+    }
+
+    /**
+     * Returns the data type of a data element
+     *
+     * @param elem                  The data element
+     * @return data_element_type    The data type of the data element
+     */
+    data_element_type data_element_to_data_element_type(data_element &elem)
+    {
+        return (data_element_type) elem.index();
     }
 
     struct _dataframe_data
     {
         std::vector<std::vector<data_element>> data;    // Dataframe data, data[i][j] = col i row j
         std::vector<std::string> col_names;             // Name of each of the columns in the dataframe
-        std::vector<data_element_type> col_types;       // Data type in each column
+        std::vector<data_element_type> col_types;       // Data type in each column (index of the type in the data_element variant)
+        const static std::string type_names[];          // String representations of each data type
     };
+
+    /**
+     * String representation of each possible data_element type (indexed by the data_element variant order)
+     * See data_element type definition for how to extend to new data types
+     */
+    const std::string _dataframe_data::type_names[] = {"string", "int", "float", "bool", "char", "null"};
 
     dataframe create_dataframe()
     {
@@ -88,6 +70,32 @@ namespace splashkit_lib
     int dataframe_num_cols(dataframe &df)
     {
         return df->col_names.size();
+    }
+
+    std::string dataframe_get_col_type(dataframe &df, int idx)
+    {
+        return _dataframe_data::type_names[df->col_types[idx]];
+    }
+
+    std::vector<std::string> dataframe_get_col_types(dataframe &df)
+    {
+        std::vector<std::string> col_types;
+        for (int i = 0; i < dataframe_num_cols(df); i++)
+            col_types.push_back(dataframe_get_col_type(df, i));
+        return col_types;
+    }
+
+    std::string dataframe_get_col_name(dataframe &df, int idx)
+    {
+        return df->col_names[idx];
+    }
+
+    std::vector<std::string> dataframe_get_col_names(dataframe &df)
+    {
+        std::vector<std::string> col_names;
+        for (int i = 0; i < dataframe_num_cols(df); i++)
+            col_names.push_back(dataframe_get_col_name(df, i));
+        return col_names;
     }
 
     /**
@@ -152,25 +160,20 @@ namespace splashkit_lib
         if (dataframe_num_cols(df) != 0 && data.size() != dataframe_num_rows(df))
             throw std::invalid_argument("Number of rows in the inserted column (" + std::to_string(data.size()) + ") does not match the number of rows in the dataframe (" + std::to_string(dataframe_num_rows(df)) + ")");
 
-        // Validate same type within column
-        data_element tmp = DATAFRAME_NULL;
+        // Init column type as null
+        data_element_type col_type = DATA_ELEMENT_NULL;
+
+        // Set column type and validate data only has one type (or null)
         for (int row = 0; row < data.size(); row++)
         {
-            data_element elem = data[row];
-            if (std::holds_alternative<dataframe_null>(elem))
+            data_element_type row_type = data_element_to_data_element_type(data[row]);
+            if (row_type == DATA_ELEMENT_NULL)
                 continue;
-            else if (std::holds_alternative<dataframe_null>(tmp))
-                tmp = elem;
-            else if (tmp.index() != elem.index())
+            else if (col_type == DATA_ELEMENT_NULL)
+                col_type = row_type;
+            else if (col_type != row_type)
                 throw std::invalid_argument("Not all data elements in the inserted column are the same type");
         }
-
-        // Extract column type (default to string if all null)
-        data_element_type col_type;
-        if (std::holds_alternative<dataframe_null>(tmp))
-            col_type = DATA_ELEMENT_STRING;
-        else
-            col_type = data_element_to_data_element_type(tmp);
 
         // Insert
         df->col_names.insert(df->col_names.begin() + idx, col_name);
@@ -199,6 +202,8 @@ namespace splashkit_lib
     {
         std::vector<data_element> col = dataframe_get_col(df, idx);
         df->data.erase(df->data.begin() + idx);
+        df->col_names.erase(df->col_names.begin() + idx);
+        df->col_types.erase(df->col_types.begin() + idx);
         return col;
     }
 
