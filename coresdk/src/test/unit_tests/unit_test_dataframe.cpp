@@ -42,6 +42,40 @@ TEST_CASE( "Dataframe", "[dataframe]" )
         REQUIRE( dataframe_num_cols(df) == 5 );
     }
 
+    SECTION( "Getting column types" )
+    {
+        dataframe df = create_demo_dataframe();
+
+        SECTION( "Getting single column type" )
+        {
+            REQUIRE( dataframe_get_col_type(df, 0) == "int" );
+            REQUIRE( dataframe_get_col_type(df, 1) == "char" );
+        }
+
+        SECTION( "Getting all column types" )
+        {
+            vector<string> col_types = {"int", "char", "bool", "float", "string"};
+            REQUIRE( dataframe_get_col_types(df) == col_types );
+        }
+    }
+
+    SECTION( "Getting column names" )
+    {
+        dataframe df = create_demo_dataframe();
+
+        SECTION( "Getting single column name" )
+        {
+            REQUIRE( dataframe_get_col_name(df, 0) == "Col 1" );
+            REQUIRE( dataframe_get_col_name(df, 1) == "Col 2" );
+        }
+
+        SECTION( "Getting all column names" )
+        {
+            vector<string> col_names = {"Col 1", "Col 2", "Col 3", "Col 4", "Col 5"};
+            REQUIRE( dataframe_get_col_names(df) == col_names );
+        }
+    }
+
     SECTION( "Getting columns" )
     {
         dataframe df = create_demo_dataframe();
@@ -175,15 +209,24 @@ TEST_CASE( "Dataframe", "[dataframe]" )
 
         SECTION( "Inserting valid columns" )
         {
-            vector<data_element> demo_col = {'Z', 'Y', 'X'};
+            // Insert column
+            vector<data_element> demo_col = {'Z', DATAFRAME_NULL, 'X'};
             dataframe_insert_col(df, 2, demo_col, "Col A");
+
+            // Validate inserted column
             vector<data_element> extract_col = dataframe_get_col(df, 2);
+            REQUIRE( dataframe_get_col_type(df, 2) == "char" );
             REQUIRE( get<char>(extract_col[0]) == 'Z' );
+            REQUIRE( get<dataframe_null>(extract_col[1]) == DATAFRAME_NULL );
             REQUIRE( get<char>(extract_col[2]) == 'X' );
-            extract_col = dataframe_get_col(df, 5);
-            REQUIRE( get<string>(extract_col[0]) == "Aa" );
-            REQUIRE( get<string>(extract_col[2]) == "Cc" );
+
+            // Validate neighbouring columns
+            extract_col = dataframe_get_col(df, 3);
+            REQUIRE( dataframe_get_col_type(df, 3) == "bool" );
+            REQUIRE( get<bool>(extract_col[0]) == true );
+            REQUIRE( get<bool>(extract_col[1]) == false );
             extract_col = dataframe_get_col(df, 1);
+            REQUIRE( dataframe_get_col_type(df, 1) == "char" );
             REQUIRE( get<char>(extract_col[0]) == 'A' );
             REQUIRE( get<char>(extract_col[2]) == 'C' );
         }
@@ -207,11 +250,17 @@ TEST_CASE( "Dataframe", "[dataframe]" )
 
         SECTION( "Inserting valid rows" )
         {
-            vector<data_element> demo_row = {-1, 'Z', false, -1.1f, "Zz"};
+            // Insert row
+            vector<data_element> demo_row = {-1, 'Z', DATAFRAME_NULL, -1.1f, "Zz"};
             dataframe_insert_row(df, 1, demo_row);
+
+            // Validate inserted row
             vector<data_element> extract_row = dataframe_get_row(df, 1);
             REQUIRE( get<int>(extract_row[0]) == -1 );
             REQUIRE( get<char>(extract_row[1]) == 'Z' );
+            REQUIRE( get<dataframe_null>(extract_row[2]) == DATAFRAME_NULL );
+
+            // Validate neighbouring rows
             extract_row = dataframe_get_row(df, 3);
             REQUIRE( get<int>(extract_row[0]) == 8 );
             REQUIRE( get<char>(extract_row[1]) == 'C' );
@@ -233,17 +282,52 @@ TEST_CASE( "Dataframe", "[dataframe]" )
         }
     }
 
+    SECTION( "Deleting columns" )
+    {
+        dataframe df = create_demo_dataframe();
+
+        SECTION( "Deleting valid columns" )
+        {
+            // Delete column
+            dataframe_delete_col(df, 1);
+            REQUIRE( dataframe_num_cols(df) == 4 );
+
+            // Check neighbouring column types
+            REQUIRE( dataframe_get_col_type(df, 1) == "bool" );
+            REQUIRE( dataframe_get_col_type(df, 0) == "int" );
+
+            // Check neighbouring column values
+            vector<data_element> extract_col = dataframe_get_col(df, 1);
+            REQUIRE( get<bool>(extract_col[0]) == true );
+            REQUIRE( get<bool>(extract_col[1]) == false );
+            extract_col = dataframe_get_col(df, 0);
+            REQUIRE( get<int>(extract_col[0]) == 9 );
+            REQUIRE( get<int>(extract_col[1]) == 4 );
+        }
+
+        SECTION( "Deleting invalid column indexes")
+        {
+            REQUIRE_THROWS_AS( dataframe_delete_col(df, -1), std::out_of_range );
+            REQUIRE_THROWS_AS( dataframe_delete_col(df, 5), std::out_of_range );
+        }
+    }
+
     SECTION( "Updating columns" )
     {
         dataframe df = create_demo_dataframe();
 
         SECTION( "Updating with valid column data" )
         {
+            // Update column
             vector<data_element> demo_col = {9, 8, 7};
             dataframe_update_col(df, 2, demo_col, "Col X");
+
+            // Validate updated column
             vector<data_element> extract_col = dataframe_get_col(df, 2);
             REQUIRE( get<int>(extract_col[0]) == 9 );
             REQUIRE( get<int>(extract_col[1]) == 8 );
+
+            // Validate a neighbour column
             extract_col = dataframe_get_col(df, 3);
             REQUIRE( get<float>(extract_col[0]) == 1.1f );
             REQUIRE( get<float>(extract_col[1]) == 2.2f );
@@ -264,13 +348,34 @@ TEST_CASE( "Dataframe", "[dataframe]" )
     }
 
     SECTION( "Null values" )
-    {   
-        SECTION( "Creating null element" ) 
-        {   
+    {
+        SECTION( "Creating null element" )
+        {
             dataframe_null elem;
             data_element data_elem = elem;
             REQUIRE_NOTHROW(get<dataframe_null>(data_elem));
             REQUIRE_THROWS(get<int>(data_elem));
+        }
+    }
+
+    SECTION( "Data element types and variant indexes")
+    {
+        // All possible element types in the data_element variant and their conversions
+        // See data_element type definition for how to extend to new data types
+        vector<data_element> elems      = { "A", 3, 1.1f, true, 'A', DATAFRAME_NULL };
+        vector<data_element_type> types = { DATA_ELEMENT_STRING, DATA_ELEMENT_INT, DATA_ELEMENT_FLOAT, DATA_ELEMENT_BOOL, DATA_ELEMENT_CHAR, DATA_ELEMENT_NULL };
+        vector<string> names            = { "string", "int", "float", "bool", "char", "null" };
+
+        dataframe df = create_dataframe();
+        for (int i = 0; i < elems.size(); i++)
+        {
+            // Validate element types
+            REQUIRE( elems[i].index() == types[i] );
+
+            // Validate names
+            vector<data_element> demo_col = {elems[i]};
+            dataframe_insert_col(df, 0, demo_col, "Col A");
+            REQUIRE( dataframe_get_col_type(df, 0) == names[i] );
         }
     }
 }
