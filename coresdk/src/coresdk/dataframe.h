@@ -64,7 +64,7 @@ namespace splashkit_lib
      * 1. Add the type to the end of the data_element type definition below
      * 2. Add the type to the data_element_type enumeration with an integer value
      *    that matches the index of the type in the data_element type definition
-     * 3. Add a string description of the type to the _dataframe_data::type_names
+     * 3. Add a string description of the type to the dataframe_get_col_type
      *    definition in dataframe.cpp at the same index of the type in the
      *    data_element type definition
      * 4. Add an element of the created data type, the enumeration, and the

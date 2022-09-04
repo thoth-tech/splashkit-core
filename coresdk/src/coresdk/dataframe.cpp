@@ -45,14 +45,7 @@ namespace splashkit_lib
         std::vector<std::vector<data_element>> data;    // Dataframe data, data[i][j] = col i row j
         std::vector<std::string> col_names;             // Name of each of the columns in the dataframe
         std::vector<data_element_type> col_types;       // Data type in each column (index of the type in the data_element variant)
-        const static std::string type_names[];          // String representations of each data type
     };
-
-    /**
-     * String representation of each possible data_element type (indexed by the data_element variant order)
-     * See data_element type definition for how to extend to new data types
-     */
-    const std::string _dataframe_data::type_names[] = {"string", "int", "float", "bool", "char", "null"};
 
     dataframe create_dataframe()
     {
@@ -74,7 +67,9 @@ namespace splashkit_lib
 
     std::string dataframe_get_col_type(dataframe &df, int idx)
     {
-        return _dataframe_data::type_names[df->col_types[idx]];
+        // See data_element type definition for how to extend to new data types
+        static std::string type_names[] = {"string", "int", "float", "bool", "char", "null"};
+        return type_names[df->col_types[idx]];
     }
 
     std::vector<std::string> dataframe_get_col_types(dataframe &df)
