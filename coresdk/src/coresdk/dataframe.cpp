@@ -5,6 +5,47 @@
 
 namespace splashkit_lib
 {
+    enum data_element_type
+    {
+        DATA_ELEMENT_STRING,
+        DATA_ELEMENT_INT,
+        DATA_ELEMENT_FLOAT,
+        DATA_ELEMENT_BOOL,
+        DATA_ELEMENT_CHAR,
+        DATA_ELEMENT_NULL
+    };
+
+    data_element_type data_element_to_data_element_type(data_element &elem)
+    {
+        if (std::holds_alternative<std::string>(elem))
+            return DATA_ELEMENT_STRING;
+        if (std::holds_alternative<int>(elem))
+            return DATA_ELEMENT_INT;
+        if (std::holds_alternative<float>(elem))
+            return DATA_ELEMENT_FLOAT;
+        if (std::holds_alternative<bool>(elem))
+            return DATA_ELEMENT_BOOL;
+        if (std::holds_alternative<char>(elem))
+            return DATA_ELEMENT_CHAR;
+        if (std::holds_alternative<dataframe_null>(elem))
+            return DATA_ELEMENT_NULL;
+        throw std::invalid_argument("No implemented conversion of data_element to data_element_type");
+    }
+
+    std::string data_element_type_to_string(data_element_type &type)
+    {
+        switch (type)
+        {
+            case DATA_ELEMENT_STRING:   return "string";
+            case DATA_ELEMENT_INT:      return "int";
+            case DATA_ELEMENT_FLOAT:    return "float";
+            case DATA_ELEMENT_BOOL:     return "bool";
+            case DATA_ELEMENT_CHAR:     return "char";
+            case DATA_ELEMENT_NULL:     return "null";
+            default:                    throw std::invalid_argument("No implemented conversion of data_element_type to string");
+        }
+    }
+
     struct _dataframe_null_data
     {
         public:
@@ -28,6 +69,7 @@ namespace splashkit_lib
     {
         std::vector<std::vector<data_element>> data;    // Dataframe data, data[i][j] = col i row j
         std::vector<std::string> col_names;             // Name of each of the columns in the dataframe
+        std::vector<data_element_type> col_types;       // Data type in each column
     };
 
     dataframe create_dataframe()
@@ -111,13 +153,29 @@ namespace splashkit_lib
             throw std::invalid_argument("Number of rows in the inserted column (" + std::to_string(data.size()) + ") does not match the number of rows in the dataframe (" + std::to_string(dataframe_num_rows(df)) + ")");
 
         // Validate same type within column
-        for (int row = 1; row < data.size(); row++)
-            if (data[row].index() != data[row-1].index())
+        data_element tmp = DATAFRAME_NULL;
+        for (int row = 0; row < data.size(); row++)
+        {
+            data_element elem = data[row];
+            if (std::holds_alternative<dataframe_null>(elem))
+                continue;
+            else if (std::holds_alternative<dataframe_null>(tmp))
+                tmp = elem;
+            else if (tmp.index() != elem.index())
                 throw std::invalid_argument("Not all data elements in the inserted column are the same type");
+        }
+
+        // Extract column type (default to string if all null)
+        data_element_type col_type;
+        if (std::holds_alternative<dataframe_null>(tmp))
+            col_type = DATA_ELEMENT_STRING;
+        else
+            col_type = data_element_to_data_element_type(tmp);
 
         // Insert
         df->col_names.insert(df->col_names.begin() + idx, col_name);
         df->data.insert(df->data.begin() + idx, data);
+        df->col_types.insert(df->col_types.begin() + idx, col_type);
     }
 
     void dataframe_insert_row(dataframe &df, int idx, std::vector<data_element> &data)
@@ -129,7 +187,7 @@ namespace splashkit_lib
         // Validate elements match column types
         if (dataframe_num_rows(df) != 0)
             for (int col = 0; col < dataframe_num_cols(df); col++)
-                if (data[col].index() != df->data[col][0].index())
+                if (!std::holds_alternative<dataframe_null>(data[col]) && df->col_types[col] != data_element_to_data_element_type(data[col]))
                     throw std::invalid_argument("Not all data elements in the inserted row match the type of their respective column");
 
         // Insert
