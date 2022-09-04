@@ -41,9 +41,9 @@ namespace splashkit_lib
      * @constant DATA_ELEMENT_STRING    string data element
      * @constant DATA_ELEMENT_INT       integer data element
      * @constant DATA_ELEMENT_FLOAT     float data element
-     * @constant BOOL                   boolean data element
-     * @constant CHAR                   character data element
-     * @constant BOOL                   dataframe_null data element
+     * @constant DATA_ELEMENT_BOOL      boolean data element
+     * @constant DATA_ELEMENT_CHAR      character data element
+     * @constant DATA_ELEMENT_NULL      dataframe_null data element
      */
     enum data_element_type
     {
