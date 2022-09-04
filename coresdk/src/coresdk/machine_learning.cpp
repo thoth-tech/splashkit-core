@@ -16,7 +16,7 @@ namespace splashkit_lib
 
 		for (size_t x = 0; x < m.x; x++)
 			for (size_t y = 0; y < m.y; y++)
-					result.elements[x][y] = exp(m.elements[x][y]);
+				result.elements[x][y] = exp(m.elements[x][y]);
 
 		return result;
 	}
@@ -120,7 +120,7 @@ namespace splashkit_lib
 
 			for (size_t y = 0; y < input.y; y++)
 				exp_sum += exp(input.elements[0][y] - max_input);
-			
+
 			double constant = max_input + log(exp_sum);
 			matrix_2d result(1, input.y);
 
@@ -252,32 +252,59 @@ namespace splashkit_lib
 		return result;
 	}
 
-	vector<double> Model::train(const matrix_2d &input, const matrix_2d &target_output)
+	// Batch -> 1/2 Batch -> Game API
+	vector<double> Model::train(const matrix_2d &input, const matrix_2d &target_output, int batch_size)
 	{
 		vector<double> losses;
-		for (int i = 0; i < input.x; i++)
+		for (int i = 0; i + batch_size < input.x; i += batch_size)
 		{
-			matrix_2d row = matrix_slice(input, i, i);
-
-			/* #region Forward Propagation */
-			vector<matrix_2d> outputs(layers.size()*2+1);
-			outputs[0] = row;
-			for (int j = 0; j < layers.size(); j++)
+			vector<matrix_2d> avg_outputs(layers.size() * 2 + 1);
+			for (int b = 0; b < batch_size; b++)
 			{
-				outputs[j*2+1] = layers[j]->forward(outputs[j*2]); // weights * x + bias
-				outputs[j*2+2] = layers[j]->activation_function->apply(outputs[j*2+1]);
+				matrix_2d row = matrix_slice(input, i + b, i + b);
+
+				/* #region Forward Propagation */
+				vector<matrix_2d> outputs(avg_outputs.size());
+				outputs[0] = row;
+				for (int j = 0; j < layers.size(); j++)
+				{
+					outputs[j * 2 + 1] = layers[j]->forward(outputs[j * 2]); // weights * x + bias
+					outputs[j * 2 + 2] = layers[j]->activation_function->apply(outputs[j * 2 + 1]);
+				}
+				/* #endregion */
+
+				// Accumulate outputs
+				if (b == 0)
+					avg_outputs = outputs; // initialise
+				else
+					for (int j = 0; j < avg_outputs.size(); j++)
+						for (int y = 0; y < avg_outputs[j].y; y++)
+							avg_outputs[j].elements[0][y] += outputs[j].elements[0][y];
 			}
-			/* #endregion */
 
+			// Average outputs
+			if (batch_size > 1)
+				for (int j = 0; j < avg_outputs.size(); j++)
+					for (int y = 0; y < avg_outputs[j].y; y++)
+						avg_outputs[j].elements[0][y] /= batch_size;
+
+			// Average target_output
 			matrix_2d target_output_row = matrix_slice(target_output, i, i);
-			matrix_2d difference = target_output_row - outputs[layers.size()*2];
+			if (batch_size > 1)
+			{
+				for (int b = 1; b < batch_size; b++)
+					for (int y = 0; y < target_output_row.y; y++)
+						target_output_row.elements[0][y] += target_output.elements[i + b][y];
+				for (int y = 0; y < target_output_row.y; y++)
+					target_output_row.elements[0][y] /= batch_size;
+			}
 
-			losses.push_back(error_function->loss(outputs[layers.size()*2], target_output_row));
+			losses.push_back(error_function->loss(avg_outputs[layers.size() * 2], target_output_row));
 
-			matrix_2d delta = error_function->backward(outputs[layers.size()*2], target_output_row);
+			matrix_2d delta = error_function->backward(avg_outputs[layers.size() * 2], target_output_row);
 			for (int j = layers.size(); j > 0; j--)
 			{
-				delta = layers[j-1]->backward(outputs[j*2-2], outputs[j*2-1], outputs[j*2], delta);
+				delta = layers[j - 1]->backward(avg_outputs[j * 2 - 2], avg_outputs[j * 2 - 1], avg_outputs[j * 2], delta);
 			}
 		}
 		return losses;

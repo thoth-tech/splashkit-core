@@ -153,7 +153,7 @@ namespace splashkit_lib
 		Model(LossFunction error_function, double learning_rate=0.01);
 		void add_layer(Layer *layer);
 		matrix_2d predict(const matrix_2d &input);
-		vector<double> train(const matrix_2d &input, const matrix_2d &target_output);
+		vector<double> train(const matrix_2d &input, const matrix_2d &target_output, int batch_size=1);
 
 		/**
 		 * @brief Save a trained model to disk so that it can be loaded later using the model.load() function.
