@@ -312,6 +312,32 @@ TEST_CASE( "Dataframe", "[dataframe]" )
         }
     }
 
+    SECTION( "Deleting rows" )
+    {
+        dataframe df = create_demo_dataframe();
+
+        SECTION( "Deleting valid rows" )
+        {
+            // Delete row
+            dataframe_delete_row(df, 1);
+            REQUIRE( dataframe_num_rows(df) == 2 );
+
+            // Check neighbouring row values
+            vector<data_element> extract_row = dataframe_get_row(df, 1);
+            REQUIRE( get<int>(extract_row[0]) == 8 );
+            REQUIRE( get<char>(extract_row[1]) == 'C' );
+            extract_row = dataframe_get_row(df, 0);
+            REQUIRE( get<int>(extract_row[0]) == 9 );
+            REQUIRE( get<char>(extract_row[1]) == 'A' );
+        }
+
+        SECTION( "Deleting invalid row indexes")
+        {
+            REQUIRE_THROWS_AS( dataframe_delete_row(df, -1), std::out_of_range );
+            REQUIRE_THROWS_AS( dataframe_delete_row(df, 4), std::out_of_range );
+        }
+    }
+
     SECTION( "Updating columns" )
     {
         dataframe df = create_demo_dataframe();
