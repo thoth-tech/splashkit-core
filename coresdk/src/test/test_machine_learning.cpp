@@ -974,7 +974,6 @@ void test_ann(matrix_2d &data)
 			auto end = chrono::high_resolution_clock::now();
 			auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
 			write_line("  Time taken: " + to_string(duration.count()) + " ms");
-			write_line("  Average loss: " + to_string(std::accumulate(loss.begin(), loss.end(), 0.0) / loss.size()));
 			write_line("  Final loss: " + to_string(loss.back()));
 		}
 	}

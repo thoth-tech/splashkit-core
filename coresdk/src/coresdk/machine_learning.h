@@ -158,11 +158,62 @@ namespace splashkit_lib
 		double learning_rate;
 
 		vector<std::shared_ptr<Layer>> layers;
-		void forward(const matrix_2d &input);
 	public:
 		Model(LossFunction error_function, double learning_rate=0.01);
+
+		/**
+		 * @brief Add a layer to the back of the model
+		 * 
+		 * @param layer 
+		 */
 		void add_layer(Layer *layer);
+
+		/**
+		 * @brief Feed-forward the input through the model
+		 * 
+		 * Will produce a result for each row in the input matrix.
+		 * 
+		 * @param input The data to feed-forward through the model
+		 * @return matrix_2d The model output
+		 */
 		matrix_2d predict(const matrix_2d &input);
+
+		/**
+		 * @brief Feed-forward the input through the model and store all the intermediate results for back propagation.
+		 * 
+		 * @param input The data to feed-forward through the model
+		 * @param input_index The index indicating the start of this batch for input.
+		 * @param batch_size The size of the batch to use for gradient averaging.
+		 * @return vector<vector<matrix_2d>> The model output and all the intermediate results for each batch.
+		 */
+		vector<vector<matrix_2d>> forward(const matrix_2d &input, int input_index=0, int batch_size=1);
+
+		/**
+		 * @brief Back propagate the loss through the model and return the gradient of the loss with respect to the weights for each layer.
+		 * 
+		 * @param outputs The outputs from forward propagation
+		 * @param target_output The target output of the model
+		 * @param index The index indicating the start of this batch for target_output.
+		 * @return vector<matrix_2d> The average delta gradients for each layer averaged across the batch.
+		 */
+		vector<matrix_2d> backward(vector<double> &losses, const vector<vector<matrix_2d>> &outputs, const matrix_2d &target_output, int index=0);
+
+		/**
+		 * @brief Update the weights of the model using the gradients from back propagation and the intermediate outputs from forward propagation.
+		 * 
+		 * @param avg_deltas The gradients from back propagation for the given batch.
+		 * @param outputs The outputs from forward propagation for the given batch.
+		 */
+		void update_weights(const vector<matrix_2d> &avg_deltas, const vector<vector<matrix_2d>> &outputs);
+
+		/**
+		 * @brief Runs forward and backward propagation and updates the weights of the model.
+		 * 
+		 * @param input The input to the model
+		 * @param target_output The target output of the model
+		 * @param batch_size The size of the batch to use for gradient averaging.
+		 * @return vector<double> The loss over time during training.
+		 */
 		vector<double> train(const matrix_2d &input, const matrix_2d &target_output, int batch_size=1);
 
 		/**
