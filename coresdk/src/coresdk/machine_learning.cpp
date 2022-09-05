@@ -258,54 +258,43 @@ namespace splashkit_lib
 		vector<double> losses;
 		for (int i = 0; i + batch_size < input.x; i += batch_size)
 		{
-			vector<matrix_2d> avg_outputs(layers.size() * 2 + 1);
+			// initialise avg_deltas with zeroes
+			vector<matrix_2d> avg_deltas(layers.size() + 1);
+			for (int j = 0; j < layers.size(); j++)
+				avg_deltas[j] = fill_matrix(1, layers[j]->input_size);
+			avg_deltas.back() = fill_matrix(1, layers.back()->output_size);
+
+			vector<vector<matrix_2d>> outputs(batch_size);
 			for (int b = 0; b < batch_size; b++)
 			{
 				matrix_2d row = matrix_slice(input, i + b, i + b);
 
 				/* #region Forward Propagation */
-				vector<matrix_2d> outputs(avg_outputs.size());
-				outputs[0] = row;
+				outputs[b] = vector<matrix_2d>(layers.size() * 2 + 1);
+				outputs[b][0] = row;
 				for (int j = 0; j < layers.size(); j++)
 				{
-					outputs[j * 2 + 1] = layers[j]->forward(outputs[j * 2]); // weights * x + bias
-					outputs[j * 2 + 2] = layers[j]->activation_function->apply(outputs[j * 2 + 1]);
+					outputs[b][j * 2 + 1] = layers[j]->forward(outputs[b][j * 2]); // weights * x + bias
+					outputs[b][j * 2 + 2] = layers[j]->activation_function->apply(outputs[b][j * 2 + 1]);
 				}
 				/* #endregion */
 
-				// Accumulate outputs
-				if (b == 0)
-					avg_outputs = outputs; // initialise
-				else
-					for (int j = 0; j < avg_outputs.size(); j++)
-						for (int y = 0; y < avg_outputs[j].y; y++)
-							avg_outputs[j].elements[0][y] += outputs[j].elements[0][y];
+				matrix_2d target_output_row = matrix_slice(target_output, i + b, i + b);
+				losses.push_back(error_function->loss(outputs[b].back(), target_output_row));
+
+				avg_deltas[layers.size()] += error_function->backward(outputs[b][layers.size() * 2], target_output_row);
+				for (int j = layers.size(); j > 0; j--)
+					avg_deltas[j - 1] += layers[j - 1]->backward(outputs[b][j * 2 - 2], outputs[b][j * 2 - 1], outputs[b][j * 2], avg_deltas[j]);
 			}
 
-			// Average outputs
+			// divide avg_deltas
 			if (batch_size > 1)
-				for (int j = 0; j < avg_outputs.size(); j++)
-					for (int y = 0; y < avg_outputs[j].y; y++)
-						avg_outputs[j].elements[0][y] /= batch_size;
-
-			// Average target_output
-			matrix_2d target_output_row = matrix_slice(target_output, i, i);
-			if (batch_size > 1)
-			{
-				for (int b = 1; b < batch_size; b++)
-					for (int y = 0; y < target_output_row.y; y++)
-						target_output_row.elements[0][y] += target_output.elements[i + b][y];
-				for (int y = 0; y < target_output_row.y; y++)
-					target_output_row.elements[0][y] /= batch_size;
-			}
-
-			losses.push_back(error_function->loss(avg_outputs[layers.size() * 2], target_output_row));
-
-			matrix_2d delta = error_function->backward(avg_outputs[layers.size() * 2], target_output_row);
-			for (int j = layers.size(); j > 0; j--)
-			{
-				delta = layers[j - 1]->backward(avg_outputs[j * 2 - 2], avg_outputs[j * 2 - 1], avg_outputs[j * 2], delta);
-			}
+				for (int j = 0; j < layers.size(); j++)
+					avg_deltas[j] /= batch_size;
+			
+			for (int b = 0; b < batch_size; b++)
+				for (int j = layers.size(); j > 0; j--)
+					layers[j-1]->update_weights(outputs[b][j * 2 - 2], avg_deltas[j]);
 		}
 		return losses;
 	}
@@ -357,11 +346,22 @@ namespace splashkit_lib
 			for (int y = 0; y < output_size; y++)
 			{
 				error += weights.elements[x][y] * delta.elements[0][y];
-				weights.elements[x][y] -= learning_rate * delta.elements[0][y] * input.elements[0][x];
 			}
 			new_delta.elements[0][x] = error;
 		}
 		return new_delta;
+	}
+
+	void Dense::update_weights(const matrix_2d &input, const matrix_2d &delta)
+	{
+		// update weights
+		for (int x = 0; x < input_size; x++)
+			for (int y = 0; y < output_size; y++)
+				weights.elements[x][y] -= learning_rate * delta.elements[0][y] * input.elements[0][x];
+
+		// update biases
+		for (int y = 0; y < output_size; y++)
+			biases.elements[0][y] -= learning_rate * delta.elements[0][y];
 	}
 	/* #endregion Dense */
 }

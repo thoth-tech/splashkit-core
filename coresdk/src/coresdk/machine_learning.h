@@ -113,12 +113,21 @@ namespace splashkit_lib
 		/**
 		 * @brief Back-propagation function
 		 * 
-		 * @param input 
-		 * @param output 
+		 * @param input The data that was inputted into the layer from the previous later
+		 * @param before_activation The output of the layer before the activation function was applied
+		 * @param output The data that was outputted into the next layer after activation function was applied
 		 * @param delta The delta/derivative of the previous layer during back propagation.
 		 * @return matrix_2d 
 		 */
 		virtual matrix_2d backward(const matrix_2d &input, const matrix_2d &before_activation, const matrix_2d &output, matrix_2d &delta) { throw std::logic_error("not implemented"); };
+
+		/**
+		 * @brief Updates the weights of the layer after back propagation.
+		 * 
+		 * @param input The data that was inputted into the layer from the previous later
+		 * @param delta The delta calculated from back propagation.
+		 */
+		virtual void update_weights(const matrix_2d &input, const matrix_2d &delta) { throw std::logic_error("not implemented"); };
 	};
 
 	/**
@@ -134,6 +143,7 @@ namespace splashkit_lib
 		matrix_2d get_weights() { return weights; };
 		matrix_2d forward(const matrix_2d &input) override;
 		matrix_2d backward(const matrix_2d &input, const matrix_2d &before_activation, const matrix_2d &output, matrix_2d &delta) override;
+		void update_weights(const matrix_2d &input, const matrix_2d &delta) override;
 	};
 
 	/**
