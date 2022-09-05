@@ -29,13 +29,7 @@ namespace splashkit_lib
         return &_dataframe_null_data::get_instance();
     }
 
-    /**
-     * Returns the data type of a data element
-     *
-     * @param elem                  The data element
-     * @return data_element_type    The data type of the data element
-     */
-    data_element_type data_element_to_data_element_type(data_element &elem)
+    data_element_type dataframe_get_element_type(data_element &elem)
     {
         return (data_element_type) elem.index();
     }
@@ -161,7 +155,7 @@ namespace splashkit_lib
         // Set column type and validate data only has one type (or null)
         for (int row = 0; row < data.size(); row++)
         {
-            data_element_type row_type = data_element_to_data_element_type(data[row]);
+            data_element_type row_type = dataframe_get_element_type(data[row]);
             if (row_type == DATA_ELEMENT_NULL)
                 continue;
             else if (col_type == DATA_ELEMENT_NULL)
@@ -185,7 +179,7 @@ namespace splashkit_lib
         // Validate elements match column types
         if (dataframe_num_rows(df) != 0)
             for (int col = 0; col < dataframe_num_cols(df); col++)
-                if (!std::holds_alternative<dataframe_null>(data[col]) && df->col_types[col] != data_element_to_data_element_type(data[col]))
+                if (!std::holds_alternative<dataframe_null>(data[col]) && df->col_types[col] != dataframe_get_element_type(data[col]))
                     throw std::invalid_argument("Not all data elements in the inserted row match the type of their respective column");
 
         // Insert

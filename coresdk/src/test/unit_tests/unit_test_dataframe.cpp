@@ -396,7 +396,7 @@ TEST_CASE( "Dataframe", "[dataframe]" )
         for (int i = 0; i < elems.size(); i++)
         {
             // Validate element types
-            REQUIRE( elems[i].index() == types[i] );
+            REQUIRE( dataframe_get_element_type(elems[i]) == types[i] );
 
             // Validate names
             vector<data_element> demo_col = {elems[i]};

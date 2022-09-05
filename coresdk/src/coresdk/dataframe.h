@@ -74,6 +74,14 @@ namespace splashkit_lib
     typedef std::variant<std::string,int,float,bool,char,dataframe_null> data_element;
 
     /**
+     * Returns the data type of a data element
+     *
+     * @param elem                  The data element
+     * @return data_element_type    The data type of the data element
+     */
+    data_element_type dataframe_get_element_type(data_element &elem);
+
+    /**
      * Dataframes contain a table of information about a data set. Data
      * from csv or text files can be loaded into a dataframe to perform
      * data analysis with.
