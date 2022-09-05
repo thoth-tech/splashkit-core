@@ -4,7 +4,7 @@
 #include "dataframe.h"
 
 namespace splashkit_lib
-{   
+{
     struct _dataframe_null_data
     {
         public:
@@ -19,15 +19,26 @@ namespace splashkit_lib
             _dataframe_null_data() {}
     };
 
+    /**
+     * Returns an instance of a null element that can be used anywhere in a dataframe
+     *
+     * @return dataframe_null   Instance of a null element
+     */
     dataframe_null dataframe_get_null()
     {
         return &_dataframe_null_data::get_instance();
+    }
+
+    data_element_type dataframe_get_element_type(data_element &elem)
+    {
+        return (data_element_type) elem.index();
     }
 
     struct _dataframe_data
     {
         std::vector<std::vector<data_element>> data;    // Dataframe data, data[i][j] = col i row j
         std::vector<std::string> col_names;             // Name of each of the columns in the dataframe
+        std::vector<data_element_type> col_types;       // Data type in each column (index of the type in the data_element variant)
     };
 
     dataframe create_dataframe()
@@ -46,6 +57,34 @@ namespace splashkit_lib
     int dataframe_num_cols(dataframe &df)
     {
         return df->col_names.size();
+    }
+
+    std::string dataframe_get_col_type(dataframe &df, int idx)
+    {
+        // See data_element type definition for how to extend to new data types
+        static std::string type_names[] = {"string", "int", "float", "bool", "char", "null"};
+        return type_names[df->col_types[idx]];
+    }
+
+    std::vector<std::string> dataframe_get_col_types(dataframe &df)
+    {
+        std::vector<std::string> col_types;
+        for (int i = 0; i < dataframe_num_cols(df); i++)
+            col_types.push_back(dataframe_get_col_type(df, i));
+        return col_types;
+    }
+
+    std::string dataframe_get_col_name(dataframe &df, int idx)
+    {
+        return df->col_names[idx];
+    }
+
+    std::vector<std::string> dataframe_get_col_names(dataframe &df)
+    {
+        std::vector<std::string> col_names;
+        for (int i = 0; i < dataframe_num_cols(df); i++)
+            col_names.push_back(dataframe_get_col_name(df, i));
+        return col_names;
     }
 
     /**
@@ -110,14 +149,25 @@ namespace splashkit_lib
         if (dataframe_num_cols(df) != 0 && data.size() != dataframe_num_rows(df))
             throw std::invalid_argument("Number of rows in the inserted column (" + std::to_string(data.size()) + ") does not match the number of rows in the dataframe (" + std::to_string(dataframe_num_rows(df)) + ")");
 
-        // Validate same type within column
-        for (int row = 1; row < data.size(); row++)
-            if (data[row].index() != data[row-1].index())
+        // Init column type as null
+        data_element_type col_type = DATA_ELEMENT_NULL;
+
+        // Set column type and validate data only has one type (or null)
+        for (int row = 0; row < data.size(); row++)
+        {
+            data_element_type row_type = dataframe_get_element_type(data[row]);
+            if (row_type == DATA_ELEMENT_NULL)
+                continue;
+            else if (col_type == DATA_ELEMENT_NULL)
+                col_type = row_type;
+            else if (col_type != row_type)
                 throw std::invalid_argument("Not all data elements in the inserted column are the same type");
+        }
 
         // Insert
         df->col_names.insert(df->col_names.begin() + idx, col_name);
         df->data.insert(df->data.begin() + idx, data);
+        df->col_types.insert(df->col_types.begin() + idx, col_type);
     }
 
     void dataframe_insert_row(dataframe &df, int idx, std::vector<data_element> &data)
@@ -129,7 +179,7 @@ namespace splashkit_lib
         // Validate elements match column types
         if (dataframe_num_rows(df) != 0)
             for (int col = 0; col < dataframe_num_cols(df); col++)
-                if (data[col].index() != df->data[col][0].index())
+                if (!std::holds_alternative<dataframe_null>(data[col]) && df->col_types[col] != dataframe_get_element_type(data[col]))
                     throw std::invalid_argument("Not all data elements in the inserted row match the type of their respective column");
 
         // Insert
@@ -141,6 +191,8 @@ namespace splashkit_lib
     {
         std::vector<data_element> col = dataframe_get_col(df, idx);
         df->data.erase(df->data.begin() + idx);
+        df->col_names.erase(df->col_names.begin() + idx);
+        df->col_types.erase(df->col_types.begin() + idx);
         return col;
     }
 
@@ -161,10 +213,11 @@ namespace splashkit_lib
 
     std::ostream &operator << (std::ostream &stream, dataframe_null &elem)
     {
+        // Print a null data element
         stream << "null";
         return stream;
     }
-    
+
     std::ostream &operator << (std::ostream &stream, data_element &data)
     {
         // Print underlying value of a data_element
