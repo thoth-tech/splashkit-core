@@ -16,7 +16,7 @@ namespace splashkit_lib
 
 		for (size_t x = 0; x < m.x; x++)
 			for (size_t y = 0; y < m.y; y++)
-					result.elements[x][y] = exp(m.elements[x][y]);
+				result.elements[x][y] = exp(m.elements[x][y]);
 
 		return result;
 	}
@@ -120,7 +120,7 @@ namespace splashkit_lib
 
 			for (size_t y = 0; y < input.y; y++)
 				exp_sum += exp(input.elements[0][y] - max_input);
-			
+
 			double constant = max_input + log(exp_sum);
 			matrix_2d result(1, input.y);
 
@@ -210,16 +210,6 @@ namespace splashkit_lib
 	/* #endregion */
 
 	/* #region  Model */
-	void Model::forward(const matrix_2d &input)
-	{
-		vector<matrix_2d> outputs(layers.size() + 1);
-		outputs[0] = input;
-		for (size_t i = 0; i < layers.size(); i++)
-		{
-			outputs[i + 1] = layers[i]->forward(outputs[i]);
-		}
-	}
-
 	Model::Model(LossFunction error_function, double learning_rate)
 	{
 		this->learning_rate = learning_rate;
@@ -252,33 +242,64 @@ namespace splashkit_lib
 		return result;
 	}
 
-	vector<double> Model::train(const matrix_2d &input, const matrix_2d &target_output)
+	void Model::forward(vector<vector<matrix_2d>> &outputs, const matrix_2d &input, int input_index, int batch_index)
 	{
-		vector<double> losses;
-		for (int i = 0; i < input.x; i++)
+		matrix_2d row = matrix_slice(input, input_index + batch_index, input_index + batch_index);
+
+		outputs[batch_index] = vector<matrix_2d>(layers.size() * 2 + 1);
+		outputs[batch_index][0] = row;
+		for (int j = 0; j < layers.size(); j++)
 		{
-			matrix_2d row = matrix_slice(input, i, i);
+			outputs[batch_index][j * 2 + 1] = layers[j]->forward(outputs[batch_index][j * 2]); // weights * x + bias
+			outputs[batch_index][j * 2 + 2] = layers[j]->activation_function->apply(outputs[batch_index][j * 2 + 1]);
+		}
+	}
 
-			/* #region Forward Propagation */
-			vector<matrix_2d> outputs(layers.size()*2+1);
-			outputs[0] = row;
-			for (int j = 0; j < layers.size(); j++)
-			{
-				outputs[j*2+1] = layers[j]->forward(outputs[j*2]); // weights * x + bias
-				outputs[j*2+2] = layers[j]->activation_function->apply(outputs[j*2+1]);
-			}
-			/* #endregion */
+	vector<matrix_2d> Model::backward(vector<double> &losses, const vector<vector<matrix_2d>> &outputs, const matrix_2d &target_output, int index)
+	{
+		int batch_size = outputs.size();
 
-			matrix_2d target_output_row = matrix_slice(target_output, i, i);
-			matrix_2d difference = target_output_row - outputs[layers.size()*2];
+		// initialise avg_deltas with zeroes
+		vector<matrix_2d> avg_deltas(layers.size() + 1);
+		for (int j = 0; j < layers.size(); j++)
+			avg_deltas[j] = fill_matrix(1, layers[j]->input_size);
+		avg_deltas.back() = fill_matrix(1, layers.back()->output_size);
 
-			losses.push_back(error_function->loss(outputs[layers.size()*2], target_output_row));
+		for (int b = 0; b < batch_size; b++)
+		{
+			matrix_2d target_output_row = matrix_slice(target_output, index + b, index + b);
+			losses.push_back(error_function->loss(outputs[b].back(), target_output_row));
 
-			matrix_2d delta = error_function->backward(outputs[layers.size()*2], target_output_row);
+			avg_deltas[layers.size()] += error_function->backward(outputs[b][layers.size() * 2], target_output_row);
 			for (int j = layers.size(); j > 0; j--)
-			{
-				delta = layers[j-1]->backward(outputs[j*2-2], outputs[j*2-1], outputs[j*2], delta);
-			}
+				avg_deltas[j - 1] += layers[j - 1]->backward(outputs[b][j * 2 - 2], outputs[b][j * 2 - 1], outputs[b][j * 2], avg_deltas[j]);
+		}
+
+		// divide avg_deltas
+		if (batch_size > 1)
+			for (int j = 0; j < layers.size(); j++)
+				avg_deltas[j] /= batch_size;
+		return avg_deltas;
+	}
+
+	void Model::update_weights(const vector<matrix_2d> &avg_deltas, const vector<vector<matrix_2d>> &outputs)
+	{
+		for (int b = 0; b < outputs.size(); b++)
+			for (int j = layers.size(); j > 0; j--)
+				layers[j-1]->update_weights(outputs[b][j * 2 - 2], avg_deltas[j]);
+	}
+
+	// TODO: Batch (Done) -> 1/2 Batch (Done) -> Game API
+	vector<double> Model::train(const matrix_2d &input, const matrix_2d &target_output, int batch_size)
+	{
+		vector<double> losses; // losses updated in backwards pass
+		for (int i = 0; i + batch_size < input.x; i += batch_size)
+		{
+			vector<vector<matrix_2d>> outputs(batch_size);
+			for (int b = 0; b < batch_size; b++)
+				forward(outputs, input, i, b);
+			auto avg_deltas = backward(losses, outputs, target_output, i);
+			update_weights(avg_deltas, outputs);
 		}
 		return losses;
 	}
@@ -330,11 +351,22 @@ namespace splashkit_lib
 			for (int y = 0; y < output_size; y++)
 			{
 				error += weights.elements[x][y] * delta.elements[0][y];
-				weights.elements[x][y] -= learning_rate * delta.elements[0][y] * input.elements[0][x];
 			}
 			new_delta.elements[0][x] = error;
 		}
 		return new_delta;
+	}
+
+	void Dense::update_weights(const matrix_2d &input, const matrix_2d &delta)
+	{
+		// update weights
+		for (int x = 0; x < input_size; x++)
+			for (int y = 0; y < output_size; y++)
+				weights.elements[x][y] -= learning_rate * delta.elements[0][y] * input.elements[0][x];
+
+		// update biases
+		for (int y = 0; y < output_size; y++)
+			biases.elements[0][y] -= learning_rate * delta.elements[0][y];
 	}
 	/* #endregion Dense */
 }

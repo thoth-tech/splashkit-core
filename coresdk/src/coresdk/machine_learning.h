@@ -113,12 +113,21 @@ namespace splashkit_lib
 		/**
 		 * @brief Back-propagation function
 		 * 
-		 * @param input 
-		 * @param output 
+		 * @param input The data that was inputted into the layer from the previous later
+		 * @param before_activation The output of the layer before the activation function was applied
+		 * @param output The data that was outputted into the next layer after activation function was applied
 		 * @param delta The delta/derivative of the previous layer during back propagation.
 		 * @return matrix_2d 
 		 */
 		virtual matrix_2d backward(const matrix_2d &input, const matrix_2d &before_activation, const matrix_2d &output, matrix_2d &delta) { throw std::logic_error("not implemented"); };
+
+		/**
+		 * @brief Updates the weights of the layer after back propagation.
+		 * 
+		 * @param input The data that was inputted into the layer from the previous later
+		 * @param delta The delta calculated from back propagation.
+		 */
+		virtual void update_weights(const matrix_2d &input, const matrix_2d &delta) { throw std::logic_error("not implemented"); };
 	};
 
 	/**
@@ -134,6 +143,7 @@ namespace splashkit_lib
 		matrix_2d get_weights() { return weights; };
 		matrix_2d forward(const matrix_2d &input) override;
 		matrix_2d backward(const matrix_2d &input, const matrix_2d &before_activation, const matrix_2d &output, matrix_2d &delta) override;
+		void update_weights(const matrix_2d &input, const matrix_2d &delta) override;
 	};
 
 	/**
@@ -148,12 +158,63 @@ namespace splashkit_lib
 		double learning_rate;
 
 		vector<std::shared_ptr<Layer>> layers;
-		void forward(const matrix_2d &input);
 	public:
 		Model(LossFunction error_function, double learning_rate=0.01);
+
+		/**
+		 * @brief Add a layer to the back of the model
+		 * 
+		 * @param layer 
+		 */
 		void add_layer(Layer *layer);
+
+		/**
+		 * @brief Feed-forward the input through the model
+		 * 
+		 * Will produce a result for each row in the input matrix.
+		 * 
+		 * @param input The data to feed-forward through the model
+		 * @return matrix_2d The model output
+		 */
 		matrix_2d predict(const matrix_2d &input);
-		vector<double> train(const matrix_2d &input, const matrix_2d &target_output);
+
+		/**
+		 * @brief Feed-forward the input through the model and store all the intermediate results for back propagation.
+		 * 
+		 * @param outputs The model output and all the intermediate results for each batch.
+		 * @param input The data to feed-forward through the model
+		 * @param input_index The index indicating the start of this batch for input.
+		 * @param batch_size The size of the batch to use for gradient averaging.
+		 */
+		void forward(vector<vector<matrix_2d>> &outputs, const matrix_2d &input, int input_index, int batch_index);
+
+		/**
+		 * @brief Back propagate the loss through the model and return the gradient of the loss with respect to the weights for each layer.
+		 * 
+		 * @param outputs The outputs from forward propagation
+		 * @param target_output The target output of the model
+		 * @param index The index indicating the start of this batch for target_output.
+		 * @return vector<matrix_2d> The average delta gradients for each layer averaged across the batch.
+		 */
+		vector<matrix_2d> backward(vector<double> &losses, const vector<vector<matrix_2d>> &outputs, const matrix_2d &target_output, int index=0);
+
+		/**
+		 * @brief Update the weights of the model using the gradients from back propagation and the intermediate outputs from forward propagation.
+		 * 
+		 * @param avg_deltas The gradients from back propagation for the given batch.
+		 * @param outputs The outputs from forward propagation for the given batch.
+		 */
+		void update_weights(const vector<matrix_2d> &avg_deltas, const vector<vector<matrix_2d>> &outputs);
+
+		/**
+		 * @brief Runs forward and backward propagation and updates the weights of the model.
+		 * 
+		 * @param input The input to the model
+		 * @param target_output The target output of the model
+		 * @param batch_size The size of the batch to use for gradient averaging.
+		 * @return vector<double> The loss over time during training.
+		 */
+		vector<double> train(const matrix_2d &input, const matrix_2d &target_output, int batch_size=1);
 
 		/**
 		 * @brief Save a trained model to disk so that it can be loaded later using the model.load() function.

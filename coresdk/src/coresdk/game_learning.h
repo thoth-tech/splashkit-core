@@ -3,6 +3,7 @@
 
 #include "random.h"
 #include "utility_functions.h"
+#include "machine_learning.h"
 
 #include <iostream>
 #include <vector>
@@ -469,7 +470,7 @@ namespace splashkit_lib
 			Large
 		};
 
-		// Model *model;
+		Model *model;
 		int total_iterations = 0;
 
 		DenseAgent(InputFormat &in_format, OutputFormat &out_format, Type type);

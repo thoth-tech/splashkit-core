@@ -69,6 +69,7 @@ namespace splashkit_lib
 		value = std::vector<float>(width, 0.5f);
 	}
 
+	// TODO: if random take weighted random?
 	int OutputValue::get_max_position(OutputFormat format, int index, const std::vector<int> filter, bool random)
 	{
 		if (format.get_type(index) != OutputFormat::Type::Position && format.get_type(index) != OutputFormat::Type::Category)

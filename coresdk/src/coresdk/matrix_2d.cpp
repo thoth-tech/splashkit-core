@@ -24,7 +24,6 @@ using std::stringstream;
  * Returns a new matrix with the same size as the original matrix (both matrices need to be the same size),
  * where each element is the result of the comparison (1 if true, 0 otherwise)
  */
-#ifndef MATRIX_ELEMENT_OP
 #define MATRIX_ELEMENT_OP(OP)                                                     \
     matrix_2d matrix_2d::operator OP(const double scalar) const                   \
     {                                                                             \
@@ -52,7 +51,34 @@ using std::stringstream;
                 result.elements[i][j] = (elements[i][j] OP other.elements[i][j]); \
         return result;                                                            \
     }
-#endif
+
+/**
+ * @brief Apply a operator in the form += *= etc.
+ * 
+ * These operators are inplace and thus modify the original matrix.
+ */
+#define MATRIX_INPLACE_ELEMENT_OP(OP)                                             \
+    void matrix_2d::operator OP(const double scalar)                              \
+    {                                                                             \
+        for (size_t i = 0; i < x; i++)                                            \
+            for (size_t j = 0; j < y; j++)                                        \
+                elements[i][j] OP scalar;                                         \
+    }                                                                             \
+    void matrix_2d::operator OP(const int scalar)                                 \
+    {                                                                             \
+        for (size_t i = 0; i < x; i++)                                            \
+            for (size_t j = 0; j < y; j++)                                        \
+                elements[i][j] OP scalar;                                         \
+    }                                                                             \
+    void matrix_2d::operator OP(const matrix_2d &other)                           \
+    {                                                                             \
+        if (x != other.x || y != other.y)                                         \
+            throw std::logic_error("dimensions must match for " #OP);             \
+        for (size_t i = 0; i < x; i++)                                            \
+            for (size_t j = 0; j < y; j++)                                        \
+                elements[i][j] OP other.elements[i][j];                           \
+    }
+
 
 namespace splashkit_lib
 {
@@ -107,11 +133,18 @@ namespace splashkit_lib
     }
 
     MATRIX_ELEMENT_OP(>)
+    MATRIX_ELEMENT_OP(>=)
     MATRIX_ELEMENT_OP(<)
+    MATRIX_ELEMENT_OP(<=)
     MATRIX_ELEMENT_OP(+)
     MATRIX_ELEMENT_OP(-)
     MATRIX_ELEMENT_OP(/)
     MATRIX_ELEMENT_OP(*)
+
+    MATRIX_INPLACE_ELEMENT_OP(+=)
+    MATRIX_INPLACE_ELEMENT_OP(-=)
+    MATRIX_INPLACE_ELEMENT_OP(*=)
+    MATRIX_INPLACE_ELEMENT_OP(/=)
 
     matrix_2d matrix_2d::operator-() const
     {

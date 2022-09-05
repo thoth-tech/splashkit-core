@@ -922,34 +922,62 @@ void test_ann(matrix_2d &data)
 {
 	matrix_2d input = matrix_slice(data, 0, -1, 0, -4); // remove last 3 columns from dataset
 	matrix_2d target = matrix_slice(data, 0, -1, -3, -1); // take last 3 columns from dataset
-	write_line(matrix_to_string(input));
-	write_line(matrix_to_string(target));
 
-	Model model(MSE, 0.1);
-	Dense *l1 = test_dense(input, target);
-	matrix_2d initial = l1->forward(matrix_slice(input, 0, 0));
-	matrix_2d initial_weights = matrix_2d(l1->get_weights());
-
-	model.add_layer(l1);
-	model.add_layer(new Dense(4, 3, Sigmoid));
-
-	vector<double> loss;
-	for (size_t i = 0; i < 1000; i++)
+	if (ask("Test Convergence"))
 	{
-		auto temp = model.train(input, target);
-		loss.push_back(std::accumulate(temp.begin(), temp.end(), 0.0) / temp.size()); // Store average loss of epoch
-		write_line("Loss: " + to_string(loss.back()));
+		write_line(matrix_to_string(input));
+		write_line(matrix_to_string(target));
+
+		Model model(MSE, 0.1);
+		Dense *l1 = test_dense(input, target);
+		matrix_2d initial = l1->forward(matrix_slice(input, 0, 0));
+		matrix_2d initial_weights = matrix_2d(l1->get_weights());
+
+		model.add_layer(l1);
+		model.add_layer(new Dense(4, 3, Sigmoid));
+
+		vector<double> loss;
+		for (size_t i = 0; i < 1000; i++)
+		{
+			auto temp = model.train(input, target);
+			loss.push_back(std::accumulate(temp.begin(), temp.end(), 0.0) / temp.size()); // Store average loss of epoch
+			write_line("Loss: " + to_string(loss.back()));
+		}
+
+		matrix_2d result = model.predict(input);
+		write_line(matrix_to_string(matrix_horizontal_concat(data, result)));
+
+		matrix_2d trained = l1->forward(matrix_slice(input, 0, 0));
+		
+		if ((initial_weights == l1->get_weights()).all()) { write_line("WARNING: Training should change weights"); }
+		if ((initial == trained).all()) { write_line("WARNING: Training should change output"); }
+
+		write_line(matrix_to_string(matrix_horizontal_concat(matrix_horizontal_concat(input, to_categorical(target)), to_categorical(result))));
 	}
 
-	matrix_2d result = model.predict(input);
-	write_line(matrix_to_string(matrix_horizontal_concat(data, result)));
-
-	matrix_2d trained = l1->forward(matrix_slice(input, 0, 0));
+	if (ask("Test Batch Speed"))
+	{
+		vector<int> batch_sizes = {8, 4, 2, 1};
+		for (int batch_size : batch_sizes)
+		{
+			vector<double> loss;
+			Model batch_model(MSE, 0.1);
+			batch_model.add_layer(new Dense(4, 4, Sigmoid));
+			batch_model.add_layer(new Dense(4, 3, Sigmoid));
+			write_line("Batch size: " + to_string(batch_size));
+			auto start = chrono::high_resolution_clock::now();
+			for (int i = 0; i < 1000; i++)
+			{
+				auto temp = batch_model.train(input, target, batch_size);
+				loss.push_back(std::accumulate(temp.begin(), temp.end(), 0.0) / temp.size()); // Store average loss of epoch
+			}
+			auto end = chrono::high_resolution_clock::now();
+			auto duration = chrono::duration_cast<chrono::milliseconds>(end - start);
+			write_line("  Time taken: " + to_string(duration.count()) + " ms");
+			write_line("  Final loss: " + to_string(loss.back()));
+		}
+	}
 	
-	if ((initial_weights == l1->get_weights()).all()) { write_line("WARNING: Training should change weights"); }
-	if ((initial == trained).all()) { write_line("WARNING: Training should change output"); }
-
-	write_line(matrix_to_string(matrix_horizontal_concat(matrix_horizontal_concat(input, to_categorical(target)), to_categorical(result))));
 }
 
 void run_machine_learning_test()
