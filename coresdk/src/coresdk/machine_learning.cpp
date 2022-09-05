@@ -242,22 +242,17 @@ namespace splashkit_lib
 		return result;
 	}
 
-	vector<vector<matrix_2d>> Model::forward(const matrix_2d &input, int input_index, int batch_size)
+	void Model::forward(vector<vector<matrix_2d>> &outputs, const matrix_2d &input, int input_index, int batch_index)
 	{
-		vector<vector<matrix_2d>> outputs(batch_size);
-		for (int b = 0; b < batch_size; b++)
-		{
-			matrix_2d row = matrix_slice(input, input_index + b, input_index + b);
+		matrix_2d row = matrix_slice(input, input_index + batch_index, input_index + batch_index);
 
-			outputs[b] = vector<matrix_2d>(layers.size() * 2 + 1);
-			outputs[b][0] = row;
-			for (int j = 0; j < layers.size(); j++)
-			{
-				outputs[b][j * 2 + 1] = layers[j]->forward(outputs[b][j * 2]); // weights * x + bias
-				outputs[b][j * 2 + 2] = layers[j]->activation_function->apply(outputs[b][j * 2 + 1]);
-			}
+		outputs[batch_index] = vector<matrix_2d>(layers.size() * 2 + 1);
+		outputs[batch_index][0] = row;
+		for (int j = 0; j < layers.size(); j++)
+		{
+			outputs[batch_index][j * 2 + 1] = layers[j]->forward(outputs[batch_index][j * 2]); // weights * x + bias
+			outputs[batch_index][j * 2 + 2] = layers[j]->activation_function->apply(outputs[batch_index][j * 2 + 1]);
 		}
-		return outputs;
 	}
 
 	vector<matrix_2d> Model::backward(vector<double> &losses, const vector<vector<matrix_2d>> &outputs, const matrix_2d &target_output, int index)
@@ -300,7 +295,9 @@ namespace splashkit_lib
 		vector<double> losses; // losses updated in backwards pass
 		for (int i = 0; i + batch_size < input.x; i += batch_size)
 		{
-			auto outputs = forward(input, i, batch_size);
+			vector<vector<matrix_2d>> outputs(batch_size);
+			for (int b = 0; b < batch_size; b++)
+				forward(outputs, input, i, b);
 			auto avg_deltas = backward(losses, outputs, target_output, i);
 			update_weights(avg_deltas, outputs);
 		}

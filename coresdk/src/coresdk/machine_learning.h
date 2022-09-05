@@ -181,12 +181,12 @@ namespace splashkit_lib
 		/**
 		 * @brief Feed-forward the input through the model and store all the intermediate results for back propagation.
 		 * 
+		 * @param outputs The model output and all the intermediate results for each batch.
 		 * @param input The data to feed-forward through the model
 		 * @param input_index The index indicating the start of this batch for input.
 		 * @param batch_size The size of the batch to use for gradient averaging.
-		 * @return vector<vector<matrix_2d>> The model output and all the intermediate results for each batch.
 		 */
-		vector<vector<matrix_2d>> forward(const matrix_2d &input, int input_index=0, int batch_size=1);
+		void forward(vector<vector<matrix_2d>> &outputs, const matrix_2d &input, int input_index, int batch_index);
 
 		/**
 		 * @brief Back propagate the loss through the model and return the gradient of the loss with respect to the weights for each layer.
