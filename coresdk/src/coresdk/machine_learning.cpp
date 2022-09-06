@@ -72,6 +72,13 @@ namespace splashkit_lib
 	}
 
 	/* #region  ActivationFunctions */
+	struct f_None : public _ActivationFunction
+	{
+		static const ActivationFunction type = ActivationFunction::None;
+		matrix_2d apply(const matrix_2d &input) override { return input; }
+		matrix_2d backward(const matrix_2d &input, const matrix_2d &output, const matrix_2d &delta) override { return delta; }
+	};
+
 	struct f_Sigmoid : public _ActivationFunction
 	{
 		static const ActivationFunction type = Sigmoid;
@@ -168,6 +175,8 @@ namespace splashkit_lib
 	{
 		switch (name)
 		{
+		case ActivationFunction::None:
+			return shared_ptr<_ActivationFunction>(new f_None());
 		case ActivationFunction::ReLu:
 			return shared_ptr<_ActivationFunction>(new f_ReLu());
 		case ActivationFunction::Sigmoid:
@@ -242,9 +251,9 @@ namespace splashkit_lib
 		return result;
 	}
 
-	void Model::forward(vector<vector<matrix_2d>> &outputs, const matrix_2d &input, int input_index, int batch_index)
+	matrix_2d Model::forward(vector<vector<matrix_2d>> &outputs, const matrix_2d &input, int input_index, int batch_index)
 	{
-		matrix_2d row = matrix_slice(input, input_index + batch_index, input_index + batch_index);
+		matrix_2d row = matrix_slice(input, input_index, input_index);
 
 		outputs[batch_index] = vector<matrix_2d>(layers.size() * 2 + 1);
 		outputs[batch_index][0] = row;
@@ -253,6 +262,8 @@ namespace splashkit_lib
 			outputs[batch_index][j * 2 + 1] = layers[j]->forward(outputs[batch_index][j * 2]); // weights * x + bias
 			outputs[batch_index][j * 2 + 2] = layers[j]->activation_function->apply(outputs[batch_index][j * 2 + 1]);
 		}
+
+		return outputs[batch_index][layers.size() * 2];
 	}
 
 	vector<matrix_2d> Model::backward(vector<double> &losses, const vector<vector<matrix_2d>> &outputs, const matrix_2d &target_output, int index)
@@ -297,7 +308,7 @@ namespace splashkit_lib
 		{
 			vector<vector<matrix_2d>> outputs(batch_size);
 			for (int b = 0; b < batch_size; b++)
-				forward(outputs, input, i, b);
+				forward(outputs, input, i + b, b);
 			auto avg_deltas = backward(losses, outputs, target_output, i);
 			update_weights(avg_deltas, outputs);
 		}

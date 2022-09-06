@@ -211,6 +211,14 @@ namespace splashkit_lib
 		OutputValue(int width);
 
 		/**
+		 * @brief Construct a new Output Value object from a given 1D matrix
+		 * Only uses the first row in the given matrix.
+		 * 
+		 * @param matrix 
+		 */
+		OutputValue(matrix_2d matrix);
+
+		/**
 		 * @brief Gets the index of the maximum reward value for the given format index.
 		 *
 		 * @param index The format index indicating which subsection of the reward values to consider.
@@ -259,8 +267,9 @@ namespace splashkit_lib
 		 */
 		void reset() { indexes.clear(); }
 
-		float at(int index) const { return value[index]; }
-		float operator[](int index) const { return value[index]; }
+		inline float at(int index) const { return value[index]; }
+		inline float operator[](int index) const { return value[index]; }
+		inline vector<int> &get_indexes() { return indexes; }
 		string to_string() const;
 	};
 
@@ -406,6 +415,7 @@ namespace splashkit_lib
 
 	struct Agent
 	{
+		virtual std::string name() const { return "DefaultAgentName"; }
 		virtual int get_move(Game *game) = 0;
 		virtual void train(Game *game, int player_count, int iterations) {};
 	};
@@ -437,6 +447,7 @@ namespace splashkit_lib
 	public:
 		RewardTable *reward_table;
 		int total_iterations = 0;
+		std::string name() const override { return "QAgent"; }
 
 		QAgent(OutputFormat &out_format, float learning_rate=0.1f, float discount_factor=0.9f, float epsilon=0.1f);
 
@@ -462,7 +473,9 @@ namespace splashkit_lib
 		class SelfPlay; // Internally used class for training
 
 		float learning_rate = 0.1f;
+		float epsilon = 0.1f;
 	public:
+		std::string name() const override { return "DenseAgent"; }
 		enum class Type 
 		{
 			Small,

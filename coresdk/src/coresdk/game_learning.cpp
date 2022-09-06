@@ -1,5 +1,6 @@
 #include "game_learning.h"
 #include "machine_learning.h"
+#include "matrix_2d.h"
 using namespace std;
 
 namespace splashkit_lib
@@ -67,6 +68,13 @@ namespace splashkit_lib
 	OutputValue::OutputValue(int width)
 	{
 		value = std::vector<float>(width, 0.5f);
+	}
+
+	OutputValue::OutputValue(matrix_2d m)
+	{
+		value = std::vector<float>(m.y);
+		for (int i = 0; i < m.y; i++)
+			value[i] = m.elements[0][i];
 	}
 
 	// TODO: if random take weighted random?
@@ -257,8 +265,7 @@ namespace splashkit_lib
 			std::vector<float> scores = game->score();
 			for (int i = 0; i < scores.size(); i++)
 			{
-				float score = scores[i];
-				agents[i].reward(score);
+				agents[i].reward(scores[i]);
 			}
 			game->reset();
 
@@ -278,13 +285,153 @@ namespace splashkit_lib
 	{
 	private:
 		Model *model;
-		std::vector<OutputValue *> move_history; // Store the moves played for the last game
+		std::vector<OutputValue> move_history; // Store the moves played for the last game
+		std::vector<std::vector<matrix_2d>> forward_history; // Forward propagation history
+		int current_move = 0;
+
+		float epsilon;
+		double average_score = 0.0;
+		int current_epoch = 0;
 	public:
-		SelfPlay(Model *model)
+		SelfPlay(Model *model, float epsilon)
 		{
 			this->model = model;
+			this->epsilon = epsilon;
+			forward_history.reserve(32);
+		}
+		
+		/**
+		 * @brief Get the move this agent wishes to play.
+		 *
+		 * @param game
+		 * @return int
+		 */
+		int get_move(Game *game)
+		{
+			std::vector<bool> input = game->get_input_format().convert_input(game->get_input()); // convert input to boolean for neural networks / ease of hashing
+			
+			matrix_2d input_matrix(1, input.size());
+			for (int i = 0; i < input.size(); i++)
+				input_matrix[0][i] = input[i] ? 1.0 : -1.0;
+
+			forward_history.resize(current_move + 1); // ensure space for forward propagation
+			matrix_2d output_matrix = model->forward(forward_history, input_matrix, 0, current_move++);
+
+			move_history.push_back(OutputValue(output_matrix));
+			return game->convert_output(move_history.back(), rnd() < epsilon);
+		}
+
+		/**
+		 * @brief Rewards all the moves taken in the game. If we won the game we give a reward so that we try to take that move again.
+		 *
+		 * @param score The total score of this agent
+		 */
+		void reward(float score)
+		{
+			// cumulative moving average
+			current_epoch++;
+			int cma_len = current_epoch < 50 ? current_epoch : 50;
+			average_score = (average_score * (cma_len - 1) + score) / cma_len;
+
+			matrix_2d target_output(current_move, model->get_output_size());
+			for (int i = 0; i < current_move; i++)
+			{
+				for (int j = 0; j < model->get_output_size(); j++)
+					target_output[i][j] = move_history[i][j]; // initialise target output to the played move (i.e. y = yhat)
+
+				vector<int> used_outputs = move_history[i].get_indexes();
+				for (int j : used_outputs)
+				{
+					if (target_output.elements[i][j] > 0.5 && score < average_score ||
+						target_output.elements[i][j] < 0.5 && score > average_score)
+					{
+						// Reduce the target
+						target_output.elements[i][j] = 0.0;
+					}
+					else
+					{
+						// Increase the target
+						target_output.elements[i][j] = 1.0;
+					}
+				}
+
+				move_history[i].reset();
+			}
+			
+			vector<double> losses;
+			auto avg_deltas = model->backward(losses, forward_history, target_output, 0);
+			model->update_weights(avg_deltas, forward_history);
+
+			// reset
+			current_move = 0;
+			move_history.clear();
+			forward_history.clear();
 		}
 	};
+
+	DenseAgent::DenseAgent(InputFormat &in_format, OutputFormat &out_format, Type type)
+	{
+		model = new Model(MSE, 0.1);
+		model->add_layer(new Dense(in_format.get_out_width(), 16, None));
+		model->add_layer(new Dense(16, out_format.get_width(), None));
+		model->add_layer(new Dense(out_format.get_width(), out_format.get_width(), None));
+		model->add_layer(new Dense(out_format.get_width(), out_format.get_width(), Sigmoid));
+	}
+
+	int DenseAgent::get_move(Game *game)
+	{
+		std::vector<bool> input = game->get_input_format().convert_input(game->get_input()); // convert input to boolean for neural networks / ease of hashing
+			
+		matrix_2d input_matrix(1, input.size());
+		for (int i = 0; i < input.size(); i++)
+			input_matrix[0][i] = input[i] ? 1.0 : -1.0;
+
+		matrix_2d output_matrix = model->predict(input_matrix);
+		OutputValue output(output_matrix); // convert to output value
+
+		return game->convert_output(output, false);
+	}
+
+	void DenseAgent::train(Game *game, int player_count, int iterations)
+	{
+		int bar_length = 50;
+		int progress = 0;						 // how many bar units achieved
+		int bar_units = iterations / bar_length; // calculates how many iterations account for each bar
+
+		cout << "Training DenseAgent for " << iterations << " iterations" << endl;
+		std::vector<DenseAgent::SelfPlay> agents;
+		for (int i = 0; i < player_count; i++)
+		{
+			agents.push_back(DenseAgent::SelfPlay(model, epsilon)); // generate the agents to play the game
+		}
+
+		// Initialise progress bar
+		cout << "  0  % [" << string(bar_length, '_') << "]\r" << std::flush;
+
+		// Main loop
+		for (int i = 0; i < iterations; i++)
+		{
+			while (!game->is_finished())
+			{
+				int move = agents[game->get_current_player()].get_move(game);
+				game->make_move(move);
+			}
+			// Update neural network
+			std::vector<float> scores = game->score();
+			for (int i = 0; i < scores.size(); i++)
+				agents[i].reward(scores[i]);
+			game->reset();
+
+			// Draw progress bar
+			if (i % bar_units == 0)
+			{
+				int percentage = ((i / bar_units) * 100) / bar_length;
+				cout << "  " << percentage << "% [" << string((i / bar_units), '#') << '\r' << std::flush;
+			}
+		}
+		cout << "\r  100%" << endl;
+		total_iterations += iterations;
+	}
 
 	MinimaxAgent::MinimaxAgent(InputFormat input_format)
 	{

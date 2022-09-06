@@ -10,6 +10,7 @@ namespace splashkit_lib
 
 	enum ActivationFunction
 	{
+		None, // No Activation function
 		ReLu, // Rectified Linear Unit
 		Sigmoid,
 		Softmax, // Softmax
@@ -161,6 +162,9 @@ namespace splashkit_lib
 	public:
 		Model(LossFunction error_function, double learning_rate=0.01);
 
+		inline int get_input_size() const { return layers[0]->input_size; };
+		inline int get_output_size() const { return layers.back()->output_size; };
+
 		/**
 		 * @brief Add a layer to the back of the model
 		 * 
@@ -185,8 +189,9 @@ namespace splashkit_lib
 		 * @param input The data to feed-forward through the model
 		 * @param input_index The index indicating the start of this batch for input.
 		 * @param batch_size The size of the batch to use for gradient averaging.
+		 * @return matrix_2d The model output
 		 */
-		void forward(vector<vector<matrix_2d>> &outputs, const matrix_2d &input, int input_index, int batch_index);
+		matrix_2d forward(vector<vector<matrix_2d>> &outputs, const matrix_2d &input, int input_index, int batch_index);
 
 		/**
 		 * @brief Back propagate the loss through the model and return the gradient of the loss with respect to the weights for each layer.

@@ -96,11 +96,7 @@ public:
 	}
 	Game *clone() override
 	{
-		TicTacToe *game = new TicTacToe(); // New keyword must be used
-		game->board = board;
-		game->current_player = current_player;
-		game->state = state;
-		return game;
+		return new TicTacToe(*this);
 	}
 	bool is_finished() override
 	{
@@ -588,74 +584,72 @@ bool ask(string question)
 	return answer == "Y" || answer == "y";
 }
 
-void play_tictactoe(QAgent *q_agent)
+struct TicTacToeHumanAgent : public Agent
+{
+	int get_move(Game *game) override
+	{
+		const vector<int> moves = game->get_possible_moves();
+		write_line("Your move: ");
+		write_line(to_string(moves));
+		int move;
+		while (!try_str_to_int(read_line(), move));
+		return move;
+	}
+};
+
+void play_tictactoe(Agent *p1, Agent *p2, bool silent=false)
 {
 	TicTacToe game;
+	game.draw_game();
+	while (game.state == TicTacToe::GameState::Playing)
+	{
+		for (int i = 0; i < 2 && game.state == TicTacToe::GameState::Playing; i++)
+		{
+			Agent *cur_agent = (i == 0) ? p1 : p2;
+
+			if (!silent && cur_agent->name() == "QAgent")
+				write_line(((QAgent*)cur_agent)->reward_table->get_value(&game).to_string());
+			if (!silent && cur_agent->name() == "DenseAgent")
+			{
+				auto game_state = game.get_input_format().convert_input(game.get_input());
+				matrix_2d game_matrix(1, game_state.size());
+				for (int i = 0; i < game_state.size(); i++)
+					game_matrix[0][i] = game_state[i];
+				write_line(matrix_to_string(((DenseAgent*)cur_agent)->model->predict(game_matrix)));
+			}
+
+			int action = cur_agent->get_move(&game);
+			game.make_move(action);
+			game.draw_game();
+		}
+	}
+}
+
+void test_tictactoe(Agent *agent)
+{
+	Agent *rnd_agent = new RandomAgent();
+	Agent *human = new TicTacToeHumanAgent();
+
 	for (int i = 0; i < 5; i++)
 	{
 		write("AI vs Random GAME ");
 		write_line(i);
-		game.draw_game();
-		while (game.state == TicTacToe::GameState::Playing)
-		{
-			if (game.current_player == TicTacToe::Player::X)
-			{
-				write_line(q_agent->reward_table->get_value(&game).to_string());
-				int ai_move = q_agent->get_move(&game);
-				game.make_move(ai_move);
-			}
-			else
-			{
-				const vector<int> moves = game.get_possible_moves();
-				game.make_move(moves[random_agent_play(moves.size())]);
-			}
-			game.draw_game();
-		}
-		game.reset();
+		play_tictactoe(agent, rnd_agent);
 	}
 	write_line("AI vs AI GAME");
-	game.draw_game();
-	while (game.state == TicTacToe::GameState::Playing)
-	{
-		write_line(q_agent->reward_table->get_value(&game).to_string());
-		game.make_move(q_agent->get_move(&game));
-		game.draw_game();
-	}
+	play_tictactoe(agent, agent);
 	do
 	{
-		game.reset();
 		write_line("\nAI vs Human GAME");
 		if (ask("Do you want to start first"))
 		{
-			game.current_player = TicTacToe::Player::X;
+			play_tictactoe(human, agent);
 		}
 		else
 		{
-			game.current_player = TicTacToe::Player::O;
-		}
-		game.draw_game();
-		while (game.state == TicTacToe::GameState::Playing)
-		{
-			if (game.current_player == TicTacToe::Player::O)
-			{
-				write_line(q_agent->reward_table->get_value(&game).to_string()); // print ai 'thoughts' on best move
-				int ai_move = q_agent->get_move(&game);
-				game.make_move(ai_move);
-			}
-			else
-			{
-				const vector<int> moves = game.get_possible_moves();
-				write_line("Your move: ");
-				write_line(to_string(moves));
-				int move;
-				while (!try_str_to_int(read_line(), move));
-				game.make_move(move);
-			}
-			game.draw_game();
+			play_tictactoe(agent, human);
 		}
 	} while (ask("Do you want to go again"));
-
-	game.reset();
 }
 
 class PongKeyAgent : public Agent
@@ -724,6 +718,7 @@ void test_pong()
 	Agent *rnd1 = new RandomAgent(0.07f);
 	Agent *rnd2 = new RandomAgent(0.07f);
 	Agent *q_agent = new QAgent(Pong::output_format);
+	Agent *d_agent = new DenseAgent(Pong::input_format, Pong::output_format, DenseAgent::Type::Small);
 
 	if (ask("Human (W/S) vs Human (Up/Dn) Game"))
 		play_pong(ws, ud);
@@ -774,6 +769,13 @@ void test_pong()
 		}
 		auto time = chrono::high_resolution_clock::now() - start;
 		write_line(to_string(pong_games) + " pong games in " + to_string(chrono::duration_cast<chrono::milliseconds>(time).count()) + "ms, " + to_string(wins) + "/" + to_string(pong_games - wins) + " rnd/QAgent wins.");
+	}
+
+	int d_agent_itr = 1000;
+	if (ask("Human (W/S) vs DenseAgent Game"))
+	{
+		d_agent->train(trainer, 2, d_agent_itr);
+		play_pong(ws, d_agent);
 	}
 
 	delete trainer;
@@ -1010,7 +1012,7 @@ void run_machine_learning_test()
 			q_agent->train(game, 2, 100000);
 			write_line("Training complete.");
 
-			play_tictactoe(q_agent);
+			test_tictactoe(q_agent);
 
 			if (ask("Evaluate QAgent and minimax against random"))
 			{
@@ -1018,6 +1020,19 @@ void run_machine_learning_test()
 				evaluate_agents_random(game, q_agent);
 			}
 		}
+
+		if (ask("Run DenseAgent test"))
+		{
+			// Test RL components
+			DenseAgent *d_agent = new DenseAgent(TicTacToe::input_format, TicTacToe::out_format, DenseAgent::Type::Small);
+
+			write_line("Training for 100,000 iterations. Please wait...");
+			d_agent->train(game, 2, 100000);
+			write_line("Training complete.");
+
+			test_tictactoe(d_agent);
+		}
+		
 
 		if (ask("Run minimax test"))
 		{
