@@ -224,7 +224,6 @@ namespace splashkit_lib
             throw std::invalid_argument("Datatype of given element is not the same as datatype of column " + dataframe_get_col_type(df, col_idx));
     }
 
-
     std::ostream &operator << (std::ostream &stream, dataframe_null &elem)
     {
         // Print a null data element
