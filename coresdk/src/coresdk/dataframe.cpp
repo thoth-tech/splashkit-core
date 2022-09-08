@@ -218,10 +218,10 @@ namespace splashkit_lib
 
         data_element_type element_type = dataframe_get_element_type(data);
 
-        if (element_type == DATA_ELEMENT_NULL || element_type == df->col_types[col_idx])
-            df->data[col_idx][row_idx] = data;
-        else
+        if (element_type != DATA_ELEMENT_NULL && element_type != df->col_types[col_idx])
             throw std::invalid_argument("Datatype of given element is not the same as datatype of column " + dataframe_get_col_type(df, col_idx));
+        
+        df->data[col_idx][row_idx] = data;
     }
 
     std::ostream &operator << (std::ostream &stream, dataframe_null &elem)

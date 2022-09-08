@@ -409,31 +409,25 @@ TEST_CASE( "Dataframe", "[dataframe]" )
     {   
         dataframe df = create_demo_dataframe();
 
-        //printf("data type; %s \n", dataframe_get_col_type(df, 1).c_str());
         SECTION( "updating int data" )
         {   
             data_element elem = 7;
             dataframe_update_cell(df, 0, 0, elem);
-            vector<data_element> extract_col = dataframe_get_col(df, 0);
-            REQUIRE( get<int>(extract_col[0]) == 7 );
+            REQUIRE( get<int>(dataframe_get_cell(df, 0, 0)) == 7 );
         }
         
         SECTION( "updating char data in cell" )
         {   
             data_element elem = 'G';
             dataframe_update_cell(df, 1, 0, elem);
-            vector<data_element> extract_col = dataframe_get_col(df, 1);
-            REQUIRE( get<char>(extract_col[0]) == 'G' );
+            REQUIRE( get<char>(dataframe_get_cell(df, 0,1)) == 'G' );
         }
 
         SECTION( "Cannot insert data of different type in cell" )
         {   
             data_element elem = "Aa";
-
             REQUIRE_THROWS_AS(dataframe_update_cell(df, 0, 0, elem), std::invalid_argument );
-            vector<data_element> extract_col = dataframe_get_col(df, 0);
-
-            REQUIRE( get<int>(extract_col[0]) == 9 );
+            REQUIRE( get<int>(dataframe_get_cell(df, 0,0)) == 9 );
         }
     }
 }
