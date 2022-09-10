@@ -242,6 +242,7 @@ namespace splashkit_lib
 		int bar_length = 50;
 		int progress = 0;						 // how many bar units achieved
 		int bar_units = iterations / bar_length; // calculates how many iterations account for each bar
+		int progress_units = iterations / 100;
 
 		cout << "Training QAgent for " << iterations << " iterations" << endl;
 		std::vector<QAgent::SelfPlay> agents;
@@ -251,7 +252,7 @@ namespace splashkit_lib
 		}
 
 		// Initialise progress bar
-		cout << "  0  % [" << string(bar_length, '_') << "]\r" << std::flush;
+		cout << "  0 % [" << string(bar_length, '_') << "]" << std::flush;
 
 		// Main loop
 		for (int i = 0; i < iterations; i++)
@@ -270,11 +271,10 @@ namespace splashkit_lib
 			game->reset();
 
 			// Draw progress bar
-			if (i % bar_units == 0)
+			if (i % progress_units == 0)
 			{
-				progress++;
-				int percentage = (progress * 100) / bar_length;
-				cout << "  " << percentage << "% [" << string(progress, '#') << '\r' << std::flush;
+				int percentage = i / progress_units;
+				cout << "\r  " << percentage << "%  [" << string((i / bar_units), '#') << std::flush;
 			}
 		}
 		cout << "\r  100%" << endl;
@@ -371,11 +371,33 @@ namespace splashkit_lib
 
 	DenseAgent::DenseAgent(InputFormat &in_format, OutputFormat &out_format, Type type)
 	{
-		model = new Model(MSE, 0.1);
-		model->add_layer(new Dense(in_format.get_out_width(), 16, None));
-		model->add_layer(new Dense(16, out_format.get_width(), None));
-		model->add_layer(new Dense(out_format.get_width(), out_format.get_width(), None));
-		model->add_layer(new Dense(out_format.get_width(), out_format.get_width(), Sigmoid));
+		int input = in_format.get_out_width();
+		int output = out_format.get_width();
+		switch (type)
+		{
+		case Type::Tiny:
+			model = new Model(MSE, 0.01);
+			model->add_layer(new Dense(input, output, Sigmoid));
+			break;
+		case Type::Small:
+			model = new Model(MSE, 0.01);
+			model->add_layer(new Dense(input, output*2, Sigmoid));
+			model->add_layer(new Dense(output*2, output, Sigmoid));
+			break;
+		case Type::Medium:
+			model = new Model(MSE, 0.1);
+			model->add_layer(new Dense(input, output*4, Sigmoid));
+			model->add_layer(new Dense(output*4, output*2, Sigmoid));
+			model->add_layer(new Dense(output*2, output, Sigmoid));
+			break;
+		case Type::Large:
+			model = new Model(MSE, 0.1);
+			model->add_layer(new Dense(input, input/2, Sigmoid));
+			model->add_layer(new Dense(input/2, output*4, Sigmoid));
+			model->add_layer(new Dense(output*4, output*2, Sigmoid));
+			model->add_layer(new Dense(output*2, output, Sigmoid));
+			break;
+		}
 	}
 
 	int DenseAgent::get_move(Game *game)
@@ -397,8 +419,9 @@ namespace splashkit_lib
 		int bar_length = 50;
 		int progress = 0;						 // how many bar units achieved
 		int bar_units = iterations / bar_length; // calculates how many iterations account for each bar
+		int progress_units = iterations / 100;
 
-		cout << "Training DenseAgent for " << iterations << " iterations" << endl;
+		cout << "Training " << _name << " for " << iterations << " iterations" << endl;
 		std::vector<DenseAgent::SelfPlay> agents;
 		for (int i = 0; i < player_count; i++)
 		{
@@ -406,7 +429,7 @@ namespace splashkit_lib
 		}
 
 		// Initialise progress bar
-		cout << "  0  % [" << string(bar_length, '_') << "]\r" << std::flush;
+		cout << "  0 % [" << string(bar_length, '_') << "]" << std::flush;
 
 		// Main loop
 		for (int i = 0; i < iterations; i++)
@@ -423,10 +446,10 @@ namespace splashkit_lib
 			game->reset();
 
 			// Draw progress bar
-			if (i % bar_units == 0)
+			if (i % progress_units == 0)
 			{
-				int percentage = ((i / bar_units) * 100) / bar_length;
-				cout << "  " << percentage << "% [" << string((i / bar_units), '#') << '\r' << std::flush;
+				int percentage = i / progress_units;
+				cout << "\r  " << percentage << "%  [" << string((i / bar_units), '#') << std::flush;
 			}
 		}
 		cout << "\r  100%" << endl;

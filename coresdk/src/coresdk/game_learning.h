@@ -475,9 +475,11 @@ namespace splashkit_lib
 		float learning_rate = 0.1f;
 		float epsilon = 0.1f;
 	public:
-		std::string name() const override { return "DenseAgent"; }
+		std::string _name = "DenseAgent";
+		std::string name() const override { return _name; }
 		enum class Type 
 		{
+			Tiny,
 			Small,
 			Medium,
 			Large
@@ -522,8 +524,8 @@ namespace splashkit_lib
 		std::vector<float> search_move(Game *game, int &best_move);
 	public:
 		MinimaxAgent(InputFormat input_format);
-
 		int get_move(Game *game) override;
+		std::string name() const override { return "Minimax"; }
 	};
 
 	class RandomAgent : public Agent
