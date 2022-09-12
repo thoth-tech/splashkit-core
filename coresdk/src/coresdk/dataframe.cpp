@@ -211,17 +211,17 @@ namespace splashkit_lib
         dataframe_delete_col(df, idx+1);
     }
 
-    void dataframe_update_cell(dataframe &df, int col_idx, int row_idx, data_element &data)
+    void dataframe_update_cell(dataframe &df, int row, int col, data_element &data)
     {
-        dataframe_validate_col_idx(df, col_idx);
-        dataframe_validate_row_idx(df, row_idx);
+        dataframe_validate_row_idx(df, row);
+        dataframe_validate_col_idx(df, col);
 
         data_element_type element_type = dataframe_get_element_type(data);
 
-        if (element_type != DATA_ELEMENT_NULL && element_type != df->col_types[col_idx])
-            throw std::invalid_argument("Datatype of given element is not the same as datatype of column " + dataframe_get_col_type(df, col_idx));
+        if (element_type != DATA_ELEMENT_NULL && element_type != df->col_types[col])
+            throw std::invalid_argument("Datatype of given element is not the same as datatype of column " + dataframe_get_col_type(df, col));
         
-        df->data[col_idx][row_idx] = data;
+        df->data[col][row] = data;
     }
 
     std::ostream &operator << (std::ostream &stream, dataframe_null &elem)

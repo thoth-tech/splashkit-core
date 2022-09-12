@@ -419,7 +419,7 @@ TEST_CASE( "Dataframe", "[dataframe]" )
         SECTION( "updating char data in cell" )
         {   
             data_element elem = 'G';
-            dataframe_update_cell(df, 1, 0, elem);
+            dataframe_update_cell(df, 0, 1, elem);
             REQUIRE( get<char>(dataframe_get_cell(df, 0,1)) == 'G' );
         }
 
