@@ -995,7 +995,12 @@ void run_machine_learning_test()
 			}
 
 			if (ask("Play " + best_agent->_name))
+			{
+				int itr = 10000; // iteration count for play testing
+				if (best_agent->total_iterations < itr)
+					best_agent->train(game, 2, itr - best_agent->total_iterations);
 				test_tictactoe(best_agent);
+			}
 		}
 
 		if (ask("Run minimax test"))

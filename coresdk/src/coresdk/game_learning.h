@@ -413,11 +413,20 @@ namespace splashkit_lib
 		virtual std::vector<int> get_input() { throw std::logic_error("get_input(): Function needs to be overridden; should return a vector following the submitted input format"); }
 	};
 
+	struct SelfPlay
+	{
+		virtual int get_move(Game *game) = 0;
+		virtual void reward(float score) = 0;
+	};
+
 	struct Agent
 	{
+		int total_iterations = 0;
 		virtual std::string name() const { return "DefaultAgentName"; }
 		virtual int get_move(Game *game) = 0;
-		virtual void train(Game *game, int player_count, int iterations) {};
+		virtual void train(Game *game, int player_count, int iterations); // default is normally enough
+	protected:
+		virtual SelfPlay *create_self_play() { return nullptr; };
 	};
 
 	/**
@@ -446,7 +455,6 @@ namespace splashkit_lib
 		float epsilon;			// Exploration rate, the probability of choosing a random move during training
 	public:
 		RewardTable *reward_table;
-		int total_iterations = 0;
 		std::string name() const override { return "QAgent"; }
 
 		QAgent(OutputFormat &out_format, float learning_rate=0.1f, float discount_factor=0.9f, float epsilon=0.1f);
@@ -459,7 +467,7 @@ namespace splashkit_lib
 		 */
 		int get_move(Game *game) override;
 
-		void train(Game *game, int player_count, int iterations) override;
+		splashkit_lib::SelfPlay *create_self_play() override;
 	};
 
 	/**
@@ -472,8 +480,10 @@ namespace splashkit_lib
 	private:
 		class SelfPlay; // Internally used class for training
 
-		float learning_rate = 0.1f;
-		float epsilon = 0.1f;
+		float learning_rate; // set in constructor
+		float epsilon = 1.0f;
+		float epsilon_decay = 0.95f;
+		float epsilon_min = 0.01f;
 	public:
 		std::string _name = "DenseAgent";
 		std::string name() const override { return _name; }
@@ -486,13 +496,12 @@ namespace splashkit_lib
 		};
 
 		Model *model;
-		int total_iterations = 0;
 
 		DenseAgent(InputFormat &in_format, OutputFormat &out_format, Type type);
 
 		int get_move(Game *game) override;
 
-		void train(Game *game, int player_count, int iterations) override;
+		splashkit_lib::SelfPlay *create_self_play() override;
 	};
 
 	/**
