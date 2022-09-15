@@ -404,4 +404,30 @@ TEST_CASE( "Dataframe", "[dataframe]" )
             REQUIRE( dataframe_get_col_type(df, 0) == names[i] );
         }
     }
+
+    SECTION( "Updating cell data" )
+    {   
+        dataframe df = create_demo_dataframe();
+
+        SECTION( "updating int data" )
+        {   
+            data_element elem = 7;
+            dataframe_update_cell(df, 0, 0, elem);
+            REQUIRE( get<int>(dataframe_get_cell(df, 0, 0)) == 7 );
+        }
+        
+        SECTION( "updating char data in cell" )
+        {   
+            data_element elem = 'G';
+            dataframe_update_cell(df, 0, 1, elem);
+            REQUIRE( get<char>(dataframe_get_cell(df, 0,1)) == 'G' );
+        }
+
+        SECTION( "Cannot insert data of different type in cell" )
+        {   
+            data_element elem = "Aa";
+            REQUIRE_THROWS_AS(dataframe_update_cell(df, 0, 0, elem), std::invalid_argument );
+            REQUIRE( get<int>(dataframe_get_cell(df, 0,0)) == 9 );
+        }
+    }
 }

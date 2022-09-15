@@ -240,6 +240,16 @@ namespace splashkit_lib
     void dataframe_update_col(dataframe &df, int idx, std::vector<data_element> &data, std::string col_name);
 
     /**
+     * Update the data in a cell
+     * 
+     * @param df        The dataframe
+     * @param row   Index of row
+     * @param col   Index of column
+     * @param data      The new data element
+     */
+    void dataframe_update_cell(dataframe &df, int row, int col, data_element &data);
+
+    /**
      * Allows data elements to be printed
      *
      * @param stream            Output stream to print to
