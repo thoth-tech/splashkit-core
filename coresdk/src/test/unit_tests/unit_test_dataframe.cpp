@@ -430,4 +430,15 @@ TEST_CASE( "Dataframe", "[dataframe]" )
             REQUIRE( get<int>(dataframe_get_cell(df, 0,0)) == 9 );
         }
     }
+
+    SECTION( "Saving as csv file" )
+    {   
+        SECTION( "Saving single column of string" )
+        {   
+            dataframe df = create_demo_dataframe();
+
+            dataframe_save_csv(df, "file.csv");
+        }
+
+    }
 }

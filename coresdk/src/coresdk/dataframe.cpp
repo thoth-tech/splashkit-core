@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdexcept>
+#include <fstream>
 
 #include "dataframe.h"
 
@@ -238,6 +239,12 @@ namespace splashkit_lib
         return stream;
     }
 
+    std::ofstream &operator << (std::ofstream &stream, data_element &data)
+    {
+        std::visit([&stream](auto&& d) { stream << d; }, data);
+        return stream;
+    }
+
     void dataframe_display(dataframe &df)
     {
         // Display column names
@@ -268,5 +275,33 @@ namespace splashkit_lib
         // TODO
         dataframe df = new _dataframe_data();
         return df;
+    }
+
+    void dataframe_save_csv(dataframe &df, std::string filename)
+    {        
+        std::ofstream myFile(filename);
+
+        int numCols, numRows;
+        numCols = dataframe_num_cols(df);
+        numRows = dataframe_num_rows(df);
+
+        for (int i = 0; i < numCols; i++)
+        {
+            myFile << dataframe_get_col_name(df, i);
+            if(i != numCols - 1) myFile << ",";
+        }
+        myFile << "\n";
+        
+        for (int i = 0; i < numRows; i++)
+        {   
+            for (int j = 0; j < numCols; j++)
+            {
+                data_element cell = dataframe_get_cell(df, i, j);
+                myFile << cell;
+                if(j != numCols - 1) myFile << ",";
+            }  
+            myFile << "\n";
+        }
+        myFile.close();
     }
 }

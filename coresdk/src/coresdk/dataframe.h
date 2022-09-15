@@ -265,6 +265,8 @@ namespace splashkit_lib
      */
     void dataframe_display(dataframe &df);
 
+    std::ofstream &operator << (std::ofstream &stream, data_element &data);
+
     /**
      * Displays the contents of a single row in a dataframe
      *
@@ -291,6 +293,14 @@ namespace splashkit_lib
      * @return dataframe   The new dataframe containing the file's data.
      */
     dataframe dataframe_read_csv(std::string filepath, char sep = ',', char line_break = '\n', bool header = true);
+
+    /**
+     * @brief 
+     * 
+     * @param df 
+     */
+    void dataframe_save_csv(dataframe &df, std::string filename);
+
 }
 
 #endif
