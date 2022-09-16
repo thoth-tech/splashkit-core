@@ -295,9 +295,10 @@ namespace splashkit_lib
     dataframe dataframe_read_csv(std::string filepath, char sep = ',', char line_break = '\n', bool header = true);
 
     /**
-     * @brief 
+     * Save dataframe as csv file
      * 
-     * @param df 
+     * @param df            Datframe
+     * @param filename      Name of file
      */
     void dataframe_save_csv(dataframe &df, std::string filename);
 
