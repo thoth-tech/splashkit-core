@@ -95,18 +95,8 @@ namespace splashkit_lib
         
         return (*p == 0);
     }
-
-    int convert_to_integer(const string &text)
-    {
-        return std::stoi( text );
-    }
-
-    double convert_to_double(const string &text)
-    {
-        return std::stod( text );
-    }
     
-    bool is_char(const string &text)
+     bool is_char(const string &text)
     {   
         string s = trim(text);
         
@@ -120,4 +110,28 @@ namespace splashkit_lib
         return s == "true" || s == "t" || s == "false" || s == "f" || s == "0" || s == "1"; 
     }
     
+
+    int convert_to_integer(const string &text)
+    {
+        return std::stoi( text );
+    }
+
+    double convert_to_double(const string &text)
+    {
+        return std::stod( text );
+    }
+    
+   //https://stackoverflow.com/questions/7352099/stdstring-to-char
+    char convert_to_char(const string &text)
+    {
+        const char *c = text.c_str();
+        std::cout << c;
+        return 0;
+    }
+    
+
+    bool convert_to_bool(const string &text)
+    {   
+        return text == "true"|| text == "t" || text == "1";
+    }
 }
