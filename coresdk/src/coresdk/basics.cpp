@@ -135,3 +135,4 @@ namespace splashkit_lib
         return text == "true"|| text == "t" || text == "1";
     }
 }
+
