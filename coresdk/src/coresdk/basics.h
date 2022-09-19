@@ -54,14 +54,6 @@ namespace splashkit_lib
     bool is_integer(const string &text);
 
     /**
-     * Checks if a string contains a float value.
-     *
-     * @param  text The text to check.
-     * @return      True if the text contains a number (and only a number).
-     */
-    bool is_float(const string &text);
-
-    /**
      * Checks if a string contains a number.
      *
      * @param  text The text to check.
@@ -76,7 +68,31 @@ namespace splashkit_lib
      * @return      True if the text contains a number (and only a number).
      */
     bool is_number(const string &text);
-
+    
+     /**
+     * Checks if a string contains a float value.
+     *
+     * @param  text The text to check.
+     * @return      True if the text contains a number (and only a number).
+     */
+    bool is_float(const string &text);
+    
+    /**
+     * Checks if a string contains a character.
+     *
+     * @param  text The text to check.
+     * @return      True if the text contains a character (and only a character).
+     */
+    bool is_char(const string &text);
+    
+    /**
+     * Checks if the string is of datatype boolean.
+     *
+     * @param  text The text to check.
+     * @return      True if the text contains string of datatype boolean.
+     */
+    bool is_bool(const string &text);
+   
     /**
      * Convert the passed in string into an integer. This can fail in an error if
      * the value is not an integer, consider using `is_integer` to check before
@@ -97,22 +113,25 @@ namespace splashkit_lib
      */
     double convert_to_double(const string &text);
     
-    /**
-     * Checks if a string contains a character.
+     /**
+     * Convert the passed in string into a char. This can fail in an error if
+     * the value is not a character, consider using `is_char` to check before
+     * converting a string.
      *
-     * @param  text The text to check.
-     * @return      True if the text contains a character (and only a character).
+     * @param  text The text to convert.
+     * @return      The char value read from the text.
      */
-    bool is_char(const string &text);
+    char convert_to_char(const string &text);
     
     /**
-     * Checks if the string is of datatype boolean.
+     * Convert the passed in string into a boolean. This can fail in an error if
+     * the value is not a boolean, consider using `is_bool` to check before
+     * converting a string.
      *
-     * @param  text The text to check.
-     * @return      True if the text contains string of datatype boolean.
+     * @param  text The text to convert.
+     * @return      The char value read from the text.
      */
-    bool is_bool(const string &text);
-   
+    bool convert_to_bool(const string &text);
     
 }
 
