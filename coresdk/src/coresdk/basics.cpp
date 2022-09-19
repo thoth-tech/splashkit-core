@@ -120,10 +120,9 @@ namespace splashkit_lib
         return std::stod( text );
     }
     
-   //https://stackoverflow.com/questions/7352099/stdstring-to-char
     char convert_to_char(const string &text)
     {
-        const char *c = text.c_str();
+        char c = text.front();
         std::cout << c;
         return 0;
     }
