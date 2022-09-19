@@ -110,7 +110,6 @@ namespace splashkit_lib
         return s == "true" || s == "t" || s == "false" || s == "f" || s == "0" || s == "1"; 
     }
     
-
     int convert_to_integer(const string &text)
     {
         return std::stoi( text );
@@ -128,7 +127,6 @@ namespace splashkit_lib
         std::cout << c;
         return 0;
     }
-    
 
     bool convert_to_bool(const string &text)
     {   
