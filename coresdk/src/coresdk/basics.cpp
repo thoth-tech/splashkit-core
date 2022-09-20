@@ -123,12 +123,12 @@ namespace splashkit_lib
     char convert_to_char(const string &text)
     {
         char c = text.front();
-        std::cout << c;
-        return 0;
+        return c
     }
 
     bool convert_to_bool(const string &text)
     {   
-        return text == "true"|| text == "t" || text == "1";
+        string s = to_lowercase(trim(text));
+        return s == "true" || s == "t" || s == "1"; 
     }
 }
