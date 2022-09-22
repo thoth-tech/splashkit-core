@@ -33,6 +33,7 @@ void setup_tests()
     add_test("Audio", run_audio_tests);
     add_test("Bundles", run_bundle_test);
     add_test("Camera", run_camera_test);
+    add_test("Collisions Test", run_collisions_test);
     add_test("Database", run_database_tests);
     add_test("Geometry", run_geometry_test);
     add_test("Graphics", run_graphics_test);
