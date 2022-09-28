@@ -123,7 +123,7 @@ namespace splashkit_lib
     char convert_to_char(const string &text)
     {
         char c = text.front();
-        return c
+        return c;
     }
 
     bool convert_to_bool(const string &text)
