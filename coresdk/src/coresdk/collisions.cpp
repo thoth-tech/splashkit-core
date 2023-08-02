@@ -336,7 +336,8 @@ namespace splashkit_lib
         {
             return false;
         }
-        else if (sprite_collision_kind(s1) == AABB_COLLISIONS && sprite_collision_kind(s2) == AABB_COLLISIONS)
+        
+        if (sprite_collision_kind(s1) == AABB_COLLISIONS && sprite_collision_kind(s2) == AABB_COLLISIONS)
         {
             return true;
         }
