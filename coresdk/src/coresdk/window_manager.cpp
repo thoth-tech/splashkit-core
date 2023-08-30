@@ -128,7 +128,7 @@ namespace splashkit_lib
     void refresh_window(window wind, unsigned int target_fps)
     {
         refresh_window(wind);
-        delay_for_target_fps(60);
+        delay_for_target_fps(target_fps);
     }
 
     void clear_window(window wind, color clr)
