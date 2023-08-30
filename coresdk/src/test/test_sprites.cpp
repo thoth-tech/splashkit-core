@@ -18,7 +18,7 @@ using namespace splashkit_lib;
 
 void run_sprite_test()
 {
-    sprite sprt, s2;
+    sprite sprt, s2, s3, s4;
     triangle tri, init_tri;
     triangle tri_b, init_tri_b;
     rectangle r;
@@ -37,6 +37,17 @@ void run_sprite_test()
     sprite_set_move_from_anchor_point(s2, true);
     sprite_set_x(s2, 100);
     sprite_set_y(s2, 100);
+
+    // S-S AABB collision test: 2 sprites initialise and set collision kind
+    s3 = create_sprite(bitmap_named("rocket_sprt.png"));
+    s4 = create_sprite(bitmap_named("rocket_sprt.png"));
+    sprite_set_collision_kind(s3,AABB_COLLISIONS);
+    sprite_set_collision_kind(s4,AABB_COLLISIONS);
+    sprite_set_rotation(s3,70);
+    sprite_set_x(s3,100);
+    sprite_set_x(s4,120);
+    sprite_set_y(s3,300);
+    sprite_set_y(s4,350);
 
     r = rectangle_from(400, 100, 100, 50);
     q = quad_from(r);
@@ -74,6 +85,13 @@ void run_sprite_test()
                 sprite_set_dy(sprt, sprite_dy(sprt) + 0.1);
         }
 
+        // S-S AABB Collision addition: move new sprites
+        if (key_typed(A_KEY))
+            sprite_set_x(s3, sprite_x(s3) - 4);
+
+        if (key_typed(D_KEY))
+            sprite_set_x(s3, sprite_x(s3) + 4);
+
         if ( key_typed(NUM_0_KEY) ) sprite_set_rotation(sprt, 0);
         if ( key_typed(NUM_9_KEY) ) sprite_set_rotation(sprt, 45);
 
@@ -97,6 +115,8 @@ void run_sprite_test()
 
         draw_sprite(sprt);
         draw_sprite(s2);
+        draw_sprite(s3);
+        draw_sprite(s4);
         
         if (sprite_rectangle_collision(sprt, r))
 		{
@@ -106,6 +126,8 @@ void run_sprite_test()
 		{
             draw_rectangle(COLOR_PURPLE, r);
 		}
+
+        
 
         draw_bitmap("ufo.png", 400, 300);
 
@@ -131,6 +153,13 @@ void run_sprite_test()
 		{
             draw_circle(COLOR_RED, sprite_collision_circle(s2));
 		}
+
+        // S-S AABB collision addition: Sprite collision test
+        if (sprite_collision(s3,s4))
+        {
+            draw_rectangle(COLOR_BLACK,sprite_collision_rectangle(s3));
+            draw_rectangle(COLOR_BLACK,sprite_collision_rectangle(s4));
+        }
 
         draw_rectangle(COLOR_GREEN, sprite_collision_rectangle(sprt));
 
