@@ -163,7 +163,7 @@ namespace splashkit_lib
 
     }
 
-    void collide_circle_circle(sprite s, const circle c)
+    void collide_circle_circle(sprite s, const circle &c)
     {
         line hit_line;
         vector_2d out_vec, mvmt, normal, col_vec, hit_pt;   // hit_pt was originally a point_2d variable
@@ -215,7 +215,7 @@ namespace splashkit_lib
     }
 
     //-- TODO: bounds based checking, need VectorIntoShape...
-    void collide_circle_rectangle(sprite s, const rectangle rect, bool bounds)
+    void collide_circle_rectangle(sprite s, const rectangle &rect, bool bounds)
     {
         int hit_idx;
         vector<line> lines;
@@ -250,12 +250,12 @@ namespace splashkit_lib
             move_sprite(s, prop);           //-- TODO: Allow proportion of move to be passed in (overload)... then do velocity based on prop * pct
     }
 
-    void collide_circle_rectangle(sprite s, const rectangle rect)
+    void collide_circle_rectangle(sprite s, const rectangle &rect)
     {
         collide_circle_rectangle(s, rect, false);
     }
 
-    void collide_circle_triangle(sprite s, const triangle tri)
+    void collide_circle_triangle(sprite s, const triangle &tri)
     {
         vector<line> lines;
 
