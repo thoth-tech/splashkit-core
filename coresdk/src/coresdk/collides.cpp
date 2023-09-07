@@ -131,7 +131,7 @@ namespace splashkit_lib
         else
         {
             //-- move s2 out
-            n = vector_out_of_circle_from_circle(c1,c2, s2_vel);
+            n = vector_out_of_circle_from_circle(c2,c1, s2_vel);
             sprite_set_x(s2, sprite_x(s2) + n.x);
             sprite_set_y(s2, sprite_y(s2) + n.y);
         }
@@ -149,7 +149,7 @@ namespace splashkit_lib
         a1 = dot_product(s1_vel, n);
         a2 = dot_product(s2_vel, n);
 
-        //-- optimised P (momentum) = 2(a1 - a2) / (m1 + m2)      //// i believe, this is an inelastic collision, where both sprites will combine their momentum
+        //-- optimised P (momentum) = 2(a1 - a2) / (m1 + m2) 
         opt_p = (2.0 * (a1-a2)) / (s1_mass + s2_mass);
 
         //-- now find out the resultant vectors
@@ -266,11 +266,7 @@ namespace splashkit_lib
 
     void collide_circle_triangle(sprite s, const triangle &tri)
     {
-        vector<line> lines;
-
-        lines = lines_from(tri);
-
-        collide_circle_lines(s, lines);
+        collide_circle_lines(s, lines_from(tri));
     }
 
 }

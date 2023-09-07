@@ -487,6 +487,15 @@ namespace splashkit_lib
      */
     bool triangle_line_collision(const triangle &tri, const line &ln);
 
+    /**
+     * Check if circle and lines in collision
+     * 
+     * @param c circle to check
+     * @param lines lines to check
+     * 
+     * @attribute class circle
+     * @attribute method circle_lines_collision
+     */
     bool circle_lines_collision(const circle &c, const vector<line> lines);
     
     /**
@@ -500,6 +509,15 @@ namespace splashkit_lib
      */
     bool circle_triangle_collision(const circle &c, const triangle &tri);
 
+    /**
+     * Check if circle and triangle in collision
+     * 
+     * @param c circle to check
+     * @param rect rectangle to check
+     * 
+     * @attribute class circle
+     * @attribute method circle_rectangle_collision
+     */
     bool circle_rectangle_collision(const circle &c, const rectangle &rect);
 
 }
