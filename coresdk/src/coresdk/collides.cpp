@@ -10,6 +10,7 @@
 #include "collides.h"
 #include "sprites.h"
 #include "utility_functions.h"
+#include "graphics.h"
 
 using std::function;
 
@@ -45,9 +46,10 @@ namespace splashkit_lib
         np_x = dot_pod * to_line.x;                                                 
         np_y = dot_pod * to_line.y;                                                 
 
-        // reverse the velocity towards closest point, needs check if it works
-        s_vel.x += 2 * np_x;                                                        
-        s_vel.y += 2 * np_y;
+        // reverse the velocity towards closest point. Pascal source used addition, this has been inverted.
+        // 2x value, because need to remove original velocity as well
+        s_vel.x -= 2 * np_x;                                                        
+        s_vel.y -= 2 * np_y;
         sprite_set_velocity(s, s_vel);
 
         //draw_line(COLOR_YELLOW, center_point(s).x, center_point(s).y, center_point(s).x + (s_vel.x * 10), center_point(s).y + (s_vel.y * 10));
@@ -197,12 +199,13 @@ namespace splashkit_lib
         
         // pascal source has some function overloads not existing now, NEEDS TO BE CHECKED IF WORKS CORRECTLY
         hit_pt = vector_add(vector_to(c.center), vector_multiply(col_vec, float(c.radius + 1.42)));
-        hit_line = line_from(point_offset_from_origin(vector_add(hit_pt, vector_multiply(normal, 100))), point_offset_from_origin(vector_multiply(normal, -200)));
-
+        hit_line = line_from(point_offset_from_origin(vector_add(hit_pt, vector_multiply(normal, 100))), vector_multiply(normal, -100));
+        
         //draw_sprite(s);
-        //draw_line(hit_line);
+        //draw_circle(COLOR_YELLOW, hit_pt.x, hit_pt.y, 2);
+        //draw_line(COLOR_YELLOW, hit_line);
         //refresh_screen(1);
-
+ 
         _collide_circle_line(s, hit_line);
 
         //-- do part velocity
@@ -225,6 +228,11 @@ namespace splashkit_lib
         if (s == NULL)
             return;
 
+        collide_circle_lines(s, lines_from(rect));
+
+        // function vector_over_lines_from_circle is not accessible, so substituted as above.
+
+        /*
         mvmt = sprite_velocity(s);
         hit_idx = -1;
 
@@ -248,6 +256,7 @@ namespace splashkit_lib
 
         if (prop > 0)
             move_sprite(s, prop);           //-- TODO: Allow proportion of move to be passed in (overload)... then do velocity based on prop * pct
+        */
     }
 
     void collide_circle_rectangle(sprite s, const rectangle &rect)

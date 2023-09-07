@@ -281,6 +281,17 @@ namespace splashkit_lib
     vector_2d vector_out_of_rect_from_circle(const circle &c, const rectangle &rect, const vector_2d &velocity);
 
     /**
+     *  Returns a vector that can be used to move a circle back out of a triangle,
+     *  given that the circle is moving at the specified velocity.
+     *
+     * @param  c        The circle that is moving
+     * @param  tri    The area you wan to move the circle out of
+     * @param  velocity The circle's velocity
+     * @return          A vector that will move the circle out of the triangle
+     */
+    vector_2d vector_out_of_triangle_from_circle(const circle &c, const triangle &tri, const vector_2d &velocity);
+
+    /**
      * Casts a ray in a heading and returns true is it intersects with a line
      *
      * @param  from_pt The origin of the ray
