@@ -148,9 +148,11 @@ namespace splashkit_lib
         //-- along n, by using dot product.
         a1 = dot_product(s1_vel, n);
         a2 = dot_product(s2_vel, n);
+        //LOG(DEBUG) << "VEL: " << a1 << "," << a2;
 
         //-- optimised P (momentum) = 2(a1 - a2) / (m1 + m2) 
         opt_p = (2.0 * (a1-a2)) / (s1_mass + s2_mass);
+        //LOG(DEBUG) << "OPT_P: " << opt_p;
 
         //-- now find out the resultant vectors
         //-- Local r1% = c1.v - optimisedP * mass2 * n
@@ -165,12 +167,102 @@ namespace splashkit_lib
 
     }
 
+    // alternate sprite collision effects, has in/elastic coefficient
+    void _collide_sprites_effects(sprite s1, sprite s2, const double &elas)
+    {
+
+        circle c1,c2;
+        float col_normal_angle, a1, a2, p1, p2, inelas_mag, s1_mass, s2_mass, s1_mass_perc, s2_mass_perc;
+        vector_2d n, s1_vel, s2_vel, rel_vel, out_vec;
+
+        s1_mass = sprite_mass(s1);
+        s2_mass = sprite_mass(s2);
+        s1_vel = sprite_velocity(s1);
+        s2_vel = sprite_velocity(s2);
+        rel_vel = vector_subtract(s1_vel,s2_vel);  // relative velocity between s1 and s2, from s1 pov
+
+        // center to center vector
+        n = unit_vector(vector_from_to(s1,s2));
+
+        c1 = sprite_collision_circle(s1);
+        c2 = sprite_collision_circle(s2);
+        out_vec = vector_out_of_circle_from_circle(c1, c2, rel_vel);    // calculate out of collision vector based on total velocity
+
+        s1_mass_perc = s1_mass / (s1_mass + s2_mass);   // s1 fraction of total mass
+        s2_mass_perc = 1 - s1_mass_perc;            // remainder value from 100%, could differ due to rounding
+        //LOG(DEBUG) << "MASS: " << s1_mass_perc << "," << s2_mass_perc; 
+
+        // move each sprite based on their inverse mass percentage
+        move_sprite(s1, vector_multiply(out_vec, s2_mass_perc));
+        move_sprite(s2, vector_multiply(out_vec, -s1_mass_perc));   // negative mult for opposite direction of vector
+
+        // magnitude along center to center vector
+        a1 = dot_product(s1_vel, n) / vector_magnitude(n);
+        a2 = dot_product(s2_vel, n) / vector_magnitude(n);
+        //LOG(DEBUG) << "VEL: " << a1 << "," << a2;
+        
+        // remove original velocity along vector
+        sprite_add_to_velocity(s1, vector_multiply(n, -a1));
+        sprite_add_to_velocity(s2, vector_multiply(n, -a2));
+        
+        // momentum along vector
+        p1 = a1 * s1_mass;
+        p2 = a2 * s2_mass;
+        //LOG(DEBUG) << "P: " << p1 << ":" << p2;
+
+        // elastic section, sprite momentum along vector is traded
+        sprite_add_to_velocity(s1, vector_multiply(n, p2 / s1_mass * elas));    // takes s2 momentum
+        sprite_add_to_velocity(s2, vector_multiply(n, p1 / s2_mass * elas));    // takes s1 momentum
+
+        // inelastic section, momentum is combined
+        inelas_mag = (p1 + p2) / (s1_mass + s2_mass) * (1 - elas);
+        sprite_add_to_velocity(s1, vector_multiply(n, inelas_mag));
+        sprite_add_to_velocity(s2, vector_multiply(n, inelas_mag));
+        //LOG(DEBUG) << "ELAS: " << inelas_mag;
+
+    }
+
+    // test overload function behaviours
+    void collide_circles(sprite s1, sprite s2, const double &elas)
+    {
+
+        float s1_mass, s2_mass;
+
+
+        s1_mass = sprite_mass(s1);
+        s2_mass = sprite_mass(s2);
+        
+        // if only one sprite is 0 mass, treat it as static, and use collide_circle_circle
+        if (s1_mass <= 0 && s2_mass <= 0)
+        {
+            LOG(WARNING) << "Both collision sprites have 0 mass... ensure at least one is greater than 0";
+            return;
+        }
+
+        if (s1_mass <= 0)
+            collide_circle_circle(s2, sprite_collision_circle(s1));     // s1 no mass, receives no effect
+        else if (s2_mass <= 0)
+            collide_circle_circle(s1, sprite_collision_circle(s2));     // s2 no mass, receives no effect
+        else
+        {
+            if (elas < 0 && elas > 1)
+            {
+                LOG(WARNING) << "Collision elasticity coefficient not between 0 to 1";
+                return;
+            }
+
+            _collide_sprites_effects(s1, s2, elas);
+        }
+        
+    }
+
     void collide_circle_circle(sprite s, const circle &c)
     {
         line hit_line;
-        vector_2d out_vec, mvmt, normal, col_vec, hit_pt;   // hit_pt was originally a point_2d variable
+        vector_2d out_vec, mvmt, normal, col_vec, hit_pt, centers_vector;   // hit_pt was originally a point_2d variable
         float mvmt_mag, prop;
         point_2d s_center;
+        double col_mvmt_angle, overlap;
         
 
         if (s == NULL)
@@ -180,6 +272,7 @@ namespace splashkit_lib
         s_center = center_point(s);
         mvmt = sprite_velocity(s);
         
+        // re-consider this section, if the circle shape can initiate a collision on a static sprite
         //-- A not moving sprite cannot "collide" as it is stationary
         //-- We are then unabel to determine where the collision did
         //-- occur...
@@ -189,48 +282,74 @@ namespace splashkit_lib
             return;
         }
 
-        out_vec = vector_out_of_circle_from_circle(sprite_collision_circle(s), c, mvmt);
-        //-- Back out of circle
-        move_sprite(s, out_vec);
-
-        //-- Normal of the collision...
-        col_vec = unit_vector(vector_point_to_point(c.center, center_point(s)));
-        normal = vector_normal(col_vec);
+        centers_vector = vector_point_to_point(s_center,c.center);              // get vector from sprite to circle centers
+        col_mvmt_angle = vector_angle_between(centers_vector, mvmt);
+        //LOG(DEBUG) << col_mvmt_angle;
         
-        // pascal source has some function overloads not existing now, NEEDS TO BE CHECKED IF WORKS CORRECTLY
-        hit_pt = vector_add(vector_to(c.center), vector_multiply(col_vec, float(c.radius + 1.42)));
-        hit_line = line_from(point_offset_from_origin(vector_add(hit_pt, vector_multiply(normal, 100))), vector_multiply(normal, -100));
-        
-        //draw_sprite(s);
-        //draw_circle(COLOR_YELLOW, hit_pt.x, hit_pt.y, 2);
-        //draw_line(COLOR_YELLOW, hit_line);
-        //refresh_screen(1);
- 
-        _collide_circle_line(s, hit_line);
+        //draw_line(COLOR_WHITE, line_from(s_center,vector_multiply(centers_vector,10)));
+        //draw_line(COLOR_RED, line_from(s_center,vector_multiply(mvmt,10)));
 
-        //-- do part velocity
-        mvmt_mag = vector_magnitude(mvmt);
-        prop = vector_magnitude(out_vec) / mvmt_mag;    //-- proportion of move "undone" by back out
+        // if sprite velocity angle is perpendicular or facing away from collision, do not bounce
+        if (col_mvmt_angle >= 90 || col_mvmt_angle <= -90)
+        {
+            // for circle, absolute distance between centers subtract position distance between objects
+            overlap = (c.radius + sprite_collision_circle(s).radius) - vector_magnitude(centers_vector);
+            //LOG(DEBUG) << overlap;
 
-        if (prop > 0)
-            move_sprite(s, prop);       //-- TODO: Allow proportion of move to be passed in (overload)... then do velocity based on prop * pct
+            // out vector along centers, magnitude based on distance under total radius. Rectangles need vector based on edge perp
+            out_vec = vector_invert(vector_multiply(unit_vector(centers_vector), overlap));
+
+            //draw_line(COLOR_WHITE, line_from(s_center,out_vec));
+            move_sprite(s,out_vec);
+        }
+        else
+        { 
+            out_vec = vector_out_of_circle_from_circle(sprite_collision_circle(s), c, mvmt);
+            //-- Back out of circle
+            move_sprite(s, out_vec);
+
+            //-- Normal of the collision...
+            col_vec = unit_vector(vector_point_to_point(c.center, center_point(s)));
+            normal = vector_normal(col_vec);
+            
+            hit_pt = vector_add(vector_to(c.center), vector_multiply(col_vec, float(c.radius + 1.42)));
+            hit_line = line_from(point_offset_from_origin(vector_add(hit_pt, vector_multiply(normal, 100))), vector_multiply(normal, -100));
+            
+            //draw_sprite(s);
+            //draw_circle(COLOR_YELLOW, hit_pt.x, hit_pt.y, 2);
+            //draw_line(COLOR_YELLOW, hit_line);
+    
+            _collide_circle_line(s, hit_line);
+
+            //-- do part velocity
+            mvmt_mag = vector_magnitude(mvmt);
+            prop = vector_magnitude(out_vec) / mvmt_mag;    //-- proportion of move "undone" by back out
+
+            if (prop > 0)
+                move_sprite(s, prop);       //-- TODO: Allow proportion of move to be passed in (overload)... then do velocity based on prop * pct
+           
+        }
+
+        // refresh_screen(1);
         
     }
 
     //-- TODO: bounds based checking, need VectorIntoShape...
     void collide_circle_rectangle(sprite s, const rectangle &rect, bool bounds)
     {
+        /*
         int hit_idx;
         vector<line> lines;
         vector_2d out_vec, mvmt;
         float mvmt_mag, prop;
+        */
 
         if (s == NULL)
             return;
 
         collide_circle_lines(s, lines_from(rect));
 
-        // function vector_over_lines_from_circle is not accessible, so substituted as above.
+        // ported code below needs fixing, substituted with another function above.
 
         /*
         mvmt = sprite_velocity(s);

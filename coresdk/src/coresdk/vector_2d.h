@@ -324,6 +324,16 @@ namespace splashkit_lib
      */
     bool vector_in_rect(const vector_2d &v, const rectangle &rect);
 
+    /**
+     * Returns angle between vector directions in degrees from v1 to v2
+     * value is only positive, does not differentiate left to right of vector
+     *
+     * @param  v1   starting vector line to measure from
+     * @param  v2   end vector line to measure angle to
+     * @return      angle between vector direction in degrees 0 - 180 range
+     */
+    double vector_angle_between(const vector_2d &v1, const vector_2d &v2);
+
 }
 
 #endif /* vector_2d_h */

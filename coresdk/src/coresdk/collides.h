@@ -81,7 +81,7 @@ namespace splashkit_lib
      * Sprite circle to sprite circle collision effect
      * Moves faster sprite out of collision
      * Sprites need positive mass values
-     * An inelastic collision is calculated, combining momentum
+     * 
      *
      * @param s1            The first sprite to collide with
      * @param s2            The second sprite to collide with
@@ -92,6 +92,22 @@ namespace splashkit_lib
      * 
      */
     void collide_circles(sprite s1, sprite s2);
+
+    /**
+     * Sprite circle to sprite circle collision effect
+     * test function behaviour
+     * needs more testing, debugging to verify effects
+     *
+     * @param s1            The first sprite to collide with
+     * @param s2            The second sprite to collide with
+     * @param elas          0-1 value coefficient for elastic to inelastic result
+     *
+     * @attribute class collide
+     * @attribute method circles
+     *
+     * 
+     */
+    void collide_circles(sprite s1, sprite s2, const double &elas);
 
 }
 #endif /* collides_h*/

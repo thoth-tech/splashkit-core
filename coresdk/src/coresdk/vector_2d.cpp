@@ -115,6 +115,12 @@ namespace splashkit_lib
         }
     }
 
+    double vector_angle_between(const vector_2d &v1, const vector_2d &v2)
+    {
+        // based on dot product formula
+        return rad_to_deg(acos(dot_product(v1, v2) / (vector_magnitude(v1) * vector_magnitude(v2))));
+    }
+
     double angle_between(const vector_2d &v1, const vector_2d &v2)
     {
         return vector_angle( vector_subtract(v2, v1) );
