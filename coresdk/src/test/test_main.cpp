@@ -53,6 +53,7 @@ void setup_tests()
     add_test("UDP Networking Test", run_udp_networking_test);
     add_test("TCP Networking Test", run_tcp_networking_test);
     add_test("Twitter Test", run_twitter_test);
+    add_test("Circle Collide Test", run_circle_collide_test);
 }
 
 int main()
