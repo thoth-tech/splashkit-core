@@ -118,7 +118,7 @@ namespace splashkit_lib
         // No intersection found
         return false;
     }
-
+    
     bool _collision_within_bitmap_images_with_translation(bitmap bmp1, int c1, const matrix_2d& matrix1, bitmap bmp2, int c2, const matrix_2d& matrix2)
     {
         return _step_through_pixels(bitmap_cell_width(bmp1), bitmap_cell_height(bmp1), matrix1,
@@ -337,6 +337,11 @@ namespace splashkit_lib
             return false;
         }
         
+        if (sprite_collision_kind(s1) == AABB_COLLISIONS && sprite_collision_kind(s2) == AABB_COLLISIONS)
+        {
+            return true;
+        }
+        
         if (sprite_collision_kind(s1) == AABB_COLLISIONS)
         {
             return sprite_rectangle_collision(s2, sprite_collision_rectangle(s1));
@@ -385,5 +390,38 @@ namespace splashkit_lib
     {
         return bitmap_collision(bmp1, 0, translation_matrix(x1, y1), bmp2, 0, translation_matrix(x2, y2));
     }
+
+    bool triangle_line_collision(const triangle &tri, const line &ln)
+    {
+        return line_intersects_lines(ln, lines_from(tri)) || point_in_triangle(ln.start_point, tri) || point_in_triangle(ln.end_point, tri);
+    }
+
+    bool circle_lines_collision(const circle &c, const vector<line> lines)
+    {
+        point_2d pt;
+
+        for (int i = 0; i < lines.size(); i++)
+        {
+            pt = closest_point_on_line_from_circle(c, lines[i]);
+
+            if (point_point_distance(c.center, pt) <= c.radius)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool circle_triangle_collision(const circle &c, const triangle &tri)
+    {
+        return circle_lines_collision(c, lines_from(tri)) || point_in_triangle(c.center, tri);
+    }
+
+    bool circle_rectangle_collision(const circle &c, const rectangle &rect)
+    {
+        return circle_lines_collision(c, lines_from(rect)) || point_in_rectangle(c.center, rect);
+    
+    }
+
 
 }

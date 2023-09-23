@@ -115,6 +115,12 @@ namespace splashkit_lib
         }
     }
 
+    double vector_angle_between(const vector_2d &v1, const vector_2d &v2)
+    {
+        // based on dot product formula
+        return rad_to_deg(acos(dot_product(v1, v2) / (vector_magnitude(v1) * vector_magnitude(v2))));
+    }
+
     double angle_between(const vector_2d &v1, const vector_2d &v2)
     {
         return vector_angle( vector_subtract(v2, v1) );
@@ -518,6 +524,12 @@ namespace splashkit_lib
     {
         int max_idx;
         return vector_over_lines_from_circle(c, lines_from(rect), velocity, max_idx);
+    }
+
+    vector_2d vector_out_of_triangle_from_circle(const circle &c, const triangle &tri, const vector_2d &velocity)
+    {
+        int max_idx;
+        return vector_over_lines_from_circle(c, lines_from(tri), velocity, max_idx);
     }
 
     vector_2d vector_from_point_to_rect(const point_2d &pt, const rectangle &rect)
