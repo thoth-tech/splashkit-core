@@ -476,5 +476,49 @@ namespace splashkit_lib
      */
     bool bitmap_collision(bitmap bmp1, double x1, double y1, bitmap bmp2, double x2, double y2);
 
+    /**
+     * Check if triangle lines collision with line
+     * 
+     * @param tri triangle to check
+     * @param ln line to check
+     * 
+     * @attribute class triangle
+     * @attribute method triangle_line_collision
+     */
+    bool triangle_line_collision(const triangle &tri, const line &ln);
+
+    /**
+     * Check if circle and lines in collision
+     * 
+     * @param c circle to check
+     * @param lines lines to check
+     * 
+     * @attribute class circle
+     * @attribute method circle_lines_collision
+     */
+    bool circle_lines_collision(const circle &c, const vector<line> lines);
+    
+    /**
+     * Check if circle and triangle in collision
+     * 
+     * @param c circle to check
+     * @param tri triangle to check
+     * 
+     * @attribute class circle
+     * @attribute method circle_triangle_collision
+     */
+    bool circle_triangle_collision(const circle &c, const triangle &tri);
+
+    /**
+     * Check if circle and triangle in collision
+     * 
+     * @param c circle to check
+     * @param rect rectangle to check
+     * 
+     * @attribute class circle
+     * @attribute method circle_rectangle_collision
+     */
+    bool circle_rectangle_collision(const circle &c, const rectangle &rect);
+
 }
 #endif /* collisions_h */

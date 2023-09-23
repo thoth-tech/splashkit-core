@@ -520,6 +520,12 @@ namespace splashkit_lib
         return vector_over_lines_from_circle(c, lines_from(rect), velocity, max_idx);
     }
 
+    vector_2d vector_out_of_triangle_from_circle(const circle &c, const triangle &tri, const vector_2d &velocity)
+    {
+        int max_idx;
+        return vector_over_lines_from_circle(c, lines_from(tri), velocity, max_idx);
+    }
+
     vector_2d vector_from_point_to_rect(const point_2d &pt, const rectangle &rect)
     {
         double px, py;
