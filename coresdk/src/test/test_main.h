@@ -36,5 +36,7 @@ void run_tcp_networking_test();
 void run_twitter_test();
 void run_terminal_test();
 void run_logging_test();
+void run_ui_test();
+// void run_microui();
 
 #endif /* test_main_h */

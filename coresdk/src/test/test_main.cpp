@@ -54,6 +54,8 @@ void setup_tests()
     add_test("UDP Networking Test", run_udp_networking_test);
     add_test("TCP Networking Test", run_tcp_networking_test);
     add_test("Twitter Test", run_twitter_test);
+    add_test("UI Test", run_ui_test);
+    // add_test("MicroUI", run_microui);
 }
 
 int main()
