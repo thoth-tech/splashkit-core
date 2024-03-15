@@ -45,6 +45,7 @@ if (APPLE)
                    -lbz2 \
                    -lFLAC \
                    -lvorbis \
+                   -lsqlite3 \
                    -lz \
                    -lpng16 \
                    -lvorbisfile \
@@ -92,6 +93,7 @@ else()
                    -lvorbisfile \
                    -logg \
                    -lwebp \
+                   -lsqlite3 \
                    -lfreetype \
                    -lcurl \
                    -ldl \
@@ -160,7 +162,6 @@ file(GLOB SOURCE_FILES
     "${SK_SRC}/coresdk/*.cpp"
     "${SK_SRC}/backend/*.cpp"
     "${SK_EXT}/civetweb/src/civetweb.c"
-    "${SK_EXT}/sqlite/sqlite3.c"
     "${SK_EXT}/hash-library/*.cpp"
     "${SK_EXT}/easyloggingpp/*.cc"
 )
@@ -188,7 +189,6 @@ include_directories("${SK_EXT}/civetweb/include")
 include_directories("${SK_EXT}/easyloggingpp")
 include_directories("${SK_EXT}/hash-library")
 include_directories("${SK_EXT}/json")
-include_directories("${SK_EXT}/sqlite")
 include_directories("${SK_EXT}/catch")
 
 # MAC OS AND WINDOWS DIRECTORY INCLUDES
@@ -209,7 +209,6 @@ if (MSYS)
     include_directories(/${MINGW_PATH_PART}/include)
     include_directories(/${MINGW_PATH_PART}/include/libpng16)
     include_directories("${SK_LIB}/win_inc")
-    include_directories("${SK_EXT}/sqlite")
 endif()
 
 # MACRO DEFINITIONS #

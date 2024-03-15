@@ -83,6 +83,7 @@ elseif (APPLE)
                    -lSDL2_gfx \
                    -lSDL2_image \
                    -lSDL2_net \
+                   -lsqlite3 \
                    -lpthread \
                    -lpng16 \
                    -lz \
@@ -115,6 +116,7 @@ else()
                    -lmikmod \
                    -logg \
                    -lwebp \
+                   -lsqlite3 \
                    -lfreetype \
                    -lcurl \
                    -ldl")
