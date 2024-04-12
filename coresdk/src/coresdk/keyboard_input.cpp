@@ -70,7 +70,6 @@ namespace splashkit_lib
 
     void _keyboard_start_process_events()
     {
-        _key_pressed = false;
         _keys_just_typed.clear();
         _keys_released.clear();
     }
@@ -80,6 +79,7 @@ namespace splashkit_lib
         key_code keycode = static_cast<key_code>(code);
         _keys_released[keycode] = true;
         _keys_down[keycode] = false;
+        _key_pressed = false;
         _raise_key_event(_on_key_up, keycode);
     }
 
@@ -92,6 +92,7 @@ namespace splashkit_lib
             _keys_just_typed[keycode] = true;
             _raise_key_event(_on_key_typed, keycode);
         }
+        _key_pressed = true;
         _raise_key_event(_on_key_down, keycode);
     }
 
