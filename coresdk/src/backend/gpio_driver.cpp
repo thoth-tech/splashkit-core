@@ -16,7 +16,7 @@ using namespace std;
 // Use https://abyz.me.uk/rpi/pigpio/pdif2.html for reference
 namespace splashkit_lib
 {
-        int pi;
+        int pi = -1;
 
         // Check if pigpio_init() has been called before any other GPIO functions
         bool check_pi()
