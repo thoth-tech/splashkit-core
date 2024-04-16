@@ -84,6 +84,6 @@ namespace splashkit_lib
 
     bool terminal_has_input()
     {
-        return cin.peek() != EOF;
+        return cin.gcount() > 0;
     }
 }
