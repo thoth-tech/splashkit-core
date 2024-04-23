@@ -96,11 +96,11 @@ namespace splashkit_lib
                 set_PWM_dutycycle(pi, pin, dutycycle);
         }
 
-		void sk_clear_gpio_bank()
-		{
-				check_pi();
-				clear_bank_1(pi, 0x0FFFFFFC);
-		}
+        void sk_clear_gpio_bank()
+        {
+                check_pi();
+                clear_bank_1(pi, 0x0FFFFFFC);
+        }
 
         // Cleanup the GPIO library
         void sk_gpio_cleanup()

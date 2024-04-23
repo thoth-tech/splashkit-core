@@ -214,7 +214,7 @@ namespace splashkit_lib
     void raspi_cleanup()
     {
 #ifdef RASPBERRY_PI
-		cout << "Cleaning GPIO pins" << endl;
+        cout << "Cleaning GPIO pins" << endl;
         sk_clear_gpio_bank();
         sk_gpio_cleanup();
 #else
