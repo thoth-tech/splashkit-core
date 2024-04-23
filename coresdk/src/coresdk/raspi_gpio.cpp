@@ -214,16 +214,8 @@ namespace splashkit_lib
     void raspi_cleanup()
     {
 #ifdef RASPBERRY_PI
-        cout << "Cleaning GPIO pins" << endl;
-        for (int i = 1; i <= 40; i++)
-        {
-            int bcmPin = boardToBCM(static_cast<pins>(i));
-            if (bcmPin > 0)
-            {
-                raspi_set_mode(static_cast<pins>(bcmPin), GPIO_INPUT);
-                raspi_write(static_cast<pins>(bcmPin), GPIO_LOW);
-            }
-        }
+		cout << "Cleaning GPIO pins" << endl;
+        sk_clear_gpio_bank();
         sk_gpio_cleanup();
 #else
         cout << "Unable to set cleanup - GPIO not supported on this platform" << endl;
