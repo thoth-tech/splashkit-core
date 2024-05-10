@@ -2,8 +2,7 @@
 
 Follow the guides below to set up your device for SplashKit development:
 
-<details>
-<summary><h1>macOS💻</h1></summary>
+## MacOS
 
 ### Install prerequisites
 
@@ -49,10 +48,7 @@ Follow the guides below to set up your device for SplashKit development:
 
 6. Add test code into `coresdk/src/test`. Now you should be good to go.
 
-</details>
-
-<details>
-<summary><h1>Linux🐧</h1></summary>
+## Linux
 
 ### Install prerequisites
 
@@ -106,11 +102,8 @@ Follow the guides below to set up your device for SplashKit development:
     ```
 
 6.  Add test code into `coresdk/src/test`. Now you should be good to go.
-</details>
 
-<details>
-<summary> <h1>Windows🪟</h1> </summary>
-
+## Windows
 
 ### Install prerequisites
 
@@ -193,9 +186,8 @@ Follow the guides below to set up your device for SplashKit development:
 
 6. Add test code into `coresdk/src/test`. Now you should be good to go.
 
-</details>
-
 ## Folder Structure
+
 Here is the folder structure tree for the SplashKit project:
 
 ```
@@ -228,16 +220,19 @@ The folder structure is as follows:
 ## Resources Needed for the Project
 
 ### CMake
+
 CMake is an open-source, cross-platform family of tools designed to build, test and package software. It is used to control the software compilation process using simple platform and compiler independent configuration files, and generate native makefiles and workspaces that can be used in the compiler environment of your choice.[3]
 
 To learn more about CMake, you can refer to the official CMake documentation: [https://cmake.org/documentation/](https://cmake.org/documentation/)
 
 ### SplashKit Translator
+
 The SplashKit Translator is a project that translates the SplashKit C++ source code into other languages. It uses HeaderDoc and a Ruby environment to generate the documentation.[1]
 
 You can find the SplashKit Translator repository on GitHub: [https://github.com/splashkit/splashkit-translator](https://github.com/splashkit/splashkit-translator)
 
 ### NuGet Package
+
 The SplashKit NuGet package provides the SplashKit library for .NET projects. It allows you to easily add the SplashKit library to your C++ or C# projects.[2]
 
 You can find the SplashKit NuGet package on the NuGet Gallery: [https://www.nuget.org/packages/SplashKit](https://www.nuget.org/packages/SplashKit)
