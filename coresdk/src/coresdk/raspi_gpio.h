@@ -115,10 +115,10 @@ namespace splashkit_lib
      * This function should be called when you are finished using the GPIO library. It sets all pin modes to INPUT and values to LOW.
      */
     void raspi_cleanup();
-	
-	connection remote_raspi_init(std::string name, const std::string &host, unsigned short int port);
-	void remote_raspi_set_mode(connection pi, int pin, int mode);
-	void remote_raspi_write(connection pi, int pin, int value);
+    
+    connection remote_raspi_init(std::string name, const std::string &host, unsigned short int port);
+    void remote_raspi_set_mode(connection pi, int pin, int mode);
+    void remote_raspi_write(connection pi, int pin, int value);
     int remote_raspi_read(connection pi, int pin);
     bool remote_raspi_cleanup(connection pi);
 }
