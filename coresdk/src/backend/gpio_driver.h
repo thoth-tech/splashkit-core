@@ -5,10 +5,12 @@
 #ifndef SPLASHKIT_GPIO_H
 #define SPLASHKIT_GPIO_H
 
+#include "network_driver.h"
 #include <stdint.h> // Include the appropriate header file for stdint.h
-#ifdef RASPBERRY_PI
+
 namespace splashkit_lib
 {
+	#ifdef RASPBERRY_PI
     int sk_gpio_init();
     int sk_gpio_read(int pin);
     void sk_gpio_set_mode(int pin, int mode);
@@ -19,6 +21,31 @@ namespace splashkit_lib
     void sk_set_pwm_frequency(int pin, int frequency);
     void sk_set_pwm_dutycycle(int pin, int dutycycle);
     void sk_gpio_cleanup();
+	#endif
+	
+	typedef struct
+    {
+        uint32_t cmd;
+        uint32_t param1;
+        uint32_t param2;
+        union
+        {
+            uint32_t param3;
+            uint32_t ext_len;
+            uint32_t res;
+        };
+    } pigpio_cmd_t;
+	
+	connection sk_remote_gpio_init(std::string name,const std::string &host, unsigned short int port);
+    void sk_remote_gpio_set_mode(connection pi, int pin, int mode);
+    int sk_remote_gpio_read(connection pi, int pin);
+    void sk_remote_gpio_write(connection pi, int pin, int value);
+	void sk_remote_clear_bank_1(connection pi);
+    bool sk_remote_gpio_cleanup(connection pi);
+
+    int sk_gpio_send_cmd(connection pi, pigpio_cmd_t &cmd);
+
+    void sk_gpio_package_command(pigpio_cmd_t &cmd, char *buffer);
 }
-#endif
+
 #endif /* defined(gpio_driver) */

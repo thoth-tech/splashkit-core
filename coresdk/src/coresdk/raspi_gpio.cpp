@@ -229,4 +229,29 @@ namespace splashkit_lib
         cout << "Unable to set cleanup - GPIO not supported on this platform" << endl;
 #endif
     }
+	
+	connection remote_raspi_init(std::string name, const std::string &host, unsigned short int port)
+    {
+        return sk_remote_gpio_init(name, host, port);
+    }
+
+    void remote_raspi_set_mode(connection pi, int pin, int mode)
+    {
+        sk_remote_gpio_set_mode(pi, pin, mode);
+    }
+
+    void remote_raspi_write(connection pi, int pin, int value)
+    {
+        sk_remote_gpio_write(pi, pin, value);
+    }
+
+    int remote_raspi_read(connection pi, int pin)
+    {
+        return sk_remote_gpio_read(pi, pin);
+    }
+
+    bool remote_raspi_cleanup(connection pi)
+    {
+        return sk_remote_gpio_cleanup(pi);
+    }
 }
