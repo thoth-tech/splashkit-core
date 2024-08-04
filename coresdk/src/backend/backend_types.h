@@ -314,7 +314,9 @@ namespace splashkit_lib
 
     typedef struct
     {
-        uint32_t cmd_code = -1;
+        // 0 is a valid value for these, so we assign -1 and let it overflow
+        // thus ensuring that the command struct does not start with valid values. 
+        uint32_t cmd_code = -1; 
         uint32_t param1 = -1;
         uint32_t param2 = -1;
         union
