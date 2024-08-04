@@ -248,13 +248,13 @@ namespace splashkit_lib
         }
         else
         {
-			sk_remote_gpio_set_mode(pi, pin, mode);
-		}
+            sk_remote_gpio_set_mode(pi, pin, mode);
+        }
     }
 
     int remote_raspi_get_mode(connection pi, pins pin)
     {
-		int bcmPin = boardToBCM(pin);
+        int bcmPin = boardToBCM(pin);
         if (bcmPin == -1)
         {
             cout << "Cant modify a HIGH Pin" << endl;
@@ -265,14 +265,14 @@ namespace splashkit_lib
         }
         else
         {
-			return sk_remote_gpio_get_mode(pi, pin);
-		}
-		return -1;
+            return sk_remote_gpio_get_mode(pi, pin);
+        }
+        return -1;
     }
 
     void remote_raspi_set_pull_up_down(connection pi, pins pin, pull_up_down pud)
     {
-		int bcmPin = boardToBCM(pin);
+        int bcmPin = boardToBCM(pin);
         if (bcmPin == -1)
         {
             cout << "Cant modify a HIGH Pin" << endl;
@@ -283,13 +283,13 @@ namespace splashkit_lib
         }
         else
         {
-			sk_remote_gpio_set_pull_up_down(pi, pin, pud);
-		}
+            sk_remote_gpio_set_pull_up_down(pi, pin, pud);
+        }
     }
 
     void remote_raspi_write(connection pi, pins pin, pin_values value)
     {
-		int bcmPin = boardToBCM(pin);
+        int bcmPin = boardToBCM(pin);
         if (bcmPin == -1)
         {
             cout << "Cant modify a HIGH Pin" << endl;
@@ -300,13 +300,13 @@ namespace splashkit_lib
         }
         else
         {
-			sk_remote_gpio_write(pi, pin, value);
-		}
+            sk_remote_gpio_write(pi, pin, value);
+        }
     }
 
     int remote_raspi_read(connection pi, pins pin)
     {
-		int bcmPin = boardToBCM(pin);
+        int bcmPin = boardToBCM(pin);
         if (bcmPin == -1)
         {
             cout << "Cant modify a HIGH Pin" << endl;
@@ -317,14 +317,14 @@ namespace splashkit_lib
         }
         else
         {
-			return sk_remote_gpio_read(pi, pin);
-		}
-		return -1;
+            return sk_remote_gpio_read(pi, pin);
+        }
+        return -1;
     }
 
     void remote_raspi_set_pwm_range(connection pi, pins pin, int range)
     {
-		int bcmPin = boardToBCM(pin);
+        int bcmPin = boardToBCM(pin);
         if (bcmPin == -1)
         {
             cout << "Cant modify a HIGH Pin" << endl;
@@ -335,13 +335,13 @@ namespace splashkit_lib
         }
         else
         {
-			sk_remote_set_pwm_range(pi, pin, range);
-		}
+            sk_remote_set_pwm_range(pi, pin, range);
+        }
     }
 
     void remote_raspi_set_pwm_frequency(connection pi, pins pin, int frequency)
     {
-		int bcmPin = boardToBCM(pin);
+        int bcmPin = boardToBCM(pin);
         if (bcmPin == -1)
         {
             cout << "Cant modify a HIGH Pin" << endl;
@@ -352,13 +352,13 @@ namespace splashkit_lib
         }
         else
         {
-			sk_remote_set_pwm_frequency(pi, pin, frequency);
-		}
+            sk_remote_set_pwm_frequency(pi, pin, frequency);
+        }
     }
 
     void remote_raspi_set_pwm_dutycycle(connection pi, pins pin, int dutycycle)
     {
-		int bcmPin = boardToBCM(pin);
+        int bcmPin = boardToBCM(pin);
         if (bcmPin == -1)
         {
             cout << "Cant modify a HIGH Pin" << endl;
@@ -369,8 +369,8 @@ namespace splashkit_lib
         }
         else
         {
-			sk_remote_set_pwm_dutycycle(pi, pin, dutycycle);
-		}
+            sk_remote_set_pwm_dutycycle(pi, pin, dutycycle);
+        }
     }
 
     bool remote_raspi_cleanup(connection pi)
