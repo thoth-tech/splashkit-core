@@ -135,7 +135,7 @@ namespace splashkit_lib
             get_cmd.cmd_code = GPIO_CMD_GET_MODE;
             get_cmd.param1 = pin;
 
-            sk_gpio_send_cmd(pi, get_cmd);
+            return sk_gpio_send_cmd(pi, get_cmd);
         }
 
         void sk_remote_gpio_set_pull_up_down(connection pi, int pin, int pud)
@@ -145,7 +145,7 @@ namespace splashkit_lib
             set_pud_cmd.param1 = pin;
             set_pud_cmd.param2 = pud;
 
-            return sk_gpio_send_cmd(pi, set_pud_cmd);
+            sk_gpio_send_cmd(pi, set_pud_cmd);
         }
 
         int sk_remote_gpio_read(connection pi, int pin)
@@ -175,7 +175,7 @@ namespace splashkit_lib
         void sk_remote_set_pwm_range(connection pi, int pin, int range)
         {
             sk_pigpio_cmd_t set_range_cmd;
-            set_range_cmd.cmd_code = GPIO_SET_PWM_RANGE;
+            set_range_cmd.cmd_code = GPIO_CMD_SET_PWM_RANGE;
             set_range_cmd.param1 = pin;
             set_range_cmd.param2 = range;
 
@@ -185,7 +185,7 @@ namespace splashkit_lib
         void sk_remote_set_pwm_frequency(connection pi, int pin, int frequency)
         {
             sk_pigpio_cmd_t set_freq_cmd;
-            set_freq_cmd.cmd_code = GPIO_SET_PWM_FREQ;
+            set_freq_cmd.cmd_code = GPIO_CMD_SET_PWM_FREQ;
             set_freq_cmd.param1 = pin;
             set_freq_cmd.param2 = frequency;
 
@@ -195,7 +195,7 @@ namespace splashkit_lib
         void sk_remote_set_pwm_dutycycle(connection pi, int pin, int dutycycle)
         {
             sk_pigpio_cmd_t set_dutycycle_cmd;
-            set_dutycycle_cmd.cmd_code = GPIO_SET_PWM_DUTYCYCLE;
+            set_dutycycle_cmd.cmd_code = GPIO_CMD_SET_PWM_DUTYCYCLE;
             set_dutycycle_cmd.param1 = pin;
             set_dutycycle_cmd.param2 = dutycycle;
 
@@ -232,8 +232,9 @@ namespace splashkit_lib
             if(pi->protocol == TCP)
             {
                 char buffer[sizeof(sk_pigpio_cmd_t)];
-                sk_gpio_package_command(cmd, buffer);
+                //sk_gpio_package_command(cmd, buffer);
 
+                memcpy(buffer, &cmd, sizeof(cmd));
 
                 if(sk_send_bytes(&pi->socket, buffer, sizeof(sk_pigpio_cmd_t)))
                 {
