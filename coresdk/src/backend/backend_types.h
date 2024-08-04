@@ -312,6 +312,7 @@ namespace splashkit_lib
         vector<animation>   anim_objs;         // The animations created from this script
     };
 
+    // See https://abyz.me.uk/rpi/pigpio/sif.html for more information on these.
     typedef struct
     {
         // 0 is a valid value for these, so we assign -1 and let it overflow

@@ -16,7 +16,8 @@
 
 
 using namespace std;
-// Use https://abyz.me.uk/rpi/pigpio/pdif2.html for reference
+// Use https://abyz.me.uk/rpi/pigpio/pdif2.html for local command reference
+// Use https://abyz.me.uk/rpi/pigpio/sif.html for remote command reference
 namespace splashkit_lib
 {
         #ifdef RASPBERRY_PI
