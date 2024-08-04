@@ -117,14 +117,14 @@ namespace splashkit_lib
     void raspi_cleanup();
     
     connection remote_raspi_init(std::string name, const std::string &host, unsigned short int port);
-    void remote_raspi_set_mode(connection pi, int pin, int mode);
-    int remote_raspi_get_mode(connection pi, int pin);
-    void remote_raspi_set_pull_up_down(connection pi, int pin, int pud);
-    void remote_raspi_write(connection pi, int pin, int value);
-    int remote_raspi_read(connection pi, int pin);
-    void remote_raspi_set_pwm_range(connection pi, int pin, int range);
-    void remote_raspi_set_pwm_frequency(connection pi, int pin, int frequency);
-    void remote_raspi_set_pwm_dutycycle(connection pi, int pin, int dutycycle);
+    void remote_raspi_set_mode(connection pi, pins pin, pin_modes mode);
+    int remote_raspi_get_mode(connection pi, pins pin);
+    void remote_raspi_set_pull_up_down(connection pi, pins pin, pull_up_down pud);
+    void remote_raspi_write(connection pi, pins pin, pin_values value);
+    int remote_raspi_read(connection pi, pins pin);
+    void remote_raspi_set_pwm_range(connection pi, pins pin, int range);
+    void remote_raspi_set_pwm_frequency(connection pi, pins pin, int frequency);
+    void remote_raspi_set_pwm_dutycycle(connection pi, pins pin, int dutycycle);
     bool remote_raspi_cleanup(connection pi);
 }
 #endif /* raspi_gpio_hpp */

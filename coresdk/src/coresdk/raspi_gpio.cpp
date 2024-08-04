@@ -235,44 +235,142 @@ namespace splashkit_lib
         return sk_remote_gpio_init(name, host, port);
     }
 
-    void remote_raspi_set_mode(connection pi, int pin, int mode)
+    void remote_raspi_set_mode(connection pi, pins pin, pin_modes mode)
     {
-        sk_remote_gpio_set_mode(pi, pin, mode);
+        int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+			sk_remote_gpio_set_mode(pi, pin, mode);
+		}
     }
 
-    int remote_raspi_get_mode(connection pi, int pin)
+    int remote_raspi_get_mode(connection pi, pins pin)
     {
-        return sk_remote_gpio_get_mode(pi, pin);
+		int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+			return sk_remote_gpio_get_mode(pi, pin);
+		}
+		return -1;
     }
 
-    void remote_raspi_set_pull_up_down(connection pi, int pin, int pud)
+    void remote_raspi_set_pull_up_down(connection pi, pins pin, pull_up_down pud)
     {
-        sk_remote_gpio_set_pull_up_down(pi, pin, pud);
+		int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+			sk_remote_gpio_set_pull_up_down(pi, pin, pud);
+		}
     }
 
-    void remote_raspi_write(connection pi, int pin, int value)
+    void remote_raspi_write(connection pi, pins pin, pin_values value)
     {
-        sk_remote_gpio_write(pi, pin, value);
+		int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+			sk_remote_gpio_write(pi, pin, value);
+		}
     }
 
-    int remote_raspi_read(connection pi, int pin)
+    int remote_raspi_read(connection pi, pins pin)
     {
-        return sk_remote_gpio_read(pi, pin);
+		int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+			return sk_remote_gpio_read(pi, pin);
+		}
+		return -1;
     }
 
-    void remote_raspi_set_pwm_range(connection pi, int pin, int range)
+    void remote_raspi_set_pwm_range(connection pi, pins pin, int range)
     {
-        sk_remote_gpio_set_pwm_range(pi, pin, range);
+		int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+			sk_remote_set_pwm_range(pi, pin, range);
+		}
     }
 
-    void remote_raspi_set_pwm_frequency(connection pi, int pin, int frequency)
+    void remote_raspi_set_pwm_frequency(connection pi, pins pin, int frequency)
     {
-        sk_remote_gpio_set_pwm_frequency(pi, pin, frequency);
+		int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+			sk_remote_set_pwm_frequency(pi, pin, frequency);
+		}
     }
 
-    void remote_raspi_set_pwm_dutycycle(connection pi, int pin, int dutycycle)
+    void remote_raspi_set_pwm_dutycycle(connection pi, pins pin, int dutycycle)
     {
-        sk_remote_gpio_set_pwm_dutycycle(pi, pin, dutycycle);
+		int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+			sk_remote_set_pwm_dutycycle(pi, pin, dutycycle);
+		}
     }
 
     bool remote_raspi_cleanup(connection pi)
