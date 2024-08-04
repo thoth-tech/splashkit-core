@@ -26,8 +26,13 @@ namespace splashkit_lib
     
     connection sk_remote_gpio_init(std::string name,const std::string &host, unsigned short int port);
     void sk_remote_gpio_set_mode(connection pi, int pin, int mode);
+    int sk_remote_gpio_get_mode(connection pi, int pin);
+    void sk_remote_gpio_set_pull_up_down(connection pi, int pin, int pud);
     int sk_remote_gpio_read(connection pi, int pin);
     void sk_remote_gpio_write(connection pi, int pin, int value);
+    void sk_remote_set_pwm_range(connection pi, int pin, int range);
+    void sk_remote_set_pwm_frequency(connection pi, int pin, int frequency);
+    void sk_remote_set_pwm_dutycycle(connection pi, int pin, int dutycycle);
     void sk_remote_clear_bank_1(connection pi);
     bool sk_remote_gpio_cleanup(connection pi);
 

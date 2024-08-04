@@ -129,6 +129,25 @@ namespace splashkit_lib
             sk_gpio_send_cmd(pi, set_cmd);
         }
 
+        int sk_remote_gpio_get_mode(connection pi, int pin)
+        {
+            sk_pigpio_cmd_t get_cmd;
+            get_cmd.cmd_code = GPIO_CMD_GET_MODE;
+            get_cmd.param1 = pin;
+
+            sk_gpio_send_cmd(pi, get_cmd);
+        }
+
+        void sk_remote_gpio_set_pull_up_down(connection pi, int pin, int pud)
+        {
+            sk_pigpio_cmd_t set_pud_cmd;
+            set_pud_cmd.cmd_code = GPIO_CMD_SET_PUD;
+            set_pud_cmd.param1 = pin;
+            set_pud_cmd.param2 = pud;
+
+            return sk_gpio_send_cmd(pi, set_pud_cmd);
+        }
+
         int sk_remote_gpio_read(connection pi, int pin)
         {
             sk_pigpio_cmd_t read_cmd;
@@ -151,6 +170,36 @@ namespace splashkit_lib
             write_cmd.result = 0;
 
             sk_gpio_send_cmd(pi, write_cmd);
+        }
+
+        void sk_remote_set_pwm_range(connection pi, int pin, int range)
+        {
+            sk_pigpio_cmd_t set_range_cmd;
+            set_range_cmd.cmd_code = GPIO_SET_PWM_RANGE;
+            set_range_cmd.param1 = pin;
+            set_range_cmd.param2 = range;
+
+            sk_gpio_send_cmd(pi, set_range_cmd);
+        }
+
+        void sk_remote_set_pwm_frequency(connection pi, int pin, int frequency)
+        {
+            sk_pigpio_cmd_t set_freq_cmd;
+            set_freq_cmd.cmd_code = GPIO_SET_PWM_FREQ;
+            set_freq_cmd.param1 = pin;
+            set_freq_cmd.param2 = frequency;
+
+            sk_gpio_send_cmd(pi, set_freq_cmd);
+        }
+
+        void sk_remote_set_pwm_dutycycle(connection pi, int pin, int dutycycle)
+        {
+            sk_pigpio_cmd_t set_dutycycle_cmd;
+            set_dutycycle_cmd.cmd_code = GPIO_SET_PWM_DUTYCYCLE;
+            set_dutycycle_cmd.param1 = pin;
+            set_dutycycle_cmd.param2 = dutycycle;
+
+            sk_gpio_send_cmd(pi, set_dutycycle_cmd);
         }
         
         void sk_remote_clear_bank_1(connection pi)
