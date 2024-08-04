@@ -232,8 +232,6 @@ namespace splashkit_lib
             if(pi->protocol == TCP)
             {
                 char buffer[sizeof(sk_pigpio_cmd_t)];
-                //sk_gpio_package_command(cmd, buffer);
-
                 memcpy(buffer, &cmd, sizeof(cmd));
 
                 if(sk_send_bytes(&pi->socket, buffer, sizeof(sk_pigpio_cmd_t)))
@@ -262,16 +260,5 @@ namespace splashkit_lib
                 std::cout << "Error: connection has UDP protocol" << std::endl;
             }
         }
-
-
-    void sk_gpio_package_command(sk_pigpio_cmd_t &cmd, char *buffer)
-    {
-        memcpy(buffer, &cmd, sizeof(cmd));
-        /*memcpy(buffer, &cmd.cmd, sizeof(cmd.cmd));
-        memcpy(buffer + sizeof(cmd.cmd), &cmd.param1, sizeof(cmd.param1));
-        memcpy(buffer + sizeof(cmd.cmd) + sizeof(cmd.param1), &cmd.param2, sizeof(cmd.param2));
-        memcpy(buffer + sizeof(cmd.cmd) + sizeof(cmd.param1) + sizeof(cmd.param2),
-               &cmd.param3, sizeof(cmd.param3));*/
-    }
 }
 

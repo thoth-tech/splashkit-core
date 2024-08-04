@@ -37,8 +37,6 @@ namespace splashkit_lib
     bool sk_remote_gpio_cleanup(connection pi);
 
     int sk_gpio_send_cmd(connection pi, sk_pigpio_cmd_t &cmd);
-
-    void sk_gpio_package_command(sk_pigpio_cmd_t &cmd, char *buffer);
 }
 
 #endif /* defined(gpio_driver) */
