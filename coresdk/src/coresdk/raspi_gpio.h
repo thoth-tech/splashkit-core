@@ -118,8 +118,13 @@ namespace splashkit_lib
     
     connection remote_raspi_init(std::string name, const std::string &host, unsigned short int port);
     void remote_raspi_set_mode(connection pi, int pin, int mode);
+    int remote_raspi_get_mode(connection pi, int pin);
+    void remote_raspi_set_pull_up_down(connection pi, int pin, int pud);
     void remote_raspi_write(connection pi, int pin, int value);
     int remote_raspi_read(connection pi, int pin);
+    void remote_raspi_set_pwm_range(connection pi, int pin, int range);
+    void remote_raspi_set_pwm_frequency(connection pi, int pin, int frequency);
+    void remote_raspi_set_pwm_dutycycle(connection pi, int pin, int dutycycle);
     bool remote_raspi_cleanup(connection pi);
 }
 #endif /* raspi_gpio_hpp */

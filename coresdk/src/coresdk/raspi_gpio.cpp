@@ -240,6 +240,16 @@ namespace splashkit_lib
         sk_remote_gpio_set_mode(pi, pin, mode);
     }
 
+    int remote_raspi_get_mode(connection pi, int pin)
+    {
+        return sk_remote_gpio_get_mode(pi, pin);
+    }
+
+    void remote_raspi_set_pull_up_down(connection pi, int pin, int pud)
+    {
+        sk_remote_gpio_set_pull_up_down(pi, pin, pud);
+    }
+
     void remote_raspi_write(connection pi, int pin, int value)
     {
         sk_remote_gpio_write(pi, pin, value);
@@ -248,6 +258,21 @@ namespace splashkit_lib
     int remote_raspi_read(connection pi, int pin)
     {
         return sk_remote_gpio_read(pi, pin);
+    }
+
+    void remote_raspi_set_pwm_range(connection pi, int pin, int range)
+    {
+        sk_remote_gpio_set_pwm_range(pi, pin, range);
+    }
+
+    void remote_raspi_set_pwm_frequency(connection pi, int pin, int frequency)
+    {
+        sk_remote_gpio_set_pwm_frequency(pi, pin, frequency);
+    }
+
+    void remote_raspi_set_pwm_dutycycle(connection pi, int pin, int dutycycle)
+    {
+        sk_remote_gpio_set_pwm_dutycycle(pi, pin, dutycycle);
     }
 
     bool remote_raspi_cleanup(connection pi)
