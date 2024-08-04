@@ -122,8 +122,6 @@ namespace splashkit_lib
             set_cmd.cmd_code = GPIO_CMD_SET_MODE; 
             set_cmd.param1 = pin;
             set_cmd.param2 = mode;
-            set_cmd.param3 = 0;
-            set_cmd.result = 0;
             
 
             sk_gpio_send_cmd(pi, set_cmd);
@@ -153,9 +151,6 @@ namespace splashkit_lib
             sk_pigpio_cmd_t read_cmd;
             read_cmd.cmd_code = GPIO_CMD_READ;
             read_cmd.param1 = pin;
-            read_cmd.param2 = 0;
-            read_cmd.param3 = 0;
-            read_cmd.result = 0;
 
             return sk_gpio_send_cmd(pi, read_cmd);
         }
@@ -166,8 +161,6 @@ namespace splashkit_lib
             write_cmd.cmd_code = GPIO_CMD_WRITE;
             write_cmd.param1 = pin;
             write_cmd.param2 = value;
-            write_cmd.param3 = 0;
-            write_cmd.result = 0;
 
             sk_gpio_send_cmd(pi, write_cmd);
         }
@@ -207,9 +200,6 @@ namespace splashkit_lib
             sk_pigpio_cmd_t clear_bank_cmd;
             clear_bank_cmd.cmd_code = GPIO_CMD_CLEAR_BANK_1;
             clear_bank_cmd.param1 = 0x0FFFFFFC;
-            clear_bank_cmd.param2 = 0;
-            clear_bank_cmd.param3 = 0;
-            clear_bank_cmd.result = 0;
             
             sk_gpio_send_cmd(pi, clear_bank_cmd);
             
