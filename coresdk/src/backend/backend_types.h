@@ -311,5 +311,33 @@ namespace splashkit_lib
 
         vector<animation>   anim_objs;         // The animations created from this script
     };
+
+    typedef struct
+    {
+        uint32_t cmd_code;
+        uint32_t param1;
+        uint32_t param2;
+        union
+        {
+            uint32_t param3;
+            uint32_t ext_len; // This is only used for particular commands
+            uint32_t result;
+        };
+    } sk_pigpio_cmd_t;
+
+    enum sk_pigpio_cmd_codes
+    {
+        GPIO_CMD_SET_MODE = 0,
+        GPIO_CMD_GET_MODE,
+        GPIO_CMD_SET_PUD,
+        GPIO_CMD_READ,
+        GPIO_CMD_WRITE,
+        GPIO_CMD_SET_PWM_DUTYCYCLE,
+        GPIO_CMD_SET_PWM_RANGE,
+        GPIO_CMD_SET_PWM_FREQ,
+        GPIO_CMD_CLEAR_BANK_1 = 12
+
+    };
+
 }
 #endif /* BackendTypes_h */

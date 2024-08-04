@@ -118,12 +118,12 @@ namespace splashkit_lib
 
         void sk_remote_gpio_set_mode(connection pi, int pin, int mode)
         {
-            pigpio_cmd_t set_cmd;
-            set_cmd.cmd = 0;
+            sk_pigpio_cmd_t set_cmd;
+            set_cmd.cmd_code = GPIO_CMD_SET_MODE; 
             set_cmd.param1 = pin;
             set_cmd.param2 = mode;
             set_cmd.param3 = 0;
-            set_cmd.res = 0;
+            set_cmd.result = 0;
             
 
             sk_gpio_send_cmd(pi, set_cmd);
@@ -131,36 +131,36 @@ namespace splashkit_lib
 
         int sk_remote_gpio_read(connection pi, int pin)
         {
-            pigpio_cmd_t read_cmd;
-            read_cmd.cmd = 3;
+            sk_pigpio_cmd_t read_cmd;
+            read_cmd.cmd_code = GPIO_CMD_READ;
             read_cmd.param1 = pin;
             read_cmd.param2 = 0;
             read_cmd.param3 = 0;
-            read_cmd.res = 0;
+            read_cmd.result = 0;
 
             return sk_gpio_send_cmd(pi, read_cmd);
         }
 
         void sk_remote_gpio_write(connection pi, int pin, int value)
         {
-            pigpio_cmd_t write_cmd;
-            write_cmd.cmd = 4;
+            sk_pigpio_cmd_t write_cmd;
+            write_cmd.cmd_code = GPIO_CMD_WRITE;
             write_cmd.param1 = pin;
             write_cmd.param2 = value;
             write_cmd.param3 = 0;
-            write_cmd.res = 0;
+            write_cmd.result = 0;
 
             sk_gpio_send_cmd(pi, write_cmd);
         }
         
         void sk_remote_clear_bank_1(connection pi)
         {
-            pigpio_cmd_t clear_bank_cmd;
-            clear_bank_cmd.cmd = 12;
+            sk_pigpio_cmd_t clear_bank_cmd;
+            clear_bank_cmd.cmd_code = GPIO_CMD_CLEAR_BANK_1;
             clear_bank_cmd.param1 = 0x0FFFFFFC;
             clear_bank_cmd.param2 = 0;
             clear_bank_cmd.param3 = 0;
-            clear_bank_cmd.res = 0;
+            clear_bank_cmd.result = 0;
             
             sk_gpio_send_cmd(pi, clear_bank_cmd);
             
@@ -172,7 +172,7 @@ namespace splashkit_lib
             return close_connection(pi);
         }
 
-        int sk_gpio_send_cmd(connection pi, pigpio_cmd_t &cmd)
+        int sk_gpio_send_cmd(connection pi, sk_pigpio_cmd_t &cmd)
         {
             if(!is_connection_open(pi)) 
             { 
@@ -182,20 +182,20 @@ namespace splashkit_lib
 
             if(pi->protocol == TCP)
             {
-                char buffer[sizeof(pigpio_cmd_t)];
+                char buffer[sizeof(sk_pigpio_cmd_t)];
                 sk_gpio_package_command(cmd, buffer);
 
 
-                if(sk_send_bytes(&pi->socket, buffer, sizeof(pigpio_cmd_t)))
+                if(sk_send_bytes(&pi->socket, buffer, sizeof(sk_pigpio_cmd_t)))
                 {
-                    char resp_buffer[sizeof(pigpio_cmd_t)];
-                    int bytes = sk_read_bytes(&pi->socket, resp_buffer, sizeof(pigpio_cmd_t));
-                    if(bytes == sizeof(pigpio_cmd_t))
+                    char resp_buffer[sizeof(sk_pigpio_cmd_t)];
+                    int bytes = sk_read_bytes(&pi->socket, resp_buffer, sizeof(sk_pigpio_cmd_t));
+                    if(bytes == sizeof(sk_pigpio_cmd_t))
                     {
-                        pigpio_cmd_t resp;
-                        memcpy(&resp, resp_buffer, sizeof(pigpio_cmd_t));
+                        sk_pigpio_cmd_t resp;
+                        memcpy(&resp, resp_buffer, sizeof(sk_pigpio_cmd_t));
                         
-                        return resp.res;
+                        return resp.result;
                     }
                     else
                     {
@@ -214,7 +214,7 @@ namespace splashkit_lib
         }
 
 
-    void sk_gpio_package_command(pigpio_cmd_t &cmd, char *buffer)
+    void sk_gpio_package_command(sk_pigpio_cmd_t &cmd, char *buffer)
     {
         memcpy(buffer, &cmd, sizeof(cmd));
         /*memcpy(buffer, &cmd.cmd, sizeof(cmd.cmd));

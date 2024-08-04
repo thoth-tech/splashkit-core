@@ -6,6 +6,7 @@
 #define SPLASHKIT_GPIO_H
 
 #include "network_driver.h"
+#include "backend_types.h"
 #include <stdint.h> // Include the appropriate header file for stdint.h
 
 namespace splashkit_lib
@@ -23,19 +24,6 @@ namespace splashkit_lib
     void sk_gpio_cleanup();
     #endif
     
-    typedef struct
-    {
-        uint32_t cmd;
-        uint32_t param1;
-        uint32_t param2;
-        union
-        {
-            uint32_t param3;
-            uint32_t ext_len;
-            uint32_t res;
-        };
-    } pigpio_cmd_t;
-    
     connection sk_remote_gpio_init(std::string name,const std::string &host, unsigned short int port);
     void sk_remote_gpio_set_mode(connection pi, int pin, int mode);
     int sk_remote_gpio_read(connection pi, int pin);
@@ -43,9 +31,9 @@ namespace splashkit_lib
     void sk_remote_clear_bank_1(connection pi);
     bool sk_remote_gpio_cleanup(connection pi);
 
-    int sk_gpio_send_cmd(connection pi, pigpio_cmd_t &cmd);
+    int sk_gpio_send_cmd(connection pi, sk_pigpio_cmd_t &cmd);
 
-    void sk_gpio_package_command(pigpio_cmd_t &cmd, char *buffer);
+    void sk_gpio_package_command(sk_pigpio_cmd_t &cmd, char *buffer);
 }
 
 #endif /* defined(gpio_driver) */
