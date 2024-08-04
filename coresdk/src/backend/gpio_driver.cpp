@@ -3,14 +3,13 @@
 // Copyright (©) 2024 Aditya Parmar. All Rights Reserved.
 
 #include "gpio_driver.h"
-
+#include "easylogging++.h"
 
 #include <string>
 #include <iostream>
 #include <cstdlib> // Add this line to include the necessary header for the exit() function
 
 #include <cstring>
-
 #ifdef RASPBERRY_PI
 #include "pigpiod_if2.h"
 #endif
@@ -30,7 +29,7 @@ namespace splashkit_lib
                 if (pi < 0)
                 {
                         cout << "gpio_init() must be called before any other GPIO functions" << endl;
-                        return false; 
+                        return false;
                 }
                 else
                         return true;
@@ -110,7 +109,7 @@ namespace splashkit_lib
                 pigpio_stop(pi);
         }
         #endif
-        
+
         connection sk_remote_gpio_init(std::string name, const std::string &host, unsigned short int port)
         {
             return open_connection(name, host, port);
@@ -119,10 +118,10 @@ namespace splashkit_lib
         void sk_remote_gpio_set_mode(connection pi, int pin, int mode)
         {
             sk_pigpio_cmd_t set_cmd;
-            set_cmd.cmd_code = GPIO_CMD_SET_MODE; 
+            set_cmd.cmd_code = GPIO_CMD_SET_MODE;
             set_cmd.param1 = pin;
             set_cmd.param2 = mode;
-            
+
 
             sk_gpio_send_cmd(pi, set_cmd);
         }
@@ -194,15 +193,15 @@ namespace splashkit_lib
 
             sk_gpio_send_cmd(pi, set_dutycycle_cmd);
         }
-        
+
         void sk_remote_clear_bank_1(connection pi)
         {
             sk_pigpio_cmd_t clear_bank_cmd;
             clear_bank_cmd.cmd_code = GPIO_CMD_CLEAR_BANK_1;
             clear_bank_cmd.param1 = 0x0FFFFFFC;
-            
+
             sk_gpio_send_cmd(pi, clear_bank_cmd);
-            
+
         }
 
         bool sk_remote_gpio_cleanup(connection pi)
@@ -213,10 +212,10 @@ namespace splashkit_lib
 
         int sk_gpio_send_cmd(connection pi, sk_pigpio_cmd_t &cmd)
         {
-            if(!is_connection_open(pi)) 
-            { 
-                std::cout << "Error, connection not open" << std::endl; 
-                return -1; 
+            if(!is_connection_open(pi))
+            {
+                LOG(ERROR) << "Remote GPIO: Connection not open.";
+                return -1;
             }
 
             if(pi->protocol == TCP)
@@ -232,23 +231,22 @@ namespace splashkit_lib
                     {
                         sk_pigpio_cmd_t resp;
                         memcpy(&resp, resp_buffer, sizeof(sk_pigpio_cmd_t));
-                        
+
                         return resp.result;
                     }
                     else
                     {
-                        std::cout << "Error: Failed to read response from socket" << std::endl;
+                        LOG(ERROR) << "Remote GPIO: Invalid response received from socket.";
                     }
                 }
                 else
                 {
-                    std::cout << "Error: Failed to send command to socket." << std::endl;
+                    LOG(ERROR) << "Remote GPIO: Failed to send command to socket.";
                 }
             }
             else
             {
-                std::cout << "Error: connection has UDP protocol" << std::endl;
+                LOG(ERROR) << "Remote GPIO: Connection has UDP Protocol";
             }
         }
 }
-

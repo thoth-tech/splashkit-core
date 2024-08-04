@@ -1,6 +1,6 @@
 /***********************************************
 * XQuestCode || Aditya Parmar
-* Code with Creativity 
+* Code with Creativity
 * 🚀 © 2024 Aditya Parmar. All Rights Reserved.
 ***********************************************/
 #include <iostream>
@@ -47,7 +47,7 @@ void run_remote_gpio_tests()
 {
     cout << "This test requires a remote Raspberry Pi running the Pigpio Daemon\n";
     cout << "Enter IP Address of remote Pi:\n";
-    
+
     std::string host;
     std::getline(std::cin, host);
 

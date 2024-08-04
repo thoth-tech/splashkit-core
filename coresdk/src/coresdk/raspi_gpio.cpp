@@ -229,7 +229,7 @@ namespace splashkit_lib
         cout << "Unable to set cleanup - GPIO not supported on this platform" << endl;
 #endif
     }
-    
+
     connection remote_raspi_init(std::string name, const std::string &host, unsigned short int port)
     {
         return sk_remote_gpio_init(name, host, port);
@@ -248,7 +248,7 @@ namespace splashkit_lib
         }
         else
         {
-            sk_remote_gpio_set_mode(pi, pin, mode);
+            sk_remote_gpio_set_mode(pi, bcmPin, mode);
         }
     }
 
@@ -265,7 +265,7 @@ namespace splashkit_lib
         }
         else
         {
-            return sk_remote_gpio_get_mode(pi, pin);
+            return sk_remote_gpio_get_mode(pi, bcmPin);
         }
         return -1;
     }
@@ -283,7 +283,7 @@ namespace splashkit_lib
         }
         else
         {
-            sk_remote_gpio_set_pull_up_down(pi, pin, pud);
+            sk_remote_gpio_set_pull_up_down(pi, bcmPin, pud);
         }
     }
 
@@ -300,7 +300,7 @@ namespace splashkit_lib
         }
         else
         {
-            sk_remote_gpio_write(pi, pin, value);
+            sk_remote_gpio_write(pi, bcmPin, value);
         }
     }
 
@@ -317,7 +317,7 @@ namespace splashkit_lib
         }
         else
         {
-            return sk_remote_gpio_read(pi, pin);
+            return sk_remote_gpio_read(pi, bcmPin);
         }
         return -1;
     }
@@ -335,7 +335,7 @@ namespace splashkit_lib
         }
         else
         {
-            sk_remote_set_pwm_range(pi, pin, range);
+            sk_remote_set_pwm_range(pi, bcmPin, range);
         }
     }
 
@@ -352,7 +352,7 @@ namespace splashkit_lib
         }
         else
         {
-            sk_remote_set_pwm_frequency(pi, pin, frequency);
+            sk_remote_set_pwm_frequency(pi, bcmPin, frequency);
         }
     }
 
@@ -369,12 +369,13 @@ namespace splashkit_lib
         }
         else
         {
-            sk_remote_set_pwm_dutycycle(pi, pin, dutycycle);
+            sk_remote_set_pwm_dutycycle(pi, bcmPin, dutycycle);
         }
     }
 
     bool remote_raspi_cleanup(connection pi)
     {
+        cout << "Cleaning Pins on Remote Pi Named: " << pi->name << endl;
         return sk_remote_gpio_cleanup(pi);
     }
 }

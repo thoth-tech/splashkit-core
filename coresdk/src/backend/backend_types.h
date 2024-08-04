@@ -314,9 +314,9 @@ namespace splashkit_lib
 
     typedef struct
     {
-        uint32_t cmd_code;
-        uint32_t param1;
-        uint32_t param2;
+        uint32_t cmd_code = -1;
+        uint32_t param1 = -1;
+        uint32_t param2 = -1;
         union
         {
             uint32_t param3;
