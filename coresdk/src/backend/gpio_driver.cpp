@@ -206,6 +206,12 @@ namespace splashkit_lib
 
         bool sk_remote_gpio_cleanup(connection pi)
         {
+			if(!is_connection_open(pi))
+            {
+                LOG(ERROR) << "Remote GPIO: Connection not open.";
+                return false;
+            }
+			cout << "Cleaning Pins on Remote Pi Named: " << pi->name << endl;
             sk_remote_clear_bank_1(pi);
             return close_connection(pi);
         }

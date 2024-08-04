@@ -375,7 +375,6 @@ namespace splashkit_lib
 
     bool remote_raspi_cleanup(connection pi)
     {
-        cout << "Cleaning Pins on Remote Pi Named: " << pi->name << endl;
         return sk_remote_gpio_cleanup(pi);
     }
 }
