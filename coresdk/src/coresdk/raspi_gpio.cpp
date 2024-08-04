@@ -252,7 +252,7 @@ namespace splashkit_lib
         }
     }
 
-    int remote_raspi_get_mode(connection pi, pins pin)
+    pin_modes remote_raspi_get_mode(connection pi, pins pin)
     {
         int bcmPin = boardToBCM(pin);
         if (bcmPin == -1)
@@ -265,9 +265,9 @@ namespace splashkit_lib
         }
         else
         {
-            return sk_remote_gpio_get_mode(pi, bcmPin);
+            return static_cast<pin_modes>(sk_remote_gpio_get_mode(pi, bcmPin));
         }
-        return -1;
+        return GPIO_DEFAULT_MODE;
     }
 
     void remote_raspi_set_pull_up_down(connection pi, pins pin, pull_up_down pud)
@@ -304,7 +304,7 @@ namespace splashkit_lib
         }
     }
 
-    int remote_raspi_read(connection pi, pins pin)
+    pin_values remote_raspi_read(connection pi, pins pin)
     {
         int bcmPin = boardToBCM(pin);
         if (bcmPin == -1)
@@ -317,9 +317,9 @@ namespace splashkit_lib
         }
         else
         {
-            return sk_remote_gpio_read(pi, bcmPin);
+            return static_cast<pin_values>(sk_remote_gpio_read(pi, bcmPin));
         }
-        return -1;
+        return GPIO_DEFAULT_VALUE;
     }
 
     void remote_raspi_set_pwm_range(connection pi, pins pin, int range)
