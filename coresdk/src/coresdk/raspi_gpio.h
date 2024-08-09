@@ -73,6 +73,7 @@ namespace splashkit_lib
      * @brief Sets the PWM range for the specified pin.
      *
      * This function sets the PWM range for the specified pin.
+     * Valid values for the range are 25 - 40000
      *
      * @param pin    The pin to set the PWM range for.
      * @param range  The PWM range to set for the pin.
@@ -187,6 +188,7 @@ namespace splashkit_lib
      * @brief Sets the PWM range for the specified pin on a remote Raspberry Pi.
      *
      * This function sets the PWM range for a specific pin on a remote Raspberry Pi.
+     * Valid values for the range are 25 - 40000
      *
      * @param pi     The connection object to the remote Raspberry Pi.
      * @param pin    The pin to set the PWM range for.
