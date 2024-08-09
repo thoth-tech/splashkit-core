@@ -227,17 +227,18 @@ namespace splashkit_lib
 
             if(pi->protocol == TCP)
             {
-                char buffer[sizeof(sk_pigpio_cmd_t)];
-                memcpy(buffer, &cmd, sizeof(cmd));
+                int num_send_bytes = sizeof(cmd);
 
-                if(sk_send_bytes(&pi->socket, buffer, sizeof(sk_pigpio_cmd_t)))
+                char buffer[num_send_bytes];
+                memcpy(buffer, &cmd, num_send_bytes);
+
+                if(sk_send_bytes(&pi->socket, buffer, num_send_bytes)) 
                 {
-                    char resp_buffer[sizeof(sk_pigpio_cmd_t)];
-                    int bytes = sk_read_bytes(&pi->socket, resp_buffer, sizeof(sk_pigpio_cmd_t));
-                    if(bytes == sizeof(sk_pigpio_cmd_t))
+                    int num_bytes_recv = sk_read_bytes(&pi->socket, buffer, num_send_bytes); 
+                    if(num_bytes_recv == num_send_bytes) 
                     {
                         sk_pigpio_cmd_t resp;
-                        memcpy(&resp, resp_buffer, sizeof(sk_pigpio_cmd_t));
+                        memcpy(&resp, buffer, num_send_bytes);
 
                         return resp.result;
                     }
@@ -248,12 +249,13 @@ namespace splashkit_lib
                 }
                 else
                 {
-                    LOG(ERROR) << "Remote GPIO: Failed to send command to socket.";
+                    LOG(ERROR) << "Remote GPIO: Failed to send command to socket."; 
                 }
             }
             else
             {
                 LOG(ERROR) << "Remote GPIO: Connection has UDP Protocol";
             }
+            return -1;
         }
 }
