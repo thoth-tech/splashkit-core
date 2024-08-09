@@ -207,7 +207,7 @@ namespace splashkit_lib
 
         bool sk_remote_gpio_cleanup(connection pi)
         {
-			if(!is_connection_open(pi))
+            if(!is_connection_open(pi))
             {
                 LOG(ERROR) << "Remote GPIO: Connection not open.";
                 return false;
