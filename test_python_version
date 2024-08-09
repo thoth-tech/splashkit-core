@@ -1,0 +1,28 @@
+# Description
+
+Test python version from the guides page in splashkit website.
+
+## Type of change
+
+
+- [x] Documentation (update or new)
+
+## How Has This Been Tested?
+
+Firstly, I open the splashkit website and navigate to the guides page. Then, I test all the code from the guides and check if there are any error. In the "Splashkit Camera" section, I notice an error that will be attached below.
+
+![alt text](image.png)
+
+## Testing Checklist
+
+- [ ] Tested with sktest
+- [ ] Tested with skunit_tests
+
+## Checklist
+
+- [ ] My code follows the style guidelines of this project
+- [ ] I have performed a self-review of my own code
+- [ ] I have commented my code in hard-to-understand areas
+- [x] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have requested a review from ... on the Pull Request
