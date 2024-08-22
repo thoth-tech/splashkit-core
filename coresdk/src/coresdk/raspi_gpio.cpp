@@ -309,17 +309,18 @@ namespace splashkit_lib
         int bcmPin = boardToBCM(pin);
         if (bcmPin == -1)
         {
-            cout << "Cant modify a HIGH Pin" << endl;
+            cout << "Reading of PIN: " << pin << " would always be HIGH" << endl;
+            return GPIO_HIGH;
         }
         else if (bcmPin == -2)
         {
-            cout << "Cant modify a Ground pin" << endl;
+            cout << "Reading of PIN: " << pin << " would always be LOW" << endl;
+            return GPIO_LOW;
         }
         else
         {
             return static_cast<pin_values>(sk_remote_gpio_read(pi, bcmPin));
         }
-        return GPIO_DEFAULT_VALUE;
     }
 
     void remote_raspi_set_pwm_range(connection pi, pins pin, int range)
