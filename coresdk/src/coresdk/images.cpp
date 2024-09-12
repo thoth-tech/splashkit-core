@@ -132,6 +132,40 @@ namespace splashkit_lib
         return result;
     }
 
+    bitmap load_bitmap_base64(string name, const char * image)
+    {
+        if (has_bitmap(name)) return bitmap_named(name);
+
+        sk_drawing_surface surface;
+        bitmap result = nullptr;
+
+        surface = sk_load_bitmap_base64(image);
+        if ( not surface._data )
+        {
+            LOG(WARNING) <<  cat({ "Error loading image for ", name}) ;
+            return nullptr;
+        }
+
+        result = new _bitmap_data;
+        result->image.surface = surface;
+
+        result->id         = BITMAP_PTR;
+        result->cell_w     = surface.width;
+        result->cell_h     = surface.height;
+        result->cell_cols  = 1;
+        result->cell_rows  = 1;
+        result->cell_count = 1;
+        result->pixel_mask = nullptr;
+
+        result->name       = name;
+
+        setup_collision_mask(result);
+
+        _bitmaps[name] = result;
+
+        return result;
+    }
+
     bitmap create_bitmap(string name, int width, int height)
     {
         bitmap result = new(_bitmap_data);
@@ -320,6 +354,27 @@ namespace splashkit_lib
     void draw_bitmap(string name, double x, double y, drawing_options opts)
     {
         draw_bitmap(bitmap_named(name), x, y, opts);
+    }
+
+    void draw_splash_screen(double x, double y)
+    {   
+        //Debug image for splash screen
+        const char image[] = {"iVBORw0KGgoAAAANSUhEUgAAAC0AAAAtCAIAAAC1eHXNAAADQklEQVRYw+2Yu47cRhBFb1U/2Bzu7Dy80BqCBId26ECZ/"
+                            "8Tf6h8wlDg2BAECjMWu5J2d4byaze4q5wJpMHBgG2x0xsLlYRWrbpOEv1sMEiiACtxZwXtSo8OhQnAqBSycndie8COIl"
+                            "BWCCYvx71gzx8wxc/wDHBbwJkBrOID6IKgA8GFUSU8wSkBQmwEoxibN2O2GUYytO3+2FysF4iV2DvCurISG5xLxjSv4UD"
+                            "1tuq1fnPQSfBPSJRadlHICjT1fXTMaSXsUS5tK7cF++cXuX8XVYHhCvEMwBFKcCAB+cETpVqmdxEE0DKJGjRIVtfARiro"
+                            "PV3yEfhnDZly582JVWo+NA97BRHaiaVJdVP1wXQwVRFNupGZo6xMs7Ae0Ww6D8UfiTfZnQ2tsosdT2ttqjW6nqKa9H9wN"
+                            "c3QocA4c0ZqIO3z7wI9v+PaUh4Uqv6/L+mTKUczFXV7360O1W3TbC+8m1cWOXHDAFQ38OSQECnuKkPpX/uxwMxjvBdFnS"
+                            "qamArUA3oEuHjZN65f3NNxeSnsn630dX6fwxJdtWRz49BMvNY9JbUveAY6qXjuA7UfRY0pCfhLHaJfrWkluD+EMLMX0gN"
+                            "VGM8po4+2gDOoRLThTyWdAyU6cIvNcnzlmjv8ghxAGN9E1K/eIanBQJPcSlBQbAga3YrUgga2WyHBQjw3jSucx/a+2dTp"
+                            "8nsjgW8AgPHt5fa1cXz2YTvQFMMP+IoeLuCD+iB7deg15RHyFZZz2HWVlpDSOqt/90/fdvenpAYWRllIzKsGwL3Y+3KJp"
+                            "8zPEBrPbG5gSduUc0EziyNQPz2l1b/jeAJrbt7Q6uhopiem4uMH4JsUjkuGqVF3XOVNs9mdvmtz3kzgqHdbtgXN6ZNyt/"
+                            "Oo5pZdyeostBMLDuscAXNZGd6WzyrWY9iY1DdIJ03wu0ajvL/Qbx7ZLOCF+h+0VAFuWYcOVjDVk72CSK9SaHp8R7ylMs3"
+                            "3QWOcaQWHAokls/KoNL02L36DXEaEN4UmjtaHn8zI1z5R/tstPiKMG/VU+SHjk/G2M9hZ3Z+xNerlJdyf/Z0xZebhf/sD"
+                            "pXpe7fGFuFkiq/hMi8oI0TsvH/P9j5pg5Zo6ZY+b4/3L8BU9VrQgqRMkBAAAAAElFTkSuQmCC"};
+        
+        bitmap bmp = load_bitmap_base64("SplashScreen", image);
+        draw_bitmap("SplashScreen", x, y);
     }
 
     rectangle bitmap_cell_rectangle(bitmap src, const point_2d &pt)
