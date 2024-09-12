@@ -2232,8 +2232,8 @@ namespace splashkit_lib
         }       
 
         vector<int8_t> out;
-        uint8_t a;
-        uint8_t b;
+        int8_t a;
+        int8_t b;
         int lb = 0;
         int rb = 6;
         //Base64 encoded data should always be divisible  into chunks of four
