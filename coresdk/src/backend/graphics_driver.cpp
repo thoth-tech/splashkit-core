@@ -2171,7 +2171,91 @@ namespace splashkit_lib
         
         return result;
     }
+
+    sk_drawing_surface sk_load_bitmap_base64(const char * image)
+    {
+        internal_sk_init();
+        sk_drawing_surface result = { SGDS_Unknown, 0, 0, nullptr };
+        vector<int8_t> base64_img = base64_decode(image);
+        SDL_RWops *rw = SDL_RWFromConstMem(&base64_img[0], base64_img.size());
+        SDL_Surface *surface = IMG_LoadTyped_RW(rw, 1, "PNG");
     
+        if ( ! surface ) {
+            std::cout << "error loading image " << IMG_GetError() << std::endl;
+            return result;
+        }
+        sk_bitmap_be *data = static_cast<sk_bitmap_be *>(malloc(sizeof(sk_bitmap_be)));
+        
+        result._data = data;
+        
+        // Allocate space for one texture per window
+        if (_sk_num_open_windows > 0)
+            data->texture = static_cast<SDL_Texture **>(malloc(sizeof(SDL_Texture*) * _sk_num_open_windows));
+        else
+            data->texture = nullptr;
+        
+        for (unsigned int i = 0; i < _sk_num_open_windows; i++)
+        {
+            // Create a texture for each window
+            data->texture[i] = SDL_CreateTextureFromSurface(_sk_open_windows[i]->renderer, surface);
+        }
+        
+        data->surface = surface;
+        data->drawable = false;
+        data->clipped = false;
+        data->clip = {0,0,0,0};
+        
+        result.kind = SGDS_Bitmap;
+        result.width = surface->w;
+        result.height = surface->h;
+        
+        _sk_add_bitmap(data);
+        
+        return result;
+    }
+
+    vector<int8_t> base64_decode(const char* in) 
+    {   
+        //Lookup decimal values for base64 string (base64 -> base10)
+        vector<uint8_t> map;
+        char base_64_index[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        for (int i = 0; i < strlen(in); i++)
+        {
+            for(int j = 0; j < 64; j++)
+            {
+                if(in[i] == base_64_index[j])
+                {
+                    //Remove 00 prefix from byte by bit shifting
+                    map.push_back(j << 2);
+                }
+            }
+        }       
+
+        vector<int8_t> out;
+        uint8_t a;
+        uint8_t b;
+        int lb = 0;
+        int rb = 6;
+        //Base64 encoded data should always be divisible  into chunks of four
+        for (int i = 0; i < map.size(); i++)
+        {
+            //Concatenate six bits of a and two bits of b to get val c
+            a = (map[i] << lb);
+            b = (map[i+1] >> rb);
+            out.push_back(a + b);
+            //Shift cursors to concatenate correct chunks
+            lb+=2; 
+            rb-=2;
+            if(rb == 0)
+            {
+                lb = 0;
+                rb = 6;
+                ++i;
+            }   
+        }
+        return out;
+    }
+
     //x, y is the position to draw the bitmap to. As bitmaps scale around their centre, (x, y) is the top-left of the bitmap IF and ONLY IF scale = 1.
     //Angle is in degrees, 0 being right way up
     //Centre is the point to rotate around, relative to the bitmap centre (therefore (0,0) would rotate around the centre point)
