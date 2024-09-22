@@ -14,6 +14,22 @@
 #include "pigpiod_if2.h"
 #endif
 
+// Relevant error codes from pigpio library
+#define PI_INIT_FAILED             -1
+#define PI_BAD_USER_GPIO           -2
+#define PI_BAD_GPIO                -3
+#define PI_BAD_MODE                -4
+#define PI_BAD_LEVEL               -5
+#define PI_BAD_PUD                 -6
+#define PI_BAD_DUTYCYCLE           -8
+#define PI_BAD_DUTYRANGE           -21
+#define PI_NOT_PERMITTED           -41
+#define PI_SOME_PERMITTED          -42
+#define PIGIF_ERR_BAD_SEND         -2000
+#define PIGIF_ERR_BAD_RECV         -2001
+#define PIGIF_ERR_BAD_GET_ADDRINFO -2002
+#define PIGIF_ERR_BAD_CONNECT      -2003
+#define PIGIF_ERR_BAD_SOCKET       -2004
 
 using namespace std;
 // Use https://abyz.me.uk/rpi/pigpio/pdif2.html for local command reference
@@ -259,5 +275,43 @@ namespace splashkit_lib
                 LOG(ERROR) << "Remote GPIO: Connection has UDP Protocol";
             }
             return -1;
+        }
+        std::string sk_gpio_error_message(int error_code)
+        {
+            switch (error_code)
+            {
+            case PI_INIT_FAILED:
+                return "GPIO initialization failed. Please check your setup and try again.";
+            case PI_BAD_USER_GPIO:
+                return "Invalid GPIO pin number. Valid GPIO pins are 0-31.";
+            case PI_BAD_GPIO:
+                return "Invalid GPIO pin number. Valid GPIO pins are 0-53.";
+            case PI_BAD_MODE:
+                return "Invalid GPIO mode. Valid modes are 0-7.";
+            case PI_BAD_LEVEL:
+                return "Invalid GPIO level. Valid levels are 0 (LOW) or 1 (HIGH).";
+            case PI_BAD_PUD:
+                return "Invalid pull-up/down configuration. Valid options are 0 (OFF), 1 (Pull-down), 2 (Pull-up).";
+            case PI_BAD_DUTYCYCLE:
+                return "Invalid PWM duty cycle. Duty cycle must be between 0 and the range value (default 255).";
+            case PI_BAD_DUTYRANGE:
+                return "Invalid PWM range. Range must be between 25 and 40000.";
+            case PI_NOT_PERMITTED:
+                return "Permission denied to access GPIO. Please check your permissions.";
+            case PI_SOME_PERMITTED:
+                return "Permission denied to access one or more GPIO pins. Please check your permissions.";
+            case PIGIF_ERR_BAD_SEND:
+                return "Failed to send command to remote GPIO daemon (pigpiod).";
+            case PIGIF_ERR_BAD_RECV:
+                return "Failed to receive response from remote GPIO daemon (pigpiod).";
+            case PIGIF_ERR_BAD_GET_ADDRINFO:
+                return "Failed to resolve address of remote GPIO daemon (pigpiod).";
+            case PIGIF_ERR_BAD_CONNECT:
+                return "Failed to connect to remote GPIO daemon (pigpiod).";
+            case PIGIF_ERR_BAD_SOCKET:
+                return "Failed to create socket for connecting to remote GPIO daemon (pigpiod).";
+            default:
+                return "Unknown error code " + std::to_string(error_code);
+            }
         }
 }
