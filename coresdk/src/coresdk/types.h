@@ -440,9 +440,9 @@ namespace splashkit_lib
      */
     enum pin_values
     {
-        GPIO_DEFAULT_VALUE = -1
+        GPIO_DEFAULT_VALUE = -1,
         GPIO_LOW = 0,
-        GPIO_HIGH = 1,
+        GPIO_HIGH = 1
     };
 
     /**
