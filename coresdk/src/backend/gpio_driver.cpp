@@ -48,7 +48,7 @@ namespace splashkit_lib
 
                 if (pi < 0)
                 {
-                        cout << "gpio_init() must be called before any other GPIO functions" << endl;
+                        LOG(ERROR) << sk_gpio_error_message(pi);
                         return false;
                 }
                 else
@@ -58,7 +58,6 @@ namespace splashkit_lib
         // Initialize the GPIO library
         int sk_gpio_init()
         {
-
                 pi = pigpio_start(0, 0);
                 return pi;
         }
@@ -66,67 +65,114 @@ namespace splashkit_lib
         // Read the value of a GPIO pin
         int sk_gpio_read(int pin)
         {
-
-                if (check_pi())
+            if (check_pi())
+            {
+                int result = gpio_read(pi, pin);
+                if(result < 0)
                 {
-                        return gpio_read(pi, pin);
+                    LOG(ERROR) << sk_gpio_error_message(result);
                 }
+                return result;
+            }
+            else
+            {
+                return PI_INIT_FAILED;
+            }
         }
 
         // Write a value to a GPIO pin
         void sk_gpio_write(int pin, int value)
         {
-
-                check_pi();
-                gpio_write(pi, pin, value);
+            if (check_pi())
+            {
+                int result = gpio_write(pi, pin, value);
+                if(result < 0)
+                {
+                    LOG(ERROR) << sk_gpio_error_message(result);
+                }
+            }
         }
 
         // Set the mode of a GPIO pin
         void sk_gpio_set_mode(int pin, int mode)
         {
-
-                check_pi();
-                set_mode(pi, pin, mode);
+            if(check_pi())
+            {
+                int result = set_mode(pi, pin, mode);
+                if(result < 0)
+                {
+                    LOG(ERROR) << sk_gpio_error_message(result);
+                }
+            }
         }
 
         int sk_gpio_get_mode(int pin)
         {
-
-                check_pi();
-                return get_mode(pi, pin);
+            if(check_pi())
+            {
+                int result = get_mode(pi, pin);
+                if(result < 0)
+                {
+                    LOG(ERROR) << sk_gpio_error_message(result);
+                }
+                return result;
+            }
         }
         void sk_gpio_set_pull_up_down(int pin, int pud)
         {
-
-                check_pi();
-                set_pull_up_down(pi, pin, pud);
+            if(check_pi())
+            {
+                int result = set_pull_up_down(pi, pin, pud);
+                if(result < 0)
+                {
+                    LOG(ERROR) << sk_gpio_error_message(result);
+                }
+                return result;
+            }
         }
         void sk_set_pwm_range(int pin, int range)
         {
-
-                check_pi();
-                set_PWM_range(pi, pin, range);
+            if(check_pi())
+            {
+                int result = set_PWM_range(pi, pin, range);
+                if(result < 0)
+                {
+                    LOG(ERROR) << sk_gpio_error_message(result);
+                }
+            }
         }
         void sk_set_pwm_frequency(int pin, int frequency)
         {
-
-                check_pi();
-                set_PWM_frequency(pi, pin, frequency);
+            if(check_pi())
+            {
+                int result = set_PWM_frequency(pi, pin, frequency);
+                if(result < 0)
+                {
+                    LOG(ERROR) << sk_gpio_error_message(result);
+                }
+            }
         }
         void sk_set_pwm_dutycycle(int pin, int dutycycle)
         {
-
-                check_pi();
-                set_PWM_dutycycle(pi, pin, dutycycle);
+            if(check_pi())
+            {
+                int result = set_PWM_dutycycle(pi, pin, dutycycle);
+                if(result < 0)
+                {
+                    LOG(ERROR) << sk_gpio_error_message(result);
+                }
+                return result;
+            }
         }
+
 
         // Cleanup the GPIO library
         void sk_gpio_cleanup()
         {
-
-                check_pi();
-
+            if(check_pi())
+            {
                 pigpio_stop(pi);
+            }
         }
         #endif
 
@@ -230,7 +276,7 @@ namespace splashkit_lib
                 LOG(ERROR) << "Remote GPIO: Connection not open.";
                 return false;
             }
-		cout << "Cleaning Pins on Remote Pi Named: " << pi->name << endl;
+            cout << "Cleaning Pins on Remote Pi Named: " << pi->name << endl;
             sk_remote_clear_bank_1(pi);
             return close_connection(pi);
         }
@@ -240,7 +286,7 @@ namespace splashkit_lib
             if(!is_connection_open(pi))
             {
                 LOG(ERROR) << "Remote GPIO: Connection not open.";
-                return -1;
+                return PIGIF_ERR_BAD_CONNECT;
             }
 
             if(pi->protocol == TCP)
@@ -257,17 +303,24 @@ namespace splashkit_lib
                     {
                         sk_pigpio_cmd_t resp;
                         memcpy(&resp, buffer, num_send_bytes);
-
+                        
+                        if (resp.result < 0)
+                        {
+                            LOG(ERROR) << sk_gpio_error_message(resp.result);
+                        }
+                        
                         return resp.result;
                     }
                     else
                     {
-                        LOG(ERROR) << "Remote GPIO: Invalid response received from socket.";
+                        LOG(ERROR) << sk_gpio_error_message(PIGIF_ERR_BAD_RECV);
+                        return PIGIF_ERR_BAD_RECV;
                     }
                 }
                 else
                 {
-                    LOG(ERROR) << "Remote GPIO: Failed to send command to socket."; 
+                    LOG(ERROR) << sk_gpio_error_message(PIGIF_ERR_BAD_SEND);
+                    return PIGIF_ERR_BAD_SEND;
                 }
             }
             else
