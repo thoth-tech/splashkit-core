@@ -220,8 +220,8 @@ namespace splashkit_lib
             int bcmPin = boardToBCM(static_cast<pins>(i));
             if (bcmPin > 0)
             {
-                raspi_set_mode(static_cast<pins>(bcmPin), GPIO_INPUT);
-                raspi_write(static_cast<pins>(bcmPin), GPIO_LOW);
+                raspi_set_mode(static_cast<pins>(i), GPIO_INPUT);
+                raspi_write(static_cast<pins>(i), GPIO_LOW);
             }
         }
         sk_gpio_cleanup();
