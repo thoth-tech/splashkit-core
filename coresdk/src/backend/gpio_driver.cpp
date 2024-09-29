@@ -14,22 +14,6 @@
 #include "pigpiod_if2.h"
 #endif
 
-// Relevant error codes from pigpio library
-#define PI_INIT_FAILED             -1
-#define PI_BAD_USER_GPIO           -2
-#define PI_BAD_GPIO                -3
-#define PI_BAD_MODE                -4
-#define PI_BAD_LEVEL               -5
-#define PI_BAD_PUD                 -6
-#define PI_BAD_DUTYCYCLE           -8
-#define PI_BAD_DUTYRANGE           -21
-#define PI_NOT_PERMITTED           -41
-#define PI_SOME_PERMITTED          -42
-#define PIGIF_ERR_BAD_SEND         -2000
-#define PIGIF_ERR_BAD_RECV         -2001
-#define PIGIF_ERR_BAD_GET_ADDRINFO -2002
-#define PIGIF_ERR_BAD_CONNECT      -2003
-#define PIGIF_ERR_BAD_SOCKET       -2004
 
 using namespace std;
 // Use https://abyz.me.uk/rpi/pigpio/pdif2.html for local command reference
@@ -188,7 +172,6 @@ namespace splashkit_lib
             set_cmd.param1 = pin;
             set_cmd.param2 = mode;
 
-
             sk_gpio_send_cmd(pi, set_cmd);
         }
 
@@ -303,13 +286,15 @@ namespace splashkit_lib
                     {
                         sk_pigpio_cmd_t resp;
                         memcpy(&resp, buffer, num_send_bytes);
-                        
-                        if (resp.result < 0)
+
+                        int32_t result = static_cast<int32_t>(resp.result);
+
+                        if (result < 0)
                         {
-                            LOG(ERROR) << sk_gpio_error_message(resp.result);
+                            LOG(ERROR) << sk_gpio_error_message(result);
                         }
                         
-                        return resp.result;
+                        return result;
                     }
                     else
                     {
@@ -336,9 +321,9 @@ namespace splashkit_lib
             case PI_INIT_FAILED:
                 return "GPIO initialization failed. Please check your setup and try again.";
             case PI_BAD_USER_GPIO:
-                return "Invalid GPIO pin number. Valid GPIO pins are 0-31.";
+                return "Invalid GPIO pin number."; 
             case PI_BAD_GPIO:
-                return "Invalid GPIO pin number. Valid GPIO pins are 0-53.";
+                return "Invalid GPIO pin number.";
             case PI_BAD_MODE:
                 return "Invalid GPIO mode. Valid modes are 0-7.";
             case PI_BAD_LEVEL:

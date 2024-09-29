@@ -4,6 +4,7 @@
 // Copyright © 2024 XQuestCode. All rights reserved.
 #include "raspi_gpio.h"
 #include "gpio_driver.h"
+#include "easylogging++.h"
 #include <iostream>
 using namespace std;
 
@@ -19,8 +20,8 @@ namespace splashkit_lib
         {
             return BCMpinData[static_cast<int>(pin) - static_cast<int>(PIN_1)];
         }
-        cout << "Invalid board pin" << endl;
-        return -1;
+        LOG(ERROR) << "Invalid board pin";
+        return PI_BAD_GPIO;
     }
     bool has_gpio()
     {
@@ -54,6 +55,10 @@ namespace splashkit_lib
         {
             cout << "Cant modify a Ground pin" << endl;
         }
+        else if (bcmPin == -3)
+        {
+            return;
+        }
         else
         {
             sk_gpio_set_mode(bcmPin, static_cast<int>(mode));
@@ -73,6 +78,10 @@ namespace splashkit_lib
         else if (bcmPin == -2)
         {
             cout << "Cant modify a Ground pin" << endl;
+        }
+        else if (bcmPin == -3)
+        {
+            return;
         }
         else
         {
@@ -97,6 +106,10 @@ namespace splashkit_lib
         else if (bcmPin == -2)
         {
             cout << "Cant write a Ground pin" << endl;
+        }
+        else if (bcmPin == -3)
+        {
+            return;
         }
         else
         {
@@ -141,6 +154,10 @@ namespace splashkit_lib
         {
             cout << "Cant modify a Ground pin" << endl;
         }
+        else if (bcmPin == -3)
+        {
+            return;
+        }
         else
         {
             sk_gpio_set_pull_up_down(bcmPin, static_cast<int>(pud));
@@ -160,6 +177,10 @@ namespace splashkit_lib
         else if (bcmPin == -2)
         {
             cout << "Cant modify a Ground pin" << endl;
+        }
+        else if (bcmPin == -3)
+        {
+            return;
         }
         else
         {
@@ -181,6 +202,10 @@ namespace splashkit_lib
         {
             cout << "Cant modify a Ground pin" << endl;
         }
+        else if (bcmPin == -3)
+        {
+            return;
+        }
         else
         {
             sk_set_pwm_frequency(bcmPin, frequency);
@@ -200,6 +225,10 @@ namespace splashkit_lib
         else if (bcmPin == -2)
         {
             cout << "Cant modify a Ground pin" << endl;
+        }
+        else if (bcmPin == -3)
+        {
+            return;
         }
         else
         {
@@ -246,6 +275,10 @@ namespace splashkit_lib
         {
             cout << "Cant modify a Ground pin" << endl;
         }
+        else if (bcmPin == -3)
+        {
+            return;
+        }
         else
         {
             sk_remote_gpio_set_mode(pi, bcmPin, mode);
@@ -262,6 +295,10 @@ namespace splashkit_lib
         else if (bcmPin == -2)
         {
             cout << "Cant modify a Ground pin" << endl;
+        }
+        else if (bcmPin == -3)
+        {
+            return GPIO_DEFAULT_MODE;
         }
         else
         {
@@ -281,6 +318,10 @@ namespace splashkit_lib
         {
             cout << "Cant modify a Ground pin" << endl;
         }
+        else if (bcmPin == -3)
+        {
+            return;
+        }
         else
         {
             sk_remote_gpio_set_pull_up_down(pi, bcmPin, pud);
@@ -297,6 +338,10 @@ namespace splashkit_lib
         else if (bcmPin == -2)
         {
             cout << "Cant modify a Ground pin" << endl;
+        }
+        else if (bcmPin == -3)
+        {
+            return;
         }
         else
         {
@@ -317,6 +362,10 @@ namespace splashkit_lib
             cout << "Reading of PIN: " << pin << " would always be LOW" << endl;
             return GPIO_LOW;
         }
+        else if (bcmPin == -3)
+        {
+            return GPIO_DEFAULT_VALUE;
+        }
         else
         {
             return static_cast<pin_values>(sk_remote_gpio_read(pi, bcmPin));
@@ -333,6 +382,10 @@ namespace splashkit_lib
         else if (bcmPin == -2)
         {
             cout << "Cant modify a Ground pin" << endl;
+        }
+        else if (bcmPin == -3)
+        {
+            return;
         }
         else
         {
@@ -351,6 +404,10 @@ namespace splashkit_lib
         {
             cout << "Cant modify a Ground pin" << endl;
         }
+        else if (bcmPin == -3)
+        {
+            return;
+        }
         else
         {
             sk_remote_set_pwm_frequency(pi, bcmPin, frequency);
@@ -367,6 +424,10 @@ namespace splashkit_lib
         else if (bcmPin == -2)
         {
             cout << "Cant modify a Ground pin" << endl;
+        }
+        else if (bcmPin == -3)
+        {
+            return;
         }
         else
         {

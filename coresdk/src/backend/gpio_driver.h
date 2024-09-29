@@ -9,8 +9,26 @@
 #include "backend_types.h"
 #include <stdint.h> // Include the appropriate header file for stdint.h
 
+// Relevant error codes from pigpio library
+#define PI_INIT_FAILED             -1
+#define PI_BAD_USER_GPIO           -2
+#define PI_BAD_GPIO                -3
+#define PI_BAD_MODE                -4
+#define PI_BAD_LEVEL               -5
+#define PI_BAD_PUD                 -6
+#define PI_BAD_DUTYCYCLE           -8
+#define PI_BAD_DUTYRANGE           -21
+#define PI_NOT_PERMITTED           -41
+#define PI_SOME_PERMITTED          -42
+#define PIGIF_ERR_BAD_SEND         -2000
+#define PIGIF_ERR_BAD_RECV         -2001
+#define PIGIF_ERR_BAD_GET_ADDRINFO -2002
+#define PIGIF_ERR_BAD_CONNECT      -2003
+#define PIGIF_ERR_BAD_SOCKET       -2004
+
 namespace splashkit_lib
 {
+
     #ifdef RASPBERRY_PI
     int sk_gpio_init();
     int sk_gpio_read(int pin);
