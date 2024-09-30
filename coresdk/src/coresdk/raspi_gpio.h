@@ -73,6 +73,7 @@ namespace splashkit_lib
      * @brief Sets the PWM range for the specified pin.
      *
      * This function sets the PWM range for the specified pin.
+     * Valid values for the range are 25 - 40000
      *
      * @param pin    The pin to set the PWM range for.
      * @param range  The PWM range to set for the pin.
@@ -115,5 +116,116 @@ namespace splashkit_lib
      * This function should be called when you are finished using the GPIO library. It sets all pin modes to INPUT and values to LOW.
      */
     void raspi_cleanup();
+    
+	/**
+     * @brief Initialises a remote connection to a Raspberry Pi.
+     *
+     * This function initialises a connection to a remote Raspberry Pi using the specified name, host, and port.
+     *
+     * @param name   The name of the connection.
+     * @param host   The host address of the Raspberry Pi.
+     * @param port   The port to use for the connection.
+     * @returns      The connection object used to communicate with the remote Raspberry Pi.
+     */
+    connection remote_raspi_init(std::string name, const std::string &host, unsigned short int port);
+	
+	/**
+     * @brief Sets the mode of the specified pin on a remote Raspberry Pi.
+     *
+     * This function sets the mode of a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi     The connection object to the remote Raspberry Pi.
+     * @param pin    The pin to set the mode for.
+     * @param mode   The mode to set for the pin.
+     */
+    void remote_raspi_set_mode(connection pi, pins pin, pin_modes mode);
+	
+	/**
+     * @brief Gets the mode of the specified pin on a remote Raspberry Pi.
+     *
+     * This function retrieves the mode of a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi     The connection object to the remote Raspberry Pi.
+     * @param pin    The pin to get the mode for.
+     * @returns      The mode of the pin.
+     */
+    pin_modes remote_raspi_get_mode(connection pi, pins pin);
+	
+	/**
+     * @brief Sets the pull up/down mode for the specified pin on a remote Raspberry Pi.
+     *
+     * This function sets the pull-up/down mode of a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi     The connection object to the remote Raspberry Pi.
+     * @param pin    The pin to set the pull up/down mode for.
+     * @param pud    The pull up/down mode to set for the pin.
+     */
+    void remote_raspi_set_pull_up_down(connection pi, pins pin, pull_up_down pud);
+	
+	/**
+     * @brief Writes a value to the specified pin on a remote Raspberry Pi.
+     *
+     * This function writes a specified value to a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi     The connection object to the remote Raspberry Pi.
+     * @param pin    The pin to write the value to.
+     * @param value  The value to write to the pin.
+     */
+    void remote_raspi_write(connection pi, pins pin, pin_values value);
+	
+	/**
+     * @brief Reads the value from the specified pin on a remote Raspberry Pi.
+     *
+     * This function reads the value from a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi     The connection object to the remote Raspberry Pi.
+     * @param pin    The pin to read the value from.
+     * @returns      The value read from the pin.
+     */
+    pin_values remote_raspi_read(connection pi, pins pin);
+	
+	/**
+     * @brief Sets the PWM range for the specified pin on a remote Raspberry Pi.
+     *
+     * This function sets the PWM range for a specific pin on a remote Raspberry Pi.
+     * Valid values for the range are 25 - 40000
+     *
+     * @param pi     The connection object to the remote Raspberry Pi.
+     * @param pin    The pin to set the PWM range for.
+     * @param range  The PWM range to set for the pin.
+     */
+    void remote_raspi_set_pwm_range(connection pi, pins pin, int range);
+	
+	/**
+     * @brief Sets the PWM frequency for the specified pin on a remote Raspberry Pi.
+     *
+     * This function sets the PWM frequency for a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi         The connection object to the remote Raspberry Pi.
+     * @param pin        The pin to set the PWM frequency for.
+     * @param frequency  The PWM frequency to set for the pin.
+     */
+    void remote_raspi_set_pwm_frequency(connection pi, pins pin, int frequency);
+	
+	/**
+     * @brief Sets the PWM duty cycle for the specified pin on a remote Raspberry Pi.
+     *
+     * This function sets the PWM duty cycle for a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi         The connection object to the remote Raspberry Pi.
+     * @param pin        The pin to set the PWM duty cycle for.
+     * @param dutycycle  The PWM duty cycle to set for the pin.
+     */
+    void remote_raspi_set_pwm_dutycycle(connection pi, pins pin, int dutycycle);
+	
+	/**
+     * @brief Cleans up and releases the connection to a remote Raspberry Pi.
+     *
+     * This function closes the connection to the remote Raspberry Pi and releases any resources associated with it.
+     *
+     * @param pi  The connection object to the remote Raspberry Pi.
+     * @returns   true if the cleanup was successful, false otherwise.
+     */
+    bool remote_raspi_cleanup(connection pi);
 }
 #endif /* raspi_gpio_hpp */

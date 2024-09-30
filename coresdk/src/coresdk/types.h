@@ -434,15 +434,15 @@ namespace splashkit_lib
     /**
      * GPIO Pin Values:
      *
+     * @constant GPIO_DEFAULT_VALUE  Default value, indicates error.
      * @constant GPIO_LOW   Logic low (0).
      * @constant GPIO_HIGH  Logic high (1).
-     * @constant GPIO_DEFAULT_VALUE  Default value.
      */
     enum pin_values
     {
+        GPIO_DEFAULT_VALUE = -1,
         GPIO_LOW = 0,
-        GPIO_HIGH = 1,
-        GPIO_DEFAULT_VALUE = -1
+        GPIO_HIGH = 1
     };
 
     /**

@@ -3,19 +3,27 @@
 // Copyright (©) 2024 Aditya Parmar. All Rights Reserved.
 
 #include "gpio_driver.h"
+#include "easylogging++.h"
 
 #include <string>
 #include <iostream>
 #include <cstdlib> // Add this line to include the necessary header for the exit() function
 
+#include <cstring>
 #ifdef RASPBERRY_PI
 #include "pigpiod_if2.h"
+#endif
 
 
 using namespace std;
-// Use https://abyz.me.uk/rpi/pigpio/pdif2.html for reference
+// Use https://abyz.me.uk/rpi/pigpio/pdif2.html for local command reference
+//   Archive Link: https://web.archive.org/web/20240423160241/https://abyz.me.uk/rpi/pigpio/pdif2.html
+//
+// Use https://abyz.me.uk/rpi/pigpio/sif.html for remote command reference
+//   Archive Link: https://web.archive.org/web/20240423160319/https://abyz.me.uk/rpi/pigpio/sif.html
 namespace splashkit_lib
 {
+        #ifdef RASPBERRY_PI
         int pi;
 
         // Check if pigpio_init() has been called before any other GPIO functions
@@ -25,7 +33,7 @@ namespace splashkit_lib
                 if (pi < 0)
                 {
                         cout << "gpio_init() must be called before any other GPIO functions" << endl;
-                        return false; 
+                        return false;
                 }
                 else
                         return true;
@@ -104,5 +112,152 @@ namespace splashkit_lib
 
                 pigpio_stop(pi);
         }
+        #endif
+
+        connection sk_remote_gpio_init(std::string name, const std::string &host, unsigned short int port)
+        {
+            return open_connection(name, host, port);
+        }
+
+        void sk_remote_gpio_set_mode(connection pi, int pin, int mode)
+        {
+            sk_pigpio_cmd_t set_cmd;
+            set_cmd.cmd_code = GPIO_CMD_SET_MODE;
+            set_cmd.param1 = pin;
+            set_cmd.param2 = mode;
+
+
+            sk_gpio_send_cmd(pi, set_cmd);
+        }
+
+        int sk_remote_gpio_get_mode(connection pi, int pin)
+        {
+            sk_pigpio_cmd_t get_cmd;
+            get_cmd.cmd_code = GPIO_CMD_GET_MODE;
+            get_cmd.param1 = pin;
+
+            return sk_gpio_send_cmd(pi, get_cmd);
+        }
+
+        void sk_remote_gpio_set_pull_up_down(connection pi, int pin, int pud)
+        {
+            sk_pigpio_cmd_t set_pud_cmd;
+            set_pud_cmd.cmd_code = GPIO_CMD_SET_PUD;
+            set_pud_cmd.param1 = pin;
+            set_pud_cmd.param2 = pud;
+
+            sk_gpio_send_cmd(pi, set_pud_cmd);
+        }
+
+        int sk_remote_gpio_read(connection pi, int pin)
+        {
+            sk_pigpio_cmd_t read_cmd;
+            read_cmd.cmd_code = GPIO_CMD_READ;
+            read_cmd.param1 = pin;
+
+            return sk_gpio_send_cmd(pi, read_cmd);
+        }
+
+        void sk_remote_gpio_write(connection pi, int pin, int value)
+        {
+            sk_pigpio_cmd_t write_cmd;
+            write_cmd.cmd_code = GPIO_CMD_WRITE;
+            write_cmd.param1 = pin;
+            write_cmd.param2 = value;
+
+            sk_gpio_send_cmd(pi, write_cmd);
+        }
+
+        void sk_remote_set_pwm_range(connection pi, int pin, int range)
+        {
+            sk_pigpio_cmd_t set_range_cmd;
+            set_range_cmd.cmd_code = GPIO_CMD_SET_PWM_RANGE;
+            set_range_cmd.param1 = pin;
+            set_range_cmd.param2 = range;
+
+            sk_gpio_send_cmd(pi, set_range_cmd);
+        }
+
+        void sk_remote_set_pwm_frequency(connection pi, int pin, int frequency)
+        {
+            sk_pigpio_cmd_t set_freq_cmd;
+            set_freq_cmd.cmd_code = GPIO_CMD_SET_PWM_FREQ;
+            set_freq_cmd.param1 = pin;
+            set_freq_cmd.param2 = frequency;
+
+            sk_gpio_send_cmd(pi, set_freq_cmd);
+        }
+
+        void sk_remote_set_pwm_dutycycle(connection pi, int pin, int dutycycle)
+        {
+            sk_pigpio_cmd_t set_dutycycle_cmd;
+            set_dutycycle_cmd.cmd_code = GPIO_CMD_SET_PWM_DUTYCYCLE;
+            set_dutycycle_cmd.param1 = pin;
+            set_dutycycle_cmd.param2 = dutycycle;
+
+            sk_gpio_send_cmd(pi, set_dutycycle_cmd);
+        }
+
+        void sk_remote_clear_bank_1(connection pi)
+        {
+            sk_pigpio_cmd_t clear_bank_cmd;
+            clear_bank_cmd.cmd_code = GPIO_CMD_CLEAR_BANK_1;
+            clear_bank_cmd.param1 = 0x0FFFFFFC;
+
+            sk_gpio_send_cmd(pi, clear_bank_cmd);
+        }
+
+        bool sk_remote_gpio_cleanup(connection pi)
+        {
+            if(!is_connection_open(pi))
+            {
+                LOG(ERROR) << "Remote GPIO: Connection not open.";
+                return false;
+            }
+		cout << "Cleaning Pins on Remote Pi Named: " << pi->name << endl;
+            sk_remote_clear_bank_1(pi);
+            return close_connection(pi);
+        }
+
+        int sk_gpio_send_cmd(connection pi, sk_pigpio_cmd_t &cmd)
+        {
+            if(!is_connection_open(pi))
+            {
+                LOG(ERROR) << "Remote GPIO: Connection not open.";
+                return -1;
+            }
+
+            if(pi->protocol == TCP)
+            {
+                int num_send_bytes = sizeof(cmd);
+
+                char buffer[num_send_bytes];
+                memcpy(buffer, &cmd, num_send_bytes);
+
+                if(sk_send_bytes(&pi->socket, buffer, num_send_bytes)) 
+                {
+                    int num_bytes_recv = sk_read_bytes(&pi->socket, buffer, num_send_bytes); 
+                    if(num_bytes_recv == num_send_bytes) 
+                    {
+                        sk_pigpio_cmd_t resp;
+                        memcpy(&resp, buffer, num_send_bytes);
+
+                        return resp.result;
+                    }
+                    else
+                    {
+                        LOG(ERROR) << "Remote GPIO: Invalid response received from socket.";
+                    }
+                }
+                else
+                {
+                    LOG(ERROR) << "Remote GPIO: Failed to send command to socket."; 
+                }
+            }
+            else
+            {
+                LOG(ERROR) << "Remote GPIO: Connection has UDP Protocol";
+            }
+            return -1;
+        }
 }
-#endif
