@@ -276,16 +276,16 @@ namespace splashkit_lib
             {
                 int num_send_bytes = sizeof(cmd);
 
-                char buffer[num_send_bytes];
-                memcpy(buffer, &cmd, num_send_bytes);
+                std::vector<char> buffer(num_send_bytes);
+                memcpy(buffer.data(), &cmd, num_send_bytes);
 
-                if(sk_send_bytes(&pi->socket, buffer, num_send_bytes)) 
+                if(sk_send_bytes(&pi->socket, buffer.data(), num_send_bytes)) 
                 {
-                    int num_bytes_recv = sk_read_bytes(&pi->socket, buffer, num_send_bytes); 
+                    int num_bytes_recv = sk_read_bytes(&pi->socket, buffer.data(), num_send_bytes); 
                     if(num_bytes_recv == num_send_bytes) 
                     {
                         sk_pigpio_cmd_t resp;
-                        memcpy(&resp, buffer, num_send_bytes);
+                        memcpy(&resp, buffer.data(), num_send_bytes);
 
                         int32_t result = static_cast<int32_t>(resp.result);
 
@@ -321,7 +321,6 @@ namespace splashkit_lib
             case PI_INIT_FAILED:
                 return "GPIO initialization failed. Please check your setup and try again.";
             case PI_BAD_USER_GPIO:
-                return "Invalid GPIO pin number."; 
             case PI_BAD_GPIO:
                 return "Invalid GPIO pin number.";
             case PI_BAD_MODE:
