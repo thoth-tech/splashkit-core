@@ -112,7 +112,6 @@ namespace splashkit_lib
                 {
                     LOG(ERROR) << sk_gpio_error_message(result);
                 }
-                return result;
             }
         }
         void sk_set_pwm_range(int pin, int range)
@@ -146,11 +145,13 @@ namespace splashkit_lib
                 {
                     LOG(ERROR) << sk_gpio_error_message(result);
                 }
-                return result;
             }
         }
 
-
+	void sk_gpio_clear_bank_1()
+	{
+		clear_bank_1(pi, PI4B_GPIO_BITMASK);
+	}
         // Cleanup the GPIO library
         void sk_gpio_cleanup()
         {

@@ -22,10 +22,13 @@ namespace splashkit_lib
             bcmPinResult = BCMpinData[static_cast<int>(pin) - static_cast<int>(PIN_1)];
         }
 
-        if(bcmPinResult < 0)
+        if(bcmPinResult < 2)
         {
-            LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO) + ((bcmPinResult == -1) ? " Pin is a POWER line." :
-                                                                (bcmPinResult == -2) ? " Pin is a GROUND line." : " Unknown Pin Type.");
+	    std::string extra_text " Pin is a";
+	    extra_text += (bcmPinResult >= 0) ? " EEPROM Pin, using this could corrupt the bootloader." :
+			  (bcmPinResult == -1) ? " Pin is a POWER line." :
+                          (bcmPinResult == -2) ? " Pin is a GROUND line." : " Unknown Pin Type.");
+            LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO) + (
             return PI_BAD_GPIO;
         }
         else
@@ -225,16 +228,8 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         cout << "Cleaning GPIO pins" << endl;
-        for (int i = 1; i <= 40; i++)
-        {
-            int bcmPin = boardToBCM(static_cast<pins>(i));
-            if (bcmPin > 0)
-            {
-                raspi_set_mode(static_cast<pins>(i), GPIO_INPUT);
-                raspi_write(static_cast<pins>(i), GPIO_LOW);
-            }
-        }
-        sk_gpio_cleanup();
+       	sk_gpio_clear_bank_1();
+	sk_gpio_cleanup();
 #else
         cout << "Unable to set cleanup - GPIO not supported on this platform" << endl;
 #endif
