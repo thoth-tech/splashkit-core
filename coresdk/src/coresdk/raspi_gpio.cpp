@@ -30,7 +30,7 @@ namespace splashkit_lib
         // https://web.archive.org/web/20240901170108/https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-datasheet.pdf
         if(bcmPinResult < 2)
         {
-	        std::string extra_text = " Pin is a";
+            std::string extra_text = " Pin is a";
     	    extra_text += (bcmPinResult >= 0) ? "n EEPROM Pin, using this could corrupt the bootloader." :
 	    		          (bcmPinResult == -1) ? " POWER line." :
                           (bcmPinResult == -2) ? " GROUND line." : "n Unknown Pin Type.";
