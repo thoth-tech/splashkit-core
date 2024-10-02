@@ -1288,4 +1288,61 @@ namespace splashkit_lib
         // TODO implement ip address resolution. Should return ip address of connected network if one exists.
         return "127.0.0.1";
     }
+
+    string ipv4_to_bin(const string &a_ip)
+    {
+        string::size_type lastpos = 0;
+        stringstream bin_string;
+        for (unsigned int i = 0; i < 4; i++)
+        {
+            string::size_type pos = a_ip.find('.', lastpos);
+            string token = pos == -1 ? a_ip.substr(lastpos) : a_ip.substr(lastpos, pos - lastpos);
+
+            int octet = token == "" || (lastpos == 0 && i > 0) ? 0 : stoi(token);
+            for (int j = 7; j >= 0; j--)
+            {
+                bin_string << ((octet >> j) & 1);
+            }
+
+            if (i < 3)
+            {
+                bin_string << ".";
+            }
+
+            lastpos = pos + 1;
+        }
+
+        return bin_string.str();
+    }
+
+    string bin_to_ipv4(const string &bin_ip)
+    {
+        string::size_type lastpos = 0;
+        stringstream ip_string;
+        for (unsigned int i = 0; i < 4; i++)
+        {
+            string::size_type pos = bin_ip.find('.', lastpos);
+            string token = pos == -1 ? bin_ip.substr(lastpos) : bin_ip.substr(lastpos, pos - lastpos);
+
+            int octet = 0;
+            for (size_t j = 0; j < 8; j++)
+            {
+                octet <<= 1;
+                if (token[j] == '1')
+                {
+                    octet |= 1;
+                }
+            }
+            ip_string << octet;
+
+            if (i < 3)
+            {
+                ip_string << ".";
+            }
+
+            lastpos = pos + 1;
+        }
+
+        return ip_string.str();
+    }
 }
