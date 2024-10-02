@@ -38,7 +38,7 @@ void local_gpio_invalid_tests()
 
     // --- ERROR TEST: Invalid GPIO pin number ---
     cout << "Testing invalid GPIO pin number (PIN_60)" << endl;
-    raspi_set_mode(static_cast<pins>(60), GPIO_OUTPUT);  // Invalid pin number
+    raspi_set_mode(static_cast<pins>(60), GPIO_OUTPUT);  
 
     // --- ERROR TEST: Invalid GPIO pin number (EEPROM pin) ---
     cout << "Testing invalid GPIO pin number (EEPROM pin)" << endl;
@@ -46,23 +46,23 @@ void local_gpio_invalid_tests()
     
     // --- ERROR TEST: Invalid GPIO pin number (POWER line) ---
     cout << "Testing invalid GPIO pin number (PIN_17, POWER line)" << endl;
-    raspi_set_mode(PIN_17, GPIO_OUTPUT);  // Invalid pin number
+    raspi_set_mode(PIN_17, GPIO_OUTPUT);  
 
     // --- ERROR TEST: Invalid GPIO pin number (GROUND line) ---
     cout << "Testing invalid GPIO pin number (PIN_6, GROUND line)" << endl;
-    raspi_set_mode(PIN_6, GPIO_OUTPUT);  // Invalid pin number
+    raspi_set_mode(PIN_6, GPIO_OUTPUT);  
 
     // --- ERROR TEST: Invalid GPIO mode ---
     cout << "Testing invalid GPIO mode (mode 10)" << endl;
-    raspi_set_mode(PIN_11, static_cast<pin_modes>(10));  // Invalid mode
+    raspi_set_mode(PIN_11, static_cast<pin_modes>(10));  
 
     // --- ERROR TEST: Invalid GPIO write value ---
     cout << "Testing invalid GPIO value (writing 5)" << endl;
-    raspi_write(PIN_11, static_cast<pin_values>(5));  // Invalid GPIO value
+    raspi_write(PIN_11, static_cast<pin_values>(5));  
 
     // --- ERROR TEST: Invalid pull-up/down configuration ---
     cout << "Testing invalid pull-up/down configuration (PUD value 3)" << endl;
-    raspi_set_pull_up_down(PIN_11, static_cast<pull_up_down>(3));  // Invalid PUD value
+    raspi_set_pull_up_down(PIN_11, static_cast<pull_up_down>(3));  
     
     // --- ERROR TEST: Invalid PWM Duty Cycle
     cout << "Testing invalid PWM duty cycle configuration (Duty Cycle value 300)" << endl;
@@ -83,7 +83,7 @@ void remote_gpio_valid_tests(connection pi)
     // Read the initial value of GPIO pin 11
     int defaultValue = remote_raspi_read(pi, PIN_11);
     cout << "Value of Pin 11: " << defaultValue << endl;
-
+    
     // Write HIGH to GPIO pin 11
     cout << "Writing HIGH to GPIO pin 11" << endl;
     remote_raspi_write(pi, PIN_11, GPIO_HIGH);

@@ -265,7 +265,7 @@ namespace splashkit_lib
     {
         if(!is_connection_open(pi))
         {
-            LOG(ERROR) << "Remote GPIO: Connection not open.";
+            LOG(ERROR) << sk_gpio_error_message(PIGIF_ERR_BAD_CONNECT); 
             return PIGIF_ERR_BAD_CONNECT;
         }
 
@@ -283,7 +283,8 @@ namespace splashkit_lib
                 {
                     sk_pigpio_cmd_t resp;
                     memcpy(&resp, buffer.data(), num_send_bytes);
-
+                    
+                    // We cast it back to a signed type so we can get the negative error codes.
                     int32_t result = static_cast<int32_t>(resp.result);
 
                     if (result < 0)
@@ -294,13 +295,13 @@ namespace splashkit_lib
                     return result;
                 }
                 else
-            {
+                {
                     LOG(ERROR) << sk_gpio_error_message(PIGIF_ERR_BAD_RECV);
                     return PIGIF_ERR_BAD_RECV;
                 }
             }
             else
-        {
+            {
                 LOG(ERROR) << sk_gpio_error_message(PIGIF_ERR_BAD_SEND);
                 return PIGIF_ERR_BAD_SEND;
             }
@@ -334,12 +335,8 @@ namespace splashkit_lib
                 return "Failed to send command to remote GPIO daemon (pigpiod).";
             case PIGIF_ERR_BAD_RECV:
                 return "Failed to receive response from remote GPIO daemon (pigpiod).";
-            case PIGIF_ERR_BAD_GET_ADDRINFO:
-                return "Failed to resolve address of remote GPIO daemon (pigpiod).";
             case PIGIF_ERR_BAD_CONNECT:
                 return "Failed to connect to remote GPIO daemon (pigpiod).";
-            case PIGIF_ERR_BAD_SOCKET:
-                return "Failed to create socket for connecting to remote GPIO daemon (pigpiod).";
             default:
                 return "Unknown error code " + std::to_string(error_code);
         }
