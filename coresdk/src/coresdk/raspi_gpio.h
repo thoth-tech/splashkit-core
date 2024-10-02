@@ -10,7 +10,7 @@
 #define raspi_gpio_hpp
 
 #include <stdint.h>
-#include "gpio_driver.h"
+#include "networking.h"
 #include "types.h"
 
 namespace splashkit_lib
