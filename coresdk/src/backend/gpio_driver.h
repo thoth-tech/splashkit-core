@@ -17,13 +17,17 @@
 #define PI_BAD_PUD                 -6
 #define PI_BAD_DUTYCYCLE           -8
 #define PI_BAD_DUTYRANGE           -21
+#define PI_NOT_PERMITTED           -41
+#define PI_SOME_PERMITTED          -42
 #define PIGIF_ERR_BAD_SEND         -2000
 #define PIGIF_ERR_BAD_RECV         -2001
 #define PIGIF_ERR_BAD_GET_ADDRINFO -2002
 #define PIGIF_ERR_BAD_CONNECT      -2003
 #define PIGIF_ERR_BAD_SOCKET       -2004
 
+// Bitmask for valid user GPIO on the 4B board
 #define PI4B_GPIO_BITMASK 0x0FFFFFFC
+
 namespace splashkit_lib
 {
 

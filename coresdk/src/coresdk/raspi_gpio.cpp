@@ -5,6 +5,7 @@
 #include "raspi_gpio.h"
 #include "gpio_driver.h"
 #include "easylogging++.h"
+#include "types.h"
 #include <iostream>
 using namespace std;
 
@@ -24,11 +25,11 @@ namespace splashkit_lib
 
         if(bcmPinResult < 2)
         {
-	    std::string extra_text " Pin is a";
-	    extra_text += (bcmPinResult >= 0) ? " EEPROM Pin, using this could corrupt the bootloader." :
-			  (bcmPinResult == -1) ? " Pin is a POWER line." :
-                          (bcmPinResult == -2) ? " Pin is a GROUND line." : " Unknown Pin Type.");
-            LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO) + (
+	    std::string extra_text = " Pin is a";
+	    extra_text += (bcmPinResult >= 0) ? "n EEPROM Pin, using this could corrupt the bootloader." :
+			          (bcmPinResult == -1) ? " POWER line." :
+                      (bcmPinResult == -2) ? " GROUND line." : "n Unknown Pin Type.";
+            LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO) + extra_text;
             return PI_BAD_GPIO;
         }
         else
@@ -60,15 +61,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)
         {
             sk_gpio_set_mode(bcmPin, static_cast<int>(mode));
         }
@@ -80,15 +73,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)    
         {
             return static_cast<pin_modes>(sk_gpio_get_mode(bcmPin));
         }
@@ -104,15 +89,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant write a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant write a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2) 
         {
             sk_gpio_write(bcmPin, static_cast<int>(value));
         }
@@ -126,17 +103,11 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
+        if(bcmPin >= 2)
         {
-            cout << "Reading of PIN: " << pin << " would always be HIGH" << endl;
-            return GPIO_HIGH;
+            return static_cast<pin_values>(sk_gpio_read(bcmPin));
         }
-        else if (bcmPin == -2)
-        {
-            cout << "Reading of PIN: " << pin << " would always be LOW" << endl;
-            return GPIO_LOW;
-        }
-        return static_cast<pin_values>(sk_gpio_read(bcmPin));
+        return GPIO_DEFAULT_VALUE;
 #else
         cout << "Unable to read pin - GPIO not supported on this platform" << endl;
         return GPIO_DEFAULT_VALUE;
@@ -146,15 +117,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)
         {
             sk_gpio_set_pull_up_down(bcmPin, static_cast<int>(pud));
         }
@@ -166,15 +129,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)
         {
             sk_set_pwm_range(bcmPin, range);
         }
@@ -186,15 +141,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)
         {
             sk_set_pwm_frequency(bcmPin, frequency);
         }
@@ -206,15 +153,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)
         {
             sk_set_pwm_dutycycle(bcmPin, dutycycle);
         }
@@ -229,7 +168,7 @@ namespace splashkit_lib
 #ifdef RASPBERRY_PI
         cout << "Cleaning GPIO pins" << endl;
        	sk_gpio_clear_bank_1();
-	sk_gpio_cleanup();
+    	sk_gpio_cleanup();
 #else
         cout << "Unable to set cleanup - GPIO not supported on this platform" << endl;
 #endif

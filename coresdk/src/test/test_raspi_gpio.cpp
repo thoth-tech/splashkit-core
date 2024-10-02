@@ -96,6 +96,10 @@ void remote_gpio_invalid_tests(connection pi)
     cout << "Testing invalid GPIO pin number (PIN_60)" << endl;
     remote_raspi_set_mode(pi, static_cast<pins>(60), GPIO_OUTPUT); 
 
+    // --- ERROR TEST: Invalid GPIO pin number (EEPROM pin) ---
+    cout << "Testing invalid GPIO pin number (EEPROM pin)" << endl;
+    remote_raspi_set_mode(pi, PIN_27, GPIO_OUTPUT); 
+     
     // --- ERROR TEST: Invalid GPIO pin number (POWER line) ---
     cout << "Testing invalid GPIO pin number (PIN_17, POWER line)" << endl;
     remote_raspi_set_mode(pi, PIN_17, GPIO_OUTPUT); 
