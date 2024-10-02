@@ -23,6 +23,7 @@
 #define PIGIF_ERR_BAD_CONNECT      -2003
 #define PIGIF_ERR_BAD_SOCKET       -2004
 
+#define PI4B_GPIO_BITMASK 0x0FFFFFFC
 namespace splashkit_lib
 {
 

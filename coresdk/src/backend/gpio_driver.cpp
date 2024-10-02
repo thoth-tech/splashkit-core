@@ -61,7 +61,7 @@ namespace splashkit_lib
             }
             else
             {
-                return PI_INIT_FAILED;
+                return GPIO_DEFAULT_VALUE;
             }
         }
 
@@ -248,7 +248,7 @@ namespace splashkit_lib
         {
             sk_pigpio_cmd_t clear_bank_cmd;
             clear_bank_cmd.cmd_code = GPIO_CMD_CLEAR_BANK_1;
-            clear_bank_cmd.param1 = 0x0FFFFFFC;
+            clear_bank_cmd.param1 = PI4B_GPIO_BITMASK;
 
             sk_gpio_send_cmd(pi, clear_bank_cmd);
         }
@@ -312,8 +312,8 @@ namespace splashkit_lib
             else
             {
                 LOG(ERROR) << "Remote GPIO: Connection has UDP Protocol";
+                return -1;
             }
-            return -1;
         }
         std::string sk_gpio_error_message(int error_code)
         {
