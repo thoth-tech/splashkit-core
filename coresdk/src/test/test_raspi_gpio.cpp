@@ -39,6 +39,10 @@ void local_gpio_invalid_tests()
     // --- ERROR TEST: Invalid GPIO pin number ---
     cout << "Testing invalid GPIO pin number (PIN_60)" << endl;
     raspi_set_mode(static_cast<pins>(60), GPIO_OUTPUT);  // Invalid pin number
+
+    // --- ERROR TEST: Invalid GPIO pin number (EEPROM pin) ---
+    cout << "Testing invalid GPIO pin number (EEPROM pin)" << endl;
+    raspi_set_mode(PIN_27, GPIO_OUTPUT); 
     
     // --- ERROR TEST: Invalid GPIO pin number (POWER line) ---
     cout << "Testing invalid GPIO pin number (PIN_17, POWER line)" << endl;
