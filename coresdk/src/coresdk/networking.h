@@ -891,5 +891,29 @@ namespace splashkit_lib
      * @return ipv4 address string in X.X.X.X format
      */
     string my_ip();
+
+    /**
+     * @brief Converts an ipv4 address string to binary representation
+     *
+     * Converts an ipv4 address into its binary representation
+     * e.g. "11000000.10101000.00000000.00000001" from "192.168.0.1"
+     *
+     * @param a_ip IP address to convert
+     *
+     * @return Binary representation of the IPv4 string
+     */
+    string ipv4_to_bin(const string &a_ip);
+
+    /**
+     * @brief Converts a binary representation of an IPv4 address back to string
+     *
+     * Converts a binary representation of an IPv4 address back into its string form
+     * e.g. "192.168.0.1" from "11000000.10101000.00000000.00000001"
+     *
+     * @param bin_ip Binary representation of IP address to convert
+     *
+     * @return IPv4 address in string format
+     */
+    string bin_to_ipv4(const string &bin_ip);
 }
 #endif //SPLASHKIT_NETWORKING_H
