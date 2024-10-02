@@ -2,6 +2,7 @@
 // This file is part of the SplashKit Core Library.
 // Copyright (©) 2024 Aditya Parmar. All Rights Reserved.
 
+#include "network_driver.h"
 #include "gpio_driver.h"
 #include "easylogging++.h"
 
@@ -333,10 +334,6 @@ namespace splashkit_lib
                 return "Invalid PWM duty cycle. Duty cycle must be between 0 and the range value (default 255).";
             case PI_BAD_DUTYRANGE:
                 return "Invalid PWM range. Range must be between 25 and 40000.";
-            case PI_NOT_PERMITTED:
-                return "Permission denied to access GPIO. Please check your permissions.";
-            case PI_SOME_PERMITTED:
-                return "Permission denied to access one or more GPIO pins. Please check your permissions.";
             case PIGIF_ERR_BAD_SEND:
                 return "Failed to send command to remote GPIO daemon (pigpiod).";
             case PIGIF_ERR_BAD_RECV:

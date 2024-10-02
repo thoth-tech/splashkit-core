@@ -5,7 +5,6 @@
 #ifndef SPLASHKIT_GPIO_H
 #define SPLASHKIT_GPIO_H
 
-#include "network_driver.h"
 #include "backend_types.h"
 #include <stdint.h> // Include the appropriate header file for stdint.h
 
@@ -18,8 +17,6 @@
 #define PI_BAD_PUD                 -6
 #define PI_BAD_DUTYCYCLE           -8
 #define PI_BAD_DUTYRANGE           -21
-#define PI_NOT_PERMITTED           -41
-#define PI_SOME_PERMITTED          -42
 #define PIGIF_ERR_BAD_SEND         -2000
 #define PIGIF_ERR_BAD_RECV         -2001
 #define PIGIF_ERR_BAD_GET_ADDRINFO -2002
