@@ -29,6 +29,34 @@ void run_encoding_decoding_tests()
     assert(my_ip() == "127.0.0.1");
 }
 
+void mac_to_hex_test()
+{
+    assert(mac_to_hex("00:00:00:00:00:00") == "0x000000000000");
+    assert(mac_to_hex("FF:FF:FF:FF:FF:FF") == "0xFFFFFFFFFFFF");
+    assert(mac_to_hex("12:34:56:78:9A:BC") == "0x123456789ABC");
+    assert(mac_to_hex(TEST_MAC) == TEST_MAC_HEX);
+
+    std::string result = mac_to_hex("AB:CD:EF:12:34:56");
+    assert(result == "0xABCDEF123456");
+
+    std::cout << "All MAC to Hexadecimal tests passed!\n"
+              << "AB:CD:EF:12:34:56" << " in hex: " << result << std::endl;
+}
+
+void hex_to_mac_test()
+{
+    assert(hex_to_mac("0x000000000000") == "00:00:00:00:00:00");
+    assert(hex_to_mac("0xFFFFFFFFFFFF") == "FF:FF:FF:FF:FF:FF");
+    assert(hex_to_mac("0x123456789ABC") == "12:34:56:78:9A:BC");
+
+    std::string result = hex_to_mac(TEST_MAC_HEX);
+    assert(result == TEST_MAC);
+
+    std::cout << "All Hexadecimal to MAC tests passed!\n"
+              << TEST_MAC_HEX << " in MAC format: " << result << std::endl;
+    std::cout << "-------------------------------------" << std::endl;
+}
+
 void run_networking_test()
 {
     run_encoding_decoding_tests();

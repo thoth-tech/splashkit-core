@@ -1288,4 +1288,39 @@ namespace splashkit_lib
         // TODO implement ip address resolution. Should return ip address of connected network if one exists.
         return "127.0.0.1";
     }
+
+    string mac_to_hex(const string &mac_address)
+    {
+        stringstream hex_string;
+        hex_string << "0x";
+
+        string::size_type lastpos = 0;
+        for (int i = 0; i < 6; i++)
+        {
+            string::size_type pos = mac_address.find(':', lastpos);
+            string token = pos == string::npos ? mac_address.substr(lastpos) : mac_address.substr(lastpos, pos - lastpos);
+
+            hex_string << setw(2) << setfill('0') << uppercase << hex << stoi(token, nullptr, 16);
+
+            lastpos = pos + 1;
+        }
+
+        return hex_string.str();
+    }
+
+    string hex_to_mac(const string &hex_str)
+    {
+        stringstream mac_string;
+
+        for (int i = 2; i < hex_str.size(); i += 2)
+        {
+            if (i > 2)
+            {
+                mac_string << ":";
+            }
+            mac_string << hex_str.substr(i, 2);
+        }
+
+        return mac_string.str();
+    }
 }
