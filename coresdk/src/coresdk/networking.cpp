@@ -1,6 +1,7 @@
 #include <sstream>
 #include <cmath>
 #include <iomanip>
+#include <regex>
 
 #include "easylogging++.h"
 
@@ -1289,8 +1290,30 @@ namespace splashkit_lib
         return "127.0.0.1";
     }
 
+    bool is_valid_mac(const string &mac_address)
+    {
+        string octet = "([0-9A-Fa-f]{2})";
+        string mac_pattern = "^" + octet + ":" + octet + ":" + octet + ":" + octet + ":" + octet + ":" + octet + "$";
+
+        std::regex mac_regex(mac_pattern);
+
+        if (!regex_match(mac_address, mac_regex))
+        {
+            LOG(ERROR) << "Invalid MAC address format: " << mac_address;
+            return false;
+        }
+
+        return true;
+    }
+
     string mac_to_hex(const string &mac_address)
     {
+        if (!is_valid_mac(mac_address))
+        {
+            LOG(ERROR) << "Cannot convert invalid MAC address to hex: " << mac_address;
+            return "";
+        }
+
         stringstream hex_string;
         hex_string << "0x";
 
@@ -1310,9 +1333,15 @@ namespace splashkit_lib
 
     string hex_to_mac(const string &hex_str)
     {
+        if (hex_str.substr(0, 2) != "0x" || hex_str.length() != 14)
+        {
+            LOG(ERROR) << "Invalid hex string format: " << hex_str;
+            return "";
+        }
+
         stringstream mac_string;
 
-        for (int i = 2; i < hex_str.size(); i += 2)
+        for (size_t i = 2; i < hex_str.size(); i += 2)
         {
             if (i > 2)
             {

@@ -893,6 +893,17 @@ namespace splashkit_lib
     string my_ip();
 
     /**
+     * @brief Checks if a MAC address is valid
+     *
+     * Checks if the supplied MAC address is valid.
+     *
+     * @param mac_address MAC address to check
+     *
+     * @return true if the MAC address is valid
+     */
+    bool is_valid_mac(const string &mac_address);
+
+    /**
      * @brief Converts a MAC address string to its hexadecimal representation
      *
      * Converts a MAC address into its hexadecimal representation.
