@@ -1,16 +1,16 @@
-//
-//  test_terminal.cpp
-//  splashkit
-//
-//  Created by Andrew Cain on 8/10/16.
-//  Copyright © 2016 Andrew Cain. All rights reserved.
-//
+/**
+*  test_terminal.cpp
+*  splashkit
+*
+*  Created by Andrew Cain on 8/10/16.
+*  Copyright © 2016 Andrew Cain. All rights reserved.
+*/
 
 #include "terminal.h"
 #include "utils.h"
 #include <iostream>
 #include "basics.h"
-#include "assert.h"
+#include <cassert>
 
 using namespace std;
 using namespace splashkit_lib;
@@ -261,8 +261,7 @@ void test_dec_to_oct()
 
     // High values (32-bit boundaries)
     assert(dec_to_oct(4294967295) == "37777777777");
-    unsigned int
-        assert(dec_to_oct(2147483648) == "20000000000");
+    assert(dec_to_oct(2147483648) == "20000000000");
 
     // Mixed bits
     assert(dec_to_oct(123) == "173");
