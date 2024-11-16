@@ -137,6 +137,40 @@ namespace splashkit_lib
     vector<string> split(const string &text, char delimiter);
 
     /**
+     * @brief Checks if a string is a valid binary string
+     *
+     * A binary string is a string that contains only '0' and '1' characters.
+     *
+     * @param bin_str Binary string to check
+     *
+     * @returns True if the string is a valid binary string, false otherwise
+     */
+    bool is_binary(const string &bin_str);
+
+    /**
+     * @brief Checks if a string is a valid hexadecimal string
+     *
+     * A hexadecimal string is a string that contains only characters from '0' to '9'
+     * and 'A' to 'F' (or 'a' to 'f').
+     *
+     * @param hex_str Hexadecimal string to check
+     *
+     * @returns True if the string is a valid hexadecimal string, false otherwise
+     */
+    bool is_hex(const string &hex_str);
+
+    /**
+     * @brief Checks if a string is a valid octal string
+     *
+     * An octal string is a string that contains only characters from '0' to '7'.
+     *
+     * @param octal_str Octal string to check
+     *
+     * @returns True if the string is a valid octal string, false otherwise
+     */
+    bool is_octal(const string &octal_str);
+    
+    /**
      * @brief Converts a decimal (unsigned integer) to a binary string
      *
      * Converts the provided unsigned integer into a binary string.

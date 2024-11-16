@@ -631,6 +631,67 @@ void test_base64_decode()
     write_line("-------------------------------------");
 }
 
+void test_is_binary()
+{
+    // Valid binary strings
+    assert(is_binary("0"));
+    assert(is_binary("1"));
+    assert(is_binary("101010"));
+    assert(is_binary("0000"));
+    assert(is_binary("1111"));
+
+    // Invalid binary strings
+    assert(!is_binary(""));
+    assert(!is_binary("102"));  // Contains invalid digit
+    assert(!is_binary("ABC"));  // Contains non-binary characters
+    assert(!is_binary("1A1"));  // Mixed binary and non-binary characters
+
+    write_line("All binary validation tests passed!");
+    write_line("-------------------------------------");
+}
+
+void test_is_hex()
+{
+    // Valid hexadecimal strings
+    assert(is_hex("0"));
+    assert(is_hex("F"));
+    assert(is_hex("10"));
+    assert(is_hex("1A2B3C"));
+    assert(is_hex("abcdef"));
+    assert(is_hex("ABCDEF"));
+    assert(is_hex("1234567890ABCDEF"));
+
+    // Invalid hexadecimal strings
+    assert(!is_hex(""));
+    assert(!is_hex("G"));      // Contains invalid hex character
+    assert(!is_hex("1G2"));    // Mixed valid and invalid characters
+    assert(!is_hex("XYZ123")); // Contains non-hex characters
+
+    write_line("All hexadecimal validation tests passed!");
+    write_line("-------------------------------------");
+}
+
+void test_is_octal()
+{
+    // Valid octal strings
+    assert(is_octal("0"));
+    assert(is_octal("7"));
+    assert(is_octal("10"));
+    assert(is_octal("1234567"));
+    assert(is_octal("0000"));
+
+    // Invalid octal strings
+    assert(!is_octal(""));
+    assert(!is_octal("8"));       // Contains invalid digit
+    assert(!is_octal("9"));       // Contains invalid digit
+    assert(!is_octal("78"));      // Contains mixed valid and invalid characters
+    assert(!is_octal("123A456")); // Contains non-octal characters
+
+    write_line("All octal validation tests passed!");
+    write_line("-------------------------------------");
+}
+
+
 void run_terminal_test()
 {
     test_simple_terminal();
@@ -646,4 +707,7 @@ void run_terminal_test()
     test_hex_to_oct();
     test_base64_encode();
     test_base64_decode();    
+    test_is_binary();
+    test_is_hex();
+    test_is_octal();
 }
