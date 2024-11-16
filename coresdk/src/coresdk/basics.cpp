@@ -18,6 +18,8 @@
 namespace splashkit_lib
 {
 
+    const string BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
     // trim see: https://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring
 
     // trim from start
@@ -141,5 +143,224 @@ namespace splashkit_lib
     double convert_to_double(const string &text)
     {
         return std::stod( text );
+    }
+
+    string dec_to_bin(unsigned int a_dec)
+    {
+        // Without this check, dec to bin will not work if dec is 0
+        if (a_dec == 0)
+            return "0";
+
+        string bin_string;
+        while (a_dec > 0)
+        {
+            bin_string = ((a_dec & 1) ? "1" : "0") + bin_string;
+            a_dec >>= 1;
+        }
+        return bin_string;
+    }
+
+    unsigned int bin_to_dec(const string &bin_str)
+    {
+        unsigned int result = 0;
+        for (size_t i = 0; i < bin_str.size(); i++)
+        {
+            if (bin_str[i] == '1')
+            {
+                result += (1 << (bin_str.size() - i - 1));
+            }
+        }
+        return result;
+    }
+
+    string hex_to_bin(const string &hex_str)
+    {
+
+        string bin_string;
+        for (char hex_char : hex_str)
+        {
+            int hex_val = 0;
+
+            if (hex_char >= '0' && hex_char <= '9')
+                hex_val = hex_char - '0';
+            else if (hex_char >= 'A' && hex_char <= 'F')
+                hex_val = hex_char - 'A' + 10;
+            else if (hex_char >= 'a' && hex_char <= 'f')
+                hex_val = hex_char - 'a' + 10;
+
+            for (int i = 3; i >= 0; i--)
+            {
+                bin_string += ((hex_val >> i) & 1) ? '1' : '0';
+            }
+        }
+
+        if (hex_str.length() == 1)
+        {
+            size_t first_one = bin_string.find_first_not_of('0');
+            return (first_one == string::npos) ? "0" : bin_string.substr(first_one);
+        }
+
+        return bin_string;
+    }
+
+    string bin_to_hex(const string &bin_str)
+    {
+        string hex_string;
+        int length = bin_str.length();
+
+        int padding = (4 - (length % 4)) % 4;
+        string padded_bin_str = string(padding, '0') + bin_str;
+
+        for (size_t i = 0; i < padded_bin_str.length(); i += 4)
+        {
+            int hex_val = 0;
+            for (size_t j = 0; j < 4; j++)
+            {
+                hex_val <<= 1;
+                if (padded_bin_str[i + j] == '1')
+                    hex_val |= 1;
+            }
+
+            if (hex_val < 10)
+                hex_string += '0' + hex_val;
+            else
+                hex_string += 'A' + (hex_val - 10);
+        }
+        return hex_string;
+    }
+
+    string base64_encode(const string &input)
+    {
+        string encoded;
+        int val = 0, bits = -6;
+        const unsigned int b63 = 0x3F;
+
+        for (unsigned char c : input)
+        {
+            val = (val << 8) + c;
+            bits += 8;
+
+            while (bits >= 0)
+            {
+                encoded.push_back(BASE64_CHARS[(val >> bits) & b63]);
+                bits -= 6;
+            }
+        }
+
+        if (bits > -6)
+        {
+            encoded.push_back(BASE64_CHARS[((val << 8) >> (bits + 8)) & b63]);
+        }
+
+        while (encoded.size() % 4)
+        {
+            encoded.push_back('='); // Padding to make the length a multiple of 4
+        }
+
+        return encoded;
+    }
+
+    string base64_decode(const string &input)
+    {
+        string decoded;
+        int val = 0, bits = -8;
+        for (unsigned char c : input)
+        {
+            if (BASE64_CHARS.find(c) == string::npos)
+            {
+                if (c == '=')
+                    break; // Padding character, stop decoding
+                continue;  // Ignore any characters not in Base64 alphabet
+            }
+
+            val = (val << 6) + BASE64_CHARS.find(c);
+            bits += 6;
+
+            if (bits >= 0)
+            {
+                decoded.push_back(char((val >> bits) & 0xFF));
+                bits -= 8;
+            }
+        }
+        return decoded;
+    }
+
+    string dec_to_oct(unsigned int decimal_value)
+    {
+        if (decimal_value == 0)
+            return "0";
+
+        string octal_string;
+        while (decimal_value > 0)
+        {
+            octal_string = to_string(decimal_value % 8) + octal_string;
+            decimal_value /= 8;
+        }
+        return octal_string;
+    }
+
+    unsigned int oct_to_dec(const string &octal_string)
+    {
+        unsigned int decimal_value = 0;
+        for (size_t i = 0; i < octal_string.size(); i++)
+        {
+            decimal_value = decimal_value * 8 + (octal_string[i] - '0');
+        }
+        return decimal_value;
+    }
+
+    string oct_to_bin(const string &octal_str)
+    {
+        string bin_string;
+        for (char oct_char : octal_str)
+        {
+            int oct_val = oct_char - '0';
+
+            // Convert each octal digit to a 3-bit binary representation
+            for (int i = 2; i >= 0; i--)
+            {
+                bin_string += ((oct_val >> i) & 1) ? '1' : '0';
+            }
+        }
+
+        size_t first_one = bin_string.find_first_not_of('0');
+        return (first_one == string::npos) ? "0" : bin_string.substr(first_one);
+    }
+
+    string bin_to_oct(const string &bin_str)
+    {
+        string octal_string;
+
+        // Pad binary string with leading zeros to make its length a multiple of 3
+        int padding = (3 - (bin_str.length() % 3)) % 3;
+        string padded_bin_str = string(padding, '0') + bin_str;
+
+        for (size_t i = 0; i < padded_bin_str.length(); i += 3)
+        {
+            int oct_val = 0;
+            for (size_t j = 0; j < 3; j++)
+            {
+                oct_val <<= 1;
+                if (padded_bin_str[i + j] == '1')
+                    oct_val |= 1;
+            }
+
+            octal_string += '0' + oct_val;
+        }
+
+        size_t first_non_zero = octal_string.find_first_not_of('0');
+        return (first_non_zero == string::npos) ? "0" : octal_string.substr(first_non_zero);
+    }
+
+    string hex_to_oct(const string &hex_str)
+    {
+        string bin_str = hex_to_bin(hex_str);
+        return bin_to_oct(bin_str);
+    }
+
+    string oct_to_hex(const string &octal_str)
+    {
+        string bin_str = oct_to_bin(octal_str);
+        return bin_to_hex(bin_str);
     }
 }
