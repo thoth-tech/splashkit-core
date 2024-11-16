@@ -20,6 +20,7 @@ namespace splashkit_lib
 {
 
     const string BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    const string BASE32_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 
     // trim see: https://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring
 
@@ -378,7 +379,7 @@ namespace splashkit_lib
         return bin_to_hex(bin_str);
     }
 
-        string base64_encode(const string &input)
+    string base64_encode(const string &input)
     {
         string encoded;
         int val = 0, bits = -6;

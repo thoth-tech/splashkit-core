@@ -565,6 +565,18 @@ void test_base64_encode()
     assert(base64_encode("Hello, World!") == "SGVsbG8sIFdvcmxkIQ==");                                                                       // Common phrase
     assert(base64_encode("The quick brown fox jumps over the lazy dog") == "VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw=="); // Long sentence
 
+    // Tests for inequality
+    assert(base64_encode("Man") != "TQ==");
+    assert(base64_encode("M") != "TWFu");
+    assert(base64_encode("Ma") != "YW55IGNhcm5hbCBwbGVhc3VyZS4=");
+    assert(base64_encode("any carnal pleasure.") != "TWE=");
+    assert(base64_encode("") != "QQ==");
+    assert(base64_encode("A") != "QkM=");
+    assert(base64_encode("BC") != "eWVz");
+    assert(base64_encode("yes") != "SGVsbG8sIFdvcmxkIQ==");
+    assert(base64_encode("Hello, World!") != "VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw==");
+    assert(base64_encode("The quick brown fox jumps over the lazy dog") != "SGVsbG8sIFdvcmxkIQ==");
+
     string input1 = "Hello, World!";
     string result1 = base64_encode(input1);
     write_line("Hello, World! in Base64 is " + result1);
@@ -594,6 +606,18 @@ void test_base64_decode()
     // Larger strings
     assert(base64_decode("SGVsbG8sIFdvcmxkIQ==") == "Hello, World!");                                                                       // Common phrase
     assert(base64_decode("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw==") == "The quick brown fox jumps over the lazy dog"); // Long sentence
+
+    // Tests for inequality
+    assert(base64_decode("TQ==") != "Man");
+    assert(base64_decode("TWFu") != "M");
+    assert(base64_decode("YW55IGNhcm5hbCBwbGVhc3VyZS4=") != "Ma");
+    assert(base64_decode("TWE=") != "any carnal pleasure.");
+    assert(base64_decode("QQ==") != "");
+    assert(base64_decode("QkM=") != "A");
+    assert(base64_decode("eWVz") != "BC");
+    assert(base64_decode("SGVsbG8sIFdvcmxkIQ==") != "yes");
+    assert(base64_decode("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZw==") != "Hello, World!");
+    assert(base64_decode("SGVsbG8sIFdvcmxkIQ==") != "The quick brown fox jumps over the lazy dog");
 
     string input1 = "SGVsbG8sIFdvcmxkIQ==";
     string result1 = base64_decode(input1);

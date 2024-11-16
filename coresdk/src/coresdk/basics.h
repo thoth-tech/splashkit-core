@@ -185,30 +185,6 @@ namespace splashkit_lib
     string bin_to_hex(const string &bin_str);
 
     /**
-     * @brief Encodes a string to Base64 format
-     *
-     * Converts the provided string into its Base64 encoded representation.
-     * For example, "Man" will be converted to "TWFu".
-     *
-     * @param input String to encode
-     *
-     * @returns Base64 encoded string
-     */
-    string base64_encode(const string &input);
-
-    /**
-     * @brief Decodes a Base64 encoded string
-     *
-     * Converts the provided Base64 encoded string back to its original form.
-     * For example, "TWFu" will be converted to "Man".
-     *
-     * @param input Base64 encoded string to decode
-     *
-     * @returns Decoded original string
-     */
-    string base64_decode(const string &input);
-
-    /**
      * @brief Converts a decimal (unsigned integer) to an octal string
      *
      * Converts the provided decimal value into its octal string representation.
@@ -279,6 +255,30 @@ namespace splashkit_lib
      * @returns Hexadecimal string representation of the octal string
      */
     string oct_to_hex(const string &oct_str);
+
+    /**
+     * @brief Encodes a string to Base64 format
+     *
+     * Converts the provided string into its Base64 encoded representation.
+     * For example, "Man" will be converted to "TWFu".
+     *
+     * @param input String to encode
+     *
+     * @returns Base64 encoded string
+     */
+    string base64_encode(const string &input);
+
+    /**
+     * @brief Decodes a Base64 encoded string
+     *
+     * Converts the provided Base64 encoded string back to its original form.
+     * For example, "TWFu" will be converted to "Man".
+     *
+     * @param input Base64 encoded string to decode
+     *
+     * @returns Decoded original string
+     */
+    string base64_decode(const string &input);
 
 }
 #endif /* basics_hpp */
