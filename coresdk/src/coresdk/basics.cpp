@@ -20,7 +20,6 @@ namespace splashkit_lib
 {
 
     const string BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    const string BASE32_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 
     // trim see: https://stackoverflow.com/questions/216823/whats-the-best-way-to-trim-stdstring
 
@@ -434,4 +433,76 @@ namespace splashkit_lib
         }
         return decoded;
     }
+
+    double calculate_square_root(int number)
+    {
+        if (number == 0 || number == 1)
+            return number;
+
+        double estimate;
+        int p = 0;
+        int square;
+
+        // Find the largest perfect square smaller than or equal to the input
+        do
+        {
+            p++;
+            square = p * p;
+        }
+        while (square <= number);
+
+        // Start estimate with the last perfect square's root
+        estimate = static_cast<double>(p - 1);
+
+        int iterations = 0;
+        const int max_iterations = 10;
+        const double precision = 0.00001;
+
+        while (iterations < max_iterations)
+        {
+            estimate = (number / estimate + estimate) / 2.0;
+
+            // If estimate squared is within precision, return the result
+            if (std::abs(estimate * estimate - number) < precision)
+                return estimate;
+
+            iterations++;
+        }
+
+        return estimate;
+    }
+
+    bool is_prime_number(int number)
+    {
+        if (number <= 1) return false;
+        for (int i = 2; i <= calculate_square_root(number); i++)
+        {
+            if (number % i == 0)
+                return false;
+        }
+        return true;
+    }
+
+    int greatest_common_divisor(int number1, int number2)
+    {
+        if (!is_number(to_string(number1)) || !is_number(to_string(number2)))
+            return 0;
+        
+        while (number2 != 0)
+        {
+            int temp = number2;
+            number2 = number1 % number2;
+            number1 = temp;
+        }
+        return number1;
+    }
+
+    int least_common_multiple(int number1, int number2)
+    {
+        if (number1 == 0 || number2 == 0)
+            return 0;
+
+        return abs(number1 * number2) / greatest_common_divisor(number1, number2);
+    }
+
 }

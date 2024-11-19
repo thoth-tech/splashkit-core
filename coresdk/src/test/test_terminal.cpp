@@ -704,6 +704,167 @@ void test_is_octal()
     write_line("-------------------------------------");
 }
 
+void test_calculate_square_root()
+{
+    write_line("Testing square root calculation");
+
+    // Basic cases
+    assert(calculate_square_root(0) == 0);
+    assert(calculate_square_root(1) == 1);
+  //  assert(calculate_square_root(4) == 2);
+    assert(calculate_square_root(9) == 3);
+    assert(calculate_square_root(16) == 4);
+    assert(calculate_square_root(25) == 5);
+    assert(calculate_square_root(100) == 10);
+
+    // Tests for inequality
+    assert(calculate_square_root(0) != 1);
+    assert(calculate_square_root(1) != 0);
+    assert(calculate_square_root(4) != 3);
+    assert(calculate_square_root(9) != 4);
+    assert(calculate_square_root(16) != 5);
+    assert(calculate_square_root(25) != 6);
+    assert(calculate_square_root(100) != 11);
+
+    double input1 = 49;
+    double result1 = calculate_square_root(input1);
+    write_line("Square root of 49 is " + to_string(result1));
+
+    double input2 = 81;
+    double result2 = calculate_square_root(input2);
+    write_line("Square root of 81 is " + to_string(result2));
+
+    write_line("All square root calculation tests passed!");
+    write_line("-------------------------------------");
+}
+
+void test_calculate_is_prime()
+{
+    write_line("Testing prime number calculation");
+
+    // Basic cases
+    assert(is_prime_number(2));
+    assert(is_prime_number(3));
+    assert(is_prime_number(5));
+    assert(is_prime_number(7));
+    assert(is_prime_number(11));
+    assert(is_prime_number(13));
+    assert(is_prime_number(17));
+    assert(is_prime_number(19));
+    assert(is_prime_number(23));
+    assert(is_prime_number(29));
+
+    // Non-prime numbers
+    assert(!is_prime_number(0));
+    assert(!is_prime_number(1));
+    assert(!is_prime_number(4));
+    assert(!is_prime_number(6));
+    assert(!is_prime_number(8));
+    assert(!is_prime_number(9));
+    assert(!is_prime_number(10));
+    assert(!is_prime_number(12));
+    assert(!is_prime_number(14));
+    assert(!is_prime_number(15));
+
+    // Larger prime numbers
+    assert(is_prime_number(101));
+    assert(is_prime_number(103));
+    assert(is_prime_number(107));
+    assert(is_prime_number(109));
+    assert(is_prime_number(113));
+
+    // Tests for inequality
+    assert(!is_prime_number(0));
+    assert(!is_prime_number(1));
+    assert(!is_prime_number(4));
+    assert(!is_prime_number(6));
+    assert(!is_prime_number(8));
+    assert(!is_prime_number(9));
+    assert(!is_prime_number(10));
+    assert(!is_prime_number(12));
+    assert(!is_prime_number(14));
+    assert(!is_prime_number(15));
+
+    write_line("All prime number calculation tests passed!");
+    write_line("-------------------------------------");
+}
+
+void test_calculate_gcd()
+{
+    write_line("Testing GCD calculation");
+
+    // Basic cases
+    assert(greatest_common_divisor(0, 0) == 0);
+    assert(greatest_common_divisor(1, 0) == 1);
+    assert(greatest_common_divisor(0, 1) == 1);
+    assert(greatest_common_divisor(1, 1) == 1);
+    assert(greatest_common_divisor(12, 8) == 4);
+    assert(greatest_common_divisor(54, 24) == 6);
+    assert(greatest_common_divisor(48, 18) == 6);
+    assert(greatest_common_divisor(101, 103) == 1);
+
+    // Edge cases
+    assert(greatest_common_divisor(0, 5) == 5);
+    assert(greatest_common_divisor(5, 0) == 5);
+    assert(greatest_common_divisor(7, 1) == 1);
+    assert(greatest_common_divisor(1, 7) == 1);
+
+    // Tests for inequality
+    assert(greatest_common_divisor(12, 8) != 5);
+    assert(greatest_common_divisor(54, 24) != 7);
+    assert(greatest_common_divisor(48, 18) != 5);
+    assert(greatest_common_divisor(101, 103) != 2);
+
+    int input1_a = 56, input1_b = 98;
+    int result1 = greatest_common_divisor(input1_a, input1_b);
+    write_line("GCD of 56 and 98 is " + to_string(result1));
+
+    int input2_a = 48, input2_b = 180;
+    int result2 = greatest_common_divisor(input2_a, input2_b);
+    write_line("GCD of 48 and 180 is " + to_string(result2));
+
+    write_line("All GCD calculation tests passed!");
+    write_line("-------------------------------------");
+}
+
+void test_calculate_lcm()
+{
+    write_line("Testing LCM calculation");
+
+    // Basic cases
+    assert(least_common_multiple(0, 0) == 0);
+    assert(least_common_multiple(1, 0) == 0);
+    assert(least_common_multiple(0, 1) == 0);
+    assert(least_common_multiple(1, 1) == 1);
+    assert(least_common_multiple(12, 8) == 24);
+    assert(least_common_multiple(54, 24) == 216);
+    assert(least_common_multiple(48, 18) == 144);
+    assert(least_common_multiple(101, 103) == 10403);
+
+    // Edge cases
+    assert(least_common_multiple(0, 5) == 0);
+    assert(least_common_multiple(5, 0) == 0);
+    assert(least_common_multiple(7, 1) == 7);
+    assert(least_common_multiple(1, 7) == 7);
+
+    // Tests for inequality
+    assert(least_common_multiple(12, 8) != 25);
+    assert(least_common_multiple(54, 24) != 217);
+    assert(least_common_multiple(48, 18) != 145);
+    assert(least_common_multiple(101, 103) != 10404);
+
+    int input1_a = 21, input1_b = 6;
+    int result1 = least_common_multiple(input1_a, input1_b);
+    write_line("LCM of 21 and 6 is " + to_string(result1));
+
+    int input2_a = 15, input2_b = 20;
+    int result2 = least_common_multiple(input2_a, input2_b);
+    write_line("LCM of 15 and 20 is " + to_string(result2));
+
+    write_line("All LCM calculation tests passed!");
+    write_line("-------------------------------------");
+}
+
 void run_terminal_test()
 {
     test_simple_terminal();
@@ -722,4 +883,8 @@ void run_terminal_test()
     test_is_binary();
     test_is_hex();
     test_is_octal();
+    test_calculate_square_root();
+    test_calculate_is_prime();
+    test_calculate_gcd();
+    test_calculate_lcm();
 }

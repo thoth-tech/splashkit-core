@@ -314,5 +314,51 @@ namespace splashkit_lib
      */
     string base64_decode(const string &input);
 
+    /**
+     * @brief Calculates the square root of a number
+     *
+     * Calculates the square root of the provided number using the Newton-Raphson method.
+     *
+     * @param number Number to calculate the square root of
+     *
+     * @returns Square root of the number
+     */
+    double calculate_square_root(int number);
+
+    /**
+     * @brief Checks if a number is a prime number
+     *
+     * A prime number is a number greater than 1 that has no positive divisors other than 1 and itself.
+     *
+     * @param number Number to check
+     *
+     * @returns True if the number is a prime number, false otherwise
+     */
+    bool is_prime_number(int number);
+
+    /**
+     * @brief Calculates the greatest common divisor of two numbers
+     *
+     * The greatest common divisor (GCD) of two numbers is the largest positive integer that divides both numbers without a remainder.
+     *
+     * @param number1 First number
+     * @param number2 Second number
+     *
+     * @returns Greatest common divisor of the two numbers
+     */
+    int greatest_common_divisor(int number1, int number2);
+
+    /**
+     * @brief Calculates the least common multiple of two numbers
+     *
+     * The least common multiple (LCM) of two numbers is the smallest positive integer that is divisible by both numbers.
+     *
+     * @param number1 First number
+     * @param number2 Second number
+     *
+     * @returns Least common multiple of the two numbers
+     */
+    int least_common_multiple(int number1, int number2);
+
 }
 #endif /* basics_hpp */
