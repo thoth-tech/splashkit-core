@@ -15,6 +15,7 @@
 #include <cctype>
 #include <locale>
 using std::to_string;
+#include <cmath>
 
 namespace splashkit_lib
 {
@@ -434,42 +435,13 @@ namespace splashkit_lib
         return decoded;
     }
 
+
     double calculate_square_root(int number)
     {
         if (number == 0 || number == 1)
             return number;
 
-        double estimate;
-        int p = 0;
-        int square;
-
-        // Find the largest perfect square smaller than or equal to the input
-        do
-        {
-            p++;
-            square = p * p;
-        }
-        while (square <= number);
-
-        // Start estimate with the last perfect square's root
-        estimate = static_cast<double>(p - 1);
-
-        int iterations = 0;
-        const int max_iterations = 10;
-        const double precision = 0.00001;
-
-        while (iterations < max_iterations)
-        {
-            estimate = (number / estimate + estimate) / 2.0;
-
-            // If estimate squared is within precision, return the result
-            if (std::abs(estimate * estimate - number) < precision)
-                return estimate;
-
-            iterations++;
-        }
-
-        return estimate;
+        return sqrt(static_cast<double>(number));
     }
 
     bool is_prime_number(int number)

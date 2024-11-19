@@ -734,6 +734,10 @@ void test_calculate_square_root()
     double result2 = calculate_square_root(input2);
     write_line("Square root of 81 is " + to_string(result2));
 
+    double input3 = 83;
+    double result3 = calculate_square_root(input3);
+    write_line("Square root of 83 is " + to_string(result3));
+
     write_line("All square root calculation tests passed!");
     write_line("-------------------------------------");
 }
