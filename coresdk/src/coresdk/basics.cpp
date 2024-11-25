@@ -7,6 +7,7 @@
 //
 
 #include "basics.h"
+#include "easylogging++.h"
 
 #include <algorithm>
 #include <cstdlib>
@@ -14,7 +15,6 @@
 #include <functional>
 #include <cctype>
 #include <locale>
-using std::to_string;
 #include <cmath>
 
 namespace splashkit_lib
@@ -196,6 +196,7 @@ namespace splashkit_lib
     {
         if (!is_binary(bin_str))
         {
+            LOG(ERROR) << "Invalid binary string passed to bin_to_dec, returning 0";            
             return 0;
         }
 
@@ -214,6 +215,7 @@ namespace splashkit_lib
     {
         if (!is_hex(hex_str))
         {
+            LOG(ERROR) << "Invalid hexadecimal string passed to hex_to_bin, returning empty string";            
             return "";
         }
 
@@ -248,6 +250,7 @@ namespace splashkit_lib
     {
         if (!is_binary(bin_str))
         {
+            LOG(ERROR) << "Invalid binary string passed to bin_to_hex, returning empty string";            
             return "";
         }
 
@@ -278,12 +281,15 @@ namespace splashkit_lib
     string dec_to_oct(unsigned int decimal_value)
     {
         if (decimal_value == 0)
-            return "0";
+        {
+            LOG(ERROR) << "Invalid decimal value passed to dec_to_oct: " << decimal_value << ", returning 0";              
+            return "0";   
+        }
 
         string octal_string;
         while (decimal_value > 0)
         {
-            octal_string = to_string(decimal_value % 8) + octal_string;
+            octal_string = std::to_string(decimal_value % 8) + octal_string;
             decimal_value /= 8;
         }
         return octal_string;
@@ -293,6 +299,7 @@ namespace splashkit_lib
     {
         if (!is_octal(octal_string))
         {
+            LOG(ERROR) << "Invalid octal string passed to oct_to_dec: " << octal_string << ", returning 0";           
             return 0;
         }
 
@@ -308,6 +315,7 @@ namespace splashkit_lib
     {
         if (!is_octal(octal_str))
         {
+            LOG(ERROR) << "Invalid octal string passed to oct_to_bin: " << octal_str << ", returning empty string";            
             return "";
         }
 
@@ -331,6 +339,7 @@ namespace splashkit_lib
     {
         if (!is_binary(bin_str))
         {
+            LOG(ERROR) << "Invalid binary string passed to bin_to_oct: " << bin_str << ", returning empty string";            
             return "";
         }
 
@@ -361,6 +370,7 @@ namespace splashkit_lib
     {
         if (!is_hex(hex_str))
         {
+            LOG(ERROR) << "Invalid hexadecimal string passed to hex_to_oct: " << hex_str << ", returning empty string";            
             return "";
         }
 
@@ -372,6 +382,7 @@ namespace splashkit_lib
     {
         if (!is_octal(octal_str))
         {
+            LOG(ERROR) << "Invalid octal string passed to oct_to_hex: " << octal_str << ", returning empty string";            
             return "";
         }
 
@@ -457,9 +468,12 @@ namespace splashkit_lib
 
     int greatest_common_divisor(int number1, int number2)
     {
-        if (!is_number(to_string(number1)) || !is_number(to_string(number2)))
+        if (!is_number(std::to_string(number1)) || !is_number(std::to_string(number2)))
+        {
+            LOG(ERROR) << "Invalid numbers passed to greatest_common_divisor: " << number1 << ", " << number2 << ", returning 0";            
             return 0;
-        
+        }
+
         while (number2 != 0)
         {
             int temp = number2;
@@ -472,7 +486,10 @@ namespace splashkit_lib
     int least_common_multiple(int number1, int number2)
     {
         if (number1 == 0 || number2 == 0)
+        {
+            LOG(ERROR) << "Invalid numbers passed to least_common_multiple: " << number1 << ", " << number2 << ", returning 0";            
             return 0;
+        }
 
         return abs(number1 * number2) / greatest_common_divisor(number1, number2);
     }

@@ -190,7 +190,7 @@ namespace splashkit_lib
      *
      * @param bin Binary string to convert
      *
-     * @returns Decimal (unsigned integer) representation of the binary string
+     * @returns Decimal (unsigned integer) representation of the binary string, or 0 if the string is not a valid binary string
      */
     unsigned int bin_to_dec(const string &bin);
 
@@ -202,7 +202,7 @@ namespace splashkit_lib
      *
      * @param hex_str Hexadecimal string to convert
      *
-     * @returns Binary string representation of the hexadecimal string
+     * @returns Binary string representation of the hexadecimal string, or an empty string if the string is not a valid hexadecimal string
      */
     string hex_to_bin(const string &hex_str);
 
@@ -214,7 +214,7 @@ namespace splashkit_lib
      *
      * @param bin_str Binary string to convert
      *
-     * @returns Hexadecimal string representation of the binary string
+     * @returns Hexadecimal string representation of the binary string, or an empty string if the string is not a valid binary string
      */
     string bin_to_hex(const string &bin_str);
 
@@ -226,7 +226,7 @@ namespace splashkit_lib
      *
      * @param decimal_value Decimal (unsigned integer) to convert
      *
-     * @returns Octal string representation of the decimal value
+     * @returns Octal string representation of the decimal value, or "0" if the value is 0
      */
     string dec_to_oct(unsigned int decimal_value);
 
@@ -238,7 +238,7 @@ namespace splashkit_lib
      *
      * @param octal_string Octal string to convert
      *
-     * @returns Decimal (unsigned integer) representation of the octal string
+     * @returns Decimal (unsigned integer) representation of the octal string, or 0 if the string is not a valid octal string
      */
     unsigned int oct_to_dec(const string &octal_string);
 
@@ -250,7 +250,7 @@ namespace splashkit_lib
      *
      * @param octal_str Octal string to convert
      *
-     * @returns Binary string representation of the octal string
+     * @returns Binary string representation of the octal string, or an empty string if the string is not a valid octal string
      */
     string oct_to_bin(const string &octal_str);
 
@@ -262,7 +262,7 @@ namespace splashkit_lib
      *
      * @param bin_str Binary string to convert
      *
-     * @returns Octal string representation of the binary string
+     * @returns Octal string representation of the binary string, or an empty string if the string is not a valid binary string
      */
     string bin_to_oct(const string &bin_str);
 
@@ -274,7 +274,7 @@ namespace splashkit_lib
      *
      * @param hex_str Hexadecimal string to convert
      *
-     * @returns Octal string representation of the hexadecimal string
+     * @returns Octal string representation of the hexadecimal string, or an empty string if the string is not a valid hexadecimal string
      */
     string hex_to_oct(const string &hex_str);
 
@@ -286,7 +286,7 @@ namespace splashkit_lib
      *
      * @param oct_str Octal string to convert
      *
-     * @returns Hexadecimal string representation of the octal string
+     * @returns Hexadecimal string representation of the octal string, or an empty string if the string is not a valid octal string
      */
     string oct_to_hex(const string &oct_str);
 
