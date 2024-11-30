@@ -19,7 +19,7 @@ using std::vector;
 
 namespace splashkit_lib
 {
-    
+
     /**
      * Return a new string that removes the spaces from the start and end of
      * the input string.
@@ -91,7 +91,7 @@ namespace splashkit_lib
      */
     double convert_to_double(const string &text);
 
-        /**
+    /**
      * Returns the length of a string in characters.
      *
      * @param text      The text to get the length of
@@ -101,7 +101,7 @@ namespace splashkit_lib
 
     /**
      * Returns true if the string contains the substring.
-     * 
+     *
      * @param text      The text to search
      * @param subtext   The substring to search for
      * @returns         True if the substring is found in the text.
@@ -110,7 +110,7 @@ namespace splashkit_lib
 
     /**
      * Returns the index of the first occurrence of the substring in the text.
-     * 
+     *
      * @param text      The text to search
      * @param subtext   The substring to search for
      * @returns         The index of the first occurrence of the substring in the text, or -1 if the substring is not found.
@@ -119,17 +119,17 @@ namespace splashkit_lib
 
     /**
      * Replace all occurrences of a substring in a string with another string.
-     * 
+     *
      * @param text      The text to search
      * @param substr    The substring to find and replace
      * @param newText   The string to replace the substring with
      * @returns         The text with all occurrences of the substring replaced with the new text.
      */
-    string replace_all(const string &text, const string &substr, const string &newText);
+    string replace_all(const string &text, const string &substr, const string &new_text);
 
     /**
      * Split a string into an array of strings based on a delimiter.
-     * 
+     *
      * @param text      The text to split
      * @param delimiter The character to split the text on
      * @returns         An array of strings

@@ -24,7 +24,8 @@ namespace splashkit_lib
     string ltrim(const string &text)
     {
         string s = text;
-        s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c) { return !std::isspace(c);}));
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c)
+                                        { return !std::isspace(c); }));
         return s;
     }
 
@@ -32,7 +33,10 @@ namespace splashkit_lib
     string rtrim(const string &text)
     {
         string s = text;
-        s.erase(std::find_if(s.rbegin(), s.rend(), [](int c) { return !std::isspace(c);}).base(), s.end());
+        s.erase(std::find_if(s.rbegin(), s.rend(), [](int c)
+                             { return !std::isspace(c); })
+                    .base(),
+                s.end());
         return s;
     }
 
@@ -74,17 +78,17 @@ namespace splashkit_lib
         return static_cast<int>(pos);
     }
 
-    string replace_all(const string &text, const string &substr, const string &replacement)
+    string replace_all(const string &text, const string &substr, const string &new_text)
     {
         if (substr.empty())
             return text;
-        
+
         string result = text;
         size_t pos = 0;
         while ((pos = result.find(substr, pos)) != string::npos)
         {
-            result.replace(pos, substr.length(), replacement);
-            pos += replacement.length();
+            result.replace(pos, substr.length(), new_text);
+            pos += new_text.length();
         }
         return result;
     }
@@ -109,11 +113,12 @@ namespace splashkit_lib
     bool is_integer(const string &text)
     {
         string s = trim(text);
-        if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
-        
-        char * p;
+        if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+')))
+            return false;
+
+        char *p;
         strtol(s.c_str(), &p, 10);
-        
+
         return (*p == 0);
     }
 
@@ -125,21 +130,22 @@ namespace splashkit_lib
     bool is_number(const string &text)
     {
         string s = trim(text);
-        if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
-        
-        char * p;
+        if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+')))
+            return false;
+
+        char *p;
         strtod(s.c_str(), &p);
-        
+
         return (*p == 0);
     }
 
     int convert_to_integer(const string &text)
     {
-        return std::stoi( text );
+        return std::stoi(text);
     }
 
     double convert_to_double(const string &text)
     {
-        return std::stod( text );
+        return std::stod(text);
     }
 }
