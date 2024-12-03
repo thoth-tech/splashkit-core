@@ -48,56 +48,6 @@ namespace splashkit_lib
 #define ROTATION_KEY    "rotation"
 #define MASS_KEY        "mass"
 
-    struct _sprite_data : public shape
-    {
-        pointer_identifier  id;
-        string name;                          // The name of the sprite for resource management
-
-        vector<bitmap>      layers;           // Layers of the sprites
-        map<string, int>    layer_names;
-        vector<int>         visible_layers;   // The indexes of the visible layers
-        vector<vector_2d>   layer_offsets;    // Offsets from drawing the layers
-
-        map<string, float>  values;           // Values associated with this sprite
-
-
-        animation           animation_info;   // The data used to animate this sprite
-        animation_script    script;           // The template for this sprite"s animations
-
-        point_2d            position;         // The game location of the sprite
-        vector_2d           velocity;         // The velocity of the sprite
-
-        collision_test_kind collision_kind;   //The kind of collisions used by this sprite
-        bitmap              collision_bitmap; // The bitmap used for collision testing (default to first image)
-
-        point_2d            anchor_point;
-        bool                position_at_anchor_point;
-        bool                draw_at_anchor_point;
-
-        bool                is_moving;          // Used for events to indicate the sprite is moving
-        point_2d            destination;        // The destination the sprite is moving to
-        vector_2d           moving_vec;         // The sprite"s movement vector
-        float               arrive_in_sec;      // Amount of time in seconds to arrive at point
-        int                 last_update;        // Time of last update
-
-        bool                announced_animation_end; // Used to avoid multiple announcements of an end of an animation
-
-        vector<sprite_event_handler *> evts;    // The call backs listening for sprite events
-
-        vector<void *>      &pack;              // Points the the SpritePack that contains this sprite
-
-        _sprite_data() : pack( current_pack() )
-        {
-        }
-
-        rectangle get_bounding_box() const override;
-        shape_type get_shape_type() const override;
-        bool intersects(const rectangle& other) const override;
-        bool intersects(const circle& other) const override;
-        bool intersects(const triangle& other) const override;
-        bool intersects(const quad& other) const override;
-    };
-
     rectangle _sprite_data::get_bounding_box() const
     {
         return sprite_collision_rectangle(const_cast<sprite>(this));
@@ -106,6 +56,11 @@ namespace splashkit_lib
     shape_type _sprite_data::get_shape_type() const
     {
         return shape_type::SPRITE;
+    }
+
+    bool _sprite_data::intersects(const _sprite_data& other) const
+    {
+        return sprite_collision(const_cast<sprite>(this), const_cast<sprite>(&other));
     }
 
     bool _sprite_data::intersects(const rectangle& other) const
@@ -155,6 +110,12 @@ namespace splashkit_lib
         }
 
         return sprite_quad_collision(const_cast<sprite>(this), other);
+    }
+
+    void _sprite_data::move_by(const vector_2d& amount)
+    {
+        this->position.x += amount.x;
+        this->position.y += amount.y;
     }
 
     //-----------------------------------------------------------------------------
