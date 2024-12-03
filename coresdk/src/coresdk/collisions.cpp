@@ -817,6 +817,16 @@ namespace splashkit_lib
         return _rectangle_rectangle_collision_direction(collider_rect, collidee_rect);
     }
 
+    // collision_direction _calculate_object_collision_direction(const shape* collider, const shape* collidee)
+    // {
+    //     if (!collider->intersects(collidee))
+    //     {
+    //         return collision_direction::NONE;
+    //     }
+
+    //     return _rectangle_rectangle_collision_direction(collider->get_bounding_box(), collidee->get_bounding_box());
+    // }
+
     void _resolve_object_AABB_collision(void* collider, const rectangle& collider_rect, const rectangle& collidee_rect,
                                 collision_direction direction, std::function<void(void*, const vector_2d& amount)> move_func)
     {
