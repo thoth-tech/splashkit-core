@@ -12,6 +12,8 @@
 #ifndef types_hpp
 #define types_hpp
 
+//#include "collisions.h"
+#include "shape.h"
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -67,14 +69,14 @@ namespace splashkit_lib
         UNDERLINE_FONT = 4
     };
 
-    enum class shape_type
-    {
-        SPRITE,
-        RECTANGLE,
-        CIRCLE,
-        TRIANGLE,
-        QUAD,
-    };
+    // enum class shape_type
+    // {
+    //     SPRITE,
+    //     RECTANGLE,
+    //     CIRCLE,
+    //     TRIANGLE,
+    //     QUAD,
+    // };
 
     /**
      * Fonts are used to draw text in SplashKit. These can be loaded from file
@@ -147,26 +149,28 @@ namespace splashkit_lib
         double y;
     };
 
-    struct rectangle;
-    struct circle;
-    struct triangle;
-    struct quad;
+    // struct rectangle;
+    // struct circle;
+    // struct triangle;
+    // struct quad;
+    // struct _sprite_data;
 
-    struct shape
-    {
-        virtual ~shape() = default;
-        virtual rectangle get_bounding_box() const = 0;
-        virtual shape_type get_shape_type() const = 0;
-        //virtual collision_test_kind get_collision_kind() const = 0;
-        virtual bool intersects(const shape* other) const;
-        virtual bool intersects(const shape& other) const;
-        //virtual bool intersects(const sprite other) const = 0;
-        virtual bool intersects(const rectangle& other) const = 0;
-        virtual bool intersects(const circle& other) const = 0;
-        virtual bool intersects(const triangle& other) const = 0;
-        virtual bool intersects(const quad& other) const = 0;
-        virtual bool AABB_intersects(const shape* other) const;
-    };
+    // struct shape
+    // {
+    //     virtual ~shape() = default;
+    //     virtual rectangle get_bounding_box() const = 0;
+    //     virtual shape_type get_shape_type() const = 0;
+    //     //virtual collision_test_kind get_collision_kind() const = 0;
+    //     virtual bool intersects(const shape* other) const;
+    //     virtual bool intersects(const shape& other) const;
+    //     virtual bool intersects(const _sprite_data& other) const = 0;
+    //     virtual bool intersects(const rectangle& other) const = 0;
+    //     virtual bool intersects(const circle& other) const = 0;
+    //     virtual bool intersects(const triangle& other) const = 0;
+    //     virtual bool intersects(const quad& other) const = 0;
+    //     virtual bool AABB_intersects(const shape* other) const;
+    //     virtual void move_by(const vector_2d& amount);
+    // };
 
     /**
      * Rectangles are simple rectangle shapes that exist at a point and have a
@@ -189,10 +193,12 @@ namespace splashkit_lib
         rectangle(double x, double y, double width, double height);
         rectangle get_bounding_box() const override;
         shape_type get_shape_type() const override;
+        bool intersects(const _sprite_data& other) const override;
         bool intersects(const rectangle& other) const override;
         bool intersects(const circle& other) const override;
         bool intersects(const triangle& other) const override;
         bool intersects(const quad& other) const override;
+        void move_by(const vector_2d& amount) override;
     };
 
     /**
@@ -215,10 +221,12 @@ namespace splashkit_lib
             const point_2d& bottom_left, const point_2d& bottom_right);
         rectangle get_bounding_box() const override;
         shape_type get_shape_type() const override;
+        bool intersects(const _sprite_data& other) const override;
         bool intersects(const rectangle& other) const override;
         bool intersects(const circle& other) const override;
         bool intersects(const triangle& other) const override;
         bool intersects(const quad& other) const override;
+        void move_by(const vector_2d& amount) override;
     };
 
     /**
@@ -238,10 +246,12 @@ namespace splashkit_lib
         circle(const point_2d& center, double radius);
         rectangle get_bounding_box() const override;
         shape_type get_shape_type() const override;
+        bool intersects(const _sprite_data& other) const override;
         bool intersects(const rectangle& other) const override;
         bool intersects(const circle& other) const override;
         bool intersects(const triangle& other) const override;
         bool intersects(const quad& other) const override;
+        void move_by(const vector_2d& amount) override;
     };
 
     /**
@@ -258,10 +268,12 @@ namespace splashkit_lib
         triangle(const point_2d& p1, const point_2d& p2, const point_2d& p3);
         rectangle get_bounding_box() const override;
         shape_type get_shape_type() const override;
+        bool intersects(const _sprite_data& other) const override;
         bool intersects(const rectangle& other) const override;
         bool intersects(const circle& other) const override;
         bool intersects(const triangle& other) const override;
         bool intersects(const quad& other) const override;
+        void move_by(const vector_2d& amount) override;
     };
 
     /**
