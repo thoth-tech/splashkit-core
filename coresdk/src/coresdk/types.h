@@ -67,6 +67,15 @@ namespace splashkit_lib
         UNDERLINE_FONT = 4
     };
 
+    enum class shape_type
+    {
+        SPRITE,
+        RECTANGLE,
+        CIRCLE,
+        TRIANGLE,
+        QUAD,
+    };
+
     /**
      * Fonts are used to draw text in SplashKit. These can be loaded from file
      * or downloaded from the internet. Once you have a font you can use the
@@ -138,6 +147,27 @@ namespace splashkit_lib
         double y;
     };
 
+    struct rectangle;
+    struct circle;
+    struct triangle;
+    struct quad;
+
+    struct shape
+    {
+        //virtual ~shape() = default;
+        virtual rectangle get_bounding_box() const = 0;
+        virtual shape_type get_shape_type() const = 0;
+        //virtual collision_test_kind get_collision_kind() const = 0;
+        virtual bool intersects(const shape* other) const;
+        virtual bool intersects(const shape& other) const;
+        //virtual bool intersects(const sprite other) const = 0;
+        virtual bool intersects(const rectangle& other) const = 0;
+        virtual bool intersects(const circle& other) const = 0;
+        virtual bool intersects(const triangle& other) const = 0;
+        virtual bool intersects(const quad& other) const = 0;
+        virtual bool AABB_intersects(const shape* other) const;
+    };
+
     /**
      * Rectangles are simple rectangle shapes that exist at a point and have a
      * set width and height. This means that the rectangle always has edges that
@@ -150,10 +180,19 @@ namespace splashkit_lib
      * @field width The width of the rectangle
      * @field height The height of the rectangle
      */
-    struct rectangle
+    struct rectangle : public shape
     {
         double x, y;
         double width, height;
+        
+        rectangle();
+        rectangle(double x, double y, double width, double height);
+        rectangle get_bounding_box() const override;
+        shape_type get_shape_type() const override;
+        bool intersects(const rectangle& other) const override;
+        bool intersects(const circle& other) const override;
+        bool intersects(const triangle& other) const override;
+        bool intersects(const quad& other) const override;
     };
 
     /**
@@ -167,9 +206,19 @@ namespace splashkit_lib
      * @field points The array of points: top left, top right, bottom left,
      *                bottom right
      */
-    struct quad
+    struct quad : public shape
     {
         point_2d points[4];
+
+        quad();
+        quad(const point_2d& top_left, const point_2d& top_right,
+            const point_2d& bottom_left, const point_2d& bottom_right);
+        rectangle get_bounding_box() const override;
+        shape_type get_shape_type() const override;
+        bool intersects(const rectangle& other) const override;
+        bool intersects(const circle& other) const override;
+        bool intersects(const triangle& other) const override;
+        bool intersects(const quad& other) const override;
     };
 
     /**
@@ -180,10 +229,19 @@ namespace splashkit_lib
      * @field center  The center point of the circle
      * @field radius  The radius of the circle
      */
-    struct circle
+    struct circle : public shape
     {
         point_2d center;
         double radius;
+
+        circle();
+        circle(const point_2d& center, double radius);
+        rectangle get_bounding_box() const override;
+        shape_type get_shape_type() const override;
+        bool intersects(const rectangle& other) const override;
+        bool intersects(const circle& other) const override;
+        bool intersects(const triangle& other) const override;
+        bool intersects(const quad& other) const override;
     };
 
     /**
@@ -192,9 +250,18 @@ namespace splashkit_lib
      *
      * @field points  The points of the triangle
      */
-    struct triangle
+    struct triangle : public shape
     {
         point_2d points[3];
+
+        triangle();
+        triangle(const point_2d& p1, const point_2d& p2, const point_2d& p3);
+        rectangle get_bounding_box() const override;
+        shape_type get_shape_type() const override;
+        bool intersects(const rectangle& other) const override;
+        bool intersects(const circle& other) const override;
+        bool intersects(const triangle& other) const override;
+        bool intersects(const quad& other) const override;
     };
 
     /**
