@@ -320,6 +320,7 @@ namespace splashkit_lib
             mu_Command *cmd = NULL;
             while (mu_next_command(ctx, &cmd))
             {
+                rectangle atlas_rect;
                 switch (cmd->type)
                 {
                     case MU_COMMAND_TEXT:
@@ -344,7 +345,6 @@ namespace splashkit_lib
                         break;
 
                     case MU_COMMAND_ICON:
-                        rectangle atlas_rect;
                         double src_data[4];
                         double dst_data[7];
                         sk_renderer_flip flip;
