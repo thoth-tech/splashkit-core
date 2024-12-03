@@ -16,8 +16,8 @@ namespace splashkit_lib
     {
         switch (other->get_shape_type())
         {
-            // case shape_type::SPRITE:
-            //     return this->intersects(*dynamic_cast<const _sprite_data*>(other));
+            case shape_type::SPRITE:
+                return other->intersects(*this);
             case shape_type::RECTANGLE:
                 return this->intersects(*dynamic_cast<const rectangle*>(other));
             case shape_type::CIRCLE:
