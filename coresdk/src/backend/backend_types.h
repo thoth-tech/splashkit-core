@@ -9,27 +9,8 @@
 #ifndef BackendTypes_h
 #define BackendTypes_h
 
-#include "drawing_options.h"
-#include "geometry.h"
-#include "audio.h"
-#include "color.h"
-#include "networking.h"
-#include "web_server.h"
-
-#include "concurrency_utils.h"
-#include "civetweb.h"
-
-#include <string>
-#include <vector>
-#include <map>
-
-using std::string;
-using std::vector;
-
 namespace splashkit_lib
 {
-    typedef void *pointer;
-
     /// An identifier for the splashkit pointers.
     /// Each resource will start with an identifier to
     /// Ensure that the dereferenced pointers are likely
@@ -63,6 +44,28 @@ namespace splashkit_lib
         JSON_PTR =                  0x4a534f4e, //'JSON';
         NONE_PTR =                  0x4e4f4e45  //'NONE';
     };
+}
+
+#include "drawing_options.h"
+#include "geometry.h"
+#include "audio.h"
+#include "color.h"
+#include "networking.h"
+#include "web_server.h"
+
+#include "concurrency_utils.h"
+#include "civetweb.h"
+
+#include <string>
+#include <vector>
+#include <map>
+
+using std::string;
+using std::vector;
+
+namespace splashkit_lib
+{
+    typedef void *pointer;
 
     typedef color sk_color;
 
