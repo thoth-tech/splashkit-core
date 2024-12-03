@@ -154,7 +154,7 @@ namespace splashkit_lib
 
     struct shape
     {
-        //virtual ~shape() = default;
+        virtual ~shape() = default;
         virtual rectangle get_bounding_box() const = 0;
         virtual shape_type get_shape_type() const = 0;
         //virtual collision_test_kind get_collision_kind() const = 0;
