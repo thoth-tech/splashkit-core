@@ -67,6 +67,11 @@ namespace splashkit_lib
         return shape_type::RECTANGLE;
     }
 
+    bool rectangle::intersects(const _sprite_data& other) const
+    {
+        return other.intersects(*this);
+    }
+
     bool rectangle::intersects(const rectangle& other) const
     {
         return rectangles_intersect(*this, other);
@@ -85,6 +90,12 @@ namespace splashkit_lib
     bool rectangle::intersects(const quad& other) const
     {
         return quads_intersect(quad_from(*this), other);
+    }
+
+    void rectangle::move_by(const vector_2d& amount)
+    {
+        x += amount.x;
+        y += amount.y;
     }
 
     quad::quad()
@@ -114,6 +125,11 @@ namespace splashkit_lib
         return shape_type::QUAD;
     }
 
+    bool quad::intersects(const _sprite_data& other) const
+    {
+        return other.intersects(*this);
+    }
+
     bool quad::intersects(const rectangle& other) const
     {
         return other.intersects(*this);
@@ -132,6 +148,15 @@ namespace splashkit_lib
     bool quad::intersects(const quad& other) const
     {
         return other.intersects(*this);
+    }
+
+    void quad::move_by(const vector_2d& amount)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            points[i].x += amount.x;
+            points[i].y += amount.y;
+        }
     }
 
     circle::circle()
@@ -156,6 +181,11 @@ namespace splashkit_lib
         return shape_type::CIRCLE;
     }
 
+    bool circle::intersects(const _sprite_data& other) const
+    {
+        return other.intersects(*this);
+    }
+
     bool circle::intersects(const rectangle& other) const
     {
         return other.intersects(*this);
@@ -174,6 +204,12 @@ namespace splashkit_lib
     bool circle::intersects(const quad& other) const
     {
         return circle_quad_intersect(*this, other);
+    }
+
+    void circle::move_by(const vector_2d& amount)
+    {
+        center.x += amount.x;
+        center.y += amount.y;
     }
 
     triangle::triangle()
@@ -201,6 +237,11 @@ namespace splashkit_lib
         return shape_type::TRIANGLE;
     }
 
+    bool triangle::intersects(const _sprite_data& other) const
+    {
+        return other.intersects(*this);
+    }
+
     bool triangle::intersects(const rectangle& other) const
     {
         return other.intersects(*this);
@@ -219,5 +260,14 @@ namespace splashkit_lib
     bool triangle::intersects(const quad& other) const
     {
         return triangle_quad_intersect(*this, other);
+    }
+
+    void triangle::move_by(const vector_2d& amount)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            points[i].x += amount.x;
+            points[i].y += amount.y;
+        }
     }
 }
