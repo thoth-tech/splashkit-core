@@ -48,7 +48,7 @@ namespace splashkit_lib
 #define ROTATION_KEY    "rotation"
 #define MASS_KEY        "mass"
 
-    struct _sprite_data
+    struct _sprite_data : public shape
     {
         pointer_identifier  id;
         string name;                          // The name of the sprite for resource management
@@ -89,7 +89,90 @@ namespace splashkit_lib
         _sprite_data() : pack( current_pack() )
         {
         }
+
+        rectangle get_bounding_box() const override;
+        shape_type get_shape_type() const override;
+        bool intersects(const rectangle& other) const override;
+        bool intersects(const circle& other) const override;
+        bool intersects(const triangle& other) const override;
+        bool intersects(const quad& other) const override;
+
+    // private:
+    //     bool check_collision(const _sprite_data* sprite, const shape& other,
+    //         bool (*specific_collision_func)(const _sprite_data*, const shape&));
     };
+
+    rectangle _sprite_data::get_bounding_box() const
+    {
+        return sprite_collision_rectangle(const_cast<sprite>(this));
+    }
+
+    shape_type _sprite_data::get_shape_type() const
+    {
+        return shape_type::SPRITE;
+    }
+
+    // bool _sprite_data::check_collision(const _sprite_data* sprite, const shape& other,
+    //     bool (*specific_collision_func)(const _sprite_data*, const shape&))
+    // {
+    //     bool aabb_collision = sprite->AABB_intersects(&other);
+
+    //     if (sprite->collision_kind == AABB_COLLISIONS || !aabb_collision)
+    //     {
+    //         return aabb_collision;
+    //     }
+
+    //     return specific_collision_func(sprite, other);
+    // }
+
+    bool _sprite_data::intersects(const rectangle& other) const
+    {
+        bool aabb_collision = this->AABB_intersects(&other);
+
+        if (this->collision_kind == AABB_COLLISIONS || !aabb_collision)
+        {
+            return aabb_collision;
+        }
+
+        return sprite_rectangle_collision(const_cast<sprite>(this), other);
+    }
+
+    bool _sprite_data::intersects(const circle& other) const
+    {
+        bool aabb_collision = this->AABB_intersects(&other);
+
+        if (this->collision_kind == AABB_COLLISIONS || !aabb_collision)
+        {
+            return aabb_collision;
+        }
+
+        return sprite_circle_collision(const_cast<sprite>(this), other);
+    }
+
+    bool _sprite_data::intersects(const triangle& other) const
+    {
+        bool aabb_collision = this->AABB_intersects(&other);
+
+        if (this->collision_kind == AABB_COLLISIONS || !aabb_collision)
+        {
+            return aabb_collision;
+        }
+
+        return sprite_triangle_collision(const_cast<sprite>(this), other);
+    }
+
+    bool _sprite_data::intersects(const quad& other) const
+    {
+        bool aabb_collision = quads_intersect(
+            quad_from(sprite_collision_rectangle(const_cast<sprite>(this))), other);
+
+        if (this->collision_kind == AABB_COLLISIONS || !aabb_collision)
+        {
+            return aabb_collision;
+        }
+
+        return sprite_quad_collision(const_cast<sprite>(this), other);
+    }
 
     //-----------------------------------------------------------------------------
     // Event Utility Code
