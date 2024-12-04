@@ -12,7 +12,6 @@
 #ifndef types_hpp
 #define types_hpp
 
-//#include "collisions.h"
 #include "shape.h"
 #include <cstdint>
 #include <string>
