@@ -32,7 +32,7 @@ namespace splashkit_lib
         virtual bool intersects(const triangle& other) const = 0;
         virtual bool intersects(const quad& other) const = 0;
         virtual bool AABB_intersects(const shape* other) const;
-        virtual void move_by(const vector_2d& amount);
+        virtual void move_by(const vector_2d& amount) = 0;
     };
 }
 
