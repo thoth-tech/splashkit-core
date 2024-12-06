@@ -122,7 +122,7 @@ namespace splashkit_lib
      *
      * @param text      The text to search
      * @param substr    The substring to find and replace
-     * @param newText   The string to replace the substring with
+     * @param new_text   The string to replace the substring with
      * @returns         The text with all occurrences of the substring replaced with the new text.
      */
     string replace_all(const string &text, const string &substr, const string &new_text);
