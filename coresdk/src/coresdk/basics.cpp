@@ -110,7 +110,7 @@ namespace splashkit_lib
     {
         string s = trim(text);
         if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
-
+        
         char * p;
         strtol(s.c_str(), &p, 10);
         
@@ -125,11 +125,11 @@ namespace splashkit_lib
     bool is_number(const string &text)
     {
         string s = trim(text);
-        if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
-
-        char *p;
+        if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
+        
+        char * p;
         strtod(s.c_str(), &p);
-
+        
         return (*p == 0);
     }
 
