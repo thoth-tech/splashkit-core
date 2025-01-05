@@ -16,6 +16,7 @@ namespace splashkit_lib
     typedef struct _window_data *window;
 
     extern bool _sk_quit;
+    extern bool _mouse_visible;
 
     typedef void (sk_empty_procedure)( void );
     typedef void (sk_intp_proc)( int ms );
@@ -59,6 +60,7 @@ namespace splashkit_lib
     void sk_move_window(sk_drawing_surface *surface, int x, int y);
 
     void sk_start_reading_text(window wind, double x, double y, double width, double height, string initial_text);
+    string sk_end_reading_text();
 
     void sk_mouse_position(double &x, double &y);
     void sk_mouse_movement(double &x, double &y);
