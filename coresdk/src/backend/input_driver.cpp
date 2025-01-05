@@ -17,8 +17,6 @@
 #include "graphics_driver.h"
 #include "window_manager.h"
 #include "interface_driver.h"
-#include <iostream> 
-#include <ostream> 
 
 namespace splashkit_lib
 {
