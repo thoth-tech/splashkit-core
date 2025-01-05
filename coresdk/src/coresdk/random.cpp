@@ -22,7 +22,7 @@ namespace splashkit_lib
         return rnd(RAND_MAX) / static_cast<float>(RAND_MAX);
     }
 
-     int rnd(int ubound)
+    int rnd(int ubound)
     {
         if (ubound <= 0) return 0;
         
