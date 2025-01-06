@@ -16,7 +16,6 @@ namespace splashkit_lib
     typedef struct _window_data *window;
 
     extern bool _sk_quit;
-    extern bool _mouse_visible;
 
     typedef void (sk_empty_procedure)( void );
     typedef void (sk_intp_proc)( int ms );
