@@ -14,6 +14,7 @@
 #include "triangle_drawing.h"
 #include "point_drawing.h"
 #include "ellipse_drawing.h"
+#include "particle_system.h"
 #include "line_drawing.h"
 #include "clipping.h"
 

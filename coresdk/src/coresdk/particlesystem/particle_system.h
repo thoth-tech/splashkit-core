@@ -50,55 +50,91 @@ struct ParticleSystem
 };
 
 // Initialize the particle system
-void initialize_particle_system(ParticleSystem &system, double x, double y);
+void initialize_particle_system(ParticleSystem &particlesystem, double x, double y);
 
 // Spawn a new particle
-void spawn_particle(ParticleSystem &system);
+void spawn_particle(ParticleSystem &particlesystem);
 
 // Update the particle system
-void update_particle_system(ParticleSystem &system, float delta_time);
+void update_particle_system(ParticleSystem &particlesystem, float delta_time);
 
 // Render the particle system
-void render_particle_system(const ParticleSystem &system);
+void draw_particle_system(const ParticleSystem &particlesystem);
 
 // add streaks
-void enable_streaks(ParticleSystem &system, bool add_streaks, color streak_color, int transparency=255);
+void enable_streaks(ParticleSystem &particlesystem, bool add_streaks, color streak_color, int transparency=255);
 
 // for updating streak history
-void update_streak_history(ParticleSystem &system);
+void update_streak_history(ParticleSystem &particlesystem);
 
 // helper function to enable individual particle glow
-void enable_particle_glow(ParticleSystem &system, bool enable);
+void enable_particle_glow(ParticleSystem &particlesystem, bool enable);
+
+// set functions
 
 // setter function for setting the particle size
-void set_particle_size(ParticleSystem &system, float size);
+void set_particle_size(ParticleSystem &particlesystem, float size);
 
 // setter function for setting the particle lifespan
-void set_particle_lifespan(ParticleSystem &system, int lifespan);
+void set_particle_lifespan(ParticleSystem &particlesystem, int lifespan);
 
 // setter function for setting the  particle color
-void set_particle_color(ParticleSystem &system, color set_color);
+void set_particle_color(ParticleSystem &particlesystem, color set_color);
 
 // setter function for setting the particle emission angle
-void set_emission_angle(ParticleSystem &system, float angle,float spread);
+void set_emission_angle(ParticleSystem &particlesystem, float angle,float spread);
 
 // setter function for setting the speed at which a particle is emitted
-void set_emission_speed(ParticleSystem &system, int speed);
+void set_emission_speed(ParticleSystem &particlesystem, int speed);
 
 // function to set the maximum particles 
-void set_max_particles(ParticleSystem &system, int max_particles);
+void set_max_particles(ParticleSystem &particlesystem, int max_particles);
 
 // function to set the decay velocity
-void set_decay_velocity(ParticleSystem &system, float decay_rate);
+void set_decay_velocity(ParticleSystem &particlesystem, float decay_rate);
 
 // set the gravity 
-void set_gravity(ParticleSystem &system, float gravity_force);
+void set_gravity(ParticleSystem &particlesystem, float gravity_force);
 
 // to turn off gravity when needed
-void disable_gravity(ParticleSystem &system);
+void disable_gravity(ParticleSystem &particlesystem);
 
 // set emission rate
-void set_emission_rate(ParticleSystem &system, int rate);
+void set_emission_rate(ParticleSystem &particlesystem, int rate);
+
+// get functions 
+
+// get the particle size
+float get_particle_size(ParticleSystem &particlesystem);
+
+// get the particle lifespan
+int get_particle_lifespan(ParticleSystem &particlesystem);
+
+// get the particle color
+color get_particle_color(ParticleSystem &particlesystem);
+
+// get the particle emission angle
+float get_particle_emission_angle(ParticleSystem &particlesystem);
+
+// get the particle emission spread
+float get_particle_emission_spread(ParticleSystem &particlesystem);
+
+// get function for getting the particle emission speed
+int get_emission_speed(ParticleSystem &particlesystem);
+
+// function to get the maximum number of particles
+int get_maximum_particles(ParticleSystem &particlesystem);
+
+// get the decay rate of the particle
+float get_decay_velocity(ParticleSystem &particlesystem);
+
+// get the gravity value 
+float get_gravity(ParticleSystem &particlesystem);
+
+// get the emission rate
+int get_emission_rate(ParticleSystem &particlesystem);
+
+
 
 
 #endif // PARTICLE_SYSTEM_H

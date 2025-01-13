@@ -1,3 +1,8 @@
+/*
+This is a mini game demo utilising the particle system 
+*/
+
+
 #include "splashkit.h"
 #include "particle_system.h"
 #include <vector>
@@ -242,7 +247,7 @@ int main()
             {
                 update_particle_system(system, 1.0f / 60.0f);
                 spawn_particle(system);
-                render_particle_system(system);
+                draw_particle_system(system);
             }
         }
         else if (level == 2) // Rain Season
@@ -251,7 +256,7 @@ int main()
             {
                 update_particle_system(system, 1.0f / 60.0f);
                 spawn_particle(system);
-                render_particle_system(system);
+                draw_particle_system(system);
             }
         }
 
