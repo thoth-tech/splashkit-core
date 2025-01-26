@@ -1,7 +1,14 @@
 #ifndef PARTICLE_SYSTEM_H
 #define PARTICLE_SYSTEM_H
 
-#include "splashkit.h"
+//#include "splashkit.h"
+#include "color.h"
+#include "circle_drawing.h"
+#include "graphics.h"
+#include "geometry.h"
+#include "circle_geometry.h"
+#include "drawing_options.h"
+#include "random.h"
 
 #define MAX_PARTICLES 1000 // Maximum number of particles
 #define STREAK_HISTORY 20 // Number of positions to track for the streak
