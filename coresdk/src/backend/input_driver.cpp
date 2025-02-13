@@ -21,7 +21,7 @@
 namespace splashkit_lib
 {
     sk_input_callbacks _input_callbacks = { nullptr };
-    
+
     bool _sk_quit = false;
     extern map<string, window> _windows;
 
@@ -791,7 +791,7 @@ namespace splashkit_lib
                 window_be = static_cast<sk_window_be *>(surface->_data);
                 
                 SDL_SetWindowPosition(window_be->window, x, y);
-                            
+
                 return;
             }
                 
