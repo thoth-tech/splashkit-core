@@ -6,6 +6,7 @@
 #include <iostream>
 
 #define TEST_IP "127.0.0.1"
+#define TEST_IP_HEX "0x7F000001"
 #define TEST_IP_DEC 2130706433  // Decimal representation of 127.0.0.1
 
 using namespace splashkit_lib;
@@ -21,9 +22,9 @@ void run_encoding_decoding_tests()
 
     // Complete ip address tests
     assert(dec_to_ipv4(ipv4_to_dec(TEST_IP)) == TEST_IP);
-    assert(dec_to_hex(ipv4_to_dec(TEST_IP)) == "0x7F000001");
-    assert(ipv4_to_hex(TEST_IP) == "0x7F000001");
-    assert(hex_str_to_ipv4("0x7F000001") == TEST_IP);
+    assert(dec_to_hex(ipv4_to_dec(TEST_IP)) == TEST_IP_HEX);
+    assert(ipv4_to_hex(TEST_IP) == TEST_IP_HEX);
+    assert(hex_str_to_ipv4(TEST_IP_HEX) == TEST_IP);
     assert(my_ip() == TEST_IP);
 }
 
