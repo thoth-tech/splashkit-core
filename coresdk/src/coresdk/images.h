@@ -249,15 +249,6 @@ namespace splashkit_lib
     void draw_bitmap(string name, double x, double y, drawing_options opts);
 
     /**
-     * Draw a pre-defined base64 encoded png file to specified coordinates of the the active window
-     * @param x     the x location which represents where the bitmap
-     *              will be drawn
-     * @param y     the y location which represents where the bitmap
-     *              will be drawn
-     */
-    void draw_splash_screen(double x, double y);
-
-    /**
      * Creates a new bitmap that you can draw to. Initially the bitmap will
      * be transparent.
      *
