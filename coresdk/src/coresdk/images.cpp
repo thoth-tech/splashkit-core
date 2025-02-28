@@ -139,7 +139,7 @@ namespace splashkit_lib
         sk_drawing_surface surface;
         bitmap result = nullptr;
 
-        surface = sk_load_bitmap_base64(image);
+        surface = sk_load_bitmap_from_memory(base64_decode_data(image));
         if ( not surface._data )
         {
             LOG(WARNING) <<  cat({ "Error loading image for ", name}) ;

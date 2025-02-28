@@ -51,8 +51,6 @@ namespace splashkit_lib
 
     sk_drawing_surface sk_load_bitmap(const char * filename);
     sk_drawing_surface sk_load_bitmap_from_memory(const vector<int8_t>& img_data);
-    sk_drawing_surface sk_load_bitmap_base64(const char * image);
-    vector<int8_t> base64_decode(const char* in);
 
     void sk_draw_bitmap( sk_drawing_surface * src, sk_drawing_surface * dst, double * src_data, int src_data_sz, double * dst_data, int dst_data_sz, sk_renderer_flip flip );
 
