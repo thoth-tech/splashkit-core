@@ -2172,12 +2172,11 @@ namespace splashkit_lib
         return result;
     }
 
-    sk_drawing_surface sk_load_bitmap_base64(const char * image)
+    sk_drawing_surface sk_load_bitmap_from_memory(const vector<int8_t>& img_data)
     {
-        internal_sk_init();
         sk_drawing_surface result = { SGDS_Unknown, 0, 0, nullptr };
-        vector<int8_t> base64_img = base64_decode(image);
-        SDL_RWops *rw = SDL_RWFromConstMem(&base64_img[0], base64_img.size());
+        internal_sk_init();
+        SDL_RWops *rw = SDL_RWFromConstMem(&img_data[0], img_data.size());
         SDL_Surface *surface = IMG_LoadTyped_RW(rw, 1, "PNG");
     
         if ( ! surface ) {
@@ -2212,6 +2211,11 @@ namespace splashkit_lib
         _sk_add_bitmap(data);
         
         return result;
+    }
+
+    sk_drawing_surface sk_load_bitmap_base64(const char * image)
+    {
+        return sk_load_bitmap_from_memory(base64_decode(image));
     }
 
     vector<int8_t> base64_decode(const char* in) 
