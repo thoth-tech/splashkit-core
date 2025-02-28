@@ -193,6 +193,20 @@ namespace splashkit_lib
         }
     }
 
+    int sk_text_height(sk_font_data* font, int font_size)
+    {
+        TTF_Font* ttf_font = _get_font(font, font_size);
+
+        if (ttf_font)
+        {
+            return TTF_FontHeight(ttf_font);
+        }
+        else
+        {
+            return 8;
+        }
+    }
+
     void sk_set_font_style(sk_font_data* font, int font_size, int style)
     {
         TTF_Font* ttf_font = _get_font(font, font_size);
@@ -227,6 +241,7 @@ namespace splashkit_lib
                               sk_color clr )
     {
         internal_sk_init();
+        gfxPrimitivesSetFont(nullptr, 0, 0);
         unsigned int count = _sk_renderer_count(surface);
 
         for (unsigned int i = 0; i < count; i++)
