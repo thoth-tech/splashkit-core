@@ -10,7 +10,7 @@
     <Version>1.0.3</Version>
     <Authors>Andrew Cain, Olivia McKeon</Authors>
     <Company>SplashKit</Company>
-    <Description>Splashkit is a free and open-source software development kit (SDK) designed to simplify the process of creating 2D games and applications. It is primarily written in C++ and provides a set of libraries and tools that abstract away many of the low-level details of game development, allowing developers to focus on the core functionality and logic of their projects.</Description>
+    <Description>SplashKit is a beginner-friendly, open-source Software Development Kit (SDK) with a comprehensive library of functions and tools designed for beginner programmers to develop games and applications. SplashKit provides fundamental capabilities for handling graphics, input, audio, networking, and more, making it an ideal toolkit for introductory programming projects and game development.</Description>
 
     <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://splashkit.io/</PackageProjectUrl>
