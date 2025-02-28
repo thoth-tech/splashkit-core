@@ -2129,14 +2129,9 @@ namespace splashkit_lib
         return result;
     }
     
-    sk_drawing_surface sk_load_bitmap(const char * filename)
+    sk_drawing_surface sk_load_from_surface(SDL_Surface *surface)
     {
-        internal_sk_init();
         sk_drawing_surface result = { SGDS_Unknown, 0, 0, nullptr };
-        
-        SDL_Surface *surface;
-        
-        surface = IMG_Load(filename);
         
         if ( ! surface ) {
             std::cout << "error loading image " << IMG_GetError() << std::endl;
@@ -2172,45 +2167,20 @@ namespace splashkit_lib
         return result;
     }
 
+    sk_drawing_surface sk_load_bitmap(const char * filename)
+    {
+        internal_sk_init();
+
+        return sk_load_from_surface(IMG_Load(filename));
+    }
+
     sk_drawing_surface sk_load_bitmap_from_memory(const vector<int8_t>& img_data)
     {
-        sk_drawing_surface result = { SGDS_Unknown, 0, 0, nullptr };
         internal_sk_init();
+
         SDL_RWops *rw = SDL_RWFromConstMem(&img_data[0], img_data.size());
-        SDL_Surface *surface = IMG_LoadTyped_RW(rw, 1, "PNG");
-    
-        if ( ! surface ) {
-            std::cout << "error loading image " << IMG_GetError() << std::endl;
-            return result;
-        }
-        sk_bitmap_be *data = static_cast<sk_bitmap_be *>(malloc(sizeof(sk_bitmap_be)));
-        
-        result._data = data;
-        
-        // Allocate space for one texture per window
-        if (_sk_num_open_windows > 0)
-            data->texture = static_cast<SDL_Texture **>(malloc(sizeof(SDL_Texture*) * _sk_num_open_windows));
-        else
-            data->texture = nullptr;
-        
-        for (unsigned int i = 0; i < _sk_num_open_windows; i++)
-        {
-            // Create a texture for each window
-            data->texture[i] = SDL_CreateTextureFromSurface(_sk_open_windows[i]->renderer, surface);
-        }
-        
-        data->surface = surface;
-        data->drawable = false;
-        data->clipped = false;
-        data->clip = {0,0,0,0};
-        
-        result.kind = SGDS_Bitmap;
-        result.width = surface->w;
-        result.height = surface->h;
-        
-        _sk_add_bitmap(data);
-        
-        return result;
+
+        return sk_load_from_surface(IMG_LoadTyped_RW(rw, 1, "PNG"));
     }
 
     //x, y is the position to draw the bitmap to. As bitmaps scale around their centre, (x, y) is the top-left of the bitmap IF and ONLY IF scale = 1.
