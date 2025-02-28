@@ -40,10 +40,6 @@ done
 # </PropertyGroup>
 
 # <ItemGroup>
-#     <Content Include="icon.ico" />
-# </ItemGroup>
-
-# <ItemGroup>
 #     <Content Include=".\Libraries\win64\*.dll">
 #         <Pack>true</Pack>
 #         <PackagePath>lib\$(TargetFramework)</PackagePath>
@@ -58,15 +54,4 @@ done
 #         <PackageCopyToOutput>true</PackageCopyToOutput>
 #         <Link>%(FileName)%(Extension)</Link>
 #     </Content>
-# </ItemGroup>
-
-# <ItemGroup>
-#     <None Update="icon.png">
-#         <Pack>True</Pack>
-#         <PackagePath>\</PackagePath>
-#     </None>
-#     <None Update="readme.md">
-#         <Pack>True</Pack>
-#         <PackagePath>\</PackagePath>
-#     </None>
 # </ItemGroup>
