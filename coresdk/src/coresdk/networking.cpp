@@ -1305,13 +1305,7 @@ namespace splashkit_lib
 
         std::regex mac_regex(mac_pattern);
 
-        if (!regex_match(mac_address, mac_regex))
-        {
-            LOG(ERROR) << "Invalid MAC address format: " << mac_address;
-            return false;
-        }
-
-        return true;
+        return regex_match(mac_address, mac_regex);
     }
 
     string mac_to_hex(const string &mac_address)

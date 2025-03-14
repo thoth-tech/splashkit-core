@@ -16,15 +16,15 @@ void run_encoding_decoding_tests()
 {
     // Incomplete ip address tests
     assert(ipv4_to_hex("127.0.0") == "0x7F000000");
-    assert(ipv4_to_str(ipv4_to_dec("127.0.0")) == "127.0.0.0");
-    assert(ipv4_to_str(ipv4_to_dec("127,0.0")) == "127.0.0.0");
-    assert(ipv4_to_str(ipv4_to_dec("")) == "0.0.0.0");
+    assert(dec_to_ipv4(ipv4_to_dec("127.0.0")) == "127.0.0.0");
+    assert(dec_to_ipv4(ipv4_to_dec("127,0.0")) == "127.0.0.0");
+    assert(dec_to_ipv4(ipv4_to_dec("")) == "0.0.0.0");
 
     int too_small_int = 4000;
-    assert(ipv4_to_str(too_small_int) == "0.0.15.160");
+    assert(dec_to_ipv4(too_small_int) == "0.0.15.160");
 
     // Complete ip address tests
-    assert(ipv4_to_str(ipv4_to_dec(TEST_IP)) == TEST_IP);
+    assert(dec_to_ipv4(ipv4_to_dec(TEST_IP)) == TEST_IP);
     assert(dec_to_hex(ipv4_to_dec(TEST_IP)) == TEST_IP_HEX);
     assert(ipv4_to_hex(TEST_IP) == TEST_IP_HEX);
     assert(hex_str_to_ipv4(TEST_IP_HEX) == TEST_IP);
@@ -61,7 +61,7 @@ void mac_to_hex_test()
     assert(mac_to_hex("01:23:45:AB") != "0x0123456789");
     assert(mac_to_hex("01:23:45:67:89:AB:CD") != "0x0123456789AB");
     assert(mac_to_hex("01:23:67:89:AB") != "0x0123456789ABCD");
-    assert(mac_to_hex("0000") != "0x0000");
+    assert(mac_to_hex("0000") == "");
 
 
     std::cout << "All MAC to Hexadecimal tests passed!\n"
@@ -102,7 +102,7 @@ void hex_to_mac_test()
     std::cout << "-------------------------------------" << std::endl;
 }
 
-void is_valid_mac()
+void is_valid_mac_test()
 {
     // Valid MAC addresses
     assert(is_valid_mac("00:00:00:00:00:00"));
@@ -141,4 +141,5 @@ void run_networking_test()
     run_encoding_decoding_tests();
     mac_to_hex_test();
     hex_to_mac_test();
+    is_valid_mac_test();
 }
