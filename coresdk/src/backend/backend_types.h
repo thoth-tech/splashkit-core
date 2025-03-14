@@ -314,13 +314,13 @@ namespace splashkit_lib
 
     // See https://abyz.me.uk/rpi/pigpio/sif.html for more information on these.
     // Archive link: https://web.archive.org/web/20240423160319/https://abyz.me.uk/rpi/pigpio/sif.html
-    typedef struct
+    typedef struct sk_pigpio_cmd_t
     {
         // 0 is a valid value for these, so we assign -1 and let it overflow
         // thus ensuring that the command struct does not start with valid values. 
-        uint32_t cmd_code = -1; 
-        uint32_t param1 = -1;
-        uint32_t param2 = -1;
+        uint32_t cmd_code = ((uint32_t)-1);
+        uint32_t param1 = ((uint32_t)-1);
+        uint32_t param2 = ((uint32_t)-1);
         union
         {
             uint32_t param3;

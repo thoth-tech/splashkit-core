@@ -221,5 +221,4 @@ TEST_CASE("can convert network data")
         REQUIRE_FALSE(is_valid_ipv4("abc.def.ghi.jkl")); // Letters
         REQUIRE_FALSE(is_valid_ipv4("192,168,1,1"));     // Wrong separator
     }
-  }
 }
