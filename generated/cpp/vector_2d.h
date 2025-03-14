@@ -9,6 +9,7 @@
 #include "types.h"
 #include <string>
 #include <vector>
+#include <cmath>
 #include <cstdint>
 using std::string;
 using std::vector;
@@ -27,7 +28,7 @@ bool vector_in_rect(const vector_2d &v, const rectangle &rect);
 vector_2d vector_invert(const vector_2d &v);
 vector_2d vector_limit(const vector_2d &v, double limit);
 double vector_magnitude(const vector_2d &v);
-double vector_magnitude_sqared(const vector_2d &v);
+double vector_magnitude_squared(const vector_2d &v);
 vector_2d vector_multiply(const vector_2d &v1, double s);
 vector_2d vector_normal(const vector_2d &v);
 vector_2d vector_out_of_circle_from_circle(const circle &src, const circle &bounds, const vector_2d &velocity);

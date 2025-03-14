@@ -58,8 +58,8 @@ if [[ $GENERATE_LIB ]]; then
   sleep 0.5
   cd "${SK_ROOT}/tools/translator/"
   
-  docker compose build
-  docker-compose run --rm  headerdoc clib,cpp,pascal,python,csharp,docs
+  # docker compose build
+  docker compose run --rm  headerdoc clib,cpp,pascal,python,csharp,docs
 
   cd "$APP_PATH/nuget-pkg"
 
@@ -125,7 +125,6 @@ do_make
 cd "${APP_PATH}"
 
 if [[ `uname` == MINGW* ]]; then
-  rm ${SK_OUT}/skm/lib/win32/*.a
   rm ${SK_OUT}/skm/lib/win64/*.a
 fi
 
