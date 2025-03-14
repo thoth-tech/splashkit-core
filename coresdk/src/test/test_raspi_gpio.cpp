@@ -38,7 +38,7 @@ void local_gpio_invalid_tests()
 
     // --- ERROR TEST: Invalid GPIO pin number ---
     cout << "Testing invalid GPIO pin number (PIN_60)" << endl;
-    raspi_set_mode(static_cast<pins>(60), GPIO_OUTPUT);  
+    raspi_set_mode(static_cast<gpio_pin>(60), GPIO_OUTPUT);  
 
     // --- ERROR TEST: Invalid GPIO pin number (EEPROM pin) ---
     cout << "Testing invalid GPIO pin number (EEPROM pin)" << endl;
@@ -54,11 +54,11 @@ void local_gpio_invalid_tests()
 
     // --- ERROR TEST: Invalid GPIO mode ---
     cout << "Testing invalid GPIO mode (mode 10)" << endl;
-    raspi_set_mode(PIN_11, static_cast<pin_modes>(10));  
+    raspi_set_mode(PIN_11, static_cast<gpio_pin_mode>(10));  
 
     // --- ERROR TEST: Invalid GPIO write value ---
     cout << "Testing invalid GPIO value (writing 5)" << endl;
-    raspi_write(PIN_11, static_cast<pin_values>(5));  
+    raspi_write(PIN_11, static_cast<gpio_pin_value>(5));  
 
     // --- ERROR TEST: Invalid pull-up/down configuration ---
     cout << "Testing invalid pull-up/down configuration (PUD value 3)" << endl;
@@ -98,7 +98,7 @@ void remote_gpio_invalid_tests(connection pi)
 
     // --- ERROR TEST: Invalid GPIO pin number ---
     cout << "Testing invalid GPIO pin number (PIN_60)" << endl;
-    remote_raspi_set_mode(pi, static_cast<pins>(60), GPIO_OUTPUT); 
+    remote_raspi_set_mode(pi, static_cast<gpio_pin>(60), GPIO_OUTPUT); 
 
     // --- ERROR TEST: Invalid GPIO pin number (EEPROM pin) ---
     cout << "Testing invalid GPIO pin number (EEPROM pin)" << endl;
@@ -114,11 +114,11 @@ void remote_gpio_invalid_tests(connection pi)
     
     // --- ERROR TEST: Invalid GPIO mode ---
     cout << "Testing invalid GPIO mode (mode 10)" << endl;
-    remote_raspi_set_mode(pi, PIN_11, static_cast<pin_modes>(10));  
+    remote_raspi_set_mode(pi, PIN_11, static_cast<gpio_pin_mode>(10));  
 
     // --- ERROR TEST: Invalid GPIO write value ---
     cout << "Testing invalid GPIO value (writing 5)" << endl;
-    remote_raspi_write(pi, PIN_11, static_cast<pin_values>(5));  
+    remote_raspi_write(pi, PIN_11, static_cast<gpio_pin_value>(5));  
 
     // --- ERROR TEST: Invalid pull-up/down configuration ---
     cout << "Testing invalid pull-up/down configuration (PUD value 3)" << endl;

@@ -150,7 +150,10 @@ namespace splashkit_lib
 
     void sk_gpio_clear_bank_1()
     {
-        clear_bank_1(pi, PI4B_GPIO_BITMASK);
+        if(check_pi())
+        {
+            clear_bank_1(pi, PI4B_GPIO_BITMASK);
+        }
     }
 
     // Cleanup the GPIO library
@@ -164,15 +167,26 @@ namespace splashkit_lib
     
     int sk_spi_open(int channel, int speed, int spi_flags)
     {
-        return spi_open(pi, channel, speed, spi_flags);
+        if(check_pi())
+            return spi_open(pi, channel, speed, spi_flags);
+        else
+            return -1;
     }
+
     int sk_spi_close(int handle)
     {
-        return spi_close(pi, handle);
+        if(check_pi())
+            return spi_close(pi, handle);
+        else
+            return -1;
     }
+
     int sk_spi_transfer(int handle, char *sendBuf, char *recvBuf, int count)
     {
-        return spi_xfer(pi, handle, sendBuf, recvBuf, count);
+        if(check_pi())
+            return spi_xfer(pi, handle, sendBuf, recvBuf, count);
+        else
+            return -1;
     }	
 
     #endif
@@ -332,6 +346,7 @@ namespace splashkit_lib
             return -1;
         }
     }
+    
     std::string sk_gpio_error_message(int error_code)
     {
         switch (error_code)

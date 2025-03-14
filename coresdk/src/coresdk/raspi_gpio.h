@@ -37,7 +37,7 @@ namespace splashkit_lib
      * @param pin   The pin to set the mode for.
      * @param mode  The mode to set for the pin.
      */
-    void raspi_set_mode(pins pin, pin_modes mode);
+    void raspi_set_mode(gpio_pin pin, gpio_pin_mode mode);
 
     /**
      * @brief Gets the mode of the specified pin.
@@ -47,7 +47,7 @@ namespace splashkit_lib
      * @param pin   The pin to get the mode for.
      * @returns     The mode of the pin.
      */
-    pin_modes raspi_get_mode(pins pin);
+    gpio_pin_mode raspi_get_mode(gpio_pin pin);
 
     /**
      * @brief Writes a value to the specified pin.
@@ -57,7 +57,7 @@ namespace splashkit_lib
      * @param pin    The pin to write the value to.
      * @param value  The value to write to the pin.
      */
-    void raspi_write(pins pin, pin_values value);
+    void raspi_write(gpio_pin pin, gpio_pin_value value);
 
     /**
      * @brief Sets the pull up/down mode for the specified pin.
@@ -67,7 +67,7 @@ namespace splashkit_lib
      * @param pin   The pin to set the pull up/down mode for.
      * @param pud   The pull up/down mode to set for the pin.
      */
-    void raspi_set_pull_up_down(pins pin, pull_up_down pud);
+    void raspi_set_pull_up_down(gpio_pin pin, pull_up_down pud);
 
     /**
      * @brief Sets the PWM range for the specified pin.
@@ -78,7 +78,7 @@ namespace splashkit_lib
      * @param pin    The pin to set the PWM range for.
      * @param range  The PWM range to set for the pin.
      */
-    void raspi_set_pwm_range(pins pin, int range);
+    void raspi_set_pwm_range(gpio_pin pin, int range);
 
     /**
      * @brief Sets the PWM frequency for the specified pin.
@@ -88,7 +88,7 @@ namespace splashkit_lib
      * @param pin         The pin to set the PWM frequency for.
      * @param frequency   The PWM frequency to set for the pin.
      */
-    void raspi_set_pwm_frequency(pins pin, int frequency);
+    void raspi_set_pwm_frequency(gpio_pin pin, int frequency);
 
     /**
      * @brief Sets the PWM duty cycle for the specified pin.
@@ -98,7 +98,7 @@ namespace splashkit_lib
      * @param pin         The pin to set the PWM duty cycle for.
      * @param dutycycle   The PWM duty cycle to set for the pin.
      */
-    void raspi_set_pwm_dutycycle(pins pin, int dutycycle);
+    void raspi_set_pwm_dutycycle(gpio_pin pin, int dutycycle);
 
     /**
      * @brief Reads the value from the specified pin.
@@ -108,7 +108,7 @@ namespace splashkit_lib
      * @param pin  The pin to read the value from.
      * @returns    The value read from the pin.
      */
-    pin_values raspi_read(pins pin);
+    gpio_pin_value raspi_read(gpio_pin pin);
 
 	/**
      * @brief Opens SPI communication on selected channel.
@@ -173,7 +173,7 @@ namespace splashkit_lib
      * @param pin    The pin to set the mode for.
      * @param mode   The mode to set for the pin.
      */
-    void remote_raspi_set_mode(connection pi, pins pin, pin_modes mode);
+    void remote_raspi_set_mode(connection pi, gpio_pin pin, gpio_pin_mode mode);
 	
 	/**
      * @brief Gets the mode of the specified pin on a remote Raspberry Pi.
@@ -184,7 +184,7 @@ namespace splashkit_lib
      * @param pin    The pin to get the mode for.
      * @returns      The mode of the pin.
      */
-    pin_modes remote_raspi_get_mode(connection pi, pins pin);
+    gpio_pin_mode remote_raspi_get_mode(connection pi, gpio_pin pin);
 	
 	/**
      * @brief Sets the pull up/down mode for the specified pin on a remote Raspberry Pi.
@@ -195,7 +195,7 @@ namespace splashkit_lib
      * @param pin    The pin to set the pull up/down mode for.
      * @param pud    The pull up/down mode to set for the pin.
      */
-    void remote_raspi_set_pull_up_down(connection pi, pins pin, pull_up_down pud);
+    void remote_raspi_set_pull_up_down(connection pi, gpio_pin pin, pull_up_down pud);
 	
 	/**
      * @brief Writes a value to the specified pin on a remote Raspberry Pi.
@@ -206,7 +206,7 @@ namespace splashkit_lib
      * @param pin    The pin to write the value to.
      * @param value  The value to write to the pin.
      */
-    void remote_raspi_write(connection pi, pins pin, pin_values value);
+    void remote_raspi_write(connection pi, gpio_pin pin, gpio_pin_value value);
 	
 	/**
      * @brief Reads the value from the specified pin on a remote Raspberry Pi.
@@ -217,7 +217,7 @@ namespace splashkit_lib
      * @param pin    The pin to read the value from.
      * @returns      The value read from the pin.
      */
-    pin_values remote_raspi_read(connection pi, pins pin);
+    gpio_pin_value remote_raspi_read(connection pi, gpio_pin pin);
 	
 	/**
      * @brief Sets the PWM range for the specified pin on a remote Raspberry Pi.
@@ -229,7 +229,7 @@ namespace splashkit_lib
      * @param pin    The pin to set the PWM range for.
      * @param range  The PWM range to set for the pin.
      */
-    void remote_raspi_set_pwm_range(connection pi, pins pin, int range);
+    void remote_raspi_set_pwm_range(connection pi, gpio_pin pin, int range);
 	
 	/**
      * @brief Sets the PWM frequency for the specified pin on a remote Raspberry Pi.
@@ -240,7 +240,7 @@ namespace splashkit_lib
      * @param pin        The pin to set the PWM frequency for.
      * @param frequency  The PWM frequency to set for the pin.
      */
-    void remote_raspi_set_pwm_frequency(connection pi, pins pin, int frequency);
+    void remote_raspi_set_pwm_frequency(connection pi, gpio_pin pin, int frequency);
 	
 	/**
      * @brief Sets the PWM duty cycle for the specified pin on a remote Raspberry Pi.
@@ -251,7 +251,7 @@ namespace splashkit_lib
      * @param pin        The pin to set the PWM duty cycle for.
      * @param dutycycle  The PWM duty cycle to set for the pin.
      */
-    void remote_raspi_set_pwm_dutycycle(connection pi, pins pin, int dutycycle);
+    void remote_raspi_set_pwm_dutycycle(connection pi, gpio_pin pin, int dutycycle);
 	
 	/**
      * @brief Cleans up and releases the connection to a remote Raspberry Pi.
