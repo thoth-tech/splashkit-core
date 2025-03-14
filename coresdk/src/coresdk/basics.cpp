@@ -445,7 +445,7 @@ namespace splashkit_lib
     }
 
 
-    double calculate_square_root(int number)
+    double square_root(int number)
     {
         if (number == 0 || number == 1)
             return number;
@@ -456,7 +456,7 @@ namespace splashkit_lib
     bool is_prime_number(int number)
     {
         if (number <= 1) return false;
-        for (int i = 2; i <= calculate_square_root(number); i++)
+        for (int i = 2; i <= square_root(number); i++)
         {
             if (number % i == 0)
                 return false;

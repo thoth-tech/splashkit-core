@@ -332,7 +332,7 @@ namespace splashkit_lib
      *
      * @returns Square root of the number
      */
-    double calculate_square_root(int number);
+    double square_root(int number);
 
     /**
      * @brief Checks if a number is a prime number
