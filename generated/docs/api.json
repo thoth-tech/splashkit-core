@@ -56509,6 +56509,57 @@
         }
       },
       {
+        "signature": "string hex_to_mac(const string &hex_str);",
+        "name": "hex_to_mac",
+        "method_name": null,
+        "unique_global_name": "hex_to_mac",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts a hexadecimal representation of a MAC address back to its standard format.\ne.g. 01:23:45:67:89:AB from 0x0123456789AB",
+        "brief": "Converts a hexadecimal string to a MAC address",
+        "return": {
+          "type": "string",
+          "description": "MAC address as a string in the format XX:XX:XX:XX:XX:XX",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "hex_str": {
+            "type": "string",
+            "description": "hexadecimal string to convert",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "networking",
+          "static": "networking"
+        },
+        "signatures": {
+          "cpp": [
+            "string hex_to_mac(const string &hex_str)"
+          ],
+          "python": [
+            "def hex_to_mac(hex_str):"
+          ],
+          "csharp": [
+            "public static string SplashKit.HexToMac(string hexStr);"
+          ],
+          "pascal": [
+            "function HexToMac(const hexStr: String): String"
+          ]
+        }
+      },
+      {
         "signature": "unsigned int ipv4_to_dec(const string &a_ip);",
         "name": "ipv4_to_dec",
         "method_name": null,
@@ -56769,6 +56820,57 @@
         }
       },
       {
+        "signature": "bool is_valid_mac(const string &mac_address);",
+        "name": "is_valid_mac",
+        "method_name": null,
+        "unique_global_name": "is_valid_mac",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Checks if the supplied MAC address is valid.",
+        "brief": "Checks if a MAC address is valid",
+        "return": {
+          "type": "bool",
+          "description": "true if the MAC address is valid",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "mac_address": {
+            "type": "string",
+            "description": "MAC address to check",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "networking",
+          "static": "networking"
+        },
+        "signatures": {
+          "cpp": [
+            "bool is_valid_mac(const string &mac_address)"
+          ],
+          "python": [
+            "def is_valid_mac(mac_address):"
+          ],
+          "csharp": [
+            "public static bool SplashKit.IsValidMac(string macAddress);"
+          ],
+          "pascal": [
+            "function IsValidMac(const macAddress: String): Boolean"
+          ]
+        }
+      },
+      {
         "signature": "connection last_connection(const string &name);",
         "name": "last_connection",
         "method_name": null,
@@ -56872,6 +56974,57 @@
           ],
           "pascal": [
             "function LastConnection(server: ServerSocket): Connection"
+          ]
+        }
+      },
+      {
+        "signature": "string mac_to_hex(const string &mac_address);",
+        "name": "mac_to_hex",
+        "method_name": null,
+        "unique_global_name": "mac_to_hex",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts a MAC address into its hexadecimal representation.\ne.g. 0x0123456789AB from 01:23:45:67:89:AB",
+        "brief": "Converts a MAC address string to its hexadecimal representation",
+        "return": {
+          "type": "string",
+          "description": "hexadecimal representation of MAC address as a string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "mac_address": {
+            "type": "string",
+            "description": "MAC address to convert",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "networking",
+          "static": "networking"
+        },
+        "signatures": {
+          "cpp": [
+            "string mac_to_hex(const string &mac_address)"
+          ],
+          "python": [
+            "def mac_to_hex(mac_address):"
+          ],
+          "csharp": [
+            "public static string SplashKit.MacToHex(string macAddress);"
+          ],
+          "pascal": [
+            "function MacToHex(const macAddress: String): String"
           ]
         }
       },
@@ -72668,7 +72821,7 @@
         }
       },
       {
-        "signature": "pin_modes raspi_get_mode(pins pin);",
+        "signature": "gpio_pin_mode raspi_get_mode(gpio_pin pin);",
         "name": "raspi_get_mode",
         "method_name": null,
         "unique_global_name": "raspi_get_mode",
@@ -72677,7 +72830,7 @@
         "description": "This function retrieves the mode of the specified pin.",
         "brief": "Gets the mode of the specified pin.",
         "return": {
-          "type": "pin_modes",
+          "type": "gpio_pin_mode",
           "description": "The mode of the pin.",
           "is_pointer": false,
           "is_reference": false,
@@ -72686,7 +72839,7 @@
         },
         "parameters": {
           "pin": {
-            "type": "pins",
+            "type": "gpio_pin",
             "description": "The pin to get the mode for.",
             "is_pointer": false,
             "is_const": false,
@@ -72705,16 +72858,16 @@
         },
         "signatures": {
           "cpp": [
-            "pin_modes raspi_get_mode(pins pin)"
+            "gpio_pin_mode raspi_get_mode(gpio_pin pin)"
           ],
           "python": [
             "def raspi_get_mode(pin):"
           ],
           "csharp": [
-            "public static PinModes SplashKit.RaspiGetMode(Pins pin);"
+            "public static GpioPinMode SplashKit.RaspiGetMode(GpioPin pin);"
           ],
           "pascal": [
-            "function RaspiGetMode(pin: Pins): PinModes"
+            "function RaspiGetMode(pin: GpioPin): GpioPinMode"
           ]
         }
       },
@@ -72757,7 +72910,7 @@
         }
       },
       {
-        "signature": "pin_values raspi_read(pins pin);",
+        "signature": "gpio_pin_value raspi_read(gpio_pin pin);",
         "name": "raspi_read",
         "method_name": null,
         "unique_global_name": "raspi_read",
@@ -72766,7 +72919,7 @@
         "description": "This function reads the value from the specified pin.",
         "brief": "Reads the value from the specified pin.",
         "return": {
-          "type": "pin_values",
+          "type": "gpio_pin_value",
           "description": "The value read from the pin.",
           "is_pointer": false,
           "is_reference": false,
@@ -72775,7 +72928,7 @@
         },
         "parameters": {
           "pin": {
-            "type": "pins",
+            "type": "gpio_pin",
             "description": "The pin to read the value from.",
             "is_pointer": false,
             "is_const": false,
@@ -72794,21 +72947,21 @@
         },
         "signatures": {
           "cpp": [
-            "pin_values raspi_read(pins pin)"
+            "gpio_pin_value raspi_read(gpio_pin pin)"
           ],
           "python": [
             "def raspi_read(pin):"
           ],
           "csharp": [
-            "public static PinValues SplashKit.RaspiRead(Pins pin);"
+            "public static GpioPinValue SplashKit.RaspiRead(GpioPin pin);"
           ],
           "pascal": [
-            "function RaspiRead(pin: Pins): PinValues"
+            "function RaspiRead(pin: GpioPin): GpioPinValue"
           ]
         }
       },
       {
-        "signature": "void raspi_set_mode(pins pin,pin_modes mode);",
+        "signature": "void raspi_set_mode(gpio_pin pin,gpio_pin_mode mode);",
         "name": "raspi_set_mode",
         "method_name": null,
         "unique_global_name": "raspi_set_mode",
@@ -72826,7 +72979,7 @@
         },
         "parameters": {
           "pin": {
-            "type": "pins",
+            "type": "gpio_pin",
             "description": "The pin to set the mode for.",
             "is_pointer": false,
             "is_const": false,
@@ -72839,7 +72992,7 @@
             "type_parameter": null
           },
           "mode": {
-            "type": "pin_modes",
+            "type": "gpio_pin_mode",
             "description": "The mode to set for the pin.",
             "is_pointer": false,
             "is_const": false,
@@ -72858,21 +73011,21 @@
         },
         "signatures": {
           "cpp": [
-            "void raspi_set_mode(pins pin, pin_modes mode)"
+            "void raspi_set_mode(gpio_pin pin, gpio_pin_mode mode)"
           ],
           "python": [
             "def raspi_set_mode(pin, mode):"
           ],
           "csharp": [
-            "public static void SplashKit.RaspiSetMode(Pins pin, PinModes mode);"
+            "public static void SplashKit.RaspiSetMode(GpioPin pin, GpioPinMode mode);"
           ],
           "pascal": [
-            "procedure RaspiSetMode(pin: Pins; mode: PinModes)"
+            "procedure RaspiSetMode(pin: GpioPin; mode: GpioPinMode)"
           ]
         }
       },
       {
-        "signature": "void raspi_set_pull_up_down(pins pin,pull_up_down pud);",
+        "signature": "void raspi_set_pull_up_down(gpio_pin pin,pull_up_down pud);",
         "name": "raspi_set_pull_up_down",
         "method_name": null,
         "unique_global_name": "raspi_set_pull_up_down",
@@ -72890,7 +73043,7 @@
         },
         "parameters": {
           "pin": {
-            "type": "pins",
+            "type": "gpio_pin",
             "description": "The pin to set the pull up/down mode for.",
             "is_pointer": false,
             "is_const": false,
@@ -72922,21 +73075,21 @@
         },
         "signatures": {
           "cpp": [
-            "void raspi_set_pull_up_down(pins pin, pull_up_down pud)"
+            "void raspi_set_pull_up_down(gpio_pin pin, pull_up_down pud)"
           ],
           "python": [
             "def raspi_set_pull_up_down(pin, pud):"
           ],
           "csharp": [
-            "public static void SplashKit.RaspiSetPullUpDown(Pins pin, PullUpDown pud);"
+            "public static void SplashKit.RaspiSetPullUpDown(GpioPin pin, PullUpDown pud);"
           ],
           "pascal": [
-            "procedure RaspiSetPullUpDown(pin: Pins; pud: PullUpDown)"
+            "procedure RaspiSetPullUpDown(pin: GpioPin; pud: PullUpDown)"
           ]
         }
       },
       {
-        "signature": "void raspi_set_pwm_dutycycle(pins pin,int dutycycle);",
+        "signature": "void raspi_set_pwm_dutycycle(gpio_pin pin,int dutycycle);",
         "name": "raspi_set_pwm_dutycycle",
         "method_name": null,
         "unique_global_name": "raspi_set_pwm_dutycycle",
@@ -72954,7 +73107,7 @@
         },
         "parameters": {
           "pin": {
-            "type": "pins",
+            "type": "gpio_pin",
             "description": "The pin to set the PWM duty cycle for.",
             "is_pointer": false,
             "is_const": false,
@@ -72986,21 +73139,21 @@
         },
         "signatures": {
           "cpp": [
-            "void raspi_set_pwm_dutycycle(pins pin, int dutycycle)"
+            "void raspi_set_pwm_dutycycle(gpio_pin pin, int dutycycle)"
           ],
           "python": [
             "def raspi_set_pwm_dutycycle(pin, dutycycle):"
           ],
           "csharp": [
-            "public static void SplashKit.RaspiSetPwmDutycycle(Pins pin, int dutycycle);"
+            "public static void SplashKit.RaspiSetPwmDutycycle(GpioPin pin, int dutycycle);"
           ],
           "pascal": [
-            "procedure RaspiSetPwmDutycycle(pin: Pins; dutycycle: Integer)"
+            "procedure RaspiSetPwmDutycycle(pin: GpioPin; dutycycle: Integer)"
           ]
         }
       },
       {
-        "signature": "void raspi_set_pwm_frequency(pins pin,int frequency);",
+        "signature": "void raspi_set_pwm_frequency(gpio_pin pin,int frequency);",
         "name": "raspi_set_pwm_frequency",
         "method_name": null,
         "unique_global_name": "raspi_set_pwm_frequency",
@@ -73018,7 +73171,7 @@
         },
         "parameters": {
           "pin": {
-            "type": "pins",
+            "type": "gpio_pin",
             "description": "The pin to set the PWM frequency for.",
             "is_pointer": false,
             "is_const": false,
@@ -73050,27 +73203,27 @@
         },
         "signatures": {
           "cpp": [
-            "void raspi_set_pwm_frequency(pins pin, int frequency)"
+            "void raspi_set_pwm_frequency(gpio_pin pin, int frequency)"
           ],
           "python": [
             "def raspi_set_pwm_frequency(pin, frequency):"
           ],
           "csharp": [
-            "public static void SplashKit.RaspiSetPwmFrequency(Pins pin, int frequency);"
+            "public static void SplashKit.RaspiSetPwmFrequency(GpioPin pin, int frequency);"
           ],
           "pascal": [
-            "procedure RaspiSetPwmFrequency(pin: Pins; frequency: Integer)"
+            "procedure RaspiSetPwmFrequency(pin: GpioPin; frequency: Integer)"
           ]
         }
       },
       {
-        "signature": "void raspi_set_pwm_range(pins pin,int range);",
+        "signature": "void raspi_set_pwm_range(gpio_pin pin,int range);",
         "name": "raspi_set_pwm_range",
         "method_name": null,
         "unique_global_name": "raspi_set_pwm_range",
         "unique_method_name": null,
         "suffix_name": null,
-        "description": "This function sets the PWM range for the specified pin.",
+        "description": "This function sets the PWM range for the specified pin.\nValid values for the range are 25 - 40000",
         "brief": "Sets the PWM range for the specified pin.",
         "return": {
           "type": "void",
@@ -73082,7 +73235,7 @@
         },
         "parameters": {
           "pin": {
-            "type": "pins",
+            "type": "gpio_pin",
             "description": "The pin to set the PWM range for.",
             "is_pointer": false,
             "is_const": false,
@@ -73114,16 +73267,16 @@
         },
         "signatures": {
           "cpp": [
-            "void raspi_set_pwm_range(pins pin, int range)"
+            "void raspi_set_pwm_range(gpio_pin pin, int range)"
           ],
           "python": [
             "def raspi_set_pwm_range(pin, range):"
           ],
           "csharp": [
-            "public static void SplashKit.RaspiSetPwmRange(Pins pin, int range);"
+            "public static void SplashKit.RaspiSetPwmRange(GpioPin pin, int range);"
           ],
           "pascal": [
-            "procedure RaspiSetPwmRange(pin: Pins; range: Integer)"
+            "procedure RaspiSetPwmRange(pin: GpioPin; range: Integer)"
           ]
         }
       },
@@ -73346,7 +73499,7 @@
         }
       },
       {
-        "signature": "void raspi_write(pins pin,pin_values value);",
+        "signature": "void raspi_write(gpio_pin pin,gpio_pin_value value);",
         "name": "raspi_write",
         "method_name": null,
         "unique_global_name": "raspi_write",
@@ -73364,7 +73517,7 @@
         },
         "parameters": {
           "pin": {
-            "type": "pins",
+            "type": "gpio_pin",
             "description": "The pin to write the value to.",
             "is_pointer": false,
             "is_const": false,
@@ -73377,7 +73530,7 @@
             "type_parameter": null
           },
           "value": {
-            "type": "pin_values",
+            "type": "gpio_pin_value",
             "description": "The value to write to the pin.",
             "is_pointer": false,
             "is_const": false,
@@ -73396,16 +73549,734 @@
         },
         "signatures": {
           "cpp": [
-            "void raspi_write(pins pin, pin_values value)"
+            "void raspi_write(gpio_pin pin, gpio_pin_value value)"
           ],
           "python": [
             "def raspi_write(pin, value):"
           ],
           "csharp": [
-            "public static void SplashKit.RaspiWrite(Pins pin, PinValues value);"
+            "public static void SplashKit.RaspiWrite(GpioPin pin, GpioPinValue value);"
           ],
           "pascal": [
-            "procedure RaspiWrite(pin: Pins; value: PinValues)"
+            "procedure RaspiWrite(pin: GpioPin; value: GpioPinValue)"
+          ]
+        }
+      },
+      {
+        "signature": "bool remote_raspi_cleanup(connection pi);",
+        "name": "remote_raspi_cleanup",
+        "method_name": null,
+        "unique_global_name": "remote_raspi_cleanup",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function closes the connection to the remote Raspberry Pi and releases any resources associated with it.",
+        "brief": "Cleans up and releases the connection to a remote Raspberry Pi.",
+        "return": {
+          "type": "bool",
+          "description": "true if the cleanup was successful, false otherwise.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pi": {
+            "type": "connection",
+            "description": "The connection object to the remote Raspberry Pi.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "bool remote_raspi_cleanup(connection pi)"
+          ],
+          "python": [
+            "def remote_raspi_cleanup(pi):"
+          ],
+          "csharp": [
+            "public static bool SplashKit.RemoteRaspiCleanup(Connection pi);"
+          ],
+          "pascal": [
+            "function RemoteRaspiCleanup(pi: Connection): Boolean"
+          ]
+        }
+      },
+      {
+        "signature": "gpio_pin_mode remote_raspi_get_mode(connection pi,gpio_pin pin);",
+        "name": "remote_raspi_get_mode",
+        "method_name": null,
+        "unique_global_name": "remote_raspi_get_mode",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function retrieves the mode of a specific pin on a remote Raspberry Pi.",
+        "brief": "Gets the mode of the specified pin on a remote Raspberry Pi.",
+        "return": {
+          "type": "gpio_pin_mode",
+          "description": "The mode of the pin.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pi": {
+            "type": "connection",
+            "description": "The connection object to the remote Raspberry Pi.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to get the mode for.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "gpio_pin_mode remote_raspi_get_mode(connection pi, gpio_pin pin)"
+          ],
+          "python": [
+            "def remote_raspi_get_mode(pi, pin):"
+          ],
+          "csharp": [
+            "public static GpioPinMode SplashKit.RemoteRaspiGetMode(Connection pi, GpioPin pin);"
+          ],
+          "pascal": [
+            "function RemoteRaspiGetMode(pi: Connection; pin: GpioPin): GpioPinMode"
+          ]
+        }
+      },
+      {
+        "signature": "connection remote_raspi_init(const string &name,const string &host,unsigned short int port);",
+        "name": "remote_raspi_init",
+        "method_name": null,
+        "unique_global_name": "remote_raspi_init",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function initialises a connection to a remote Raspberry Pi using the specified name, host, and port.",
+        "brief": "Initialises a remote connection to a Raspberry Pi.",
+        "return": {
+          "type": "connection",
+          "description": "The connection object used to communicate with the remote Raspberry Pi.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "The name of the connection.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "host": {
+            "type": "string",
+            "description": "The host address of the Raspberry Pi.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "port": {
+            "type": "unsigned short",
+            "description": "The port to use for the connection.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "connection remote_raspi_init(const string &name, const string &host, unsigned short port)"
+          ],
+          "python": [
+            "def remote_raspi_init(name, host, port):"
+          ],
+          "csharp": [
+            "public static Connection SplashKit.RemoteRaspiInit(string name, string host, ushort port);"
+          ],
+          "pascal": [
+            "function RemoteRaspiInit(const name: String; const host: String; port: Word): Connection"
+          ]
+        }
+      },
+      {
+        "signature": "gpio_pin_value remote_raspi_read(connection pi,gpio_pin pin);",
+        "name": "remote_raspi_read",
+        "method_name": null,
+        "unique_global_name": "remote_raspi_read",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function reads the value from a specific pin on a remote Raspberry Pi.",
+        "brief": "Reads the value from the specified pin on a remote Raspberry Pi.",
+        "return": {
+          "type": "gpio_pin_value",
+          "description": "The value read from the pin.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pi": {
+            "type": "connection",
+            "description": "The connection object to the remote Raspberry Pi.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to read the value from.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "gpio_pin_value remote_raspi_read(connection pi, gpio_pin pin)"
+          ],
+          "python": [
+            "def remote_raspi_read(pi, pin):"
+          ],
+          "csharp": [
+            "public static GpioPinValue SplashKit.RemoteRaspiRead(Connection pi, GpioPin pin);"
+          ],
+          "pascal": [
+            "function RemoteRaspiRead(pi: Connection; pin: GpioPin): GpioPinValue"
+          ]
+        }
+      },
+      {
+        "signature": "void remote_raspi_set_mode(connection pi,gpio_pin pin,gpio_pin_mode mode);",
+        "name": "remote_raspi_set_mode",
+        "method_name": null,
+        "unique_global_name": "remote_raspi_set_mode",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function sets the mode of a specific pin on a remote Raspberry Pi.",
+        "brief": "Sets the mode of the specified pin on a remote Raspberry Pi.",
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pi": {
+            "type": "connection",
+            "description": "The connection object to the remote Raspberry Pi.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to set the mode for.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "mode": {
+            "type": "gpio_pin_mode",
+            "description": "The mode to set for the pin.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "void remote_raspi_set_mode(connection pi, gpio_pin pin, gpio_pin_mode mode)"
+          ],
+          "python": [
+            "def remote_raspi_set_mode(pi, pin, mode):"
+          ],
+          "csharp": [
+            "public static void SplashKit.RemoteRaspiSetMode(Connection pi, GpioPin pin, GpioPinMode mode);"
+          ],
+          "pascal": [
+            "procedure RemoteRaspiSetMode(pi: Connection; pin: GpioPin; mode: GpioPinMode)"
+          ]
+        }
+      },
+      {
+        "signature": "void remote_raspi_set_pull_up_down(connection pi,gpio_pin pin,pull_up_down pud);",
+        "name": "remote_raspi_set_pull_up_down",
+        "method_name": null,
+        "unique_global_name": "remote_raspi_set_pull_up_down",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function sets the pull-up/down mode of a specific pin on a remote Raspberry Pi.",
+        "brief": "Sets the pull up/down mode for the specified pin on a remote Raspberry Pi.",
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pi": {
+            "type": "connection",
+            "description": "The connection object to the remote Raspberry Pi.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to set the pull up/down mode for.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pud": {
+            "type": "pull_up_down",
+            "description": "The pull up/down mode to set for the pin.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "void remote_raspi_set_pull_up_down(connection pi, gpio_pin pin, pull_up_down pud)"
+          ],
+          "python": [
+            "def remote_raspi_set_pull_up_down(pi, pin, pud):"
+          ],
+          "csharp": [
+            "public static void SplashKit.RemoteRaspiSetPullUpDown(Connection pi, GpioPin pin, PullUpDown pud);"
+          ],
+          "pascal": [
+            "procedure RemoteRaspiSetPullUpDown(pi: Connection; pin: GpioPin; pud: PullUpDown)"
+          ]
+        }
+      },
+      {
+        "signature": "void remote_raspi_set_pwm_dutycycle(connection pi,gpio_pin pin,int dutycycle);",
+        "name": "remote_raspi_set_pwm_dutycycle",
+        "method_name": null,
+        "unique_global_name": "remote_raspi_set_pwm_dutycycle",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function sets the PWM duty cycle for a specific pin on a remote Raspberry Pi.",
+        "brief": "Sets the PWM duty cycle for the specified pin on a remote Raspberry Pi.",
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pi": {
+            "type": "connection",
+            "description": "The connection object to the remote Raspberry Pi.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to set the PWM duty cycle for.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "dutycycle": {
+            "type": "int",
+            "description": "The PWM duty cycle to set for the pin.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "void remote_raspi_set_pwm_dutycycle(connection pi, gpio_pin pin, int dutycycle)"
+          ],
+          "python": [
+            "def remote_raspi_set_pwm_dutycycle(pi, pin, dutycycle):"
+          ],
+          "csharp": [
+            "public static void SplashKit.RemoteRaspiSetPwmDutycycle(Connection pi, GpioPin pin, int dutycycle);"
+          ],
+          "pascal": [
+            "procedure RemoteRaspiSetPwmDutycycle(pi: Connection; pin: GpioPin; dutycycle: Integer)"
+          ]
+        }
+      },
+      {
+        "signature": "void remote_raspi_set_pwm_frequency(connection pi,gpio_pin pin,int frequency);",
+        "name": "remote_raspi_set_pwm_frequency",
+        "method_name": null,
+        "unique_global_name": "remote_raspi_set_pwm_frequency",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function sets the PWM frequency for a specific pin on a remote Raspberry Pi.",
+        "brief": "Sets the PWM frequency for the specified pin on a remote Raspberry Pi.",
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pi": {
+            "type": "connection",
+            "description": "The connection object to the remote Raspberry Pi.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to set the PWM frequency for.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "frequency": {
+            "type": "int",
+            "description": "The PWM frequency to set for the pin.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "void remote_raspi_set_pwm_frequency(connection pi, gpio_pin pin, int frequency)"
+          ],
+          "python": [
+            "def remote_raspi_set_pwm_frequency(pi, pin, frequency):"
+          ],
+          "csharp": [
+            "public static void SplashKit.RemoteRaspiSetPwmFrequency(Connection pi, GpioPin pin, int frequency);"
+          ],
+          "pascal": [
+            "procedure RemoteRaspiSetPwmFrequency(pi: Connection; pin: GpioPin; frequency: Integer)"
+          ]
+        }
+      },
+      {
+        "signature": "void remote_raspi_set_pwm_range(connection pi,gpio_pin pin,int range);",
+        "name": "remote_raspi_set_pwm_range",
+        "method_name": null,
+        "unique_global_name": "remote_raspi_set_pwm_range",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function sets the PWM range for a specific pin on a remote Raspberry Pi.\nValid values for the range are 25 - 40000",
+        "brief": "Sets the PWM range for the specified pin on a remote Raspberry Pi.",
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pi": {
+            "type": "connection",
+            "description": "The connection object to the remote Raspberry Pi.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to set the PWM range for.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "range": {
+            "type": "int",
+            "description": "The PWM range to set for the pin.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "void remote_raspi_set_pwm_range(connection pi, gpio_pin pin, int range)"
+          ],
+          "python": [
+            "def remote_raspi_set_pwm_range(pi, pin, range):"
+          ],
+          "csharp": [
+            "public static void SplashKit.RemoteRaspiSetPwmRange(Connection pi, GpioPin pin, int range);"
+          ],
+          "pascal": [
+            "procedure RemoteRaspiSetPwmRange(pi: Connection; pin: GpioPin; range: Integer)"
+          ]
+        }
+      },
+      {
+        "signature": "void remote_raspi_write(connection pi,gpio_pin pin,gpio_pin_value value);",
+        "name": "remote_raspi_write",
+        "method_name": null,
+        "unique_global_name": "remote_raspi_write",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function writes a specified value to a specific pin on a remote Raspberry Pi.",
+        "brief": "Writes a value to the specified pin on a remote Raspberry Pi.",
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pi": {
+            "type": "connection",
+            "description": "The connection object to the remote Raspberry Pi.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to write the value to.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "value": {
+            "type": "gpio_pin_value",
+            "description": "The value to write to the pin.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "void remote_raspi_write(connection pi, gpio_pin pin, gpio_pin_value value)"
+          ],
+          "python": [
+            "def remote_raspi_write(pi, pin, value):"
+          ],
+          "csharp": [
+            "public static void SplashKit.RemoteRaspiWrite(Connection pi, GpioPin pin, GpioPinValue value);"
+          ],
+          "pascal": [
+            "procedure RemoteRaspiWrite(pi: Connection; pin: GpioPin; value: GpioPinValue)"
           ]
         }
       }
@@ -92512,212 +93383,8 @@
         }
       },
       {
-        "signature": "enum http_status_code {HTTP_STATUS_OK = 200,HTTP_STATUS_CREATED = 201,HTTP_STATUS_NO_CONTENT = 204,HTTP_STATUS_MOVED_PERMANENTLY = 301,HTTP_STATUS_FOUND = 302,HTTP_STATUS_SEE_OTHER = 303,HTTP_STATUS_BAD_REQUEST = 400,HTTP_STATUS_UNAUTHORIZED = 401,HTTP_STATUS_FORBIDDEN = 403,HTTP_STATUS_NOT_FOUND = 404,HTTP_STATUS_METHOD_NOT_ALLOWED = 405,HTTP_STATUS_REQUEST_TIMEOUT = 408,HTTP_STATUS_CONFLICT = 409,HTTP_STATUS_INTERNAL_SERVER_ERROR = 500,HTTP_STATUS_NOT_IMPLEMENTED = 501,HTTP_STATUS_SERVICE_UNAVAILABLE = 503};",
-        "name": "http_status_code",
-        "description": "Defines the HTTP status codes supported by SplashKit.\nRefer to [this article](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)\nfor a detailed description of each code.",
-        "brief": null,
-        "constants": {
-          "HTTP_STATUS_OK": {
-            "description": "The server accepted the request.",
-            "number": 200
-          },
-          "HTTP_STATUS_CREATED": {
-            "description": "The request has been fulfilled, resulting in the creation of a new resource.",
-            "number": 201
-          },
-          "HTTP_STATUS_NO_CONTENT": {
-            "description": "The server successfully processed the request and is not returning any content.",
-            "number": 204
-          },
-          "HTTP_STATUS_MOVED_PERMANENTLY": {
-            "description": "The URL of the requested resource has been changed permanently.",
-            "number": 301
-          },
-          "HTTP_STATUS_FOUND": {
-            "description": "The URI of requested resource has been changed temporarily.",
-            "number": 302
-          },
-          "HTTP_STATUS_SEE_OTHER": {
-            "description": "The server sent this response to direct the client to get the requested resource at another URI with a GET request.",
-            "number": 303
-          },
-          "HTTP_STATUS_BAD_REQUEST": {
-            "description": "The server cannot or will not process the request due to an apparent client error.",
-            "number": 400
-          },
-          "HTTP_STATUS_UNAUTHORIZED": {
-            "description": "The server requires authentication or has failed to process provided authentication.",
-            "number": 401
-          },
-          "HTTP_STATUS_FORBIDDEN": {
-            "description": "The request was a valid request, but the server is refusing to respond to it.",
-            "number": 403
-          },
-          "HTTP_STATUS_NOT_FOUND": {
-            "description": "The requested resource could not be found but may be available in the future.",
-            "number": 404
-          },
-          "HTTP_STATUS_METHOD_NOT_ALLOWED": {
-            "description": "The request method is not support for the requested resource.",
-            "number": 405
-          },
-          "HTTP_STATUS_REQUEST_TIMEOUT": {
-            "description": "The server timed out waiting for the request.",
-            "number": 408
-          },
-          "HTTP_STATUS_CONFLICT": {
-            "description": "The request conflicts with current state of the server.",
-            "number": 409
-          },
-          "HTTP_STATUS_INTERNAL_SERVER_ERROR": {
-            "description": "The server encountered an unexpected condition.",
-            "number": 500
-          },
-          "HTTP_STATUS_NOT_IMPLEMENTED": {
-            "description": "The server does not recognize or implement the request method.",
-            "number": 501
-          },
-          "HTTP_STATUS_SERVICE_UNAVAILABLE": {
-            "description": "The server is currently unavailable.",
-            "number": 503
-          }
-        },
-        "attributes": {
-          "group": "types"
-        },
-        "signatures": {
-          "cpp": "class http_status_code {HTTP_STATUS_OK = 200, HTTP_STATUS_CREATED = 201, HTTP_STATUS_NO_CONTENT = 204, HTTP_STATUS_MOVED_PERMANENTLY = 301, HTTP_STATUS_FOUND = 302, HTTP_STATUS_SEE_OTHER = 303, HTTP_STATUS_BAD_REQUEST = 400, HTTP_STATUS_UNAUTHORIZED = 401, HTTP_STATUS_FORBIDDEN = 403, HTTP_STATUS_NOT_FOUND = 404, HTTP_STATUS_METHOD_NOT_ALLOWED = 405, HTTP_STATUS_REQUEST_TIMEOUT = 408, HTTP_STATUS_CONFLICT = 409, HTTP_STATUS_INTERNAL_SERVER_ERROR = 500, HTTP_STATUS_NOT_IMPLEMENTED = 501, HTTP_STATUS_SERVICE_UNAVAILABLE = 503};",
-          "python": "public enum {http_status_code.http_status_ok = 200, http_status_code.http_status_created = 201, http_status_code.http_status_no_content = 204, http_status_code.http_status_moved_permanently = 301, http_status_code.http_status_found = 302, http_status_code.http_status_see_other = 303, http_status_code.http_status_bad_request = 400, http_status_code.http_status_unauthorized = 401, http_status_code.http_status_forbidden = 403, http_status_code.http_status_not_found = 404, http_status_code.http_status_method_not_allowed = 405, http_status_code.http_status_request_timeout = 408, http_status_code.http_status_conflict = 409, http_status_code.http_status_internal_server_error = 500, http_status_code.http_status_not_implemented = 501, http_status_code.http_status_service_unavailable = 503}",
-          "csharp": "public enum {HttpStatusCode.HttpStatusOk = 200, HttpStatusCode.HttpStatusCreated = 201, HttpStatusCode.HttpStatusNoContent = 204, HttpStatusCode.HttpStatusMovedPermanently = 301, HttpStatusCode.HttpStatusFound = 302, HttpStatusCode.HttpStatusSeeOther = 303, HttpStatusCode.HttpStatusBadRequest = 400, HttpStatusCode.HttpStatusUnauthorized = 401, HttpStatusCode.HttpStatusForbidden = 403, HttpStatusCode.HttpStatusNotFound = 404, HttpStatusCode.HttpStatusMethodNotAllowed = 405, HttpStatusCode.HttpStatusRequestTimeout = 408, HttpStatusCode.HttpStatusConflict = 409, HttpStatusCode.HttpStatusInternalServerError = 500, HttpStatusCode.HttpStatusNotImplemented = 501, HttpStatusCode.HttpStatusServiceUnavailable = 503}",
-          "pascal": "public enum {HttpStatusCode.HttpStatusOk = 200, HttpStatusCode.HttpStatusCreated = 201, HttpStatusCode.HttpStatusNoContent = 204, HttpStatusCode.HttpStatusMovedPermanently = 301, HttpStatusCode.HttpStatusFound = 302, HttpStatusCode.HttpStatusSeeOther = 303, HttpStatusCode.HttpStatusBadRequest = 400, HttpStatusCode.HttpStatusUnauthorized = 401, HttpStatusCode.HttpStatusForbidden = 403, HttpStatusCode.HttpStatusNotFound = 404, HttpStatusCode.HttpStatusMethodNotAllowed = 405, HttpStatusCode.HttpStatusRequestTimeout = 408, HttpStatusCode.HttpStatusConflict = 409, HttpStatusCode.HttpStatusInternalServerError = 500, HttpStatusCode.HttpStatusNotImplemented = 501, HttpStatusCode.HttpStatusServiceUnavailable = 503}"
-        }
-      },
-      {
-        "signature": "enum interface_style {FLAT_DARK_STYLE = 0,SHADED_DARK_STYLE = 1,FLAT_LIGHT_STYLE = 2,SHADED_LIGHT_STYLE = 3,BUBBLE = 4,BUBBLE_MULTICOLORED = 5};",
-        "name": "interface_style",
-        "description": "Use these interface styles as a way to quickly\ncustomize your interface.",
-        "brief": null,
-        "constants": {
-          "FLAT_DARK_STYLE": {
-            "description": "A flat, dark-mode interface.",
-            "number": 0
-          },
-          "SHADED_DARK_STYLE": {
-            "description": "A dark-mode interface with shadows and depth.",
-            "number": 1
-          },
-          "FLAT_LIGHT_STYLE": {
-            "description": "A flat, light-mode interface.",
-            "number": 2
-          },
-          "SHADED_LIGHT_STYLE": {
-            "description": "A light-mode interface with shadows and depth.",
-            "number": 3
-          },
-          "BUBBLE": {
-            "description": "A light-mode interface with a semi-transparent bubbly look.",
-            "number": 4
-          },
-          "BUBBLE_MULTICOLORED": {
-            "description": "A light-mode interface with a semi-transparent bubbly look - gives a multi-coloured result when provided a color.",
-            "number": 5
-          }
-        },
-        "attributes": {
-          "group": "types"
-        },
-        "signatures": {
-          "cpp": "class interface_style {FLAT_DARK_STYLE = 0, SHADED_DARK_STYLE = 1, FLAT_LIGHT_STYLE = 2, SHADED_LIGHT_STYLE = 3, BUBBLE = 4, BUBBLE_MULTICOLORED = 5};",
-          "python": "public enum {interface_style.flat_dark_style = 0, interface_style.shaded_dark_style = 1, interface_style.flat_light_style = 2, interface_style.shaded_light_style = 3, interface_style.bubble = 4, interface_style.bubble_multicolored = 5}",
-          "csharp": "public enum {InterfaceStyle.FlatDarkStyle = 0, InterfaceStyle.ShadedDarkStyle = 1, InterfaceStyle.FlatLightStyle = 2, InterfaceStyle.ShadedLightStyle = 3, InterfaceStyle.Bubble = 4, InterfaceStyle.BubbleMulticolored = 5}",
-          "pascal": "public enum {InterfaceStyle.FlatDarkStyle = 0, InterfaceStyle.ShadedDarkStyle = 1, InterfaceStyle.FlatLightStyle = 2, InterfaceStyle.ShadedLightStyle = 3, InterfaceStyle.Bubble = 4, InterfaceStyle.BubbleMulticolored = 5}"
-        }
-      },
-      {
-        "signature": "enum pin_modes {GPIO_INPUT = 0,GPIO_OUTPUT = 1,GPIO_ALT0 = 4,GPIO_ALT1 = 5,GPIO_ALT2 = 6,GPIO_ALT3 = 7,GPIO_ALT4 = 3,GPIO_ALT5 = 2,GPIO_DEFAULT_MODE = -1,};",
-        "name": "pin_modes",
-        "description": "GPIO Pin Modes:",
-        "brief": null,
-        "constants": {
-          "GPIO_INPUT": {
-            "description": "Input mode.",
-            "number": 0
-          },
-          "GPIO_OUTPUT": {
-            "description": "Output mode.",
-            "number": 1
-          },
-          "GPIO_ALT0": {
-            "description": "Alternate function mode 0.",
-            "number": 4
-          },
-          "GPIO_ALT1": {
-            "description": "Alternate function mode 1.",
-            "number": 5
-          },
-          "GPIO_ALT2": {
-            "description": "Alternate function mode 2.",
-            "number": 6
-          },
-          "GPIO_ALT3": {
-            "description": "Alternate function mode 3.",
-            "number": 7
-          },
-          "GPIO_ALT4": {
-            "description": "Alternate function mode 4.",
-            "number": 3
-          },
-          "GPIO_ALT5": {
-            "description": "Alternate function mode 5.",
-            "number": 2
-          },
-          "GPIO_DEFAULT_MODE": {
-            "description": "Default mode.",
-            "number": 1
-          }
-        },
-        "attributes": {
-          "group": "types"
-        },
-        "signatures": {
-          "cpp": "class pin_modes {GPIO_INPUT = 0, GPIO_OUTPUT = 1, GPIO_ALT0 = 4, GPIO_ALT1 = 5, GPIO_ALT2 = 6, GPIO_ALT3 = 7, GPIO_ALT4 = 3, GPIO_ALT5 = 2, GPIO_DEFAULT_MODE = 1};",
-          "python": "public enum {pin_modes.gpio_input = 0, pin_modes.gpio_output = 1, pin_modes.gpio_alt0 = 4, pin_modes.gpio_alt1 = 5, pin_modes.gpio_alt2 = 6, pin_modes.gpio_alt3 = 7, pin_modes.gpio_alt4 = 3, pin_modes.gpio_alt5 = 2, pin_modes.gpio_default_mode = 1}",
-          "csharp": "public enum {PinModes.GpioInput = 0, PinModes.GpioOutput = 1, PinModes.GpioAlt0 = 4, PinModes.GpioAlt1 = 5, PinModes.GpioAlt2 = 6, PinModes.GpioAlt3 = 7, PinModes.GpioAlt4 = 3, PinModes.GpioAlt5 = 2, PinModes.GpioDefaultMode = 1}",
-          "pascal": "public enum {PinModes.GpioInput = 0, PinModes.GpioOutput = 1, PinModes.GpioAlt0 = 4, PinModes.GpioAlt1 = 5, PinModes.GpioAlt2 = 6, PinModes.GpioAlt3 = 7, PinModes.GpioAlt4 = 3, PinModes.GpioAlt5 = 2, PinModes.GpioDefaultMode = 1}"
-        }
-      },
-      {
-        "signature": "enum pin_values {GPIO_LOW = 0,GPIO_HIGH = 1,GPIO_DEFAULT_VALUE = -1};",
-        "name": "pin_values",
-        "description": "GPIO Pin Values:",
-        "brief": null,
-        "constants": {
-          "GPIO_LOW": {
-            "description": "Logic low (0).",
-            "number": 0
-          },
-          "GPIO_HIGH": {
-            "description": "Logic high (1).",
-            "number": 1
-          },
-          "GPIO_DEFAULT_VALUE": {
-            "description": "Default value.",
-            "number": 1
-          }
-        },
-        "attributes": {
-          "group": "types"
-        },
-        "signatures": {
-          "cpp": "class pin_values {GPIO_LOW = 0, GPIO_HIGH = 1, GPIO_DEFAULT_VALUE = 1};",
-          "python": "public enum {pin_values.gpio_low = 0, pin_values.gpio_high = 1, pin_values.gpio_default_value = 1}",
-          "csharp": "public enum {PinValues.GpioLow = 0, PinValues.GpioHigh = 1, PinValues.GpioDefaultValue = 1}",
-          "pascal": "public enum {PinValues.GpioLow = 0, PinValues.GpioHigh = 1, PinValues.GpioDefaultValue = 1}"
-        }
-      },
-      {
-        "signature": "enum pins {PIN_1 = 1,PIN_2 = 2,PIN_3 = 3,PIN_4 = 4,PIN_5 = 5,PIN_6 = 6,PIN_7 = 7,PIN_8 = 8,PIN_9 = 9,PIN_10 = 10,PIN_11 = 11,PIN_12 = 12,PIN_13 = 13,PIN_14 = 14,PIN_15 = 15,PIN_16 = 16,PIN_17 = 17,PIN_18 = 18,PIN_19 = 19,PIN_20 = 20,PIN_21 = 21,PIN_22 = 22,PIN_23 = 23,PIN_24 = 24,PIN_25 = 25,PIN_26 = 26,PIN_27 = 27,PIN_28 = 28,PIN_29 = 29,PIN_30 = 30,PIN_31 = 31,PIN_32 = 32,PIN_33 = 33,PIN_34 = 34,PIN_35 = 35,PIN_36 = 36,PIN_37 = 37,PIN_38 = 38,PIN_39 = 39,PIN_40 = 40,};",
-        "name": "pins",
+        "signature": "enum gpio_pin {PIN_1 = 1,PIN_2 = 2,PIN_3 = 3,PIN_4 = 4,PIN_5 = 5,PIN_6 = 6,PIN_7 = 7,PIN_8 = 8,PIN_9 = 9,PIN_10 = 10,PIN_11 = 11,PIN_12 = 12,PIN_13 = 13,PIN_14 = 14,PIN_15 = 15,PIN_16 = 16,PIN_17 = 17,PIN_18 = 18,PIN_19 = 19,PIN_20 = 20,PIN_21 = 21,PIN_22 = 22,PIN_23 = 23,PIN_24 = 24,PIN_25 = 25,PIN_26 = 26,PIN_27 = 27,PIN_28 = 28,PIN_29 = 29,PIN_30 = 30,PIN_31 = 31,PIN_32 = 32,PIN_33 = 33,PIN_34 = 34,PIN_35 = 35,PIN_36 = 36,PIN_37 = 37,PIN_38 = 38,PIN_39 = 39,PIN_40 = 40,};",
+        "name": "gpio_pin",
         "description": "Raspberry Pi GPIO Board Pin Descriptions:",
         "brief": null,
         "constants": {
@@ -92886,10 +93553,214 @@
           "group": "types"
         },
         "signatures": {
-          "cpp": "class pins {PIN_1 = 1, PIN_2 = 2, PIN_3 = 3, PIN_4 = 4, PIN_5 = 5, PIN_6 = 6, PIN_7 = 7, PIN_8 = 8, PIN_9 = 9, PIN_10 = 10, PIN_11 = 11, PIN_12 = 12, PIN_13 = 13, PIN_14 = 14, PIN_15 = 15, PIN_16 = 16, PIN_17 = 17, PIN_18 = 18, PIN_19 = 19, PIN_20 = 20, PIN_21 = 21, PIN_22 = 22, PIN_23 = 23, PIN_24 = 24, PIN_25 = 25, PIN_26 = 26, PIN_27 = 27, PIN_28 = 28, PIN_29 = 29, PIN_30 = 30, PIN_31 = 31, PIN_32 = 32, PIN_33 = 33, PIN_34 = 34, PIN_35 = 35, PIN_36 = 36, PIN_37 = 37, PIN_38 = 38, PIN_39 = 39, PIN_40 = 40};",
-          "python": "public enum {pins.pin_1 = 1, pins.pin_2 = 2, pins.pin_3 = 3, pins.pin_4 = 4, pins.pin_5 = 5, pins.pin_6 = 6, pins.pin_7 = 7, pins.pin_8 = 8, pins.pin_9 = 9, pins.pin_10 = 10, pins.pin_11 = 11, pins.pin_12 = 12, pins.pin_13 = 13, pins.pin_14 = 14, pins.pin_15 = 15, pins.pin_16 = 16, pins.pin_17 = 17, pins.pin_18 = 18, pins.pin_19 = 19, pins.pin_20 = 20, pins.pin_21 = 21, pins.pin_22 = 22, pins.pin_23 = 23, pins.pin_24 = 24, pins.pin_25 = 25, pins.pin_26 = 26, pins.pin_27 = 27, pins.pin_28 = 28, pins.pin_29 = 29, pins.pin_30 = 30, pins.pin_31 = 31, pins.pin_32 = 32, pins.pin_33 = 33, pins.pin_34 = 34, pins.pin_35 = 35, pins.pin_36 = 36, pins.pin_37 = 37, pins.pin_38 = 38, pins.pin_39 = 39, pins.pin_40 = 40}",
-          "csharp": "public enum {Pins.Pin1 = 1, Pins.Pin2 = 2, Pins.Pin3 = 3, Pins.Pin4 = 4, Pins.Pin5 = 5, Pins.Pin6 = 6, Pins.Pin7 = 7, Pins.Pin8 = 8, Pins.Pin9 = 9, Pins.Pin10 = 10, Pins.Pin11 = 11, Pins.Pin12 = 12, Pins.Pin13 = 13, Pins.Pin14 = 14, Pins.Pin15 = 15, Pins.Pin16 = 16, Pins.Pin17 = 17, Pins.Pin18 = 18, Pins.Pin19 = 19, Pins.Pin20 = 20, Pins.Pin21 = 21, Pins.Pin22 = 22, Pins.Pin23 = 23, Pins.Pin24 = 24, Pins.Pin25 = 25, Pins.Pin26 = 26, Pins.Pin27 = 27, Pins.Pin28 = 28, Pins.Pin29 = 29, Pins.Pin30 = 30, Pins.Pin31 = 31, Pins.Pin32 = 32, Pins.Pin33 = 33, Pins.Pin34 = 34, Pins.Pin35 = 35, Pins.Pin36 = 36, Pins.Pin37 = 37, Pins.Pin38 = 38, Pins.Pin39 = 39, Pins.Pin40 = 40}",
-          "pascal": "public enum {Pins.Pin1 = 1, Pins.Pin2 = 2, Pins.Pin3 = 3, Pins.Pin4 = 4, Pins.Pin5 = 5, Pins.Pin6 = 6, Pins.Pin7 = 7, Pins.Pin8 = 8, Pins.Pin9 = 9, Pins.Pin10 = 10, Pins.Pin11 = 11, Pins.Pin12 = 12, Pins.Pin13 = 13, Pins.Pin14 = 14, Pins.Pin15 = 15, Pins.Pin16 = 16, Pins.Pin17 = 17, Pins.Pin18 = 18, Pins.Pin19 = 19, Pins.Pin20 = 20, Pins.Pin21 = 21, Pins.Pin22 = 22, Pins.Pin23 = 23, Pins.Pin24 = 24, Pins.Pin25 = 25, Pins.Pin26 = 26, Pins.Pin27 = 27, Pins.Pin28 = 28, Pins.Pin29 = 29, Pins.Pin30 = 30, Pins.Pin31 = 31, Pins.Pin32 = 32, Pins.Pin33 = 33, Pins.Pin34 = 34, Pins.Pin35 = 35, Pins.Pin36 = 36, Pins.Pin37 = 37, Pins.Pin38 = 38, Pins.Pin39 = 39, Pins.Pin40 = 40}"
+          "cpp": "class gpio_pin {PIN_1 = 1, PIN_2 = 2, PIN_3 = 3, PIN_4 = 4, PIN_5 = 5, PIN_6 = 6, PIN_7 = 7, PIN_8 = 8, PIN_9 = 9, PIN_10 = 10, PIN_11 = 11, PIN_12 = 12, PIN_13 = 13, PIN_14 = 14, PIN_15 = 15, PIN_16 = 16, PIN_17 = 17, PIN_18 = 18, PIN_19 = 19, PIN_20 = 20, PIN_21 = 21, PIN_22 = 22, PIN_23 = 23, PIN_24 = 24, PIN_25 = 25, PIN_26 = 26, PIN_27 = 27, PIN_28 = 28, PIN_29 = 29, PIN_30 = 30, PIN_31 = 31, PIN_32 = 32, PIN_33 = 33, PIN_34 = 34, PIN_35 = 35, PIN_36 = 36, PIN_37 = 37, PIN_38 = 38, PIN_39 = 39, PIN_40 = 40};",
+          "python": "public enum {gpio_pin.pin_1 = 1, gpio_pin.pin_2 = 2, gpio_pin.pin_3 = 3, gpio_pin.pin_4 = 4, gpio_pin.pin_5 = 5, gpio_pin.pin_6 = 6, gpio_pin.pin_7 = 7, gpio_pin.pin_8 = 8, gpio_pin.pin_9 = 9, gpio_pin.pin_10 = 10, gpio_pin.pin_11 = 11, gpio_pin.pin_12 = 12, gpio_pin.pin_13 = 13, gpio_pin.pin_14 = 14, gpio_pin.pin_15 = 15, gpio_pin.pin_16 = 16, gpio_pin.pin_17 = 17, gpio_pin.pin_18 = 18, gpio_pin.pin_19 = 19, gpio_pin.pin_20 = 20, gpio_pin.pin_21 = 21, gpio_pin.pin_22 = 22, gpio_pin.pin_23 = 23, gpio_pin.pin_24 = 24, gpio_pin.pin_25 = 25, gpio_pin.pin_26 = 26, gpio_pin.pin_27 = 27, gpio_pin.pin_28 = 28, gpio_pin.pin_29 = 29, gpio_pin.pin_30 = 30, gpio_pin.pin_31 = 31, gpio_pin.pin_32 = 32, gpio_pin.pin_33 = 33, gpio_pin.pin_34 = 34, gpio_pin.pin_35 = 35, gpio_pin.pin_36 = 36, gpio_pin.pin_37 = 37, gpio_pin.pin_38 = 38, gpio_pin.pin_39 = 39, gpio_pin.pin_40 = 40}",
+          "csharp": "public enum {GpioPin.Pin1 = 1, GpioPin.Pin2 = 2, GpioPin.Pin3 = 3, GpioPin.Pin4 = 4, GpioPin.Pin5 = 5, GpioPin.Pin6 = 6, GpioPin.Pin7 = 7, GpioPin.Pin8 = 8, GpioPin.Pin9 = 9, GpioPin.Pin10 = 10, GpioPin.Pin11 = 11, GpioPin.Pin12 = 12, GpioPin.Pin13 = 13, GpioPin.Pin14 = 14, GpioPin.Pin15 = 15, GpioPin.Pin16 = 16, GpioPin.Pin17 = 17, GpioPin.Pin18 = 18, GpioPin.Pin19 = 19, GpioPin.Pin20 = 20, GpioPin.Pin21 = 21, GpioPin.Pin22 = 22, GpioPin.Pin23 = 23, GpioPin.Pin24 = 24, GpioPin.Pin25 = 25, GpioPin.Pin26 = 26, GpioPin.Pin27 = 27, GpioPin.Pin28 = 28, GpioPin.Pin29 = 29, GpioPin.Pin30 = 30, GpioPin.Pin31 = 31, GpioPin.Pin32 = 32, GpioPin.Pin33 = 33, GpioPin.Pin34 = 34, GpioPin.Pin35 = 35, GpioPin.Pin36 = 36, GpioPin.Pin37 = 37, GpioPin.Pin38 = 38, GpioPin.Pin39 = 39, GpioPin.Pin40 = 40}",
+          "pascal": "public enum {GpioPin.Pin1 = 1, GpioPin.Pin2 = 2, GpioPin.Pin3 = 3, GpioPin.Pin4 = 4, GpioPin.Pin5 = 5, GpioPin.Pin6 = 6, GpioPin.Pin7 = 7, GpioPin.Pin8 = 8, GpioPin.Pin9 = 9, GpioPin.Pin10 = 10, GpioPin.Pin11 = 11, GpioPin.Pin12 = 12, GpioPin.Pin13 = 13, GpioPin.Pin14 = 14, GpioPin.Pin15 = 15, GpioPin.Pin16 = 16, GpioPin.Pin17 = 17, GpioPin.Pin18 = 18, GpioPin.Pin19 = 19, GpioPin.Pin20 = 20, GpioPin.Pin21 = 21, GpioPin.Pin22 = 22, GpioPin.Pin23 = 23, GpioPin.Pin24 = 24, GpioPin.Pin25 = 25, GpioPin.Pin26 = 26, GpioPin.Pin27 = 27, GpioPin.Pin28 = 28, GpioPin.Pin29 = 29, GpioPin.Pin30 = 30, GpioPin.Pin31 = 31, GpioPin.Pin32 = 32, GpioPin.Pin33 = 33, GpioPin.Pin34 = 34, GpioPin.Pin35 = 35, GpioPin.Pin36 = 36, GpioPin.Pin37 = 37, GpioPin.Pin38 = 38, GpioPin.Pin39 = 39, GpioPin.Pin40 = 40}"
+        }
+      },
+      {
+        "signature": "enum gpio_pin_mode {GPIO_INPUT = 0,GPIO_OUTPUT = 1,GPIO_ALT0 = 4,GPIO_ALT1 = 5,GPIO_ALT2 = 6,GPIO_ALT3 = 7,GPIO_ALT4 = 3,GPIO_ALT5 = 2,GPIO_DEFAULT_MODE = -1,};",
+        "name": "gpio_pin_mode",
+        "description": "GPIO Pin Modes:",
+        "brief": null,
+        "constants": {
+          "GPIO_INPUT": {
+            "description": "Input mode.",
+            "number": 0
+          },
+          "GPIO_OUTPUT": {
+            "description": "Output mode.",
+            "number": 1
+          },
+          "GPIO_ALT0": {
+            "description": "Alternate function mode 0.",
+            "number": 4
+          },
+          "GPIO_ALT1": {
+            "description": "Alternate function mode 1.",
+            "number": 5
+          },
+          "GPIO_ALT2": {
+            "description": "Alternate function mode 2.",
+            "number": 6
+          },
+          "GPIO_ALT3": {
+            "description": "Alternate function mode 3.",
+            "number": 7
+          },
+          "GPIO_ALT4": {
+            "description": "Alternate function mode 4.",
+            "number": 3
+          },
+          "GPIO_ALT5": {
+            "description": "Alternate function mode 5.",
+            "number": 2
+          },
+          "GPIO_DEFAULT_MODE": {
+            "description": "Default mode.",
+            "number": -1
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "cpp": "class gpio_pin_mode {GPIO_INPUT = 0, GPIO_OUTPUT = 1, GPIO_ALT0 = 4, GPIO_ALT1 = 5, GPIO_ALT2 = 6, GPIO_ALT3 = 7, GPIO_ALT4 = 3, GPIO_ALT5 = 2, GPIO_DEFAULT_MODE = -1};",
+          "python": "public enum {gpio_pin_mode.gpio_input = 0, gpio_pin_mode.gpio_output = 1, gpio_pin_mode.gpio_alt0 = 4, gpio_pin_mode.gpio_alt1 = 5, gpio_pin_mode.gpio_alt2 = 6, gpio_pin_mode.gpio_alt3 = 7, gpio_pin_mode.gpio_alt4 = 3, gpio_pin_mode.gpio_alt5 = 2, gpio_pin_mode.gpio_default_mode = -1}",
+          "csharp": "public enum {GpioPinMode.GpioInput = 0, GpioPinMode.GpioOutput = 1, GpioPinMode.GpioAlt0 = 4, GpioPinMode.GpioAlt1 = 5, GpioPinMode.GpioAlt2 = 6, GpioPinMode.GpioAlt3 = 7, GpioPinMode.GpioAlt4 = 3, GpioPinMode.GpioAlt5 = 2, GpioPinMode.GpioDefaultMode = -1}",
+          "pascal": "public enum {GpioPinMode.GpioInput = 0, GpioPinMode.GpioOutput = 1, GpioPinMode.GpioAlt0 = 4, GpioPinMode.GpioAlt1 = 5, GpioPinMode.GpioAlt2 = 6, GpioPinMode.GpioAlt3 = 7, GpioPinMode.GpioAlt4 = 3, GpioPinMode.GpioAlt5 = 2, GpioPinMode.GpioDefaultMode = -1}"
+        }
+      },
+      {
+        "signature": "enum gpio_pin_value {GPIO_DEFAULT_VALUE = -1,GPIO_LOW = 0,GPIO_HIGH = 1};",
+        "name": "gpio_pin_value",
+        "description": "GPIO Pin Values:",
+        "brief": null,
+        "constants": {
+          "GPIO_DEFAULT_VALUE": {
+            "description": "Default value, indicates error.",
+            "number": -1
+          },
+          "GPIO_LOW": {
+            "description": "Logic low (0).",
+            "number": 0
+          },
+          "GPIO_HIGH": {
+            "description": "Logic high (1).",
+            "number": 1
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "cpp": "class gpio_pin_value {GPIO_DEFAULT_VALUE = -1, GPIO_LOW = 0, GPIO_HIGH = 1};",
+          "python": "public enum {gpio_pin_value.gpio_default_value = -1, gpio_pin_value.gpio_low = 0, gpio_pin_value.gpio_high = 1}",
+          "csharp": "public enum {GpioPinValue.GpioDefaultValue = -1, GpioPinValue.GpioLow = 0, GpioPinValue.GpioHigh = 1}",
+          "pascal": "public enum {GpioPinValue.GpioDefaultValue = -1, GpioPinValue.GpioLow = 0, GpioPinValue.GpioHigh = 1}"
+        }
+      },
+      {
+        "signature": "enum http_status_code {HTTP_STATUS_OK = 200,HTTP_STATUS_CREATED = 201,HTTP_STATUS_NO_CONTENT = 204,HTTP_STATUS_MOVED_PERMANENTLY = 301,HTTP_STATUS_FOUND = 302,HTTP_STATUS_SEE_OTHER = 303,HTTP_STATUS_BAD_REQUEST = 400,HTTP_STATUS_UNAUTHORIZED = 401,HTTP_STATUS_FORBIDDEN = 403,HTTP_STATUS_NOT_FOUND = 404,HTTP_STATUS_METHOD_NOT_ALLOWED = 405,HTTP_STATUS_REQUEST_TIMEOUT = 408,HTTP_STATUS_CONFLICT = 409,HTTP_STATUS_INTERNAL_SERVER_ERROR = 500,HTTP_STATUS_NOT_IMPLEMENTED = 501,HTTP_STATUS_SERVICE_UNAVAILABLE = 503};",
+        "name": "http_status_code",
+        "description": "Defines the HTTP status codes supported by SplashKit.\nRefer to [this article](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)\nfor a detailed description of each code.",
+        "brief": null,
+        "constants": {
+          "HTTP_STATUS_OK": {
+            "description": "The server accepted the request.",
+            "number": 200
+          },
+          "HTTP_STATUS_CREATED": {
+            "description": "The request has been fulfilled, resulting in the creation of a new resource.",
+            "number": 201
+          },
+          "HTTP_STATUS_NO_CONTENT": {
+            "description": "The server successfully processed the request and is not returning any content.",
+            "number": 204
+          },
+          "HTTP_STATUS_MOVED_PERMANENTLY": {
+            "description": "The URL of the requested resource has been changed permanently.",
+            "number": 301
+          },
+          "HTTP_STATUS_FOUND": {
+            "description": "The URI of requested resource has been changed temporarily.",
+            "number": 302
+          },
+          "HTTP_STATUS_SEE_OTHER": {
+            "description": "The server sent this response to direct the client to get the requested resource at another URI with a GET request.",
+            "number": 303
+          },
+          "HTTP_STATUS_BAD_REQUEST": {
+            "description": "The server cannot or will not process the request due to an apparent client error.",
+            "number": 400
+          },
+          "HTTP_STATUS_UNAUTHORIZED": {
+            "description": "The server requires authentication or has failed to process provided authentication.",
+            "number": 401
+          },
+          "HTTP_STATUS_FORBIDDEN": {
+            "description": "The request was a valid request, but the server is refusing to respond to it.",
+            "number": 403
+          },
+          "HTTP_STATUS_NOT_FOUND": {
+            "description": "The requested resource could not be found but may be available in the future.",
+            "number": 404
+          },
+          "HTTP_STATUS_METHOD_NOT_ALLOWED": {
+            "description": "The request method is not support for the requested resource.",
+            "number": 405
+          },
+          "HTTP_STATUS_REQUEST_TIMEOUT": {
+            "description": "The server timed out waiting for the request.",
+            "number": 408
+          },
+          "HTTP_STATUS_CONFLICT": {
+            "description": "The request conflicts with current state of the server.",
+            "number": 409
+          },
+          "HTTP_STATUS_INTERNAL_SERVER_ERROR": {
+            "description": "The server encountered an unexpected condition.",
+            "number": 500
+          },
+          "HTTP_STATUS_NOT_IMPLEMENTED": {
+            "description": "The server does not recognize or implement the request method.",
+            "number": 501
+          },
+          "HTTP_STATUS_SERVICE_UNAVAILABLE": {
+            "description": "The server is currently unavailable.",
+            "number": 503
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "cpp": "class http_status_code {HTTP_STATUS_OK = 200, HTTP_STATUS_CREATED = 201, HTTP_STATUS_NO_CONTENT = 204, HTTP_STATUS_MOVED_PERMANENTLY = 301, HTTP_STATUS_FOUND = 302, HTTP_STATUS_SEE_OTHER = 303, HTTP_STATUS_BAD_REQUEST = 400, HTTP_STATUS_UNAUTHORIZED = 401, HTTP_STATUS_FORBIDDEN = 403, HTTP_STATUS_NOT_FOUND = 404, HTTP_STATUS_METHOD_NOT_ALLOWED = 405, HTTP_STATUS_REQUEST_TIMEOUT = 408, HTTP_STATUS_CONFLICT = 409, HTTP_STATUS_INTERNAL_SERVER_ERROR = 500, HTTP_STATUS_NOT_IMPLEMENTED = 501, HTTP_STATUS_SERVICE_UNAVAILABLE = 503};",
+          "python": "public enum {http_status_code.http_status_ok = 200, http_status_code.http_status_created = 201, http_status_code.http_status_no_content = 204, http_status_code.http_status_moved_permanently = 301, http_status_code.http_status_found = 302, http_status_code.http_status_see_other = 303, http_status_code.http_status_bad_request = 400, http_status_code.http_status_unauthorized = 401, http_status_code.http_status_forbidden = 403, http_status_code.http_status_not_found = 404, http_status_code.http_status_method_not_allowed = 405, http_status_code.http_status_request_timeout = 408, http_status_code.http_status_conflict = 409, http_status_code.http_status_internal_server_error = 500, http_status_code.http_status_not_implemented = 501, http_status_code.http_status_service_unavailable = 503}",
+          "csharp": "public enum {HttpStatusCode.HttpStatusOk = 200, HttpStatusCode.HttpStatusCreated = 201, HttpStatusCode.HttpStatusNoContent = 204, HttpStatusCode.HttpStatusMovedPermanently = 301, HttpStatusCode.HttpStatusFound = 302, HttpStatusCode.HttpStatusSeeOther = 303, HttpStatusCode.HttpStatusBadRequest = 400, HttpStatusCode.HttpStatusUnauthorized = 401, HttpStatusCode.HttpStatusForbidden = 403, HttpStatusCode.HttpStatusNotFound = 404, HttpStatusCode.HttpStatusMethodNotAllowed = 405, HttpStatusCode.HttpStatusRequestTimeout = 408, HttpStatusCode.HttpStatusConflict = 409, HttpStatusCode.HttpStatusInternalServerError = 500, HttpStatusCode.HttpStatusNotImplemented = 501, HttpStatusCode.HttpStatusServiceUnavailable = 503}",
+          "pascal": "public enum {HttpStatusCode.HttpStatusOk = 200, HttpStatusCode.HttpStatusCreated = 201, HttpStatusCode.HttpStatusNoContent = 204, HttpStatusCode.HttpStatusMovedPermanently = 301, HttpStatusCode.HttpStatusFound = 302, HttpStatusCode.HttpStatusSeeOther = 303, HttpStatusCode.HttpStatusBadRequest = 400, HttpStatusCode.HttpStatusUnauthorized = 401, HttpStatusCode.HttpStatusForbidden = 403, HttpStatusCode.HttpStatusNotFound = 404, HttpStatusCode.HttpStatusMethodNotAllowed = 405, HttpStatusCode.HttpStatusRequestTimeout = 408, HttpStatusCode.HttpStatusConflict = 409, HttpStatusCode.HttpStatusInternalServerError = 500, HttpStatusCode.HttpStatusNotImplemented = 501, HttpStatusCode.HttpStatusServiceUnavailable = 503}"
+        }
+      },
+      {
+        "signature": "enum interface_style {FLAT_DARK_STYLE = 0,SHADED_DARK_STYLE = 1,FLAT_LIGHT_STYLE = 2,SHADED_LIGHT_STYLE = 3,BUBBLE = 4,BUBBLE_MULTICOLORED = 5};",
+        "name": "interface_style",
+        "description": "Use these interface styles as a way to quickly\ncustomize your interface.",
+        "brief": null,
+        "constants": {
+          "FLAT_DARK_STYLE": {
+            "description": "A flat, dark-mode interface.",
+            "number": 0
+          },
+          "SHADED_DARK_STYLE": {
+            "description": "A dark-mode interface with shadows and depth.",
+            "number": 1
+          },
+          "FLAT_LIGHT_STYLE": {
+            "description": "A flat, light-mode interface.",
+            "number": 2
+          },
+          "SHADED_LIGHT_STYLE": {
+            "description": "A light-mode interface with shadows and depth.",
+            "number": 3
+          },
+          "BUBBLE": {
+            "description": "A light-mode interface with a semi-transparent bubbly look.",
+            "number": 4
+          },
+          "BUBBLE_MULTICOLORED": {
+            "description": "A light-mode interface with a semi-transparent bubbly look - gives a multi-coloured result when provided a color.",
+            "number": 5
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "cpp": "class interface_style {FLAT_DARK_STYLE = 0, SHADED_DARK_STYLE = 1, FLAT_LIGHT_STYLE = 2, SHADED_LIGHT_STYLE = 3, BUBBLE = 4, BUBBLE_MULTICOLORED = 5};",
+          "python": "public enum {interface_style.flat_dark_style = 0, interface_style.shaded_dark_style = 1, interface_style.flat_light_style = 2, interface_style.shaded_light_style = 3, interface_style.bubble = 4, interface_style.bubble_multicolored = 5}",
+          "csharp": "public enum {InterfaceStyle.FlatDarkStyle = 0, InterfaceStyle.ShadedDarkStyle = 1, InterfaceStyle.FlatLightStyle = 2, InterfaceStyle.ShadedLightStyle = 3, InterfaceStyle.Bubble = 4, InterfaceStyle.BubbleMulticolored = 5}",
+          "pascal": "public enum {InterfaceStyle.FlatDarkStyle = 0, InterfaceStyle.ShadedDarkStyle = 1, InterfaceStyle.FlatLightStyle = 2, InterfaceStyle.ShadedLightStyle = 3, InterfaceStyle.Bubble = 4, InterfaceStyle.BubbleMulticolored = 5}"
         }
       },
       {
@@ -92930,6 +93801,261 @@
     "brief": "SplashKit provides some basic data manipulation functions to\nhelp make it easy to get some basic tasks performed.SplashKit random provides a simple implementation of random.SplashKit provides miscellaneous utilities for unclassified functionality.",
     "description": "The SplashKit`s random library provides two rnd methods, a `rnd()` which generates\na random number between 0 and 1, and `rnd(int ubound)` which\ngenerates a random number between 0 and the value scpeficied in `ubound`.",
     "functions": [
+      {
+        "signature": "string base64_decode(const string &input);",
+        "name": "base64_decode",
+        "method_name": null,
+        "unique_global_name": "base64_decode",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided Base64 encoded string back to its original form.\nFor example, \"TWFu\" will be converted to \"Man\".",
+        "brief": "Decodes a Base64 encoded string",
+        "return": {
+          "type": "string",
+          "description": "Decoded original string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "input": {
+            "type": "string",
+            "description": "Base64 encoded string to decode",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "string base64_decode(const string &input)"
+          ],
+          "python": [
+            "def base64_decode(input):"
+          ],
+          "csharp": [
+            "public static string SplashKit.Base64Decode(string input);"
+          ],
+          "pascal": [
+            "function Base64Decode(const input: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "string base64_encode(const string &input);",
+        "name": "base64_encode",
+        "method_name": null,
+        "unique_global_name": "base64_encode",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided string into its Base64 encoded representation.\nFor example, \"Man\" will be converted to \"TWFu\".",
+        "brief": "Encodes a string to Base64 format",
+        "return": {
+          "type": "string",
+          "description": "Base64 encoded string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "input": {
+            "type": "string",
+            "description": "String to encode",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "string base64_encode(const string &input)"
+          ],
+          "python": [
+            "def base64_encode(input):"
+          ],
+          "csharp": [
+            "public static string SplashKit.Base64Encode(string input);"
+          ],
+          "pascal": [
+            "function Base64Encode(const input: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "unsigned int bin_to_dec(const string &bin);",
+        "name": "bin_to_dec",
+        "method_name": null,
+        "unique_global_name": "bin_to_dec",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided binary string into an unsigned integer.\nFor example, \"1010\" will be converted to 10.",
+        "brief": "Converts a binary string to a decimal (unsigned integer)",
+        "return": {
+          "type": "unsigned int",
+          "description": "Decimal (unsigned integer) representation of the binary string, or 0 if the string is not a valid binary string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "bin": {
+            "type": "string",
+            "description": "Binary string to convert",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "unsigned int bin_to_dec(const string &bin)"
+          ],
+          "python": [
+            "def bin_to_dec(bin):"
+          ],
+          "csharp": [
+            "public static uint SplashKit.BinToDec(string bin);"
+          ],
+          "pascal": [
+            "function BinToDec(const bin: String): Cardinal"
+          ]
+        }
+      },
+      {
+        "signature": "string bin_to_hex(const string &bin_str);",
+        "name": "bin_to_hex",
+        "method_name": null,
+        "unique_global_name": "bin_to_hex",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided binary string into a hexadecimal string representation.\nFor example, \"1010\" will be converted to \"A\".",
+        "brief": "Converts a binary string to a hexadecimal string",
+        "return": {
+          "type": "string",
+          "description": "Hexadecimal string representation of the binary string, or an empty string if the string is not a valid binary string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "bin_str": {
+            "type": "string",
+            "description": "Binary string to convert",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "string bin_to_hex(const string &bin_str)"
+          ],
+          "python": [
+            "def bin_to_hex(bin_str):"
+          ],
+          "csharp": [
+            "public static string SplashKit.BinToHex(string binStr);"
+          ],
+          "pascal": [
+            "function BinToHex(const binStr: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "string bin_to_oct(const string &bin_str);",
+        "name": "bin_to_oct",
+        "method_name": null,
+        "unique_global_name": "bin_to_oct",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided binary string into its octal string representation.\nFor example, \"1010\" will be converted to \"12\".",
+        "brief": "Converts a binary string to an octal string",
+        "return": {
+          "type": "string",
+          "description": "Octal string representation of the binary string, or an empty string if the string is not a valid binary string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "bin_str": {
+            "type": "string",
+            "description": "Binary string to convert",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "string bin_to_oct(const string &bin_str)"
+          ],
+          "python": [
+            "def bin_to_oct(bin_str):"
+          ],
+          "csharp": [
+            "public static string SplashKit.BinToOct(string binStr);"
+          ],
+          "pascal": [
+            "function BinToOct(const binStr: String): String"
+          ]
+        }
+      },
       {
         "signature": "bool contains(const string &text,const string &subtext);",
         "name": "contains",
@@ -93097,6 +94223,325 @@
         }
       },
       {
+        "signature": "string dec_to_bin(unsigned int dec);",
+        "name": "dec_to_bin",
+        "method_name": null,
+        "unique_global_name": "dec_to_bin",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided unsigned integer into a binary string.\nFor example, 10 will be converted to \"1010\".",
+        "brief": "Converts a decimal (unsigned integer) to a binary string",
+        "return": {
+          "type": "string",
+          "description": "Binary string representation of the decimal",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "dec": {
+            "type": "unsigned int",
+            "description": "Decimal (unsigned integer) to convert",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "string dec_to_bin(unsigned int dec)"
+          ],
+          "python": [
+            "def dec_to_bin(dec):"
+          ],
+          "csharp": [
+            "public static string SplashKit.DecToBin(uint dec);"
+          ],
+          "pascal": [
+            "function DecToBin(dec: Cardinal): String"
+          ]
+        }
+      },
+      {
+        "signature": "string dec_to_oct(unsigned int decimal_value);",
+        "name": "dec_to_oct",
+        "method_name": null,
+        "unique_global_name": "dec_to_oct",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided decimal value into its octal string representation.\nFor example, 64 will be converted to \"100\".",
+        "brief": "Converts a decimal (unsigned integer) to an octal string",
+        "return": {
+          "type": "string",
+          "description": "Octal string representation of the decimal value, or \"0\" if the value is 0",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "decimal_value": {
+            "type": "unsigned int",
+            "description": "Decimal (unsigned integer) to convert",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "string dec_to_oct(unsigned int decimal_value)"
+          ],
+          "python": [
+            "def dec_to_oct(decimal_value):"
+          ],
+          "csharp": [
+            "public static string SplashKit.DecToOct(uint decimalValue);"
+          ],
+          "pascal": [
+            "function DecToOct(decimalValue: Cardinal): String"
+          ]
+        }
+      },
+      {
+        "signature": "int greatest_common_divisor(int number1,int number2);",
+        "name": "greatest_common_divisor",
+        "method_name": null,
+        "unique_global_name": "greatest_common_divisor",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "The greatest common divisor (GCD) of two numbers is the largest positive integer that divides both numbers without a remainder.",
+        "brief": "Calculates the greatest common divisor of two numbers",
+        "return": {
+          "type": "int",
+          "description": "Greatest common divisor of the two numbers, or 0 if either of the numbers is not a valid integer above 0",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "number1": {
+            "type": "int",
+            "description": "First number",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "number2": {
+            "type": "int",
+            "description": "Second number",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "int greatest_common_divisor(int number1, int number2)"
+          ],
+          "python": [
+            "def greatest_common_divisor(number1, number2):"
+          ],
+          "csharp": [
+            "public static int SplashKit.GreatestCommonDivisor(int number1, int number2);"
+          ],
+          "pascal": [
+            "function GreatestCommonDivisor(number1: Integer; number2: Integer): Integer"
+          ]
+        }
+      },
+      {
+        "signature": "string hex_to_bin(const string &hex_str);",
+        "name": "hex_to_bin",
+        "method_name": null,
+        "unique_global_name": "hex_to_bin",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided hexadecimal string into its binary string representation.\nFor example, \"A\" will be converted to \"1010\".",
+        "brief": "Converts a hexadecimal string to a binary string",
+        "return": {
+          "type": "string",
+          "description": "Binary string representation of the hexadecimal string, or an empty string if the string is not a valid hexadecimal string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "hex_str": {
+            "type": "string",
+            "description": "Hexadecimal string to convert",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "string hex_to_bin(const string &hex_str)"
+          ],
+          "python": [
+            "def hex_to_bin(hex_str):"
+          ],
+          "csharp": [
+            "public static string SplashKit.HexToBin(string hexStr);"
+          ],
+          "pascal": [
+            "function HexToBin(const hexStr: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "unsigned int hex_to_dec(const string &hex_string);",
+        "name": "hex_to_dec",
+        "method_name": null,
+        "unique_global_name": "hex_to_dec",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": null,
+        "brief": "Convert a hexadecimal string to its numeric value.",
+        "return": {
+          "type": "unsigned int",
+          "description": "unsigned int the numeric value of the hex string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "hex_string": {
+            "type": "string",
+            "description": "the data to convert",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "unsigned int hex_to_dec(const string &hex_string)"
+          ],
+          "python": [
+            "def hex_to_dec(hex_string):"
+          ],
+          "csharp": [
+            "public static uint SplashKit.HexToDec(string hexString);"
+          ],
+          "pascal": [
+            "function HexToDec(const hexString: String): Cardinal"
+          ]
+        }
+      },
+      {
+        "signature": "string hex_to_oct(const string &hex_str);",
+        "name": "hex_to_oct",
+        "method_name": null,
+        "unique_global_name": "hex_to_oct",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided hexadecimal string into its octal string representation.\nFor example, \"A\" will be converted to \"12\".",
+        "brief": "Converts a hexadecimal string to an octal string",
+        "return": {
+          "type": "string",
+          "description": "Octal string representation of the hexadecimal string, or an empty string if the string is not a valid hexadecimal string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "hex_str": {
+            "type": "string",
+            "description": "Hexadecimal string to convert",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "string hex_to_oct(const string &hex_str)"
+          ],
+          "python": [
+            "def hex_to_oct(hex_str):"
+          ],
+          "csharp": [
+            "public static string SplashKit.HexToOct(string hexStr);"
+          ],
+          "pascal": [
+            "function HexToOct(const hexStr: String): String"
+          ]
+        }
+      },
+      {
         "signature": "int index_of(const string &text,const string &subtext);",
         "name": "index_of",
         "method_name": null,
@@ -93161,6 +94606,57 @@
         }
       },
       {
+        "signature": "bool is_binary(const string &bin_str);",
+        "name": "is_binary",
+        "method_name": null,
+        "unique_global_name": "is_binary",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "A binary string is a string that contains only '0' and '1' characters.",
+        "brief": "Checks if a string is a valid binary string",
+        "return": {
+          "type": "bool",
+          "description": "True if the string is a valid binary string, false otherwise",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "bin_str": {
+            "type": "string",
+            "description": "Binary string to check",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "bool is_binary(const string &bin_str)"
+          ],
+          "python": [
+            "def is_binary(bin_str):"
+          ],
+          "csharp": [
+            "public static bool SplashKit.IsBinary(string binStr);"
+          ],
+          "pascal": [
+            "function IsBinary(const binStr: String): Boolean"
+          ]
+        }
+      },
+      {
         "signature": "bool is_double(const string &text);",
         "name": "is_double",
         "method_name": null,
@@ -93208,6 +94704,57 @@
           ],
           "pascal": [
             "function IsDouble(const text: String): Boolean"
+          ]
+        }
+      },
+      {
+        "signature": "bool is_hex(const string &hex_str);",
+        "name": "is_hex",
+        "method_name": null,
+        "unique_global_name": "is_hex",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "A hexadecimal string is a string that contains only characters from '0' to '9'\nand 'A' to 'F' (or 'a' to 'f').",
+        "brief": "Checks if a string is a valid hexadecimal string",
+        "return": {
+          "type": "bool",
+          "description": "True if the string is a valid hexadecimal string, false otherwise",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "hex_str": {
+            "type": "string",
+            "description": "Hexadecimal string to check",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "bool is_hex(const string &hex_str)"
+          ],
+          "python": [
+            "def is_hex(hex_str):"
+          ],
+          "csharp": [
+            "public static bool SplashKit.IsHex(string hexStr);"
+          ],
+          "pascal": [
+            "function IsHex(const hexStr: String): Boolean"
           ]
         }
       },
@@ -93314,6 +94861,172 @@
         }
       },
       {
+        "signature": "bool is_octal(const string &octal_str);",
+        "name": "is_octal",
+        "method_name": null,
+        "unique_global_name": "is_octal",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "An octal string is a string that contains only characters from '0' to '7'.",
+        "brief": "Checks if a string is a valid octal string",
+        "return": {
+          "type": "bool",
+          "description": "True if the string is a valid octal string, false otherwise",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "octal_str": {
+            "type": "string",
+            "description": "Octal string to check",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "bool is_octal(const string &octal_str)"
+          ],
+          "python": [
+            "def is_octal(octal_str):"
+          ],
+          "csharp": [
+            "public static bool SplashKit.IsOctal(string octalStr);"
+          ],
+          "pascal": [
+            "function IsOctal(const octalStr: String): Boolean"
+          ]
+        }
+      },
+      {
+        "signature": "bool is_prime_number(int number);",
+        "name": "is_prime_number",
+        "method_name": null,
+        "unique_global_name": "is_prime_number",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "A prime number is a number greater than 1 that has no positive divisors other than 1 and itself.",
+        "brief": "Checks if a number is a prime number",
+        "return": {
+          "type": "bool",
+          "description": "True if the number is a prime number, false otherwise",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "number": {
+            "type": "int",
+            "description": "Number to check",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "bool is_prime_number(int number)"
+          ],
+          "python": [
+            "def is_prime_number(number):"
+          ],
+          "csharp": [
+            "public static bool SplashKit.IsPrimeNumber(int number);"
+          ],
+          "pascal": [
+            "function IsPrimeNumber(number: Integer): Boolean"
+          ]
+        }
+      },
+      {
+        "signature": "int least_common_multiple(int number1,int number2);",
+        "name": "least_common_multiple",
+        "method_name": null,
+        "unique_global_name": "least_common_multiple",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "The least common multiple (LCM) of two numbers is the smallest positive integer that is divisible by both numbers.",
+        "brief": "Calculates the least common multiple of two numbers",
+        "return": {
+          "type": "int",
+          "description": "Least common multiple of the two numbers, or 0 if either of the numbers is not a valid integer above 0",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "number1": {
+            "type": "int",
+            "description": "First number",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "number2": {
+            "type": "int",
+            "description": "Second number",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "int least_common_multiple(int number1, int number2)"
+          ],
+          "python": [
+            "def least_common_multiple(number1, number2):"
+          ],
+          "csharp": [
+            "public static int SplashKit.LeastCommonMultiple(int number1, int number2);"
+          ],
+          "pascal": [
+            "function LeastCommonMultiple(number1: Integer; number2: Integer): Integer"
+          ]
+        }
+      },
+      {
         "signature": "int length_of(const string &text);",
         "name": "length_of",
         "method_name": null,
@@ -93361,6 +95074,159 @@
           ],
           "pascal": [
             "function LengthOf(const text: String): Integer"
+          ]
+        }
+      },
+      {
+        "signature": "string oct_to_bin(const string &octal_str);",
+        "name": "oct_to_bin",
+        "method_name": null,
+        "unique_global_name": "oct_to_bin",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided octal string into its binary string representation.\nFor example, \"12\" will be converted to \"1010\".",
+        "brief": "Converts an octal string to a binary string",
+        "return": {
+          "type": "string",
+          "description": "Binary string representation of the octal string, or an empty string if the string is not a valid octal string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "octal_str": {
+            "type": "string",
+            "description": "Octal string to convert",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "string oct_to_bin(const string &octal_str)"
+          ],
+          "python": [
+            "def oct_to_bin(octal_str):"
+          ],
+          "csharp": [
+            "public static string SplashKit.OctToBin(string octalStr);"
+          ],
+          "pascal": [
+            "function OctToBin(const octalStr: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "unsigned int oct_to_dec(const string &octal_string);",
+        "name": "oct_to_dec",
+        "method_name": null,
+        "unique_global_name": "oct_to_dec",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided octal string into its decimal representation.\nFor example, \"100\" will be converted to 64.",
+        "brief": "Converts an octal string to a decimal (unsigned integer)",
+        "return": {
+          "type": "unsigned int",
+          "description": "Decimal (unsigned integer) representation of the octal string, or 0 if the string is not a valid octal string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "octal_string": {
+            "type": "string",
+            "description": "Octal string to convert",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "unsigned int oct_to_dec(const string &octal_string)"
+          ],
+          "python": [
+            "def oct_to_dec(octal_string):"
+          ],
+          "csharp": [
+            "public static uint SplashKit.OctToDec(string octalString);"
+          ],
+          "pascal": [
+            "function OctToDec(const octalString: String): Cardinal"
+          ]
+        }
+      },
+      {
+        "signature": "string oct_to_hex(const string &oct_str);",
+        "name": "oct_to_hex",
+        "method_name": null,
+        "unique_global_name": "oct_to_hex",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the provided octal string into its hexadecimal string representation.\nFor example, \"12\" will be converted to \"A\".",
+        "brief": "Converts an octal string to a hexadecimal string",
+        "return": {
+          "type": "string",
+          "description": "Hexadecimal string representation of the octal string, or an empty string if the string is not a valid octal string",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "oct_str": {
+            "type": "string",
+            "description": "Octal string to convert",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "string oct_to_hex(const string &oct_str)"
+          ],
+          "python": [
+            "def oct_to_hex(oct_str):"
+          ],
+          "csharp": [
+            "public static string SplashKit.OctToHex(string octStr);"
+          ],
+          "pascal": [
+            "function OctToHex(const octStr: String): String"
           ]
         }
       },
@@ -93502,6 +95368,57 @@
           ],
           "pascal": [
             "function Split(const text: String; delimiter: Char): ArrayOfString"
+          ]
+        }
+      },
+      {
+        "signature": "double square_root(int number);",
+        "name": "square_root",
+        "method_name": null,
+        "unique_global_name": "square_root",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Calculates the square root of the provided number using the Newton-Raphson method.",
+        "brief": "Calculates the square root of a number",
+        "return": {
+          "type": "double",
+          "description": "Square root of the number",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "number": {
+            "type": "int",
+            "description": "Number to calculate the square root of",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "cpp": [
+            "double square_root(int number)"
+          ],
+          "python": [
+            "def square_root(number):"
+          ],
+          "csharp": [
+            "public static double SplashKit.SquareRoot(int number);"
+          ],
+          "pascal": [
+            "function SquareRoot(number: Integer): Double"
           ]
         }
       },
