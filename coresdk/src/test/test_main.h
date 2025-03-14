@@ -29,6 +29,7 @@ void run_bundle_test();
 void run_camera_test();
 void test_cave_escape();
 void run_restful_web_service();
+void run_networking_test();
 void run_udp_networking_test();
 void run_tcp_networking_test();
 void run_gpio_tests();
