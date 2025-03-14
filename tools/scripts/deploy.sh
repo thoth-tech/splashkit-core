@@ -16,7 +16,6 @@ SK_OUT="${SK_ROOT}/out"
 SK_TOOLS="${SK_ROOT}/tools"
 
 SK_CMAKE_CLIB="${SK_TOOLS}/scripts/cmake/libsplashkit"
-SK_CMAKE_CPP="${SK_TOOLS}/scripts/cmake/splashkitcpp"
 SK_CMAKE_FPC="${SK_TOOLS}/scripts/cmake/splashkitpas"
 SK_CMAKE_PYTHON="${SK_TOOLS}/scripts/cmake/splashkit-python"
 SK_CMAKE_CSHARP="${SK_TOOLS}/scripts/cmake/splashkit-csharp"
