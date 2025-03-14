@@ -200,15 +200,7 @@ namespace splashkit_lib
             return 0;
         }
 
-        unsigned int result = 0;
-        for (size_t i = 0; i < bin_str.size(); i++)
-        {
-            if (bin_str[i] == '1')
-            {
-                result += (1 << (bin_str.size() - i - 1));
-            }
-        }
-        return result;
+        return stoi(bin_str, nullptr, 2);
     }
 
     string hex_to_bin(const string &hex_str)
@@ -303,12 +295,18 @@ namespace splashkit_lib
             return 0;
         }
 
-        unsigned int decimal_value = 0;
-        for (size_t i = 0; i < octal_string.size(); i++)
+        return stoi(octal_string, nullptr, 8);
+    }
+
+    unsigned int hex_to_dec(const string &hex_string)
+    {
+        if (!is_hex(hex_string))
         {
-            decimal_value = decimal_value * 8 + (octal_string[i] - '0');
+            LOG(ERROR) << "Invalid octal string passed to hex_to_dec: " << hex_string << ", returning 0";           
+            return 0;
         }
-        return decimal_value;
+
+        return stoi(hex_string, nullptr, 16);
     }
 
     string oct_to_bin(const string &octal_str)

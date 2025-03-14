@@ -279,6 +279,15 @@ namespace splashkit_lib
     string hex_to_oct(const string &hex_str);
 
     /**
+     * @brief Convert a hexadecimal string to its numeric value.
+     * 
+     * @param hex_string the data to convert
+     * 
+     * @return unsigned int the numeric value of the hex string
+     */
+    unsigned int hex_to_dec(const string &hex_string);
+
+    /**
      * @brief Converts an octal string to a hexadecimal string
      *
      * Converts the provided octal string into its hexadecimal string representation.
