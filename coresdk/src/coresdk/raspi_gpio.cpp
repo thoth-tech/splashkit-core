@@ -4,6 +4,8 @@
 // Copyright © 2024 XQuestCode. All rights reserved.
 #include "raspi_gpio.h"
 #include "gpio_driver.h"
+#include "easylogging++.h"
+#include "types.h"
 #include <iostream>
 using namespace std;
 
@@ -15,12 +17,30 @@ namespace splashkit_lib
 
     int boardToBCM(pins pin)
     {
+        int bcmPinResult = PI_BAD_GPIO;
         if (pin >= PIN_1 && pin <= PIN_40)
         {
-            return BCMpinData[static_cast<int>(pin) - static_cast<int>(PIN_1)];
+            bcmPinResult = BCMpinData[static_cast<int>(pin) - static_cast<int>(PIN_1)];
         }
-        cout << "Invalid board pin" << endl;
-        return -1;
+
+        // Pins 0 and 1 are EEPROM pins and should not be written to
+        // See Page 9. of Raspberry Pi 4B Datasheet:
+        // https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-datasheet.pdf
+        // Archive Link:
+        // https://web.archive.org/web/20240901170108/https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-datasheet.pdf
+        if(bcmPinResult < 2)
+        {
+            std::string extra_text = " Pin is a";
+    	    extra_text += (bcmPinResult >= 0) ? "n EEPROM Pin, using this could corrupt the bootloader." :
+	    		          (bcmPinResult == -1) ? " POWER line." :
+                          (bcmPinResult == -2) ? " GROUND line." : "n Unknown Pin Type.";
+            LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO) + extra_text;
+            return PI_BAD_GPIO;
+        }
+        else
+        {
+            return bcmPinResult;
+        }
     }
     bool has_gpio()
     {
@@ -46,15 +66,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)
         {
             sk_gpio_set_mode(bcmPin, static_cast<int>(mode));
         }
@@ -66,15 +78,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)    
         {
             return static_cast<pin_modes>(sk_gpio_get_mode(bcmPin));
         }
@@ -90,15 +94,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant write a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant write a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2) 
         {
             sk_gpio_write(bcmPin, static_cast<int>(value));
         }
@@ -112,18 +108,11 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
+        if(bcmPin >= 2)
         {
-            cout << "Reading of PIN: " << pin << " would always be HIGH" << endl;
-            return GPIO_HIGH;
+            return static_cast<pin_values>(sk_gpio_read(bcmPin));
         }
-        else if (bcmPin == -2)
-        {
-
-            cout << "Reading of PIN: " << pin << " would always be LOW" << endl;
-            return GPIO_LOW;
-        }
-        return static_cast<pin_values>(sk_gpio_read(bcmPin));
+        return GPIO_DEFAULT_VALUE;
 #else
         cout << "Unable to read pin - GPIO not supported on this platform" << endl;
         return GPIO_DEFAULT_VALUE;
@@ -133,15 +122,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)
         {
             sk_gpio_set_pull_up_down(bcmPin, static_cast<int>(pud));
         }
@@ -153,15 +134,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)
         {
             sk_set_pwm_range(bcmPin, range);
         }
@@ -173,15 +146,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)
         {
             sk_set_pwm_frequency(bcmPin, frequency);
         }
@@ -193,15 +158,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
+        if(bcmPin >= 2)
         {
             sk_set_pwm_dutycycle(bcmPin, dutycycle);
         }
@@ -246,9 +203,9 @@ namespace splashkit_lib
     void raspi_cleanup()
     {
 #ifdef RASPBERRY_PI
-        cout << "Cleaning GPIO pins" << endl;
-        sk_clear_gpio_bank();
-        sk_gpio_cleanup();
+        LOG(INFO) << "Cleaning GPIO pins";
+       	sk_gpio_clear_bank_1();
+    	sk_gpio_cleanup();
 #else
         cout << "Unable to set cleanup - GPIO not supported on this platform" << endl;
 #endif
@@ -262,140 +219,52 @@ namespace splashkit_lib
     void remote_raspi_set_mode(connection pi, pins pin, pin_modes mode)
     {
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
-        {
-            sk_remote_gpio_set_mode(pi, bcmPin, mode);
-        }
+        if (bcmPin >= 2) sk_remote_gpio_set_mode(pi, bcmPin, mode);
     }
 
     pin_modes remote_raspi_get_mode(connection pi, pins pin)
     {
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
-        {
-            return static_cast<pin_modes>(sk_remote_gpio_get_mode(pi, bcmPin));
-        }
-        return GPIO_DEFAULT_MODE;
+        if(bcmPin >= 2) return static_cast<pin_modes>(sk_remote_gpio_get_mode(pi, bcmPin));
+        else return GPIO_DEFAULT_MODE;
     }
 
     void remote_raspi_set_pull_up_down(connection pi, pins pin, pull_up_down pud)
     {
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
-        {
-            sk_remote_gpio_set_pull_up_down(pi, bcmPin, pud);
-        }
+        if(bcmPin >= 2) sk_remote_gpio_set_pull_up_down(pi, bcmPin, pud);
     }
 
     void remote_raspi_write(connection pi, pins pin, pin_values value)
     {
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
-        {
-            sk_remote_gpio_write(pi, bcmPin, value);
-        }
+        
+        if(bcmPin >= 2) sk_remote_gpio_write(pi, bcmPin, value);
     }
 
     pin_values remote_raspi_read(connection pi, pins pin)
     {
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Reading of PIN: " << pin << " would always be HIGH" << endl;
-            return GPIO_HIGH;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Reading of PIN: " << pin << " would always be LOW" << endl;
-            return GPIO_LOW;
-        }
-        else
-        {
-            return static_cast<pin_values>(sk_remote_gpio_read(pi, bcmPin));
-        }
+        if(bcmPin >= 2) return static_cast<pin_values>(sk_remote_gpio_read(pi, bcmPin));
+        else return GPIO_DEFAULT_VALUE;
     }
 
     void remote_raspi_set_pwm_range(connection pi, pins pin, int range)
     {
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
-        {
-            sk_remote_set_pwm_range(pi, bcmPin, range);
-        }
+        if(bcmPin >= 2) sk_remote_set_pwm_range(pi, bcmPin, range);
     }
 
     void remote_raspi_set_pwm_frequency(connection pi, pins pin, int frequency)
     {
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
-        {
-            sk_remote_set_pwm_frequency(pi, bcmPin, frequency);
-        }
+        if(bcmPin >= 2) sk_remote_set_pwm_frequency(pi, bcmPin, frequency);
     }
 
     void remote_raspi_set_pwm_dutycycle(connection pi, pins pin, int dutycycle)
     {
         int bcmPin = boardToBCM(pin);
-        if (bcmPin == -1)
-        {
-            cout << "Cant modify a HIGH Pin" << endl;
-        }
-        else if (bcmPin == -2)
-        {
-            cout << "Cant modify a Ground pin" << endl;
-        }
-        else
-        {
-            sk_remote_set_pwm_dutycycle(pi, bcmPin, dutycycle);
-        }
+        if(bcmPin >= 2) sk_remote_set_pwm_dutycycle(pi, bcmPin, dutycycle);
     }
 
     bool remote_raspi_cleanup(connection pi)

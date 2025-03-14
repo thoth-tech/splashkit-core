@@ -5,12 +5,30 @@
 #ifndef SPLASHKIT_GPIO_H
 #define SPLASHKIT_GPIO_H
 
-#include "network_driver.h"
 #include "backend_types.h"
 #include <stdint.h> // Include the appropriate header file for stdint.h
 
+// Relevant error codes from pigpio library
+#define PI_INIT_FAILED             -1
+#define PI_BAD_USER_GPIO           -2
+#define PI_BAD_GPIO                -3
+#define PI_BAD_MODE                -4
+#define PI_BAD_LEVEL               -5
+#define PI_BAD_PUD                 -6
+#define PI_BAD_DUTYCYCLE           -8
+#define PI_BAD_DUTYRANGE           -21
+#define PI_NOT_PERMITTED           -41
+#define PI_SOME_PERMITTED          -42
+#define PIGIF_ERR_BAD_SEND         -2000
+#define PIGIF_ERR_BAD_RECV         -2001
+#define PIGIF_ERR_BAD_CONNECT      -2003
+
+// Bitmask for valid user GPIO on the 4B board
+#define PI4B_GPIO_BITMASK 0x0FFFFFFC
+
 namespace splashkit_lib
 {
+
     #ifdef RASPBERRY_PI
   
     int sk_gpio_init();
@@ -22,7 +40,7 @@ namespace splashkit_lib
     void sk_set_pwm_range(int pin, int range);
     void sk_set_pwm_frequency(int pin, int frequency);
     void sk_set_pwm_dutycycle(int pin, int dutycycle);
-    void sk_clear_gpio_bank();
+    void sk_gpio_clear_bank_1();
     int sk_spi_open(int channel, int speed, int spi_flags);
     int sk_spi_close(int handle);
     int sk_spi_transfer(int handle, char *sendBuf, char *recvBuf, int count);
@@ -43,6 +61,7 @@ namespace splashkit_lib
     bool sk_remote_gpio_cleanup(connection pi);
 
     int sk_gpio_send_cmd(connection pi, sk_pigpio_cmd_t &cmd);
+    std::string sk_gpio_error_message(int error_code);
 }
 
 #endif /* defined(gpio_driver) */
