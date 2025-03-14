@@ -718,33 +718,33 @@ void test_calculate_square_root()
     write_line("Testing square root calculation");
 
     // Basic cases
-    assert(calculate_square_root(0) == 0);
-    assert(calculate_square_root(1) == 1);
-  //  assert(calculate_square_root(4) == 2);
-    assert(calculate_square_root(9) == 3);
-    assert(calculate_square_root(16) == 4);
-    assert(calculate_square_root(25) == 5);
-    assert(calculate_square_root(100) == 10);
+    assert(square_root(0) == 0);
+    assert(square_root(1) == 1);
+  //  assert(square_root(4) == 2);
+    assert(square_root(9) == 3);
+    assert(square_root(16) == 4);
+    assert(square_root(25) == 5);
+    assert(square_root(100) == 10);
 
     // Tests for inequality
-    assert(calculate_square_root(0) != 1);
-    assert(calculate_square_root(1) != 0);
-    assert(calculate_square_root(4) != 3);
-    assert(calculate_square_root(9) != 4);
-    assert(calculate_square_root(16) != 5);
-    assert(calculate_square_root(25) != 6);
-    assert(calculate_square_root(100) != 11);
+    assert(square_root(0) != 1);
+    assert(square_root(1) != 0);
+    assert(square_root(4) != 3);
+    assert(square_root(9) != 4);
+    assert(square_root(16) != 5);
+    assert(square_root(25) != 6);
+    assert(square_root(100) != 11);
 
     double input1 = 49;
-    double result1 = calculate_square_root(input1);
+    double result1 = square_root(input1);
     write_line("Square root of 49 is " + to_string(result1));
 
     double input2 = 81;
-    double result2 = calculate_square_root(input2);
+    double result2 = square_root(input2);
     write_line("Square root of 81 is " + to_string(result2));
 
     double input3 = 83;
-    double result3 = calculate_square_root(input3);
+    double result3 = square_root(input3);
     write_line("Square root of 83 is " + to_string(result3));
 
     write_line("All square root calculation tests passed!");
