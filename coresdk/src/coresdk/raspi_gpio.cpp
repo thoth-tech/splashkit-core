@@ -253,4 +253,153 @@ namespace splashkit_lib
         cout << "Unable to set cleanup - GPIO not supported on this platform" << endl;
 #endif
     }
+
+    connection remote_raspi_init(std::string name, const std::string &host, unsigned short int port)
+    {
+        return sk_remote_gpio_init(name, host, port);
+    }
+
+    void remote_raspi_set_mode(connection pi, pins pin, pin_modes mode)
+    {
+        int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+            sk_remote_gpio_set_mode(pi, bcmPin, mode);
+        }
+    }
+
+    pin_modes remote_raspi_get_mode(connection pi, pins pin)
+    {
+        int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+            return static_cast<pin_modes>(sk_remote_gpio_get_mode(pi, bcmPin));
+        }
+        return GPIO_DEFAULT_MODE;
+    }
+
+    void remote_raspi_set_pull_up_down(connection pi, pins pin, pull_up_down pud)
+    {
+        int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+            sk_remote_gpio_set_pull_up_down(pi, bcmPin, pud);
+        }
+    }
+
+    void remote_raspi_write(connection pi, pins pin, pin_values value)
+    {
+        int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+            sk_remote_gpio_write(pi, bcmPin, value);
+        }
+    }
+
+    pin_values remote_raspi_read(connection pi, pins pin)
+    {
+        int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Reading of PIN: " << pin << " would always be HIGH" << endl;
+            return GPIO_HIGH;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Reading of PIN: " << pin << " would always be LOW" << endl;
+            return GPIO_LOW;
+        }
+        else
+        {
+            return static_cast<pin_values>(sk_remote_gpio_read(pi, bcmPin));
+        }
+    }
+
+    void remote_raspi_set_pwm_range(connection pi, pins pin, int range)
+    {
+        int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+            sk_remote_set_pwm_range(pi, bcmPin, range);
+        }
+    }
+
+    void remote_raspi_set_pwm_frequency(connection pi, pins pin, int frequency)
+    {
+        int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+            sk_remote_set_pwm_frequency(pi, bcmPin, frequency);
+        }
+    }
+
+    void remote_raspi_set_pwm_dutycycle(connection pi, pins pin, int dutycycle)
+    {
+        int bcmPin = boardToBCM(pin);
+        if (bcmPin == -1)
+        {
+            cout << "Cant modify a HIGH Pin" << endl;
+        }
+        else if (bcmPin == -2)
+        {
+            cout << "Cant modify a Ground pin" << endl;
+        }
+        else
+        {
+            sk_remote_set_pwm_dutycycle(pi, bcmPin, dutycycle);
+        }
+    }
+
+    bool remote_raspi_cleanup(connection pi)
+    {
+        return sk_remote_gpio_cleanup(pi);
+    }
 }

@@ -45,6 +45,7 @@ TEST_CASE("can communicate with server", "[networking]")
 
     constexpr unsigned short int PORT = 3001;
     const string TEST_IP = "localhost";
+
     SECTION("can communicate with a TCP server")
     {
         const string SERVER_NAME = "test_server_3";
@@ -114,11 +115,20 @@ TEST_CASE("can communicate with server", "[networking]")
         REQUIRE_FALSE(has_connection("non_existent_connection"));
     }
 
-    close_all_servers();
-    close_all_connections();
+    SECTION("can check for error connecting to server")
+    {
+        connection conn = open_connection("test_connection_3", TEST_IP, PORT, TCP);
+        REQUIRE_FALSE(is_connection_open(conn));
+
+        const string INVALID_IP = "invalid_ip";
+        connection conn2 = open_connection("test_connection_4", INVALID_IP, PORT, TCP);
+        REQUIRE_FALSE(is_connection_open(conn2));
+    }
 }
 TEST_CASE("can convert network data")
 {
+    close_all_servers();
+    close_all_connections();
     SECTION("Testing hex_str_to_ipv4: can convert hexidecimal to ipv4")
     {
         REQUIRE(hex_str_to_ipv4("0x7F000001") == "127.0.0.1");
@@ -129,6 +139,7 @@ TEST_CASE("can convert network data")
         REQUIRE_THROWS(hex_str_to_ipv4("0x"));
         REQUIRE_THROWS(hex_str_to_ipv4("error"));
     }
+
     SECTION("Testing hex_to_dec_string: can convert hexadecimal to decimal string")
     {
         REQUIRE(hex_to_dec_string("0x7F") == "127");
