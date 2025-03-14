@@ -217,7 +217,7 @@ namespace splashkit_lib
 #endif
     }
 
-    connection remote_raspi_init(std::string name, const std::string &host, unsigned short int port)
+    connection remote_raspi_init(const string &name, const string &host, unsigned short int port)
     {
         return sk_remote_gpio_init(name, host, port);
     }
