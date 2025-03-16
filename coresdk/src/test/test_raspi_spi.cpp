@@ -29,14 +29,16 @@ void run_gpio_spi_tests()
         return;
     }
 
-    char buffer[3];
+    string buffer = "abc";
+    int bytes_trans = 0;
 
     cout << "Attempting transfer..." << endl;
-    int bytes_trans = raspi_spi_transfer(handle, buffer, buffer, 3);
+    string response = raspi_spi_transfer(handle, buffer, 3, bytes_trans);
     if(bytes_trans != 3)
     {
         cout << "Transfer error, wrong number of bytes transferred." << endl;     
     }
+    cout << "Received " << response << endl;
 
     cout << "Attempting to close SPI..." << endl;
     int close_result = raspi_spi_close(handle);
