@@ -44070,7 +44070,7 @@
     "group": "raspberry",
     "brief": "Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1741942888,
+    "parsed_at": 1743128328,
     "path": "coresdk/src/coresdk/raspi_gpio.h",
     "functions": [
       {
@@ -44570,7 +44570,7 @@
         }
       },
       {
-        "signature": "int raspi_spi_transfer(int handle,string sendBuf,string recvBuf,int count);",
+        "signature": "string raspi_spi_transfer(int handle,const string &send,int count,int &bytes_transfered);",
         "name": "raspi_spi_transfer",
         "method_name": null,
         "unique_global_name": "raspi_spi_transfer",
@@ -44579,8 +44579,8 @@
         "description": "This function transfers data through SPI, it sends data from sendBuf and receives it into recvBuf.",
         "brief": "Transfers data on specified SPI connection. It will return -1 if not using Raspberry Pi.",
         "return": {
-          "type": "int",
-          "description": "The number of bytes that have actually been transfered.",
+          "type": "string",
+          "description": "The data returned from the spi transfer",
           "is_pointer": false,
           "is_reference": false,
           "is_vector": false,
@@ -44600,25 +44600,12 @@
             "is_vector": false,
             "type_parameter": null
           },
-          "sendBuf": {
+          "send": {
             "type": "string",
-            "description": "The memory buffer for sending data.",
+            "description": "The data to send.",
             "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "recvBuf": {
-            "type": "string",
-            "description": "The memory buffer for receiving data.",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
+            "is_const": true,
+            "is_reference": true,
             "is_array": false,
             "array_dimension_sizes": [
 
@@ -44632,6 +44619,19 @@
             "is_pointer": false,
             "is_const": false,
             "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "bytes_transfered": {
+            "type": "int",
+            "description": "The number of bytes transferred (output)",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": true,
             "is_array": false,
             "array_dimension_sizes": [
 
