@@ -763,3 +763,219 @@ TEST_CASE("return a SplashKit resource of resource_kind with name filename as a 
         REQUIRE(result == expected);
     }
 }
+TEST_CASE("check if string is valid binary", "[is_binary]")
+{
+    SECTION("string is valid binary")
+    {
+        REQUIRE(is_binary("1010"));
+    }
+    SECTION("string uses the invalid symbol 2")
+    {
+        REQUIRE_FALSE(is_binary("2"));
+    }
+}
+TEST_CASE("check if string is valid hex", "[is_hex]")
+{
+    SECTION("string is valid hex")
+    {
+        REQUIRE(is_hex("A"));
+    }
+    SECTION("string uses the invalid symbol G")
+    {
+        REQUIRE_FALSE(is_hex("G"));
+    }
+}
+TEST_CASE("check if string is valid octal", "[is_octal]")
+{
+    SECTION("string is valid octal")
+    {
+        REQUIRE(is_octal("100"));
+    }
+    SECTION("input string uses the invalid symbol 8")
+    {
+        REQUIRE_FALSE(is_octal("8"));
+    }
+}
+TEST_CASE("convert an integer to a binary string", "[dec_to_bin]")
+{
+    REQUIRE(dec_to_bin(10) == "1010");
+}
+TEST_CASE("convert a binary string to an integer", "[bin_to_dec]")
+{
+    SECTION("binary string is converted to an integer")
+    {
+        REQUIRE(bin_to_dec("1010") == 10);
+    }
+    SECTION("input is invalid binary")
+    {
+        REQUIRE(bin_to_dec("2") == 0);
+    }
+}
+TEST_CASE("convert a hex string to binary", "[hex_to_bin]")
+{
+    SECTION("hex string is converted to binary")
+    {
+        REQUIRE(hex_to_bin("A") == "1010");
+    }
+    SECTION("input contains invalid symbol G")
+    {
+        REQUIRE(hex_to_bin("G") == "");
+    }
+}
+TEST_CASE("convert a binary string to hex", "[bin_to_hex]")
+{
+    SECTION("binary string is converted to hex")
+    {
+        REQUIRE(bin_to_hex("1010") == "A");
+    }
+    SECTION("input is invalid binary")
+    {
+        REQUIRE(bin_to_hex("2") == "");
+    }
+}
+TEST_CASE("convert an integer to octal", "[dec_to_oct]")
+{
+    REQUIRE(dec_to_oct(64) == "100");
+}
+TEST_CASE("convert an octal string to an integer", "[oct_to_dec]")
+{
+    SECTION("octal string is converted to an integer")
+    {
+        REQUIRE(oct_to_dec("100") == 64);
+    }
+    SECTION("input uses invalid symbol 8")
+    {
+        REQUIRE(oct_to_dec("8") == 0);
+    }
+}
+TEST_CASE("convert an octal string to binary", "[oct_to_bin]")
+{
+    SECTION("octal string is converted to an integer")
+    {
+        REQUIRE(oct_to_bin("12") == "1010");
+    }
+    SECTION("input uses invalid symbol 8")
+    {
+        REQUIRE(oct_to_bin("8") == "");
+    }
+}
+TEST_CASE("convert a binary string to octal", "[bin_to_oct]")
+{
+    SECTION("octal string is converted to an integer")
+    {
+        REQUIRE(bin_to_oct("1010") == "12");
+    }
+    SECTION("input is invalid binary")
+    {
+        REQUIRE(bin_to_oct("2") == "");
+    }
+}
+TEST_CASE("convert a hex string to octal", "[hex_to_oct]")
+{
+    SECTION("hex string is converted to octal")
+    {
+        REQUIRE(hex_to_oct("A") == "12");
+    }
+    SECTION("input uses the invalid symbol G")
+    {
+        REQUIRE(hex_to_oct("G") == "");
+    }
+}
+TEST_CASE("convert a hex string to an integer", "[hex_to_dec]")
+{
+    SECTION("hex string is converted to integer")
+    {
+        REQUIRE(hex_to_dec("A") == 10);
+    }
+    SECTION("input uses the invalid symbol G")
+    {
+        REQUIRE(hex_to_dec("G") == 0);
+    }
+}
+TEST_CASE("convert an octal string to hex", "[oct_to_hex]")
+{
+    SECTION("hex string is converted to octal")
+    {
+        REQUIRE(oct_to_hex("12") == "A");
+    }
+    SECTION("input uses the invalid symbol 8")
+    {
+        REQUIRE(oct_to_hex("8") == "");
+    }
+}
+TEST_CASE("encode a string in base64 format", "[base64_encode]")
+{
+    REQUIRE(base64_encode("Man") == "TWFu");
+}
+TEST_CASE("decode a string from base64", "[base64_decode]")
+{
+    REQUIRE(base64_decode("TWFu") == "Man");
+}
+TEST_CASE("calculate the square root of an integer")
+{
+    SECTION("input is a positive integer")
+    {
+        REQUIRE(square_root(4) == 2.0);
+    }
+    SECTION("input is zero")
+    {
+        REQUIRE(square_root(0) == 0.0);
+    }
+}
+TEST_CASE("check if a number is prime", "[is_prime_number]")
+{
+    SECTION("number is prime")
+    {
+        is_prime_number(7);
+    }
+    SECTION("number is not prime")
+    {
+        is_prime_number(42);
+    }
+}
+TEST_CASE("calculates the gcd of two integers", "[greatest_common_divisor]")
+{
+    SECTION("both numbers are valid integers above 0")
+    {
+        REQUIRE(greatest_common_divisor(12, 42) == 6);
+    }
+    SECTION("first number is negative")
+    {
+        REQUIRE(greatest_common_divisor(-1, 42) == 0);
+    }
+    SECTION("first number is zero")
+    {
+        REQUIRE(greatest_common_divisor(0, 42) == 0);
+    }
+    SECTION("second number is negative")
+    {
+        REQUIRE(greatest_common_divisor(42, -1) == 0);
+    }
+    SECTION("second number is zero")
+    {
+        REQUIRE(greatest_common_divisor(42, 0) == 0);
+    }
+}
+TEST_CASE("calculates the lcm of two numbers", "[least_common_multiple]")
+{
+    SECTION("both numbers are valid integers above 0")
+    {
+        REQUIRE(least_common_multiple(12, 42) == 84);
+    }
+    SECTION("first number is negative")
+    {
+        REQUIRE(least_common_multiple(-1, 42) == 0);
+    }
+    SECTION("first number is zero")
+    {
+        REQUIRE(least_common_multiple(0, 42) == 0);
+    }
+    SECTION("second number is negative")
+    {
+        REQUIRE(least_common_multiple(42, -1) == 0);
+    }
+    SECTION("second number is zero")
+    {
+        REQUIRE(least_common_multiple(42, 0) == 0);
+    }
+}
