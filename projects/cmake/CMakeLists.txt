@@ -18,8 +18,18 @@ if (WIN32 OR MSYS OR MINGW)
 endif()
 
 # Check for Raspberry Pi
+execute_process(COMMAND uname -m OUTPUT_VARIABLE ARCH OUTPUT_STRIP_TRAILING_WHITESPACE)
+if (EXISTS "/sys/firmware/devicetree/base/model")
+    file(READ "/sys/firmware/devicetree/base/model" DEVICE_MODEL)
+endif()
+
+if (ARCH MATCHES "armv7l|aarch64|armv6l" OR DEVICE_MODEL MATCHES "Raspberry Pi")
+    message(STATUS "Raspberry Pi detected: ${ARCH} ${DEVICE_MODEL}")
+    set(IS_RASPBERRY_PI TRUE)
+    add_definitions(-DRASPBERRY_PI)
+endif()
+
 include(CheckIncludeFile)
-find_path(BCM_HOST_INCLUDE_DIR bcm_host.h PATHS "/opt/vc/include")
 #### SETUP ####
 if (APPLE)
     # MAC OS PROJECT FLAGS
@@ -105,6 +115,11 @@ else()
                    -ldl \
                    -lstdc++fs")
 endif()
+
+find_path(BCM_HOST_INCLUDE_DIR bcm_host.h 
+    HINTS /usr/include /usr/local/include /opt/vc/include 
+    PATH_SUFFIXES interface/vcos/pthreads interface/vmcs_host/linux
+)
 
 if (BCM_HOST_INCLUDE_DIR)
     message("Raspberry Pi detected")
@@ -287,3 +302,4 @@ set_target_properties(skunit_tests
 
 install(TARGETS SplashKitBackend DESTINATION lib)
 install(FILES ${INCLUDE_FILES} DESTINATION include/SplashKitBackend)
+
