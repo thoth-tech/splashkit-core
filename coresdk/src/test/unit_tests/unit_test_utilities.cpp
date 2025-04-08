@@ -46,7 +46,7 @@ TEST_CASE("substring contained within string is detected", "[contains]")
         REQUIRE_FALSE(contains("", "splashkit"));
     }
 }
-TEST_CASE("string is converted to double", "[covert_to_double]")
+TEST_CASE("string is converted to double", "[convert_to_double]")
 {
     SECTION("string is an integer")
     {
@@ -149,7 +149,7 @@ TEST_CASE("string is converted to double", "[covert_to_double]")
         REQUIRE_THROWS(convert_to_double(""));
     }
 }
-TEST_CASE("string is converted to integer", "[covert_to_integer]")
+TEST_CASE("string is converted to integer", "[convert_to_integer]")
 {
     SECTION("string is an integer")
     {
