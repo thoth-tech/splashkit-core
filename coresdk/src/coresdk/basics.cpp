@@ -466,9 +466,9 @@ namespace splashkit_lib
 
     int greatest_common_divisor(int number1, int number2)
     {
-        if (!is_number(std::to_string(number1)) || !is_number(std::to_string(number2)))
+        // gcd(0, 0) == 0
+        if (number1 == 0 && number2 == 0)
         {
-            LOG(ERROR) << "Invalid numbers passed to greatest_common_divisor: " << number1 << ", " << number2 << ", returning 0";            
             return 0;
         }
 
@@ -483,12 +483,11 @@ namespace splashkit_lib
 
     int least_common_multiple(int number1, int number2)
     {
+        // lcm(0, n) == 0
         if (number1 == 0 || number2 == 0)
         {
-            LOG(ERROR) << "Invalid numbers passed to least_common_multiple: " << number1 << ", " << number2 << ", returning 0";            
             return 0;
         }
-
         return abs(number1 * number2) / greatest_common_divisor(number1, number2);
     }
 
