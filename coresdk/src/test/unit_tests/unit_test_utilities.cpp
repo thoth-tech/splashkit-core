@@ -941,19 +941,27 @@ TEST_CASE("calculates the gcd of two integers", "[greatest_common_divisor]")
     }
     SECTION("first number is negative")
     {
-        REQUIRE(greatest_common_divisor(-1, 42) == 0);
+        REQUIRE(greatest_common_divisor(-12, 42) == 6);
     }
     SECTION("first number is zero")
     {
-        REQUIRE(greatest_common_divisor(0, 42) == 0);
+        REQUIRE(greatest_common_divisor(0, 42) == 42);
     }
     SECTION("second number is negative")
     {
-        REQUIRE(greatest_common_divisor(42, -1) == 0);
+        REQUIRE(greatest_common_divisor(42, -12) == 6);
     }
     SECTION("second number is zero")
     {
-        REQUIRE(greatest_common_divisor(42, 0) == 0);
+        REQUIRE(greatest_common_divisor(42, 0) == 42);
+    }
+    SECTION("both numbers are zero")
+    {
+        REQUIRE(greatest_common_divisor(0, 0) == 0);
+    }
+    SECTION("numbers are equal")
+    {
+        REQUIRE(greatest_common_divisor(42, 42) == 42);
     }
 }
 TEST_CASE("calculates the lcm of two numbers", "[least_common_multiple]")
@@ -964,7 +972,7 @@ TEST_CASE("calculates the lcm of two numbers", "[least_common_multiple]")
     }
     SECTION("first number is negative")
     {
-        REQUIRE(least_common_multiple(-1, 42) == 0);
+        REQUIRE(least_common_multiple(-12, 42) == 84);
     }
     SECTION("first number is zero")
     {
@@ -972,10 +980,18 @@ TEST_CASE("calculates the lcm of two numbers", "[least_common_multiple]")
     }
     SECTION("second number is negative")
     {
-        REQUIRE(least_common_multiple(42, -1) == 0);
+        REQUIRE(least_common_multiple(42, -12) == 84);
     }
     SECTION("second number is zero")
     {
         REQUIRE(least_common_multiple(42, 0) == 0);
+    }
+    SECTION("both numbers are zero")
+    {
+        REQUIRE(least_common_multiple(0, 0) == 0);
+    }
+    SECTION("numbers are equal")
+    {
+        REQUIRE(least_common_multiple(42, 42) == 42);
     }
 }
