@@ -6,16 +6,9 @@
 //  Copyright © 2016 Andrew Cain. All rights reserved.
 //
 
-#include "animations.h"
-#include "images.h"
-#include "graphics.h"
-#include "window_manager.h"
-#include "utils.h"
-#include "audio.h"
-#include "input.h"
-
-#include <vector>
 #include <iostream>
+#include "networking.h"
+#include "raspi_gpio.h"
 using namespace std;
 using namespace splashkit_lib;
 
