@@ -140,7 +140,7 @@ if (BCM_HOST_INCLUDE_DIR)
     find_path(WIRINGPI_INCLUDE_DIR NAMES wiringPi.h HINTS /usr/include /usr/local/include)
 
     # Find the WiringPi library.
-    find_library(WIRINGPI_LIBRARY NAMES libwiringPi.so.3.14 HINTS /usr/lib /home/jp/WiringPi/wiringPi /usr/local/lib)
+    find_library(WIRINGPI_LIBRARY NAMES libwiringPi.so HINTS /usr/lib /home/jp/WiringPi/wiringPi /usr/local/lib)
 
     # If WiringPi library is found, link it to your project
     if(WIRINGPI_LIBRARY)
