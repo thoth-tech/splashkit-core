@@ -13,6 +13,8 @@
 #include <cstring>
 #ifdef RASPBERRY_PI
 #include "pigpiod_if2.h"
+#include <chrono>
+#include <thread>
 #include <wiringPi.h>
 #endif
 
