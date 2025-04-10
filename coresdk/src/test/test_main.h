@@ -38,5 +38,6 @@ void run_gpio_spi_tests();
 void run_terminal_test();
 void run_logging_test();
 void run_ui_test();
+void run_wiringPi_test();
 
 #endif /* test_main_h */

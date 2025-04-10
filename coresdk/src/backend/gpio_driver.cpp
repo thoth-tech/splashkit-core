@@ -13,6 +13,7 @@
 #include <cstring>
 #ifdef RASPBERRY_PI
 #include "pigpiod_if2.h"
+#include <wiringPi.h>
 #endif
 
 
@@ -41,7 +42,8 @@ namespace splashkit_lib
     // Initialize the GPIO library
     int sk_gpio_init()
     {
-        pi = pigpio_start(0, 0);
+        pi = wiringPiSetupGpio();
+        // pi = pigpio_start(0, 0);
         return pi;
     }
 
