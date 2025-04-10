@@ -926,11 +926,11 @@ TEST_CASE("check if a number is prime", "[is_prime_number]")
 {
     SECTION("number is prime")
     {
-        is_prime_number(7);
+        REQUIRE(is_prime_number(7));
     }
     SECTION("number is not prime")
     {
-        is_prime_number(42);
+        REQUIRE_FALSE(is_prime_number(42));
     }
 }
 TEST_CASE("calculates the gcd of two integers", "[greatest_common_divisor]")
