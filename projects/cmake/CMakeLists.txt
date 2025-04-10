@@ -312,13 +312,13 @@ set_target_properties(skunit_tests
             IMPORTED_LOCATION "/home/jp/Documents/splashkit-core/out/lib/libSplashKitBackend.a"
         )
 
-        target_link_libraries(sktest PRIVATE SplashKitBackend ${WIRINGPI_LIBRARY})
+        target_link_libraries(sktest SplashKitBackend ${WIRINGPI_LIBRARY})
 
         #targets sktest later
         
     else()
         message(FATAL_ERROR "WiringPi library not found.")
-        target_link_libraries(sktest PRIVATE ${WIRINGPI_LIBRARY})
+        target_link_libraries(sktest ${WIRINGPI_LIBRARY})
     endif()
 
     if(WIRINGPI_INCLUDE_DIR)
