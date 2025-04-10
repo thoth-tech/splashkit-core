@@ -144,7 +144,8 @@ if (BCM_HOST_INCLUDE_DIR)
 
     if(WIRINGPI_LIBRARY)
         message(STATUS "Found WiringPi library: ${WIRINGPI_LIBRARY}")
-        target_link_libraries(sktest PRIVATE ${WIRINGPI_LIBRARY})
+        #targets sktest later
+        
     else()
         message(FATAL_ERROR "WiringPi library not found.")
     endif()
@@ -319,6 +320,9 @@ set_target_properties(skunit_tests
         RUNTIME_OUTPUT_DIRECTORY ${SK_BIN}
         )
 #### END sktest EXECUTABLE ####
+
+#This targets library after sktest is dealt with
+target_link_libraries(sktest PRIVATE ${WIRINGPI_LIBRARY})
 
 install(TARGETS SplashKitBackend DESTINATION lib)
 install(FILES ${INCLUDE_FILES} DESTINATION include/SplashKitBackend)
