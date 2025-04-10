@@ -145,8 +145,8 @@ if (BCM_HOST_INCLUDE_DIR)
     # If WiringPi library is found, link it to your project
     if(WIRINGPI_LIBRARY)
         message(STATUS "Found WiringPi library: ${WIRINGPI_LIBRARY}")
-        find_library(WIRINGPI_LIB wiringPi)
-        target_link_libraries(sktest PRIVATE ${WIRINGPI_LIB})
+        target_link_libraries(sktest PRIVATE ${WIRINGPI_LIBRARY})
+
 
     else()
         message(FATAL_ERROR "WiringPi library not found.")
