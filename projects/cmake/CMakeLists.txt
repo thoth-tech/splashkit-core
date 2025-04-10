@@ -136,6 +136,27 @@ if (BCM_HOST_INCLUDE_DIR)
         # target_link_libraries(SplashKitBackend ${LIB_FLAGS} pigpiod_if2)
     endif()
     
+    # Find the WiringPi headers.
+    find_path(WIRINGPI_INCLUDE_DIR NAMES wiringPi.h HINTS /usr/include /usr/local/include)
+
+    # Find the WiringPi library.
+    find_library(WIRINGPI_LIBRARY NAMES wiringPi.so HINTS /usr/lib /usr/local/lib)
+
+    # If WiringPi library is found, link it to your project
+    if(WIRINGPI_LIBRARY)
+        message(STATUS "Found WiringPi library: ${WIRINGPI_LIBRARY}")
+        target_link_libraries(SplashKitBackend ${LIB_FLAGS} ${WIRINGPI_LIBRARY})
+    else()
+        message(FATAL_ERROR "WiringPi library not found.")
+    endif()
+
+    # Optionally, include the WiringPi headers for use in your project
+    if(WIRINGPI_INCLUDE_DIR)
+        include_directories(${WIRINGPI_INCLUDE_DIR})
+    else()
+        message(FATAL_ERROR "WiringPi headers not found.")
+    endif()
+
     
      
     # Add necessary directories for Raspberry Pi
