@@ -12,7 +12,7 @@
 #include <stdint.h>
 #include "networking.h"
 #include "types.h"
-#include "adc_driver.h"
+#include "raspi_adc.h"
 
 namespace splashkit_lib
 {
@@ -153,55 +153,6 @@ namespace splashkit_lib
      */
     void raspi_cleanup();
 
-    /**
-     * @brief Checks if an ADC device with the given name has been loaded.
-     *
-     * This function checks if an ADC device with the specified name has been loaded.
-     *
-     * @param name  The name of the ADC device to check.
-     * @param type  The type of ADC device to check.
-     * @returns     true if the ADC device exists, false otherwise.
-     */
-    adc_device open_adc(const string &name, adc_type type);
-    
-    /**
-     * @brief Reads an 8-bit value from the specified ADC channel on the device.
-     *
-     * This function reads an 8-bit value from the specified ADC channel on the device.
-     *
-     * @param adc      The ADC device to read from.
-     * @param channel  The channel number to read (range depends on ADC type).
-     * @returns        The ADC conversion value (0–255), or -1 on error.
-     */
-    int adc_read(adc_device adc, adc_pin channel);
-
-    /**
-     * @brief Closes an ADC device given its pointer.
-     *
-     * This function closes an ADC device given its pointer.
-     *
-     * @param adc  The ADC name string to close.
-     * @param channel  The channel number to read (range depends on ADC type).
-     * @returns        The ADC conversion value (0–255), or -1 on error.
-     */
-    int adc_read(const string &name, adc_pin channel);
-    /**
-     * @brief Closes an ADC device given its pointer.
-     *
-     * This function closes an ADC device given its pointer.
-     *
-     * @param adc  The ADC device to close.
-     */
-    void close_adc(adc_device adc);
-
-    /**
-     * @brief Closes an ADC device given its name.
-     *
-     * This function closes an ADC device given its name.
-     *
-     * @param name  The name of the ADC device to close.
-     */
-    void close_adc(const string &name);
 	/**
      * @brief Initialises a remote connection to a Raspberry Pi.
      *
