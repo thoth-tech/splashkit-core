@@ -90,7 +90,7 @@ namespace splashkit_lib
 
         // Open the I2C channel to the ADC device.
         // (For both ADS7830 and PCF8591, we assume the initialization is similar.)
-        result->i2c_handle = i2c_open(bus, address, 0);
+        result->i2c_handle = sk_i2c_open(bus, address, 0);
         if (result->i2c_handle < 0)
         {
             LOG(WARNING) << "Error opening ADC device " << name
@@ -153,12 +153,12 @@ namespace splashkit_lib
         }
 
         // Write the command byte to the device (selecting the channel and settings)
-        i2c_write_byte(dev->i2c_handle, command);
+        sk_i2c_write_byte(dev->i2c_handle, command);
         // Wait for the conversion to complete (if needed)
         // delay 10 milliseconds
         delay(10);
         // Read the conversion result (8-bit value)
-        int value = i2c_read_byte(dev->i2c_handle);
+        int value = sk_i2c_read_byte(dev->i2c_handle);
         if (value < 0)
         {
             LOG(WARNING) << "Error reading ADC channel " << channel
@@ -177,7 +177,7 @@ namespace splashkit_lib
         if (dev)
         {
             // Close the I2C connection
-            i2c_close(dev->i2c_handle);
+            sk_i2c_close(dev->i2c_handle);
             // Remove the device from our map
             _adc_devices.erase(dev->name);
             dev->id = NONE_PTR; // Set pointer to a non-valid identifier
@@ -284,7 +284,7 @@ namespace splashkit_lib
     void close_adc(adc_device adc)
     {
 #ifdef RASPBERRY_PI
-        free_adc_device(adc);
+        close_adc_device(adc);
 #else
         LOG(ERROR) << "ADC not supported on this platform";
 #endif
@@ -307,7 +307,7 @@ namespace splashkit_lib
 #ifdef RASPBERRY_PI
         for (auto &entry : _adc_devices)
         {
-            free_adc_device(entry.second);
+            close_adc_device(entry.second);
         }
         _adc_devices.clear();
 #else

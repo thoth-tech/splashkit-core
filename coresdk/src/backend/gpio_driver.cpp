@@ -162,7 +162,7 @@ namespace splashkit_lib
     }
 
     // I2C Functions
-    void i2c_open(int bus, int address, int flags)
+    int sk_i2c_open(int bus, int address, int flags)
     {
         if (check_pi())
         {
@@ -171,9 +171,14 @@ namespace splashkit_lib
             {
                 LOG(ERROR) << sk_gpio_error_message(result);
             }
+            return result;
+        }
+        else
+        {
+            return -1;
         }
     }
-    void i2c_close(int handle)
+    void sk_i2c_close(int handle)
     {
         if (check_pi())
         {
@@ -184,7 +189,7 @@ namespace splashkit_lib
             }
         }
     }
-    int i2c_read_byte(int handle)
+    int sk_i2c_read_byte(int handle)
     {
         if (check_pi())
         {
@@ -200,7 +205,7 @@ namespace splashkit_lib
             return -1;
         }
     }
-    void i2c_write_byte(int handle, int data)
+    void sk_i2c_write_byte(int handle, int data)
     {
         if (check_pi())
         {
@@ -211,7 +216,7 @@ namespace splashkit_lib
             }
         }
     }
-    int i2c_read_device(int handle, char *buf, int count)
+    int sk_i2c_read_device(int handle, char *buf, int count)
     {
         if (check_pi())
         {
@@ -227,7 +232,7 @@ namespace splashkit_lib
             return -1;
         }
     }
-    void i2c_write_device(int handle, char *buf, int count)
+    void sk_i2c_write_device(int handle, char *buf, int count)
     {
         if (check_pi())
         {

@@ -46,12 +46,12 @@ namespace splashkit_lib
     int sk_spi_transfer(int handle, char *sendBuf, char *recvBuf, int count);
 
     // I2C Functions
-    void i2c_open(int bus, int address, int flags);
-    void i2c_close(int handle);
-    int i2c_read_byte(int handle);
-    void i2c_write_byte(int handle, int data);
-    int i2c_read_device(int handle, char *buf, int count);
-    void i2c_write_device(int handle, char *buf, int count);
+    int sk_i2c_open(int bus, int address, int flags);
+    void sk_i2c_close(int handle);
+    int sk_i2c_read_byte(int handle);
+    void sk_i2c_write_byte(int handle, int data);
+    int sk_i2c_read_device(int handle, char *buf, int count);
+    void sk_i2c_write_device(int handle, char *buf, int count);
 
     // Additional I2C Functions
     int sk_i2c_read_byte_data(int handle, int reg);
