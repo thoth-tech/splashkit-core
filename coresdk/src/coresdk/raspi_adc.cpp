@@ -6,6 +6,7 @@
 #include "gpio_driver.h" // Provides i2c_open, i2c_close, etc.
 #include "backend_types.h"
 #include "easylogging++.h" // For logging
+#include "utils.h"       // For delay function
 
 #include <string>
 #include <map>
@@ -153,7 +154,9 @@ namespace splashkit_lib
 
         // Write the command byte to the device (selecting the channel and settings)
         i2c_write_byte(dev->i2c_handle, command);
-
+        // Wait for the conversion to complete (if needed)
+        // delay 10 milliseconds
+        delay(10);
         // Read the conversion result (8-bit value)
         int value = i2c_read_byte(dev->i2c_handle);
         if (value < 0)
