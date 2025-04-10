@@ -121,13 +121,7 @@ namespace splashkit_lib
         {
         case ADS7830:
         {
-            // ADS7830 supports channels 0-7
-            if (channel < 0 || channel > 7)
-            {
-                LOG(WARNING) << "Invalid ADC channel: " << channel
-                             << " for device " << dev->name << " (ADS7830 supports 0-7)";
-                return -1;
-            }
+           
             command = channel;
             break;
         }
@@ -241,8 +235,13 @@ namespace splashkit_lib
         }
         if (channel < ADC_PIN_0 || channel > ADC_PIN_7)
         {
-            LOG(ERROR) << "Invalid ADC channel: " << channel;
-            return -1;
+             // ADS7830 supports channels 0-7
+            if (channel < ADC_PIN_0 || channel > ADC_PIN_7)
+            {
+                LOG(WARNING) << "Invalid ADC channel: " << channel
+                             << " for device " << dev->name << " (ADS7830 supports 0-7)";
+                return -1;
+            }
         }
         // Convert the adc_pin enum to the corresponding channel number using get_ads7830_pin_address
         int channel_num = get_ads7830_pin_address(channel);

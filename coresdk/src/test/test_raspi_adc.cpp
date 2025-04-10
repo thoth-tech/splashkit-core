@@ -24,7 +24,7 @@ void run_gpio_adc_tests()
 
     adc_pin channel = ADC_PIN_0; // Change this to the desired channel
     int value = 0;
-    while (any_key_pressed())
+    while (!any_key_pressed())
     {
         value = adc_read(dev, channel);
         cout << "ADC value: " << value << endl;
