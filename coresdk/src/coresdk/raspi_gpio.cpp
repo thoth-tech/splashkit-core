@@ -4,8 +4,10 @@
 // Copyright © 2024 XQuestCode. All rights reserved.
 #include "raspi_gpio.h"
 #include "gpio_driver.h"
+#include "adc_driver.h"
 #include "easylogging++.h"
 #include "types.h"
+#include "backend_types.h"
 #include <iostream>
 using namespace std;
 
@@ -14,6 +16,34 @@ namespace splashkit_lib
     // Each index points to PIN_1, PIN_2, PIN_3, etc.
     int BCMpinData[] = {
         -1, -1, 2, -1, 3, -2, 4, 14, -2, 15, 17, 18, 27, -2, 22, 23, -1, 24, 10, -2, 9, 25, 11, 8, -2, 7, 0, 1, 5, -2, -6, 12, 13, -2, 19, 16, 26, 20, -2, 21};
+
+    // a function to return address based on pin number of ads7830
+    int get_ads7830_pin_address(adc_pin pin)
+    {
+        switch (pin)
+        {
+
+        case ADC_PIN_0:
+            return 0x84; // CH0
+        case ADC_PIN_1:
+            return 0x85; // CH1
+        case ADC_PIN_2:
+            return 0x86; // CH2
+        case ADC_PIN_3:
+            return 0x87; // CH3
+        case ADC_PIN_4:
+            return 0x88; // CH4
+        case ADC_PIN_5:
+            return 0x89; // CH5
+        case ADC_PIN_6:
+            return 0x8A; // CH6
+        case ADC_PIN_7:
+            return 0x8B; // CH7
+
+        default:
+            return -1; // Invalid pin
+        }
+    }
 
     int boardToBCM(gpio_pin pin)
     {
@@ -28,12 +58,12 @@ namespace splashkit_lib
         // https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-datasheet.pdf
         // Archive Link:
         // https://web.archive.org/web/20240901170108/https://datasheets.raspberrypi.com/rpi4/raspberry-pi-4-datasheet.pdf
-        if(bcmPinResult < 2)
+        if (bcmPinResult < 2)
         {
             std::string extra_text = " Pin is a";
-    	    extra_text += (bcmPinResult >= 0) ? "n EEPROM Pin, using this could corrupt the bootloader." :
-	    		          (bcmPinResult == -1) ? " POWER line." :
-                          (bcmPinResult == -2) ? " GROUND line." : "n Unknown Pin Type.";
+            extra_text += (bcmPinResult >= 0) ? "n EEPROM Pin, using this could corrupt the bootloader." : (bcmPinResult == -1) ? " POWER line."
+                                                                                                       : (bcmPinResult == -2)   ? " GROUND line."
+                                                                                                                                : "n Unknown Pin Type.";
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO) + extra_text;
             return PI_BAD_GPIO;
         }
@@ -67,7 +97,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2)
+        if (bcmPin >= 2)
         {
             sk_gpio_set_mode(bcmPin, static_cast<int>(mode));
         }
@@ -76,11 +106,31 @@ namespace splashkit_lib
 #endif
     }
 
+    gpio_pin raspi_get_pin(int boardPin)
+    {
+        gpio_pin pin = PIN_1;
+        if (boardPin >= 1 && boardPin <= 40)
+        {
+            pin = static_cast<gpio_pin>(boardPin);
+        }
+        return pin;
+    }
+    // set pin to input
+    void raspi_set_input(gpio_pin pin)
+    {
+        raspi_set_mode(pin, GPIO_INPUT);
+    }
+    // set pin to output
+    void raspi_set_output(gpio_pin pin)
+    {
+        raspi_set_mode(pin, GPIO_OUTPUT);
+    }
+
     gpio_pin_mode raspi_get_mode(gpio_pin pin)
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2)    
+        if (bcmPin >= 2)
         {
             return static_cast<gpio_pin_mode>(sk_gpio_get_mode(bcmPin));
         }
@@ -96,7 +146,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) 
+        if (bcmPin >= 2)
         {
             sk_gpio_write(bcmPin, static_cast<int>(value));
         }
@@ -110,7 +160,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2)
+        if (bcmPin >= 2)
         {
             return static_cast<gpio_pin_value>(sk_gpio_read(bcmPin));
         }
@@ -125,7 +175,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2)
+        if (bcmPin >= 2)
         {
             sk_gpio_set_pull_up_down(bcmPin, static_cast<int>(pud));
         }
@@ -138,7 +188,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2)
+        if (bcmPin >= 2)
         {
             sk_set_pwm_range(bcmPin, range);
         }
@@ -151,7 +201,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2)
+        if (bcmPin >= 2)
         {
             sk_set_pwm_frequency(bcmPin, frequency);
         }
@@ -164,7 +214,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2)
+        if (bcmPin >= 2)
         {
             sk_set_pwm_dutycycle(bcmPin, dutycycle);
         }
@@ -172,12 +222,12 @@ namespace splashkit_lib
         LOG(ERROR) << "Unable to set pwm dutycycle - GPIO not supported on this platform";
 #endif
     }
-	
-	int raspi_spi_open(int channel, int speed, int spi_flags)
+
+    int raspi_spi_open(int channel, int speed, int spi_flags)
     {
 #ifdef RASPBERRY_PI
         int handle = -1;
-	    handle = sk_spi_open(channel, speed, spi_flags);
+        handle = sk_spi_open(channel, speed, spi_flags);
         return handle;
 #else
         LOG(ERROR) << "Unable to open SPI interface - GPIO not supported on this platform";
@@ -200,7 +250,8 @@ namespace splashkit_lib
 #ifdef RASPBERRY_PI
         int len = send.size() > count ? count : send.size();
         char send_buf[len + 1]{};
-        for(int i = 0; i < len; i++) {
+        for (int i = 0; i < len; i++)
+        {
             send_buf[i] = send[i];
         }
 
@@ -221,10 +272,100 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         LOG(INFO) << "Cleaning GPIO pins";
-       	sk_gpio_clear_bank_1();
-    	sk_gpio_cleanup();
+        sk_gpio_clear_bank_1();
+        sk_gpio_cleanup();
 #else
         LOG(ERROR) << "Unable to set cleanup - GPIO not supported on this platform";
+#endif
+    }
+
+    // ADC functions
+    adc_device open_adc(const string &name, adc_type type)
+    {
+#ifdef RASPBERRY_PI
+        if (type != ADS7830)
+        {
+            LOG(ERROR) << "Unsupported ADC type for " << name;
+            return nullptr;
+        }
+        const int default_bus = 1;
+        const int default_address = 0x48; // Default I2C address for ADS7830
+        return load_adc_device(name, default_bus, default_address, type);
+#else
+        LOG(ERROR) << "ADC not supported on this platform";
+        return nullptr;
+#endif
+    }
+    // Read the ADC value from a given channel (0-7) using a device pointer.
+    int adc_read(adc_device adc, adc_pin channel)
+    {
+#ifdef RASPBERRY_PI
+        if (adc == nullptr)
+        {
+            LOG(ERROR) << "ADC device not initialized.";
+            return -1;
+        }
+        if (channel < ADC_PIN_0 || channel > ADC_PIN_7)
+        {
+            LOG(ERROR) << "Invalid ADC channel: " << channel;
+            return -1;
+        }
+        // Convert the adc_pin enum to the corresponding channel number using get_ads7830_pin_address
+        int channel_num = get_ads7830_pin_address(channel);
+        if (channel_num == -1)
+        {
+            LOG(ERROR) << "Invalid ADC pin: " << channel;
+            return -1;
+        }
+        return read_adc_channel(adc, channel_num);
+#else
+        LOG(ERROR) << "ADC not supported on this platform";
+        return -1;
+#endif
+    }
+    
+    // Overload: read ADC value by providing the ADC device name.
+    int adc_read(const string &name, adc_pin channel)
+    {
+#ifdef RASPBERRY_PI
+        adc_device dev = adc_device_named(name);
+        if (dev == nullptr)
+        {
+            LOG(ERROR) << "ADC device " << name << " not found.";
+            return -1;
+        }
+        int channel_num = get_ads7830_pin_address(channel);
+        if (channel_num == -1)
+        {
+            LOG(ERROR) << "Invalid ADC pin: " << channel;
+            return -1;
+        }
+        return read_adc_channel(dev, channel_num);
+#else
+        LOG(ERROR) << "ADC not supported on this platform";
+        return -1;
+#endif
+    }
+    // Close an ADC device given its pointer.
+    void close_adc(adc_device adc)
+    {
+#ifdef RASPBERRY_PI
+        free_adc_device(adc);
+#else
+        LOG(ERROR) << "ADC not supported on this platform";
+#endif
+    }
+    // Overload: close an ADC device using its name.
+    void close_adc(const string &name)
+    {
+#ifdef RASPBERRY_PI
+        adc_device dev = adc_device_named(name);
+        if (dev != nullptr)
+            free_adc_device(dev);
+        else
+            LOG(WARNING) << "Attempted to close unknown ADC device: " << name;
+#else
+        LOG(ERROR) << "ADC not supported on this platform";
 #endif
     }
 

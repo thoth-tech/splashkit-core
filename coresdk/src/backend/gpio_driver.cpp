@@ -117,6 +117,7 @@ namespace splashkit_lib
         }
     }
 
+    // PWM Functions
     void sk_set_pwm_range(int pin, int range)
     {
         if(check_pi())
@@ -160,6 +161,143 @@ namespace splashkit_lib
         }
     }
 
+    // I2C Functions
+    void i2c_open(int bus, int address, int flags)
+    {
+        if (check_pi())
+        {
+            int result = ::i2c_open(pi, bus, address, flags);
+            if (result < 0)
+            {
+                LOG(ERROR) << sk_gpio_error_message(result);
+            }
+        }
+    }
+    void i2c_close(int handle)
+    {
+        if (check_pi())
+        {
+            int result = ::i2c_close(pi, handle);
+            if (result < 0)
+            {
+                LOG(ERROR) << sk_gpio_error_message(result);
+            }
+        }
+    }
+    int i2c_read_byte(int handle)
+    {
+        if (check_pi())
+        {
+            int result = ::i2c_read_byte(pi, handle);
+            if (result < 0)
+            {
+                LOG(ERROR) << sk_gpio_error_message(result);
+            }
+            return result;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    void i2c_write_byte(int handle, int data)
+    {
+        if (check_pi())
+        {
+            int result = ::i2c_write_byte(pi, handle, data);
+            if (result < 0)
+            {
+                LOG(ERROR) << sk_gpio_error_message(result);
+            }
+        }
+    }
+    int i2c_read_device(int handle, char *buf, int count)
+    {
+        if (check_pi())
+        {
+            int result = ::i2c_read_device(pi, handle, buf, count);
+            if (result < 0)
+            {
+                LOG(ERROR) << sk_gpio_error_message(result);
+            }
+            return result;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    void i2c_write_device(int handle, char *buf, int count)
+    {
+        if (check_pi())
+        {
+            int result = ::i2c_write_device(pi, handle, buf, count);
+            if (result < 0)
+            {
+                LOG(ERROR) << sk_gpio_error_message(result);
+            }
+        }
+    }
+
+    // Additional I2C Functions (new)
+    int sk_i2c_read_byte_data(int handle, int reg)
+    {
+        if (check_pi())
+        {
+            int result = ::i2c_read_byte_data(pi, handle, reg);
+            if (result < 0)
+            {
+                LOG(ERROR) << sk_gpio_error_message(result);
+            }
+            return result;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    void sk_i2c_write_byte_data(int handle, int reg, int data)
+    {
+        if (check_pi())
+        {
+            int result = ::i2c_write_byte_data(pi, handle, reg, data);
+            if (result < 0)
+            {
+                LOG(ERROR) << sk_gpio_error_message(result);
+            }
+        }
+    }
+
+    int sk_i2c_read_word_data(int handle, int reg)
+    {
+        if (check_pi())
+        {
+            int result = ::i2c_read_word_data(pi, handle, reg);
+            if (result < 0)
+            {
+                LOG(ERROR) << sk_gpio_error_message(result);
+            }
+            return result;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    void sk_i2c_write_word_data(int handle, int reg, int data)
+    {
+        if (check_pi())
+        {
+            int result = ::i2c_write_word_data(pi, handle, reg, data);
+            if (result < 0)
+            {
+                LOG(ERROR) << sk_gpio_error_message(result);
+            }
+        }
+    }
+
     // Cleanup the GPIO library
     void sk_gpio_cleanup()
     {
@@ -195,6 +333,7 @@ namespace splashkit_lib
 
     #endif
 
+    // Remote GPIO Functions
     connection sk_remote_gpio_init(std::string name, const std::string &host, unsigned short int port)
     {
         return open_connection(name, host, port);
