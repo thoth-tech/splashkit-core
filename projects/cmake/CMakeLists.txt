@@ -307,6 +307,8 @@ set_target_properties(skunit_tests
 
     if(WIRINGPI_LIBRARY)
         message(STATUS "Found WiringPi library: ${WIRINGPI_LIBRARY}")
+
+        target_link_libraries(sktest PRIVATE ${WIRINGPI_LIBRARY})
         #targets sktest later
         
     else()
