@@ -44,9 +44,14 @@ namespace splashkit_lib
     // Initialize the GPIO library
     int sk_gpio_init()
     {
-        pi = wiringPiSetup();
-        // pi = pigpio_start(0, 0);
-        return pi;
+        if (wiringPiSetup() == -1)
+        {
+            return 1;
+        }
+        return 0;
+        // pi = wiringPiSetup();
+        // // pi = pigpio_start(0, 0);
+        // return pi;
     }
 
     // Read the value of a GPIO pin
