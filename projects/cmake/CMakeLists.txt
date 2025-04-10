@@ -140,24 +140,21 @@ if (BCM_HOST_INCLUDE_DIR)
     find_path(WIRINGPI_INCLUDE_DIR NAMES wiringPi.h HINTS /usr/include /usr/local/include)
 
     # Find the WiringPi library.
-    find_library(WIRINGPI_LIBRARY NAMES libwiringPi.so HINTS /usr/lib /home/jp/WiringPi/wiringPi /usr/local/lib)
+    find_library(WIRINGPI_LIBRARY NAMES wiringPi libwiringPi.so HINTS /usr/lib /usr/local/lib /home/jp/WiringPi/wiringPi)
 
-    # If WiringPi library is found, link it to your project
     if(WIRINGPI_LIBRARY)
         message(STATUS "Found WiringPi library: ${WIRINGPI_LIBRARY}")
         target_link_libraries(sktest PRIVATE ${WIRINGPI_LIBRARY})
-
-
     else()
         message(FATAL_ERROR "WiringPi library not found.")
     endif()
 
-    # Optionally, include the WiringPi headers for use in your project
     if(WIRINGPI_INCLUDE_DIR)
         include_directories(${WIRINGPI_INCLUDE_DIR})
     else()
         message(FATAL_ERROR "WiringPi headers not found.")
     endif()
+
 
     
      
