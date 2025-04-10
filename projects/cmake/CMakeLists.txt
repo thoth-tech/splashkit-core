@@ -135,30 +135,7 @@ if (BCM_HOST_INCLUDE_DIR)
         set(pigpiod_if_LIBRARY ${pigpiod_if2_LIBRARY})
         # target_link_libraries(SplashKitBackend ${LIB_FLAGS} pigpiod_if2)
     endif()
-    
-    # Find the WiringPi headers.
-    find_path(WIRINGPI_INCLUDE_DIR NAMES wiringPi.h HINTS /usr/include /usr/local/include)
-
-    # Find the WiringPi library.
-    find_library(WIRINGPI_LIBRARY NAMES wiringPi libwiringPi.so HINTS /usr/lib /usr/local/lib /home/jp/WiringPi/wiringPi)
-
-    if(WIRINGPI_LIBRARY)
-        message(STATUS "Found WiringPi library: ${WIRINGPI_LIBRARY}")
-        #targets sktest later
-        
-    else()
-        message(FATAL_ERROR "WiringPi library not found.")
-    endif()
-
-    if(WIRINGPI_INCLUDE_DIR)
-        include_directories(${WIRINGPI_INCLUDE_DIR})
-    else()
-        message(FATAL_ERROR "WiringPi headers not found.")
-    endif()
-
-
-    
-     
+         
     # Add necessary directories for Raspberry Pi
     include_directories(/usr/include)
     # target_link_libraries(/usr/lib)
@@ -322,7 +299,27 @@ set_target_properties(skunit_tests
 #### END sktest EXECUTABLE ####
 
 #This targets library after sktest is dealt with
-target_link_libraries(sktest PRIVATE ${WIRINGPI_LIBRARY})
+# Find the WiringPi headers.
+    find_path(WIRINGPI_INCLUDE_DIR NAMES wiringPi.h HINTS /usr/include /usr/local/include)
+
+    # Find the WiringPi library.
+    find_library(WIRINGPI_LIBRARY NAMES wiringPi libwiringPi.so HINTS /usr/lib /usr/local/lib /home/jp/WiringPi/wiringPi)
+
+    if(WIRINGPI_LIBRARY)
+        message(STATUS "Found WiringPi library: ${WIRINGPI_LIBRARY}")
+        #targets sktest later
+        
+    else()
+        message(FATAL_ERROR "WiringPi library not found.")
+        target_link_libraries(sktest PRIVATE ${WIRINGPI_LIBRARY})
+    endif()
+
+    if(WIRINGPI_INCLUDE_DIR)
+        include_directories(${WIRINGPI_INCLUDE_DIR})
+    else()
+        message(FATAL_ERROR "WiringPi headers not found.")
+    endif()
+
 
 install(TARGETS SplashKitBackend DESTINATION lib)
 install(FILES ${INCLUDE_FILES} DESTINATION include/SplashKitBackend)
