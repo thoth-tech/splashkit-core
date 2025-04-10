@@ -4,6 +4,7 @@
  ***********************************************/
 #include <iostream>
 #include "raspi_gpio.h"
+#include "input.h"
 
 using namespace std;
 using namespace splashkit_lib;
