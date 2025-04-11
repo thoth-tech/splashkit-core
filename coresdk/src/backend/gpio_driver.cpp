@@ -81,7 +81,7 @@ namespace splashkit_lib
             }
             catch
             {
-                LOG(ERROR) << sk_gpio_error_message(result);
+                LOG(ERROR) << sk_gpio_error_message(-1);
             }
         }
     }
