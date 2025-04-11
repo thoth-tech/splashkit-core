@@ -33,6 +33,7 @@ namespace splashkit_lib
 
     //Add map to track pin modes
     std::unordered_map<int, int> pin_modes;
+    std::unordered_map<int, int> pwm_range;
 
     // Check if pigpio_init() has been called before any other GPIO functions
     bool check_pi()
@@ -63,7 +64,7 @@ namespace splashkit_lib
         if (check_pi())
         {
             //Checks whether the pins are in the correct range
-            if (pin < 0 || pin > 29) 
+            if (pin < 0 || pin > 40) 
             { 
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
                 return -1;
@@ -89,7 +90,7 @@ namespace splashkit_lib
         if (check_pi())
         {
             //Checks whether the pins are in the correct range
-            if (pin < 0 || pin > 29) 
+            if (pin < 0 || pin > 40) 
             { 
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
                 return;
@@ -110,7 +111,7 @@ namespace splashkit_lib
         if(check_pi())
         {
             //Checks whether the pins are in the correct range
-            if (pin < 0 || pin > 29) 
+            if (pin < 0 || pin > 40) 
             { 
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
                 return;
@@ -126,12 +127,13 @@ namespace splashkit_lib
         }
     }
 
+    // Get the mode of a GPIO pin
     int sk_gpio_get_mode(int pin)
     {
         if(check_pi())
         {
             //Checks whether the pins are in the correct range
-            if (pin < 0 || pin > 29) 
+            if (pin < 0 || pin > 40) 
             { 
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
                 return -1;
@@ -145,14 +147,14 @@ namespace splashkit_lib
         }
     }
 
-    //pinMode(pin, INPUT);
-    //pullUpDnControl(pin, pud)
+    //Description
     void sk_gpio_set_pull_up_down(int pin, int pud)
     {
         //Checks whether the pins are in the correct range
         if(check_pi())
         {
-            if (pin < 0 || pin > 29) 
+            //Checks whether the pins are in the correct range
+            if (pin < 0 || pin > 40) 
             { 
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
                 return;
