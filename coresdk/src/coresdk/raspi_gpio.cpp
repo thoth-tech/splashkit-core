@@ -114,6 +114,7 @@ namespace splashkit_lib
         {
             return static_cast<gpio_pin_value>(sk_gpio_read(bcmPin));
         }
+        "Un" << GPIO_DEFAULT_VALUE;
         return GPIO_DEFAULT_VALUE;
 #else
         LOG(ERROR) << "Unable to read pin - GPIO not supported on this platform";
