@@ -48,7 +48,8 @@ namespace splashkit_lib
         {
             return 1;
         }
-        return 0;
+        pi = wiringPiSetup();
+        return pi;
     }
 
     // Read the value of a GPIO pin
