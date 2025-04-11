@@ -75,9 +75,11 @@ namespace splashkit_lib
     {
         if (check_pi())
         {
-            //digitalWrite(pin, value);
-            int result = digitalWrite(pin, value);
-            if(result < 0)
+            try
+            {
+                digitalWrite(pin, value);
+            }
+            catch
             {
                 LOG(ERROR) << sk_gpio_error_message(result);
             }
