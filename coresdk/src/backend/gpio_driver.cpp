@@ -49,9 +49,6 @@ namespace splashkit_lib
             return 1;
         }
         return 0;
-        // pi = wiringPiSetup();
-        // // pi = pigpio_start(0, 0);
-        // return pi;
     }
 
     // Read the value of a GPIO pin
@@ -59,7 +56,7 @@ namespace splashkit_lib
     {
         if (check_pi())
         {
-            int result = gpio_read(pi, pin);
+            int result = digitalRead(pi, pin);
             if (result < 0)
             {
                 LOG(ERROR) << sk_gpio_error_message(result);
@@ -77,6 +74,7 @@ namespace splashkit_lib
     {
         if (check_pi())
         {
+            //digitalWrite(pin, value);
             int result = gpio_write(pi, pin, value);
             if(result < 0)
             {
@@ -90,6 +88,8 @@ namespace splashkit_lib
     {
         if(check_pi())
         {
+            //
+            //pinMode(pin, mode); // mode is usually INPUT or OUTPUT
             int result = set_mode(pi, pin, mode);
             if(result < 0)
             {

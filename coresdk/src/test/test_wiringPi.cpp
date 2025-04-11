@@ -15,4 +15,6 @@ using namespace splashkit_lib;
 void run_wiringPi_test()
 {
     raspi_init();
+    raspi_read(2);
+    raspi_read(60);
 }
