@@ -57,6 +57,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         sk_gpio_init();
+        std::cout << "rpi init" << std::endl;
 #else
         LOG(ERROR) << "GPIO not supported on this platform";
 #endif
@@ -71,6 +72,7 @@ namespace splashkit_lib
         {
             sk_gpio_set_mode(bcmPin, static_cast<int>(mode));
         }
+        std::cout << "rpi set" << std::endl;
 #else
         LOG(ERROR) << "Unable to set mode - GPIO not supported on this platform";
 #endif

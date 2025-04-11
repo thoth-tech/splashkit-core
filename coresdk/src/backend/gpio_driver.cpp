@@ -49,6 +49,7 @@ namespace splashkit_lib
             return 1;
         }
         pi = wiringPiSetup();
+        std::cout << pi << std::endl;
         return pi;
     }
 
@@ -88,6 +89,7 @@ namespace splashkit_lib
     // Set the mode of a GPIO pin
     void sk_gpio_set_mode(int pin, int mode)
     {
+        std::cout << check_pi() << std::endl;
         if(check_pi())
         {
             //

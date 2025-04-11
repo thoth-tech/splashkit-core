@@ -23,4 +23,5 @@ void run_wiringPi_test()
     raspi_write(PIN_11, GPIO_HIGH);
     delay(5000);
     raspi_write(PIN_11, GPIO_LOW);
+    raspi_cleanup();
 }
