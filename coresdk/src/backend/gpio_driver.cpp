@@ -44,15 +44,11 @@ namespace splashkit_lib
     // Initialize the GPIO library
     int sk_gpio_init()
     {
-        if (wiringPiSetup() == -1)
+        if (wiringPiSetupGpio() == -1)
         {
             return 1;
         }
-        pi = wiringPiSetup();
-        pinMode(PIN_11, GPIO_OUTPUT);
-        digitalWrite(PIN_11, GPIO_HIGH);
-        delay(2000);
-        digitalWrite(PIN_11, GPIO_LOW);
+        pi = wiringPiSetupGpio();
         return pi;
     }
 
@@ -77,19 +73,15 @@ namespace splashkit_lib
     // Write a value to a GPIO pin
     void sk_gpio_write(int pin, int value)
     {
-        std::cout << check_pi() << std::endl;
         if (check_pi())
         {
             
-            // if (pin < 0 || pin > 29) 
-            // { 
-            //     LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
-            //     return;
-            // }
-            pinMode(PIN_11, GPIO_OUTPUT);
-            digitalWrite(PIN_11, GPIO_HIGH);
-            delay(2000);
-            digitalWrite(PIN_11, GPIO_LOW);
+            if (pin < 0 || pin > 29) 
+            { 
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
+                return;
+            }
+            digitalWrite(pin, value);
         }
     }
 
