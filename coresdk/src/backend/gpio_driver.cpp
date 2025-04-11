@@ -49,7 +49,10 @@ namespace splashkit_lib
             return 1;
         }
         pi = wiringPiSetup();
-        std::cout << pi << std::endl;
+        pinMode(PIN_11, GPIO_OUTPUT);
+        digitalWrite(PIN_11, GPIO_HIGH);
+        delay(2000);
+        digitalWrite(PIN_11, GPIO_LOW);
         return pi;
     }
 
