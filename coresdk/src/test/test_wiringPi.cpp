@@ -18,4 +18,5 @@ void run_wiringPi_test()
     raspi_read(PIN_11);
     raspi_write(PIN_11, GPIO_HIGH);
     raspi_write(PIN_11, GPIO_LOW);
+    raspi_set_mode(PIN_11, GPIO_OUTPUT );
 }
