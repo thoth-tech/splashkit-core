@@ -91,12 +91,12 @@ namespace splashkit_lib
         if(check_pi())
         {
             //
-            //pinMode(pin, mode); 
-            int result = set_mode(pi, pin, mode);
-            if(result < 0)
-            {
-                LOG(ERROR) << sk_gpio_error_message(result);
-            }
+            pinMode(pin, mode); 
+            // int result = set_mode(pi, pin, mode);
+            // if(result < 0)
+            // {
+            //     LOG(ERROR) << sk_gpio_error_message(result);
+            // }
         }
     }
 
