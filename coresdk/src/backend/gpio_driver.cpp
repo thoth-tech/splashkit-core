@@ -16,6 +16,7 @@
 #include <chrono>
 #include <thread>
 #include <wiringPi.h>
+#include <unordered_map>
 #endif
 
 
@@ -29,6 +30,9 @@ namespace splashkit_lib
 {
     #ifdef RASPBERRY_PI
     int pi = -1;
+
+    //Add map to track pin modes
+    std::unordered_map<int, int> pin_modes;
 
     // Check if pigpio_init() has been called before any other GPIO functions
     bool check_pi()
@@ -46,6 +50,7 @@ namespace splashkit_lib
     {
         if (wiringPiSetupGpio() == -1)
         {
+            LOG(ERROR) << sk_gpio_error_message(pi);
             return 1;
         }
         pi = wiringPiSetupGpio();
@@ -57,10 +62,18 @@ namespace splashkit_lib
     {
         if (check_pi())
         {
+            //Checks whether the pins are in the correct range
+            if (pin < 0 || pin > 29) 
+            { 
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
+                return -1;
+            }
             int result = digitalRead(pin);
+            //Verifies if a result is produced or not
             if (result < 0)
             {
                 LOG(ERROR) << sk_gpio_error_message(result);
+                return -1;
             }
             return result;
         }
@@ -75,9 +88,15 @@ namespace splashkit_lib
     {
         if (check_pi())
         {
-            
+            //Checks whether the pins are in the correct range
             if (pin < 0 || pin > 29) 
             { 
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
+                return;
+            }
+            //Checks if the value exists in the SplashKit library or not
+            if (value < -1 || value > 7)
+            {
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
                 return;
             }
@@ -88,16 +107,22 @@ namespace splashkit_lib
     // Set the mode of a GPIO pin
     void sk_gpio_set_mode(int pin, int mode)
     {
-        std::cout << check_pi() << std::endl;
         if(check_pi())
         {
-            //
+            //Checks whether the pins are in the correct range
+            if (pin < 0 || pin > 29) 
+            { 
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
+                return;
+            }
+            //Checks if the value exists in the SplashKit library or not
+            if (mode < 0 || mode > 7)
+            {
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_MODE);
+                return;
+            }
             pinMode(pin, mode); 
-            // int result = set_mode(pi, pin, mode);
-            // if(result < 0)
-            // {
-            //     LOG(ERROR) << sk_gpio_error_message(result);
-            // }
+            pin_modes[pin] = mode;
         }
     }
 
@@ -105,30 +130,50 @@ namespace splashkit_lib
     {
         if(check_pi())
         {
-            int result = get_mode(pi, pin);
-            if(result < 0)
-            {
-                LOG(ERROR) << sk_gpio_error_message(result);
+            //Checks whether the pins are in the correct range
+            if (pin < 0 || pin > 29) 
+            { 
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
+                return -1;
             }
-            return result;
+            int mode = pin_modes.count(pin) ? pin_modes[pin] : -1;
+            return mode;
         }
         else
         {
             return PI_BAD_GPIO; 
         }
     }
+
+    //pinMode(pin, INPUT);
+    //pullUpDnControl(pin, pud)
     void sk_gpio_set_pull_up_down(int pin, int pud)
     {
+        //Checks whether the pins are in the correct range
         if(check_pi())
         {
-            int result = set_pull_up_down(pi, pin, pud);
-            if(result < 0)
-            {
-                LOG(ERROR) << sk_gpio_error_message(result);
+            if (pin < 0 || pin > 29) 
+            { 
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
+                return;
             }
+            //Checks if the pud exists in the SplashKit library or not
+            if (pud < 0 || pud > 2)
+            {
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_PUD);
+                return;
+            }
+            pinMode(pin, INPUT);
+            pullUpDnControl(pin, pud);
         }
     }
 
+    //pinMode(1, PWM_OUTPUT); 
+    // pwmSetMode(PWM_MODE_MS);
+    // pwmSetRange(range);
+    //pwmSetClock(384);
+
+    //pwmWrite(1, 50); 
     void sk_set_pwm_range(int pin, int range)
     {
         if(check_pi())
@@ -140,6 +185,10 @@ namespace splashkit_lib
             }
         }
     }
+
+    // pwmSetMode(PWM_MODE_MS);
+    // pwmSetRange(range);
+    // pwmSetClock(divisor);
     void sk_set_pwm_frequency(int pin, int frequency)
     {
         if(check_pi())
