@@ -18,7 +18,7 @@ void run_wiringPi_test()
 {
     raspi_init();
     process_events();
-    raspi_set_mode(PIN_11, GPIO_OUTPUT);
+    // raspi_set_mode(PIN_11, GPIO_OUTPUT);
     // raspi_read(PIN_17);
     raspi_write(PIN_11, GPIO_HIGH);
     delay(5000);

@@ -74,6 +74,7 @@ namespace splashkit_lib
     // Write a value to a GPIO pin
     void sk_gpio_write(int pin, int value)
     {
+        std::cout << check_pi() << std::endl;
         if (check_pi())
         {
             
@@ -82,7 +83,10 @@ namespace splashkit_lib
             //     LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
             //     return;
             // }
-            digitalWrite(pin, value);
+            pinMode(PIN_11, GPIO_OUTPUT);
+            digitalWrite(PIN_11, GPIO_HIGH);
+            delay(2000);
+            digitalWrite(PIN_11, GPIO_LOW);
         }
     }
 
