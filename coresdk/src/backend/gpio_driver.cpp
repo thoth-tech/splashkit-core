@@ -57,7 +57,7 @@ namespace splashkit_lib
     {
         if (check_pi())
         {
-            int result = digitalRead(pi, pin);
+            int result = digitalRead(pin);
             if (result < 0)
             {
                 LOG(ERROR) << sk_gpio_error_message(result);
@@ -76,7 +76,7 @@ namespace splashkit_lib
         if (check_pi())
         {
             //digitalWrite(pin, value);
-            int result = gpio_write(pi, pin, value);
+            int result = digitalWrite(pin, value);
             if(result < 0)
             {
                 LOG(ERROR) << sk_gpio_error_message(result);
@@ -90,7 +90,7 @@ namespace splashkit_lib
         if(check_pi())
         {
             //
-            //pinMode(pin, mode); // mode is usually INPUT or OUTPUT
+            //pinMode(pin, mode); 
             int result = set_mode(pi, pin, mode);
             if(result < 0)
             {
