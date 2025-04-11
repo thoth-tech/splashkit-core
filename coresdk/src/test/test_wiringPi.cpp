@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include "networking.h"
+#include "utils.h"
+#include "input.h"
 #include "raspi_gpio.h"
 using namespace std;
 using namespace splashkit_lib;
