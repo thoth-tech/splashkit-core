@@ -174,11 +174,12 @@ namespace splashkit_lib
 #endif
     }
 	
-	int raspi_spi_open(int channel, int speed, int spi_flags)
+	int raspi_spi_open(int channel, int speed)
     {
 #ifdef RASPBERRY_PI
         int handle = -1;
-	    handle = sk_spi_open(channel, speed, spi_flags);
+	    handle = sk_spi_open(channel, speed);
+        
         return handle;
 #else
         LOG(ERROR) << "Unable to open SPI interface - GPIO not supported on this platform";

@@ -18,19 +18,15 @@ using namespace splashkit_lib;
 void run_wiringPi_test()
 {
     raspi_init();
-    process_events();
-    raspi_set_mode(PIN_11, GPIO_OUTPUT);
-    raspi_get_mode(PIN_11);
-    raspi_write(PIN_11, GPIO_HIGH);
-    raspi_read(PIN_11);
-    delay(5000);
-    raspi_write(PIN_11, GPIO_LOW);
-    raspi_set_pull_up_down(PIN_11, PUD_UP);  
-    raspi_set_pull_up_down(PIN_11, PUD_DOWN);  
-    raspi_set_pull_up_down(PIN_11, PUD_OFF);  
-    raspi_set_pwm_range(PIN_12, 300);
-    raspi_set_pwm_frequency(PIN_12, 100);
-    raspi_set_pwm_dutycycle(PIN_12, 100);
-    raspi_cleanup();
-    // raspi_cleanup();
+    cout << "Attempting to open SPI..." << endl;
+    int handle = raspi_spi_open(0, 1000000);
+    if(handle >= 0)
+    {
+        cout << "SPI Connection Opened" << endl;
+    }
+    else
+    {
+        cout << "SPI failed to open." << endl;
+        return;
+    }
 }

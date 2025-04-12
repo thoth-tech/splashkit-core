@@ -44,7 +44,7 @@ namespace splashkit_lib
     void sk_set_pwm_frequency(int pin, int frequency);
     void sk_set_pwm_dutycycle(int pin, int dutycycle);
     void sk_gpio_clear_bank_1();
-    int sk_spi_open(int channel, int speed, int spi_flags);
+    int sk_spi_open(int channel, int speed);
     int sk_spi_close(int handle);
     int sk_spi_transfer(int handle, char *sendBuf, char *recvBuf, int count);
   

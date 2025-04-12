@@ -18,7 +18,7 @@ void run_gpio_spi_tests()
     raspi_init();
 
     cout << "Attempting to open SPI..." << endl;
-    int handle = raspi_spi_open(0, 1000000, 0);
+    int handle = raspi_spi_open(0, 1000000);
     if(handle >= 0)
     {
         cout << "SPI Connection Opened" << endl;

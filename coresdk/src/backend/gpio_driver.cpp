@@ -17,6 +17,8 @@
 #include <thread>
 #include <wiringPi.h>
 #include <unordered_map>
+#include <wiringPiSPI.h>
+
 #endif
 
 
@@ -278,11 +280,11 @@ namespace splashkit_lib
 
     //Delete function sk_gpio_cleanup
     
-    int sk_spi_open(int channel, int speed, int spi_flags)
+    // WiringPi's version of spi_open doesn't need the variable flag so I removed it
+    int sk_spi_open(int channel, int speed)
     {
-        //int fd = wiringPiSPISetup(channel, speed);
         if(check_pi())
-            return spi_open(pi, channel, speed, spi_flags);
+            return wiringPiSPISetup(channel, speed);
         else
             return -1;
     }
