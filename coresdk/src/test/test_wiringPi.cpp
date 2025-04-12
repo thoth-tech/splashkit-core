@@ -28,5 +28,9 @@ void run_wiringPi_test()
     raspi_set_pull_up_down(PIN_11, PUD_UP);  
     raspi_set_pull_up_down(PIN_11, PUD_DOWN);  
     raspi_set_pull_up_down(PIN_11, PUD_OFF);  
+    raspi_set_pwm_range(PIN_12, 300);
+    raspi_set_pwm_frequency(PIN_12, 100);
+    raspi_set_pwm_dutycycle(PIN_12, 100);
+    raspi_set_pwm_dutycycle(PIN_12, 301);
     // raspi_cleanup();
 }

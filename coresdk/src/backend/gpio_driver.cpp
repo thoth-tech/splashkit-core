@@ -30,6 +30,7 @@ namespace splashkit_lib
 {
     #ifdef RASPBERRY_PI
     int pi = -1;
+    int base_clock = 19200000;
 
     //Add map to track pin modes
     std::unordered_map<int, int> pin_modes;
@@ -170,75 +171,111 @@ namespace splashkit_lib
         }
     }
 
-    //pinMode(1, PWM_OUTPUT); 
-    // pwmSetMode(PWM_MODE_MS);
-    // pwmSetRange(range);
-    //pwmSetClock(384);
-
-    //pwmWrite(1, 50); 
     //Needs to be set before frequency and dutycycle
     void sk_set_pwm_range(int pin, int range)
     {
         if(check_pi())
         {
             //Checks whether the pins are in the correct range
-            if (pin != 1) 
+            if (pin < 0 || pin > 40) 
             { 
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
                 return;
             }
             //Checks whether newly set range is a reasonable value
-            if (prange < 0 || range > 4096) 
+            if (range <= 25 || range > 4096) 
             { 
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_DUTYRANGE);
                 return;
             }
             pinMode(pin, PWM_OUTPUT); 
+            pin_modes[pin] = PWM_OUTPUT;
             pwmSetMode(PWM_MODE_MS);
             pwmSetRange(range);
             pwm_range[pin] = range;
         }
     }
 
-    // pwmSetMode(PWM_MODE_MS);
-    // pwmSetRange(range);
-    // pwmSetClock(divisor);
-
-    //Find out what the clock divisor is using base clock, frequency and range
+    // Find out what the clock divisor is using base clock, frequency and range
+    // Set frequency by setting both the range & clock
     void sk_set_pwm_frequency(int pin, int frequency)
     {
+
         if(check_pi())
         {
-            int result = set_PWM_frequency(pi, pin, frequency);
-            if(result < 0)
-            {
-                LOG(ERROR) << sk_gpio_error_message(result);
+            //Checks whether the pins are in the correct range
+            if (pin < 0 || pin > 40) 
+            { 
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
+                return;
             }
-            //int range = pin_modes[pin]
+            int range = pwm_range[pin];
+            //Checks if range exists in the map of know PWM ranges
+            if (range < 25)
+            {
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_DUTYRANGE);
+                return;
+            }
+            double divisor = static_cast<double>(base_clock) / (frequency * range);
+            int clock_divisor = static_cast<int>(divisor + 0.5);
+            //Checks if the new frequency is in a safe limit
+            if ((range / clock_divisor) > 38400)
+            {
+                LOG(ERROR) << sk_gpio_error_message(-1);
+                return;
+            }
+            pwmSetRange(range);
+            pwmSetClock(clock_divisor);
         }
     }
 
+    //Value must not be more than range (100% to 0%)
     void sk_set_pwm_dutycycle(int pin, int dutycycle)
     {
         if(check_pi())
         {
-            int result = set_PWM_dutycycle(pi, pin, dutycycle);
-            if(result < 0)
-            {
-                LOG(ERROR) << sk_gpio_error_message(result);
+            //Checks whether the pins are in the correct range
+            if (pin < 0 || pin > 40) 
+            { 
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
+                return;
             }
+            int range = pwm_range[pin];
+            //Checks if range exists in the map of know PWM ranges
+            if (range < 25)
+            {
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_DUTYRANGE);
+                return;
+            }
+            //Check if dutycycle is less than range (percentage of cycle from 0 to 100% (range))
+            else if (dutycycle > range)
+            {
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_DUTYCYCLE);
+                return;
+            }
+            pwmWrite(pin, dutycycle);
         }
     }
 
     void sk_gpio_clear_bank_1()
     {
+        //clear_bank_1(pi, PI4B_GPIO_BITMASK);
         if(check_pi())
         {
-            clear_bank_1(pi, PI4B_GPIO_BITMASK);
+            for (int pin = 0; gpio <= PI_SIZE; ++pin)
+            {
+                if (PI4B_GPIO_BITMASK && (1 << pin))
+                {
+                    int currentPin = pin;
+                    pinMode(pin, OUTPUT);
+                    digitalWrite(pin, LOW);
+                }
+            }
         }
     }
 
     // Cleanup the GPIO library
+    //Delete function sk_gpio_cleanup
     void sk_gpio_cleanup()
     {
         if(check_pi())
@@ -249,6 +286,7 @@ namespace splashkit_lib
     
     int sk_spi_open(int channel, int speed, int spi_flags)
     {
+        //int fd = wiringPiSPISetup(channel, speed);
         if(check_pi())
             return spi_open(pi, channel, speed, spi_flags);
         else
@@ -257,6 +295,8 @@ namespace splashkit_lib
 
     int sk_spi_close(int handle)
     {
+        //close(fd);
+        
         if(check_pi())
             return spi_close(pi, handle);
         else
@@ -265,6 +305,7 @@ namespace splashkit_lib
 
     int sk_spi_transfer(int handle, char *send_buf, char *recv_buf, int count)
     {
+        //wiringPiSPIDataRW(channel, buffer, length);
         if(check_pi())
             return spi_xfer(pi, handle, send_buf, recv_buf, count);
         else
