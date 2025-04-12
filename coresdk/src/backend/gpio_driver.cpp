@@ -176,21 +176,35 @@ namespace splashkit_lib
     //pwmSetClock(384);
 
     //pwmWrite(1, 50); 
+    //Needs to be set before frequency and dutycycle
     void sk_set_pwm_range(int pin, int range)
     {
         if(check_pi())
         {
-            int result = set_PWM_range(pi, pin, range);
-            if(result < 0)
-            {
-                LOG(ERROR) << sk_gpio_error_message(result);
+            //Checks whether the pins are in the correct range
+            if (pin != 1) 
+            { 
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
+                return;
             }
+            //Checks whether newly set range is a reasonable value
+            if (prange < 0 || range > 4096) 
+            { 
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_DUTYRANGE);
+                return;
+            }
+            pinMode(pin, PWM_OUTPUT); 
+            pwmSetMode(PWM_MODE_MS);
+            pwmSetRange(range);
+            pwm_range[pin] = range;
         }
     }
 
     // pwmSetMode(PWM_MODE_MS);
     // pwmSetRange(range);
     // pwmSetClock(divisor);
+
+    //Find out what the clock divisor is using base clock, frequency and range
     void sk_set_pwm_frequency(int pin, int frequency)
     {
         if(check_pi())
@@ -200,6 +214,7 @@ namespace splashkit_lib
             {
                 LOG(ERROR) << sk_gpio_error_message(result);
             }
+            //int range = pin_modes[pin]
         }
     }
 
