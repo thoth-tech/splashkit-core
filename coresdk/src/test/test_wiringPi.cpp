@@ -31,6 +31,6 @@ void run_wiringPi_test()
     raspi_set_pwm_range(PIN_12, 300);
     raspi_set_pwm_frequency(PIN_12, 100);
     raspi_set_pwm_dutycycle(PIN_12, 100);
-    raspi_set_pwm_dutycycle(PIN_12, 301);
+    raspi_cleanup();
     // raspi_cleanup();
 }

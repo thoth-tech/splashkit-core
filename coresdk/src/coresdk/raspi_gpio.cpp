@@ -223,7 +223,6 @@ namespace splashkit_lib
 #ifdef RASPBERRY_PI
         LOG(INFO) << "Cleaning GPIO pins";
        	sk_gpio_clear_bank_1();
-    	sk_gpio_cleanup();
 #else
         LOG(ERROR) << "Unable to set cleanup - GPIO not supported on this platform";
 #endif

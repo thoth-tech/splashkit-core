@@ -97,7 +97,7 @@ namespace splashkit_lib
                 return;
             }
             //Checks if the value exists in the SplashKit library or not
-            if (value < -1 || value > 7)
+            if (value < -1 || value > 2)
             {
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
                 return;
@@ -248,7 +248,7 @@ namespace splashkit_lib
                 return;
             }
             //Check if dutycycle is less than range (percentage of cycle from 0 to 100% (range))
-            else if (dutycycle > range)
+            else if (range < dutycycle)
             {
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_DUTYCYCLE);
                 return;
@@ -262,27 +262,21 @@ namespace splashkit_lib
         //clear_bank_1(pi, PI4B_GPIO_BITMASK);
         if(check_pi())
         {
-            for (int pin = 0; gpio <= PI_SIZE; ++pin)
+            // Manually go through each pin and reset it to 0 (LOW)
+            for (int pin = 0; pin <= PI_SIZE; ++pin)
             {
                 if (PI4B_GPIO_BITMASK && (1 << pin))
                 {
                     int currentPin = pin;
                     pinMode(pin, OUTPUT);
                     digitalWrite(pin, LOW);
+                    pin_modes[pin] = LOW;
                 }
             }
         }
     }
 
-    // Cleanup the GPIO library
     //Delete function sk_gpio_cleanup
-    void sk_gpio_cleanup()
-    {
-        if(check_pi())
-        {
-            pigpio_stop(pi);
-        }
-    }
     
     int sk_spi_open(int channel, int speed, int spi_flags)
     {

@@ -47,7 +47,6 @@ namespace splashkit_lib
     int sk_spi_open(int channel, int speed, int spi_flags);
     int sk_spi_close(int handle);
     int sk_spi_transfer(int handle, char *sendBuf, char *recvBuf, int count);
-    void sk_gpio_cleanup();
   
     #endif
     
