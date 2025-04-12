@@ -29,4 +29,16 @@ void run_wiringPi_test()
         cout << "SPI failed to open." << endl;
         return;
     }
+
+    string buffer = "abc";
+    int bytes_trans = 0;
+
+    cout << "Attempting transfer..." << endl;
+    string response = raspi_spi_transfer(handle, "abc", 2, bytes_trans);
+    cout << bytes_trans << endl;     
+    if(bytes_trans != -22)
+    {
+        cout << "Transfer error, wrong number of bytes transferred." << endl;     
+    }
+    cout << "Received " << response << endl;
 }

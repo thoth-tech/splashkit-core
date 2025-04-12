@@ -201,16 +201,12 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         int len = send.size() > count ? count : send.size();
-        char send_buf[len + 1]{};
-        for(int i = 0; i < len; i++) {
-            send_buf[i] = send[i];
-        }
+        
+        std::vector<char> buf(send.begin(), send.end());
 
-        char recv_buf[len + 1]{};
+        bytes_transfered = sk_spi_transfer(handle, buf.data(), len);
 
-        bytes_transfered = sk_spi_transfer(handle, send_buf, recv_buf, len);
-
-        string response(recv_buf);
+        string response(buf.data(), buf.size());
         return response;
 #else
         LOG(ERROR) << "Unable to transfer through SPI - GPIO not supported on this platform";

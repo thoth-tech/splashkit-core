@@ -284,6 +284,12 @@ namespace splashkit_lib
     int sk_spi_open(int channel, int speed)
     {
         if(check_pi())
+            //Checks whether the channel is in the correct range
+            if (pin < 0 || pin > 2) 
+            { 
+                LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
+                return;
+            }
             return wiringPiSPISetup(channel, speed);
         else
             return -1;
@@ -299,13 +305,18 @@ namespace splashkit_lib
             return -1;
     }
 
-    int sk_spi_transfer(int handle, char *send_buf, char *recv_buf, int count)
+    int sk_spi_transfer(int handle, char *buf, int count)
     {
         //wiringPiSPIDataRW(channel, buffer, length);
         if(check_pi())
-            return spi_xfer(pi, handle, send_buf, recv_buf, count);
+        {
+            unsigned char* u_buf = (unsigned char*) buf;
+            return wiringPiSPIDataRW(handle, u_buf, count);
+        }
         else
+        {
             return -1;
+        }
     }	
 
     #endif
