@@ -37,6 +37,7 @@ namespace splashkit_lib
     //Add map to track pin modes
     std::unordered_map<int, int> pin_modes;
     std::unordered_map<int, int> pwm_range;
+    std::unordered_map<int, int> handle_channel;
 
     // Check if pigpio_init() has been called before any other GPIO functions
     bool check_pi()
@@ -284,15 +285,21 @@ namespace splashkit_lib
     int sk_spi_open(int channel, int speed)
     {
         if(check_pi())
+        {
             //Checks whether the channel is in the correct range
-            if (pin < 0 || pin > 2) 
+            if (channel < 0 || channel > 2) 
             { 
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
-                return;
+                return -1;
             }
-            return wiringPiSPISetup(channel, speed);
+            int handle = wiringPiSPISetup(channel, speed);
+            handle_channel[handle] = channel;
+            return handle;
+        }
         else
+        {
             return -1;
+        }
     }
 
     int sk_spi_close(int handle)
@@ -310,8 +317,18 @@ namespace splashkit_lib
         //wiringPiSPIDataRW(channel, buffer, length);
         if(check_pi())
         {
+            if (handle == -1)
+            {
+                return -1;
+            }
             unsigned char* u_buf = (unsigned char*) buf;
-            return wiringPiSPIDataRW(handle, u_buf, count);
+            int channel = handle_channel[handle];
+            if (channel >= 0 || channel < 2)
+            {
+                return -1;
+            }
+            int val = wiringPiSPIDataRW(channel, u_buf, count);
+            return val;
         }
         else
         {
