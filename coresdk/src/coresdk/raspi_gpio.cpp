@@ -202,10 +202,13 @@ namespace splashkit_lib
 #ifdef RASPBERRY_PI
         int len = send.size() > count ? count : send.size();
         
+        //Get an array (vector) of characters from send to make buffer
         std::vector<char> buf(send.begin(), send.end());
 
+        //The buf variable is the data within the buf vector
         bytes_transfered = sk_spi_transfer(handle, buf.data(), len);
 
+        //The response is a combination of the data & size
         string response(buf.data(), buf.size());
         return response;
 #else

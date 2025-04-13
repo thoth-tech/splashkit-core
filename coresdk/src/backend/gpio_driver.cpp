@@ -293,6 +293,7 @@ namespace splashkit_lib
                 return -1;
             }
             int handle = wiringPiSPISetup(channel, speed);
+            //Save handle to unordered map
             handle_channel[handle] = channel;
             return handle;
         }
@@ -304,10 +305,9 @@ namespace splashkit_lib
 
     int sk_spi_close(int handle)
     {
-        //close(fd);
-        
         if(check_pi())
         {
+            //Close SPI & reset handle value to 0
             close(handle); 
             handle_channel[handle] = 0;
             return 0;
@@ -318,17 +318,19 @@ namespace splashkit_lib
         }
     }
 
+    //This function uses a combined buffer now called buf
     int sk_spi_transfer(int handle, char *buf, int count)
     {
-        //wiringPiSPIDataRW(channel, buffer, length);
         if(check_pi())
         {
+            //If handle is -1, it doesn't exist
             if (handle == -1)
             {
                 return -1;
             }
             unsigned char* u_buf = (unsigned char*) buf;
             int channel = handle_channel[handle];
+            //Checks whether the channel is in the correct range or if it's not 0
             if (channel >= 0 || channel < 2)
             {
                 return -1;
