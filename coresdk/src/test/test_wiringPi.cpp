@@ -31,12 +31,12 @@ void run_wiringPi_test()
     }
 
     string buffer = "abc";
-    int bytes_trans = 0;
+    int bytes_trans1 = 0;
 
     cout << "Attempting transfer..." << endl;
-    string response = raspi_spi_transfer(handle, "abc", 2, bytes_trans);
-    cout << bytes_trans << endl;     
-    if(bytes_trans != -22)
+    string response = raspi_spi_transfer(handle, "abc", 2, bytes_trans1 );
+    cout << bytes_trans1 << endl;     
+    if(bytes_trans1 != -1)
     {
         cout << "Transfer error, wrong number of bytes transferred." << endl;     
     }

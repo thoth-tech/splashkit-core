@@ -307,9 +307,15 @@ namespace splashkit_lib
         //close(fd);
         
         if(check_pi())
-            return spi_close(pi, handle);
+        {
+            close(handle); 
+            handle_channel[handle] = 0;
+            return 0;
+        }
         else
+        {
             return -1;
+        }
     }
 
     int sk_spi_transfer(int handle, char *buf, int count)
