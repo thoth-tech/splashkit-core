@@ -17,11 +17,9 @@ namespace splashkit_lib
     int BCMpinData[] = {
         -1, -1, 2, -1, 3, -2, 4, 14, -2, 15, 17, 18, 27, -2, 22, 23, -1, 24, 10, -2, 9, 25, 11, 8, -2, 7, 0, 1, 5, -2, -6, 12, 13, -2, 19, 16, 26, 20, -2, 21};
 
-    
-
     int boardToBCM(gpio_pin pin)
     {
-        int bcmPinResult = PI_BAD_GPIO;
+        int bcmPinResult = -1;
         if (pin >= PIN_1 && pin <= PIN_40)
         {
             bcmPinResult = BCMpinData[static_cast<int>(pin) - static_cast<int>(PIN_1)];
@@ -253,8 +251,6 @@ namespace splashkit_lib
 #endif
     }
 
-
-
     connection remote_raspi_init(const string &name, const string &host, unsigned short int port)
     {
         return sk_remote_gpio_init(name, host, port);
@@ -263,52 +259,62 @@ namespace splashkit_lib
     void remote_raspi_set_mode(connection pi, gpio_pin pin, gpio_pin_mode mode)
     {
         int bcmPin = boardToBCM(pin);
-        if (bcmPin >= 2) sk_remote_gpio_set_mode(pi, bcmPin, mode);
+        if (bcmPin >= 2)
+            sk_remote_gpio_set_mode(pi, bcmPin, mode);
     }
 
     gpio_pin_mode remote_raspi_get_mode(connection pi, gpio_pin pin)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) return static_cast<gpio_pin_mode>(sk_remote_gpio_get_mode(pi, bcmPin));
-        else return GPIO_DEFAULT_MODE;
+        if (bcmPin >= 2)
+            return static_cast<gpio_pin_mode>(sk_remote_gpio_get_mode(pi, bcmPin));
+        else
+            return GPIO_DEFAULT_MODE;
     }
 
     void remote_raspi_set_pull_up_down(connection pi, gpio_pin pin, pull_up_down pud)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) sk_remote_gpio_set_pull_up_down(pi, bcmPin, pud);
+        if (bcmPin >= 2)
+            sk_remote_gpio_set_pull_up_down(pi, bcmPin, pud);
     }
 
     void remote_raspi_write(connection pi, gpio_pin pin, gpio_pin_value value)
     {
         int bcmPin = boardToBCM(pin);
-        
-        if(bcmPin >= 2) sk_remote_gpio_write(pi, bcmPin, value);
+
+        if (bcmPin >= 2)
+            sk_remote_gpio_write(pi, bcmPin, value);
     }
 
     gpio_pin_value remote_raspi_read(connection pi, gpio_pin pin)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) return static_cast<gpio_pin_value>(sk_remote_gpio_read(pi, bcmPin));
-        else return GPIO_DEFAULT_VALUE;
+        if (bcmPin >= 2)
+            return static_cast<gpio_pin_value>(sk_remote_gpio_read(pi, bcmPin));
+        else
+            return GPIO_DEFAULT_VALUE;
     }
 
     void remote_raspi_set_pwm_range(connection pi, gpio_pin pin, int range)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) sk_remote_set_pwm_range(pi, bcmPin, range);
+        if (bcmPin >= 2)
+            sk_remote_set_pwm_range(pi, bcmPin, range);
     }
 
     void remote_raspi_set_pwm_frequency(connection pi, gpio_pin pin, int frequency)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) sk_remote_set_pwm_frequency(pi, bcmPin, frequency);
+        if (bcmPin >= 2)
+            sk_remote_set_pwm_frequency(pi, bcmPin, frequency);
     }
 
     void remote_raspi_set_pwm_dutycycle(connection pi, gpio_pin pin, int dutycycle)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) sk_remote_set_pwm_dutycycle(pi, bcmPin, dutycycle);
+        if (bcmPin >= 2)
+            sk_remote_set_pwm_dutycycle(pi, bcmPin, dutycycle);
     }
 
     bool remote_raspi_cleanup(connection pi)

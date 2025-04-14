@@ -98,6 +98,19 @@ namespace splashkit_lib
             delete result;
             return nullptr;
         }
+        // Try to write a test byte to the device to check if it's responding.
+        // This is a simple way to check if the device is connected.
+        // For ADS7830, we can use a command like 0x84 (CH0) to test.
+        int test = sk_i2c_write_byte(result->i2c_handle, 0x84);
+        if (test < 0)
+        {
+            // ask the user to check the device connection
+            LOG(WARNING) << "Error communicating with ADC device, check your ADC connection" << name
+                         << " on bus " << bus << " at address " << address;
+            sk_i2c_close(result->i2c_handle);
+            delete result;
+            return nullptr;
+        }
 
         _adc_devices[name] = result;
         return result;
