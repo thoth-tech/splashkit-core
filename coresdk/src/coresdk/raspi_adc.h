@@ -64,6 +64,7 @@ namespace splashkit_lib
      * @param address The I2C address of the ADC device.
      * @param type    The type of ADC device (e.g., ADS7830, PCF8591).
      * @returns A valid adc_device on success, or nullptr on failure.
+     * @attribute suffix with_bus
      */
     adc_device open_adc(const string &name, int bus, int address, adc_type type);
 
@@ -92,7 +93,7 @@ namespace splashkit_lib
      *
      * This function closes an ADC device given its pointer.
      *
-     * @param adc  The ADC name string to close.
+     * @param name  The ADC name string to close.
      * @param channel  The channel number to read (range depends on ADC type).
      * @returns        The ADC conversion value (0–255), or -1 on error.
      *
