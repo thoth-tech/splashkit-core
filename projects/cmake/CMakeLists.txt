@@ -12,6 +12,9 @@ set(SK_LIB "${CMAKE_CURRENT_SOURCE_DIR}/../../coresdk/lib")
 set(SK_OUT "${CMAKE_CURRENT_SOURCE_DIR}/../../out")
 set(SK_BIN "${CMAKE_CURRENT_SOURCE_DIR}/../../bin")
 
+# FLAGS
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
+
 if (WIN32 OR MSYS OR MINGW)
   SET(MSYS "true")
   add_definitions(-DWINDOWS)
@@ -226,8 +229,6 @@ add_definitions(-DELPP_THREAD_SAFE)
 #### SplashKitBackend STATIC LIBRARY ####
 add_library(SplashKitBackend STATIC ${SOURCE_FILES} ${INCLUDE_FILES})
 target_link_libraries(SplashKitBackend ${LIB_FLAGS})
-
-set_property(TARGET SplashKitBackend PROPERTY CXX_STANDARD 20)
 
 if (MSYS)
     set_target_properties(SplashKitBackend PROPERTIES PREFIX "")
