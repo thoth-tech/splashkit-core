@@ -145,9 +145,9 @@ TEST_CASE("can correctly perform point geometry", "[geometry]")
     {
         point_2d pt1 = point_at(100.0, 100.0);
         point_2d pt2 = point_at(200.0, 200.0);
-        REQUIRE(point_point_angle(pt1, pt2) == Approx(45.0f).margin(__FLT_EPSILON__));
+        REQUIRE(point_point_angle(pt1, pt2) == Catch::Detail::Approx(45.0f).margin(__FLT_EPSILON__));
         pt2 = point_at(100.0, 200.0);
-        REQUIRE(point_point_angle(pt1, pt2) == Approx(90.0f).margin(__FLT_EPSILON__));
+        REQUIRE(point_point_angle(pt1, pt2) == Catch::Detail::Approx(90.0f).margin(__FLT_EPSILON__));
         pt2 = point_at(200.0, 100.0);
         REQUIRE(point_point_angle(pt1, pt2) == 0.0f);
     }
@@ -161,7 +161,7 @@ TEST_CASE("can correctly perform point geometry", "[geometry]")
         l = line_from(0.0, 0.0, 0.0, 200.0);
         REQUIRE(point_line_distance(pt, l) == 100.0f);
         l = line_from(0.0, 0.0, 200.0, 100.0);
-        REQUIRE(point_line_distance(pt, l) == Approx(sqrtf(20.0f * 20.0f + 40.0f * 40.0f)).margin(__FLT_EPSILON__));
+        REQUIRE(point_line_distance(pt, l) == Catch::Detail::Approx(sqrtf(20.0f * 20.0f + 40.0f * 40.0f)).margin(__FLT_EPSILON__));
     }
 }
 TEST_CASE("can perform circle geometry", "[geometry]")
@@ -243,8 +243,8 @@ TEST_CASE("can perform circle geometry", "[geometry]")
             REQUIRE(circle_triangle_intersect(c2, t3));
             point_2d p2;
             REQUIRE(circle_triangle_intersect(c2, t3, p2));
-            REQUIRE(p2.x == Approx(0.0).margin(__DBL_EPSILON__));
-            REQUIRE(p2.y == Approx(0.0).margin(__DBL_EPSILON__));
+            REQUIRE(p2.x == Catch::Detail::Approx(0.0).margin(__DBL_EPSILON__));
+            REQUIRE(p2.y == Catch::Detail::Approx(0.0).margin(__DBL_EPSILON__));
             triangle t4 = triangle_from(point_at(-1.0, 1.0), point_at(1.0, 1.0), point_at(0.0, 2.0));
             REQUIRE_FALSE(circle_triangle_intersect(c2, t4));
         }
@@ -271,10 +271,10 @@ TEST_CASE("can perform circle geometry", "[geometry]")
         v = vector_to(10.0, -10.0);
         widest_points(c, v, p1, p2);
         double angle = 45.0 * (M_PI / 180.0);
-        REQUIRE(p1.x == Approx(100.0 + 50.0 * cos(angle)).margin(__DBL_EPSILON__));
-        REQUIRE(p1.y == Approx(100.0 - 50.0 * sin(angle)).margin(__DBL_EPSILON__));
-        REQUIRE(p2.x == Approx(100.0 - 50.0 * sin(angle)).margin(__DBL_EPSILON__));
-        REQUIRE(p2.y == Approx(100.0 + 50.0 * cos(angle)).margin(__DBL_EPSILON__));
+        REQUIRE(p1.x == Catch::Detail::Approx(100.0 + 50.0 * cos(angle)).margin(__DBL_EPSILON__));
+        REQUIRE(p1.y == Catch::Detail::Approx(100.0 - 50.0 * sin(angle)).margin(__DBL_EPSILON__));
+        REQUIRE(p2.x == Catch::Detail::Approx(100.0 - 50.0 * sin(angle)).margin(__DBL_EPSILON__));
+        REQUIRE(p2.y == Catch::Detail::Approx(100.0 + 50.0 * cos(angle)).margin(__DBL_EPSILON__));
     }
     SECTION("can calculate distant point on circle heading")
     {
@@ -291,8 +291,8 @@ TEST_CASE("can perform circle geometry", "[geometry]")
         v = vector_to(1.0, 1.0);
         REQUIRE(distant_point_on_circle_heading(p, c, v, opposite));
         double angle = 45.0 * (M_PI / 180.0);
-        REQUIRE(opposite.x == Approx(100.0 + 50.0 * cos(angle)).margin(__DBL_EPSILON__));
-        REQUIRE(opposite.y == Approx(100.0 + 50.0 * sin(angle)).margin(__DBL_EPSILON__));
+        REQUIRE(opposite.x == Catch::Detail::Approx(100.0 + 50.0 * cos(angle)).margin(__DBL_EPSILON__));
+        REQUIRE(opposite.y == Catch::Detail::Approx(100.0 + 50.0 * sin(angle)).margin(__DBL_EPSILON__));
     }
     SECTION("can calculate distant point on circle")
     {
@@ -311,22 +311,22 @@ TEST_CASE("can perform circle geometry", "[geometry]")
         circle c = circle_at(100.0, 100.0, 50.0);
         point_2d origin = point_at(155.0, 100.0);
         vector_2d heading = vector_to(-1.0, 0.0);
-        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Approx(5.0f).margin(__FLT_EPSILON__));
+        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Catch::Detail::Approx(5.0f).margin(__FLT_EPSILON__));
         origin = point_at(45.0, 100.0);
         heading = vector_to(1.0, 0.0);
-        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Approx(5.0f).margin(__FLT_EPSILON__));
+        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Catch::Detail::Approx(5.0f).margin(__FLT_EPSILON__));
         origin = point_at(100.0, 155.0);
         heading = vector_to(0.0, -1.0);
-        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Approx(5.0f).margin(__FLT_EPSILON__));
+        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Catch::Detail::Approx(5.0f).margin(__FLT_EPSILON__));
         origin = point_at(100.0, 45.0);
         heading = vector_to(0.0, 1.0);
-        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Approx(5.0f).margin(__FLT_EPSILON__));
+        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Catch::Detail::Approx(5.0f).margin(__FLT_EPSILON__));
         origin = point_at(100.0, 100.0 + EPSILON);
         heading = vector_to(0.0, 1.0);
-        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Approx(-50.0f).margin(__FLT_EPSILON__));
+        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Catch::Detail::Approx(-50.0f).margin(__FLT_EPSILON__));
         origin = point_at(0.0, 0.0);
         heading = vector_to(1.0, 1.0);
-        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Approx(100.0f * sqrt(2.0f) - 50.0f).margin(__FLT_EPSILON__));
+        REQUIRE(ray_circle_intersect_distance(origin, heading, c) == Catch::Detail::Approx(100.0f * sqrt(2.0f) - 50.0f).margin(__FLT_EPSILON__));
         origin = point_at(0.0, 0.0);
         heading = vector_to(-1.0, 0.0);
         REQUIRE(ray_circle_intersect_distance(origin, heading, c) == -1.0f);
@@ -376,8 +376,8 @@ TEST_CASE("can perform circle geometry", "[geometry]")
         REQUIRE(closest.y == 100.0);
         l = line_from(0.0, 0.0, 200.0, 100.0);
         closest = closest_point_on_line_from_circle(c, l);
-        REQUIRE(closest.x == Approx(120.0).margin(__DBL_EPSILON__));
-        REQUIRE(closest.y == Approx(60.0).margin(__DBL_EPSILON__));
+        REQUIRE(closest.x == Catch::Detail::Approx(120.0).margin(__DBL_EPSILON__));
+        REQUIRE(closest.y == Catch::Detail::Approx(60.0).margin(__DBL_EPSILON__));
     }
     SECTION("can calculate closest point on rectangle from circle")
     {
@@ -408,9 +408,9 @@ TEST_CASE("can perform circle geometry", "[geometry]")
         p = point_at(200.0, 100.0);
         REQUIRE(tangent_points(p, c, p1, p2));
         REQUIRE(p1.x == 125.0);
-        REQUIRE(p1.y == Approx(100.0 + sqrt(50.0 * 50.0 - 25.0 * 25.0)).margin(__DBL_EPSILON__));
+        REQUIRE(p1.y == Catch::Detail::Approx(100.0 + sqrt(50.0 * 50.0 - 25.0 * 25.0)).margin(__DBL_EPSILON__));
         REQUIRE(p2.x == 125.0);
-        REQUIRE(p2.y == Approx(100.0 - sqrt(50.0 * 50.0 - 25.0 * 25.0)).margin(__DBL_EPSILON__));
+        REQUIRE(p2.y == Catch::Detail::Approx(100.0 - sqrt(50.0 * 50.0 - 25.0 * 25.0)).margin(__DBL_EPSILON__));
         p = point_at(100.0, 100.0);
         REQUIRE_FALSE(tangent_points(p, c, p1, p2));
     }
@@ -668,7 +668,7 @@ TEST_CASE("can perform line geometry", "[line]")
     SECTION("can calculate line length")
     {
         line l = line_from(100.0, 100.0, 200.0, 200.0);
-        REQUIRE(line_length(l) == Approx(100.0f * sqrtf(2.0f)).margin(__FLT_EPSILON__));
+        REQUIRE(line_length(l) == Catch::Detail::Approx(100.0f * sqrtf(2.0f)).margin(__FLT_EPSILON__));
     }
     SECTION("can calculate lines from triangle")
     {
@@ -785,8 +785,8 @@ TEST_CASE("can perform line geometry", "[line]")
     {
         line l = line_from(100.0, 100.0, 200.0, 200.0);
         vector_2d normal = line_normal(l);
-        REQUIRE(normal.x == Approx(-sqrt(2.0) / 2.0).margin(__DBL_EPSILON__));
-        REQUIRE(normal.y == Approx(sqrt(2.0) / 2.0).margin(__DBL_EPSILON__));
+        REQUIRE(normal.x == Catch::Detail::Approx(-sqrt(2.0) / 2.0).margin(__DBL_EPSILON__));
+        REQUIRE(normal.y == Catch::Detail::Approx(sqrt(2.0) / 2.0).margin(__DBL_EPSILON__));
     }
     SECTION("can convert line to string")
     {
@@ -879,10 +879,10 @@ TEST_CASE("can perform quad geometry", "[quad]")
         q = quad_from(r, m);
         REQUIRE(q.points[0].x == -100.0);
         REQUIRE(q.points[0].y == 100.0);
-        REQUIRE(q.points[1].x == Approx(-100.0).margin(__DBL_EPSILON__));
+        REQUIRE(q.points[1].x == Catch::Detail::Approx(-100.0).margin(__DBL_EPSILON__));
         REQUIRE(q.points[1].y == 300.0);
         REQUIRE(q.points[2].x == -300.0);
-        REQUIRE(q.points[2].y == Approx(100.0).margin(__DBL_EPSILON__));
+        REQUIRE(q.points[2].y == Catch::Detail::Approx(100.0).margin(__DBL_EPSILON__));
         REQUIRE(q.points[3].x == -300.0);
         REQUIRE(q.points[3].y == 300.0);
     }
@@ -958,29 +958,29 @@ TEST_CASE("can perform trigonometric calculations", "[trigonometry]")
     SECTION("can calculate cosine")
     {
         REQUIRE(cosine(0.0f) == 1.0f);
-        REQUIRE(cosine(90.0f) == Approx(0.0f).margin(__FLT_EPSILON__));
-        REQUIRE(cosine(180.0f) == Approx(-1.0f).margin(__FLT_EPSILON__));
-        REQUIRE(cosine(270.0f) == Approx(0.0f).margin(__FLT_EPSILON__));
+        REQUIRE(cosine(90.0f) == Catch::Detail::Approx(0.0f).margin(__FLT_EPSILON__));
+        REQUIRE(cosine(180.0f) == Catch::Detail::Approx(-1.0f).margin(__FLT_EPSILON__));
+        REQUIRE(cosine(270.0f) == Catch::Detail::Approx(0.0f).margin(__FLT_EPSILON__));
         REQUIRE(cosine(360.0f) == 1.0f);
     }
     SECTION("can calculate sine")
     {
         REQUIRE(sine(0.0f) == 0.0f);
         REQUIRE(sine(90.0f) == 1.0f);
-        REQUIRE(sine(180.0f) == Approx(0.0f).margin(__FLT_EPSILON__));
+        REQUIRE(sine(180.0f) == Catch::Detail::Approx(0.0f).margin(__FLT_EPSILON__));
         REQUIRE(sine(270.0f) == -1.0f);
-        REQUIRE(sine(360.0f) == Approx(0.0f).margin(__FLT_EPSILON__));
+        REQUIRE(sine(360.0f) == Catch::Detail::Approx(0.0f).margin(__FLT_EPSILON__));
     }
     SECTION("can calculate tangent")
     {
         REQUIRE(tangent(0.0f) == 0.0f);
         REQUIRE(tangent(45.0f) == 1.0f);
-        REQUIRE(tangent(91.0f) == Approx(-57.29f).margin(__FLT_EPSILON__));
-        REQUIRE(tangent(135.0f) == Approx(-1.0).margin(__FLT_EPSILON__));
-        REQUIRE(tangent(180.0f) == Approx(0.0f).margin(__FLT_EPSILON__));
+        REQUIRE(tangent(91.0f) == Catch::Detail::Approx(-57.29f).margin(__FLT_EPSILON__));
+        REQUIRE(tangent(135.0f) == Catch::Detail::Approx(-1.0).margin(__FLT_EPSILON__));
+        REQUIRE(tangent(180.0f) == Catch::Detail::Approx(0.0f).margin(__FLT_EPSILON__));
         REQUIRE(tangent(225.0f) == 1.0f);
-        REQUIRE(tangent(269.0f) == Approx(57.29f).margin(__FLT_EPSILON__));
-        REQUIRE(tangent(315.0f) == Approx(-1.0f).margin(__FLT_EPSILON__));
-        REQUIRE(tangent(360.0f) == Approx(0.0f).margin(__FLT_EPSILON__));
+        REQUIRE(tangent(269.0f) == Catch::Detail::Approx(57.29f).margin(__FLT_EPSILON__));
+        REQUIRE(tangent(315.0f) == Catch::Detail::Approx(-1.0f).margin(__FLT_EPSILON__));
+        REQUIRE(tangent(360.0f) == Catch::Detail::Approx(0.0f).margin(__FLT_EPSILON__));
     }
 }
