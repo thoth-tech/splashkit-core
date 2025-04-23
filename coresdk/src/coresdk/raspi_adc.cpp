@@ -1,6 +1,10 @@
-// adc_driver.cpp
+// 
+//  raspi_adc.cpp
+//  splashkit
+//
 // This file is part of the SplashKit Core Library.
 // Copyright (©) 2024 Aditya Parmar. All Rights Reserved.
+//
 
 #include "raspi_adc.h"
 #include "gpio_driver.h" // Provides i2c_open, i2c_close, etc.

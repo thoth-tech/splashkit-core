@@ -1,7 +1,11 @@
-// raspi_gpio.cpp
+// 
+//  raspi_gpio.cpp
 //  splashkit
+//
 // Created by Aditya Parmar on 20/01/2024.
 // Copyright © 2024 XQuestCode. All rights reserved.
+//
+
 #include "raspi_gpio.h"
 #include "gpio_driver.h"
 #include "raspi_adc.h"
