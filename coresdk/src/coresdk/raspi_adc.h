@@ -9,7 +9,7 @@
 #ifndef SPLASHKIT_ADC_H
 #define SPLASHKIT_ADC_H
 
-#include "backend_types.h"
+#include "types.h"
 #include <string>
 
 namespace splashkit_lib
