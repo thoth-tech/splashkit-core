@@ -2045,7 +2045,7 @@
     "group": "utilities",
     "brief": "SplashKit provides some basic data manipulation functions to\nhelp make it easy to get some basic tasks performed.",
     "description": null,
-    "parsed_at": 1743659058,
+    "parsed_at": 1745552119,
     "path": "coresdk/src/coresdk/basics.h",
     "functions": [
       {
@@ -5961,7 +5961,7 @@
     "group": "geometry",
     "brief": null,
     "description": null,
-    "parsed_at": 1743659060,
+    "parsed_at": 1745552119,
     "path": "coresdk/src/coresdk/circle_geometry.h",
     "functions": [
       {
@@ -7839,7 +7839,7 @@
     "group": "physics",
     "brief": "SplashKit Collisions library allow you to perform tests between\nbitmaps, sprites and shapes to determin if a collision has occured.",
     "description": null,
-    "parsed_at": 1743659062,
+    "parsed_at": 1745552121,
     "path": "coresdk/src/coresdk/collisions.h",
     "functions": [
       {
@@ -35092,7 +35092,7 @@
     "group": "logging",
     "brief": "SplashKit Logging facilitates streamlined logging with customizable severity levels and modes.",
     "description": "SplashKit Logging module,  allows users to initialize a custom logger with specified log levels and modes (console, file, or both). \nThe module provides functions to log messages at different severity levels (INFO, DEBUG, WARNING, ERROR, FATAL) with timestamped entries. \nUsers can close the logging process as needed, and the module handles customization for console and file output.",
-    "parsed_at": 1743659072,
+    "parsed_at": 1745552121,
     "path": "coresdk/src/coresdk/logging.h",
     "functions": [
       {
@@ -37596,7 +37596,7 @@
     "group": "networking",
     "brief": "SplashKit's network-related functions allow you to communicate data\nacross networks.",
     "description": null,
-    "parsed_at": 1743659074,
+    "parsed_at": 1745552122,
     "path": "coresdk/src/coresdk/networking.h",
     "functions": [
       {
@@ -42230,7 +42230,7 @@
     "group": "geometry",
     "brief": null,
     "description": null,
-    "parsed_at": 1743659075,
+    "parsed_at": 1745552123,
     "path": "coresdk/src/coresdk/point_geometry.h",
     "functions": [
       {
@@ -43254,7 +43254,7 @@
     "group": "geometry",
     "brief": null,
     "description": null,
-    "parsed_at": 1743659075,
+    "parsed_at": 1745552123,
     "path": "coresdk/src/coresdk/quad_geometry.h",
     "functions": [
       {
@@ -44070,7 +44070,7 @@
     "group": "raspberry",
     "brief": "Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1743128328,
+    "parsed_at": 1745552124,
     "path": "coresdk/src/coresdk/raspi_gpio.h",
     "functions": [
       {
@@ -48184,7 +48184,7 @@
     "group": "geometry",
     "brief": null,
     "description": null,
-    "parsed_at": 1743659077,
+    "parsed_at": 1745552124,
     "path": "coresdk/src/coresdk/rectangle_geometry.h",
     "functions": [
       {
@@ -50500,7 +50500,7 @@
     "group": "sprites",
     "brief": "SplashKit Sprites allows you to create images you can easily\nmove and animate.",
     "description": "SplashKit sprites are game elements that can be moved, and animated. Sprites\nare located at a position in the game, have a velocity, and an animation.\nThe sprite can also have arbitary data associated with it for game specific\npurposes.",
-    "parsed_at": 1743659080,
+    "parsed_at": 1745552126,
     "path": "coresdk/src/coresdk/sprites.h",
     "functions": [
       {
@@ -61258,7 +61258,7 @@
     "group": "timers",
     "brief": "Timers in SplashKit can be used to track the passing of time.",
     "description": null,
-    "parsed_at": 1743659082,
+    "parsed_at": 1745552126,
     "path": "coresdk/src/coresdk/timers.h",
     "functions": [
       {
@@ -64503,7 +64503,7 @@
     "group": "geometry",
     "brief": null,
     "description": null,
-    "parsed_at": 1743659083,
+    "parsed_at": 1745552127,
     "path": "coresdk/src/coresdk/triangle_geometry.h",
     "functions": [
       {
@@ -65067,7 +65067,7 @@
     "group": "types",
     "brief": "SplashKit Types simplifies data type creation and management for streamlined programming.",
     "description": null,
-    "parsed_at": 1743659084,
+    "parsed_at": 1745552128,
     "path": "coresdk/src/coresdk/types.h",
     "functions": [
 
@@ -65668,6 +65668,64 @@
       }
     ],
     "enums": [
+      {
+        "signature": "enum adc_pin {ADC_PIN_0 = 0,ADC_PIN_1 = 1,ADC_PIN_2 = 2,ADC_PIN_3 = 3,ADC_PIN_4 = 4,ADC_PIN_5 = 5,ADC_PIN_6 = 6,ADC_PIN_7 = 7,// ADC_SDA = 8,// ADC_SCL = 9,// ADC_VREF = 10,// ADC_COM = 12,// ADC_AD0 = 13,// ADC_AD1 = 14,};",
+        "name": "adc_pin",
+        "description": "ADC Pins:",
+        "brief": null,
+        "constants": {
+          "ADC_PIN_0": {
+            "description": "Analog Input Channel 0",
+            "number": 0
+          },
+          "ADC_PIN_1": {
+            "description": "Analog Input Channel 1",
+            "number": 1
+          },
+          "ADC_PIN_2": {
+            "description": "Analog Input Channel 2",
+            "number": 2
+          },
+          "ADC_PIN_3": {
+            "description": "Analog Input Channel 3",
+            "number": 3
+          },
+          "ADC_PIN_4": {
+            "description": "Analog Input Channel 4",
+            "number": 4
+          },
+          "ADC_PIN_5": {
+            "description": "Analog Input Channel 5",
+            "number": 5
+          },
+          "ADC_PIN_6": {
+            "description": "Analog Input Channel 6",
+            "number": 6
+          },
+          "ADC_PIN_7": {
+            "description": "Analog Input Channel 7",
+            "number": 7
+          }
+        },
+        "attributes": {
+          "group": "types"
+        }
+      },
+      {
+        "signature": "enum adc_type {ADS7830 = 0,// PCF8591 = 1,};",
+        "name": "adc_type",
+        "description": "ADC Type:",
+        "brief": null,
+        "constants": {
+          "ADS7830": {
+            "description": "8-Bit, 8-Channel Sampling A/D Converter with I2C Interface",
+            "number": 0
+          }
+        },
+        "attributes": {
+          "group": "types"
+        }
+      },
       {
         "signature": "enum drawing_dest {DRAW_TO_SCREEN, // no camera effectDRAW_TO_WORLD, // camera effectDRAW_DEFAULT // camera effect on screen, but not on bitmaps};",
         "name": "drawing_dest",
@@ -68334,7 +68392,7 @@
     "group": "networking",
     "brief": null,
     "description": null,
-    "parsed_at": 1743659086,
+    "parsed_at": 1745552128,
     "path": "coresdk/src/coresdk/web_server.h",
     "functions": [
       {

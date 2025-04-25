@@ -93324,6 +93324,76 @@
     ],
     "enums": [
       {
+        "signature": "enum adc_pin {ADC_PIN_0 = 0,ADC_PIN_1 = 1,ADC_PIN_2 = 2,ADC_PIN_3 = 3,ADC_PIN_4 = 4,ADC_PIN_5 = 5,ADC_PIN_6 = 6,ADC_PIN_7 = 7,// ADC_SDA = 8,// ADC_SCL = 9,// ADC_VREF = 10,// ADC_COM = 12,// ADC_AD0 = 13,// ADC_AD1 = 14,};",
+        "name": "adc_pin",
+        "description": "ADC Pins:",
+        "brief": null,
+        "constants": {
+          "ADC_PIN_0": {
+            "description": "Analog Input Channel 0",
+            "number": 0
+          },
+          "ADC_PIN_1": {
+            "description": "Analog Input Channel 1",
+            "number": 1
+          },
+          "ADC_PIN_2": {
+            "description": "Analog Input Channel 2",
+            "number": 2
+          },
+          "ADC_PIN_3": {
+            "description": "Analog Input Channel 3",
+            "number": 3
+          },
+          "ADC_PIN_4": {
+            "description": "Analog Input Channel 4",
+            "number": 4
+          },
+          "ADC_PIN_5": {
+            "description": "Analog Input Channel 5",
+            "number": 5
+          },
+          "ADC_PIN_6": {
+            "description": "Analog Input Channel 6",
+            "number": 6
+          },
+          "ADC_PIN_7": {
+            "description": "Analog Input Channel 7",
+            "number": 7
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "cpp": "class adc_pin {ADC_PIN_0 = 0, ADC_PIN_1 = 1, ADC_PIN_2 = 2, ADC_PIN_3 = 3, ADC_PIN_4 = 4, ADC_PIN_5 = 5, ADC_PIN_6 = 6, ADC_PIN_7 = 7};",
+          "python": "public enum {AdcPin.adc_pin_0 = 0, AdcPin.adc_pin_1 = 1, AdcPin.adc_pin_2 = 2, AdcPin.adc_pin_3 = 3, AdcPin.adc_pin_4 = 4, AdcPin.adc_pin_5 = 5, AdcPin.adc_pin_6 = 6, AdcPin.adc_pin_7 = 7}",
+          "csharp": "public enum {AdcPin.AdcPin0 = 0, AdcPin.AdcPin1 = 1, AdcPin.AdcPin2 = 2, AdcPin.AdcPin3 = 3, AdcPin.AdcPin4 = 4, AdcPin.AdcPin5 = 5, AdcPin.AdcPin6 = 6, AdcPin.AdcPin7 = 7}",
+          "pascal": "public enum {AdcPin.AdcPin0 = 0, AdcPin.AdcPin1 = 1, AdcPin.AdcPin2 = 2, AdcPin.AdcPin3 = 3, AdcPin.AdcPin4 = 4, AdcPin.AdcPin5 = 5, AdcPin.AdcPin6 = 6, AdcPin.AdcPin7 = 7}"
+        }
+      },
+      {
+        "signature": "enum adc_type {ADS7830 = 0,// PCF8591 = 1,};",
+        "name": "adc_type",
+        "description": "ADC Type:",
+        "brief": null,
+        "constants": {
+          "ADS7830": {
+            "description": "8-Bit, 8-Channel Sampling A/D Converter with I2C Interface",
+            "number": 0
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "cpp": "class adc_type {ADS7830 = 0};",
+          "python": "public enum {AdcType.ads7830 = 0}",
+          "csharp": "public enum {AdcType.Ads7830 = 0}",
+          "pascal": "public enum {AdcType.Ads7830 = 0}"
+        }
+      },
+      {
         "signature": "enum drawing_dest {DRAW_TO_SCREEN, // no camera effectDRAW_TO_WORLD, // camera effectDRAW_DEFAULT // camera effect on screen, but not on bitmaps};",
         "name": "drawing_dest",
         "description": "Determines the effect of the camera on a drawing operation.",
