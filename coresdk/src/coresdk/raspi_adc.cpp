@@ -242,7 +242,7 @@ namespace splashkit_lib
 #endif
     }
     // Read the ADC value from a given channel (0-7) using a device pointer.
-    int adc_read(adc_device adc, adc_pin channel)
+    int read_adc(adc_device adc, adc_pin channel)
     {
 #ifdef RASPBERRY_PI
         if (adc == nullptr)
@@ -275,7 +275,7 @@ namespace splashkit_lib
     }
 
     // Overload: read ADC value by providing the ADC device name.
-    int adc_read(const string &name, adc_pin channel)
+    int read_adc(const string &name, adc_pin channel)
     {
 #ifdef RASPBERRY_PI
         adc_device dev = adc_device_named(name);

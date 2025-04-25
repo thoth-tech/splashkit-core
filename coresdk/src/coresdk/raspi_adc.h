@@ -86,7 +86,7 @@ namespace splashkit_lib
      * @param channel  The channel number to read (range depends on ADC type).
      * @returns        The ADC conversion value (0–255), or -1 on error.
      */
-    int adc_read(adc_device adc, adc_pin channel);
+    int read_adc(adc_device adc, adc_pin channel);
 
     /**
      * @brief Closes an ADC device given its pointer.
@@ -97,9 +97,9 @@ namespace splashkit_lib
      * @param channel  The channel number to read (range depends on ADC type).
      * @returns        The ADC conversion value (0–255), or -1 on error.
      *
-     * @attribute suffix  with_name
+     * @attribute suffix  named
      */
-    int adc_read(const string &name, adc_pin channel);
+    int read_adc(const string &name, adc_pin channel);
 
     /**
      * @brief Closes an ADC device given its pointer.
