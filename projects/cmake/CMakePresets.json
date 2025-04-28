@@ -28,7 +28,7 @@
             "name": "macOS",
             "displayName": "macOS",
             "description": "macOS clang",
-            "generator": "Unix makefiles",
+            "generator": "Unix Makefiles",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "clang",
