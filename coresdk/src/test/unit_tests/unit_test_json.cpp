@@ -118,6 +118,32 @@ TEST_CASE("json can be created and read", "[json]")
         REQUIRE("#00ff00ff" == color_to_string(deserialized_clr));
     }
 
+    SECTION("negative test cases") 
+    {
+        SECTION("throws when accessing missing key") 
+        {
+            REQUIRE_FALSE(json_has_key(person, "middleName"));
+            REQUIRE_THROWS(json_read_string(person, "middleName"));
+        }
+
+        SECTION("throws on type mismatch (bool read as string)") 
+        {
+            REQUIRE(json_has_key(person, "pensioner"));
+            REQUIRE_THROWS(json_read_string(person, "pensioner"));
+        }
+
+        SECTION("throws on malformed json string") 
+        {
+            std::string bad_json = "{ this is not valid json }";
+            REQUIRE_THROWS(json_from_string(bad_json));
+        }
+
+        SECTION("throws on invalid file path") 
+        {
+            REQUIRE_THROWS(json_from_file("nonexistent.json"));
+        }
+    }
+
     free_json(person);
     free_all_json();
 }

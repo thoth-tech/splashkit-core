@@ -50,14 +50,13 @@ TEST_CASE("can communicate with server", "[networking]")
     {
         const string SERVER_NAME = "test_server_3";
         const string CONNECTION_NAME = "test_connection";
-        server_socket server;
 
-        SECTION("can create server with no connections")
+        server_socket server = create_server(SERVER_NAME, PORT, TCP);
+        REQUIRE(server != nullptr);
+        REQUIRE(has_server(SERVER_NAME));
+
+        SECTION("server starts with no connections")
         {
-            server = create_server(SERVER_NAME, PORT, TCP);
-            REQUIRE(server != nullptr);
-            REQUIRE(has_server(SERVER_NAME));
-
             REQUIRE_FALSE(has_connection(CONNECTION_NAME));
             REQUIRE(connection_count(server) == 0);
             REQUIRE(new_connection_count(server) == 0);
@@ -69,17 +68,16 @@ TEST_CASE("can communicate with server", "[networking]")
         connection conn = open_connection(CONNECTION_NAME, TEST_IP, PORT, TCP);
         REQUIRE(conn != nullptr);
 
-        // TODO: Fix issue with intermittent failing
+        // You can safely uncomment and test these when stable:
         // REQUIRE(accept_new_connection(server));
         // REQUIRE(has_connection(CONNECTION_NAME));
         // REQUIRE(connection_count(server) == 1);
-
         // connection last_conn = last_connection(server);
-
         // REQUIRE(is_connection_open(conn));
 
         REQUIRE(close_server(server));
     }
+
     SECTION("can communicate with a UDP server")
     {
         const string SERVER_NAME = "test_server_4";
