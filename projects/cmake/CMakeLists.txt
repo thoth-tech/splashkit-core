@@ -300,31 +300,32 @@ set_target_properties(skunit_tests
 
 #This targets library after sktest is dealt with
 # Find the WiringPi headers.
-    find_path(WIRINGPI_INCLUDE_DIR NAMES wiringPi.h HINTS /usr/include /usr/local/include)
 
-    # Find the WiringPi library.
-    find_library(WIRINGPI_LIBRARY NAMES wiringPi libwiringPi.so HINTS /usr/lib /usr/local/lib /home/jp/WiringPi/wiringPi)
+    if (BCM_HOST_INCLUDE_DIR)
+        find_path(WIRINGPI_INCLUDE_DIR NAMES wiringPi.h HINTS /usr/include /usr/local/include)
 
-    if(WIRINGPI_LIBRARY)
-        message(STATUS "Found WiringPi library: ${WIRINGPI_LIBRARY}")
-        set_target_properties(SplashKitBackend PROPERTIES
-            IMPORTED_LOCATION "/home/jp/Documents/splashkit-core/out/lib/libSplashKitBackend.a"
-        )
+        # Find the WiringPi library.
+        find_library(WIRINGPI_LIBRARY NAMES wiringPi libwiringPi.so HINTS /usr/lib /usr/local/lib /home/jp/WiringPi/wiringPi)
 
-        target_link_libraries(sktest SplashKitBackend ${WIRINGPI_LIBRARY})
+        if (WIRINGPI_LIBRARY)
+            message(STATUS "Found WiringPi library: ${WIRINGPI_LIBRARY}")
+            
+            set_target_properties(SplashKitBackend PROPERTIES
+                IMPORTED_LOCATION "/home/jp/Documents/splashkit-core/out/lib/libSplashKitBackend.a"
+            )
 
-        #targets sktest later
-        
-    else()
-        message(FATAL_ERROR "WiringPi library not found.")
-        target_link_libraries(sktest ${WIRINGPI_LIBRARY})
+            target_link_libraries(sktest SplashKitBackend ${WIRINGPI_LIBRARY})
+        else()
+            message(FATAL_ERROR "WiringPi library not found. Cannot link.")
+        endif()
+
+        if(WIRINGPI_INCLUDE_DIR)
+            include_directories(${WIRINGPI_INCLUDE_DIR})
+        else()
+            message(FATAL_ERROR "WiringPi headers not found.")
+        endif()
     endif()
 
-    if(WIRINGPI_INCLUDE_DIR)
-        include_directories(${WIRINGPI_INCLUDE_DIR})
-    else()
-        message(FATAL_ERROR "WiringPi headers not found.")
-    endif()
 
 
 install(TARGETS SplashKitBackend DESTINATION lib)

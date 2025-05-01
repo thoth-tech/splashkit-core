@@ -9,7 +9,9 @@
 #include <string>
 #include <iostream>
 #include <cstdlib> // Add this line to include the necessary header for the exit() function
-
+#include <arpa/inet.h>
+#include <unistd.h>
+#include "gpio_protocol.h"
 #include <cstring>
 #ifdef RASPBERRY_PI
 #include <wiringPi.h>
@@ -320,7 +322,7 @@ namespace splashkit_lib
     {
         if(check_pi())
         {
-            //If handle is -1, it doesn't exist
+            //If handle is -1, it doesn't existzzz
             if (handle == -1)
             {
                 return -1;
@@ -343,161 +345,121 @@ namespace splashkit_lib
 
     #endif
 
-    connection sk_remote_gpio_init(std::string name, const std::string &host, unsigned short int port)
-    {
-        return open_connection(name, host, port);
-    }
+    using connection = int;
 
-    void sk_remote_gpio_set_mode(connection pi, int pin, int mode)
-    {
-        sk_pigpio_cmd_t set_cmd;
-        set_cmd.cmd_code = GPIO_CMD_SET_MODE;
-        set_cmd.param1 = pin;
-        set_cmd.param2 = mode;
-
-        sk_gpio_send_cmd(pi, set_cmd);
-    }
-
-    int sk_remote_gpio_get_mode(connection pi, int pin)
-    {
-        sk_pigpio_cmd_t get_cmd;
-        get_cmd.cmd_code = GPIO_CMD_GET_MODE;
-        get_cmd.param1 = pin;
-
-        return sk_gpio_send_cmd(pi, get_cmd);
-    }
-
-    void sk_remote_gpio_set_pull_up_down(connection pi, int pin, int pud)
-    {
-        sk_pigpio_cmd_t set_pud_cmd;
-        set_pud_cmd.cmd_code = GPIO_CMD_SET_PUD;
-        set_pud_cmd.param1 = pin;
-        set_pud_cmd.param2 = pud;
-
-        sk_gpio_send_cmd(pi, set_pud_cmd);
-    }
-
-    int sk_remote_gpio_read(connection pi, int pin)
-    {
-        sk_pigpio_cmd_t read_cmd;
-        read_cmd.cmd_code = GPIO_CMD_READ;
-        read_cmd.param1 = pin;
-
-        return sk_gpio_send_cmd(pi, read_cmd);
-    }
-
-    void sk_remote_gpio_write(connection pi, int pin, int value)
-    {
-        sk_pigpio_cmd_t write_cmd;
-        write_cmd.cmd_code = GPIO_CMD_WRITE;
-        write_cmd.param1 = pin;
-        write_cmd.param2 = value;
-
-        sk_gpio_send_cmd(pi, write_cmd);
-    }
-
-    void sk_remote_set_pwm_range(connection pi, int pin, int range)
-    {
-        sk_pigpio_cmd_t set_range_cmd;
-        set_range_cmd.cmd_code = GPIO_CMD_SET_PWM_RANGE;
-        set_range_cmd.param1 = pin;
-        set_range_cmd.param2 = range;
-
-        sk_gpio_send_cmd(pi, set_range_cmd);
-    }
-
-    void sk_remote_set_pwm_frequency(connection pi, int pin, int frequency)
-    {
-        sk_pigpio_cmd_t set_freq_cmd;
-        set_freq_cmd.cmd_code = GPIO_CMD_SET_PWM_FREQ;
-        set_freq_cmd.param1 = pin;
-        set_freq_cmd.param2 = frequency;
-
-        sk_gpio_send_cmd(pi, set_freq_cmd);
-    }
-
-    void sk_remote_set_pwm_dutycycle(connection pi, int pin, int dutycycle)
-    {
-        sk_pigpio_cmd_t set_dutycycle_cmd;
-        set_dutycycle_cmd.cmd_code = GPIO_CMD_SET_PWM_DUTYCYCLE;
-        set_dutycycle_cmd.param1 = pin;
-        set_dutycycle_cmd.param2 = dutycycle;
-
-        sk_gpio_send_cmd(pi, set_dutycycle_cmd);
-    }
-
-    void sk_remote_clear_bank_1(connection pi)
-    {
-        sk_pigpio_cmd_t clear_bank_cmd;
-        clear_bank_cmd.cmd_code = GPIO_CMD_CLEAR_BANK_1;
-        clear_bank_cmd.param1 = PI4B_GPIO_BITMASK;
-
-        sk_gpio_send_cmd(pi, clear_bank_cmd);
-    }
-
-    bool sk_remote_gpio_cleanup(connection pi)
-    {
-        if(!is_connection_open(pi))
-        {
-            LOG(ERROR) << "Remote GPIO: Connection not open.";
-            return false;
-        }
-        LOG(INFO) << "Cleaning Pins on Remote Pi Named: " << pi->name << endl;
-        sk_remote_clear_bank_1(pi);
-        return close_connection(pi);
-    }
-
-    int sk_gpio_send_cmd(connection pi, sk_pigpio_cmd_t &cmd)
-    {
-        if(!is_connection_open(pi))
-        {
-            LOG(ERROR) << sk_gpio_error_message(PIGIF_ERR_BAD_CONNECT); 
-            return PIGIF_ERR_BAD_CONNECT;
-        }
-
-        if(pi->protocol == TCP)
-        {
-            int num_send_bytes = sizeof(cmd);
-
-            std::vector<char> buffer(num_send_bytes);
-            memcpy(buffer.data(), &cmd, num_send_bytes);
-
-            if(sk_send_bytes(&pi->socket, buffer.data(), num_send_bytes)) 
-            {
-                int num_bytes_recv = sk_read_bytes(&pi->socket, buffer.data(), num_send_bytes); 
-                if(num_bytes_recv == num_send_bytes) 
-                {
-                    sk_pigpio_cmd_t resp;
-                    memcpy(&resp, buffer.data(), num_send_bytes);
-                    
-                    // We cast it back to a signed type so we can get the negative error codes.
-                    int32_t result = static_cast<int32_t>(resp.result);
-
-                    if (result < 0)
-                    {
-                        LOG(ERROR) << sk_gpio_error_message(result);
-                    }
-
-                    return result;
-                }
-                else
-                {
-                    LOG(ERROR) << sk_gpio_error_message(PIGIF_ERR_BAD_RECV);
-                    return PIGIF_ERR_BAD_RECV;
-                }
-            }
-            else
-            {
-                LOG(ERROR) << sk_gpio_error_message(PIGIF_ERR_BAD_SEND);
-                return PIGIF_ERR_BAD_SEND;
-            }
-        }
-        else
-        {
-            LOG(ERROR) << "Remote GPIO: Connection has UDP Protocol";
+    enum GpioCommandCode {
+        GPIO_CMD_SET_MODE,
+        GPIO_CMD_GET_MODE,
+        GPIO_CMD_WRITE,
+        GPIO_CMD_READ,
+        GPIO_CMD_SET_PUD,
+        GPIO_CMD_SET_PWM_RANGE,
+        GPIO_CMD_SET_PWM_FREQ,
+        GPIO_CMD_SET_PWM_DUTYCYCLE,
+        GPIO_CMD_CLEAR_BANK_1
+    };
+    
+    struct GpioCommand {
+        int cmd_code;
+        int param1;
+        int param2;
+    };
+    
+    connection sk_remote_gpio_init(std::string name, const std::string &host, unsigned short port) {
+        int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+        sockaddr_in serv_addr{};
+    
+        serv_addr.sin_family = AF_INET;
+        serv_addr.sin_port = htons(port);
+        inet_pton(AF_INET, host.c_str(), &serv_addr.sin_addr);
+    
+        if (connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0) {
+            perror("Connection failed");
             return -1;
         }
+    
+        return sockfd;
     }
+    
+    // Simplified send/receive helper
+    int sk_send_command(connection pi, const GpioCommand& cmd, int* response = nullptr) {
+        if (send(pi, &cmd, sizeof(cmd), 0) < 0) {
+            perror("Send failed");
+            return -1;
+        }
+    
+        if (response) {
+            if (recv(pi, response, sizeof(int), 0) <= 0) {
+                perror("Recv failed");
+                return -1;
+            }
+        }
+    
+        return 0;
+    }
+    
+    // Wrapper functions
+    void sk_remote_gpio_set_mode(connection pi, int pin, int mode) {
+        GpioCommand cmd{GPIO_CMD_SET_MODE, pin, mode};
+        sk_send_command(pi, cmd);
+    }
+    
+    int sk_remote_gpio_get_mode(connection pi, int pin) {
+        GpioCommand cmd{GPIO_CMD_GET_MODE, pin, 0};
+        int response;
+        sk_send_command(pi, cmd, &response);
+        return response;
+    }
+    
+    void sk_remote_gpio_write(connection pi, int pin, int value) {
+        GpioCommand cmd{GPIO_CMD_WRITE, pin, value};
+        sk_send_command(pi, cmd);
+    }
+    
+    int sk_remote_gpio_read(connection pi, int pin) {
+        GpioCommand cmd{GPIO_CMD_READ, pin, 0};
+        int response;
+        sk_send_command(pi, cmd, &response);
+        return response;
+    }
+    
+    void sk_remote_gpio_set_pull_up_down(connection pi, int pin, int pud) {
+        GpioCommand cmd{GPIO_CMD_SET_PUD, pin, pud};
+        sk_send_command(pi, cmd);
+    }
+    
+    void sk_remote_set_pwm_range(connection pi, int pin, int range) {
+        GpioCommand cmd{GPIO_CMD_SET_PWM_RANGE, pin, range};
+        sk_send_command(pi, cmd);
+    }
+    
+    void sk_remote_set_pwm_frequency(connection pi, int pin, int frequency) {
+        GpioCommand cmd{GPIO_CMD_SET_PWM_FREQ, pin, frequency};
+        sk_send_command(pi, cmd);
+    }
+    
+    void sk_remote_set_pwm_dutycycle(connection pi, int pin, int dutycycle) {
+        GpioCommand cmd{GPIO_CMD_SET_PWM_DUTYCYCLE, pin, dutycycle};
+        sk_send_command(pi, cmd);
+    }
+    
+    void sk_remote_clear_bank_1(connection pi) {
+        GpioCommand cmd{GPIO_CMD_CLEAR_BANK_1, /*bitmask*/ 0x3FFFFFF, 0};
+        sk_send_command(pi, cmd);
+    }
+    
+    bool sk_remote_gpio_cleanup(connection pi) {
+        if (pi < 0) {
+            std::cerr << "Remote GPIO: Invalid connection\n";
+            return false;
+        }
+    
+        std::cout << "Cleaning up remote GPIO...\n";
+        sk_remote_clear_bank_1(pi);
+        close(pi);
+        return true;
+    }
+    
     
     std::string sk_gpio_error_message(int error_code)
     {
