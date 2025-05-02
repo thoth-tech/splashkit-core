@@ -17,10 +17,13 @@
 #include <string>
 #include <vector>
 #include <functional>
+#include <stdexcept>
+#include <map>
 
 using backend_json = nlohmann::json;
 using std::string;
 using std::vector;
+using std::map;
 using std::make_pair;
 
 namespace splashkit_lib
@@ -35,66 +38,73 @@ namespace splashkit_lib
 
     string json_type_to_string(backend_json::value_t type);
 
+    inline bool is_type_number(backend_json::value_t type)
+    {
+        return type == backend_json::value_t::number_float ||
+               type == backend_json::value_t::number_integer ||
+               type == backend_json::value_t::number_unsigned;
+    }
+
     template <typename T>
-    void sk_json_add_value(json j, string key, T value)
+    void sk_json_add_value(json j, const string &key, T value)
     {
         if (INVALID_PTR(j, JSON_PTR))
         {
-            LOG(WARNING) << "Passed an invalid json object to json_add_x";
+            LOG(WARNING) << "Passed an invalid json object to json_add_value";
             return;
         }
 
         j->data[key] = value;
     }
 
-    inline bool is_type_number(backend_json::value_t type)
-    {
-        return (type == backend_json::value_t::number_float ||
-                type == backend_json::value_t::number_integer ||
-                type == backend_json::value_t::number_unsigned);
-    }
-
-    template<typename T>
-    T sk_json_read_value(json j, string key, backend_json::value_t type)
+    template <typename T>
+    T sk_json_read_value(json j, const string &key, backend_json::value_t expected_type)
     {
         if (INVALID_PTR(j, JSON_PTR))
         {
-            LOG(ERROR) << "Invalid json pointer passed to json_read_x";
-            return T();
+            throw std::runtime_error("Invalid JSON pointer passed to json_read_value");
         }
 
-        backend_json temp = j->data[key];
-
-        if ((temp.type() != type) &&
-            !(is_type_number(temp.type()) && is_type_number(type)))
+        if (j->data.find(key) == j->data.end())
         {
-            LOG(ERROR) << "JSON key value is not expected in sk_json_read_value. Has type " << json_type_to_string(j->data[key].type());
-            return T();
+            throw std::runtime_error("Key '" + key + "' not found in JSON");
         }
 
-        return j->data[key];
+        backend_json value = j->data[key];
+        backend_json::value_t actual_type = value.type();
+
+        if ((actual_type != expected_type) &&
+            !(is_type_number(actual_type) && is_type_number(expected_type)))
+        {
+            throw std::runtime_error("JSON key '" + key + "' has type '" +
+                                     json_type_to_string(actual_type) +
+                                     "', but expected '" +
+                                     json_type_to_string(expected_type) + "'");
+        }
+
+        return value;
     }
 
     template <typename T>
-    void sk_json_read_array(json j, string key, vector<T>& out)
+    void sk_json_read_array(json j, const string &key, vector<T> &out)
     {
         if (INVALID_PTR(j, JSON_PTR))
         {
-            LOG(WARNING) << "Passed an invalid json object to json_add_array";
+            LOG(WARNING) << "Passed an invalid json object to json_read_array";
             return;
         }
 
         if (!j->data[key].is_array())
         {
-            LOG(ERROR) << "JSON key value is not an array. Has type " << json_type_to_string(j->data[key].type());
+            LOG(ERROR) << "JSON key value is not an array. Has type "
+                       << json_type_to_string(j->data[key].type());
             return;
         }
-        
+
         out.clear();
-        
-        backend_json json_array = j->data[key];
-        
-        for (T e : json_array) {
+
+        for (const auto &e : j->data[key])
+        {
             out.push_back(e);
         }
     }
@@ -103,20 +113,19 @@ namespace splashkit_lib
     {
         map<string, string> result;
 
-        backend_json bj = j->data;
-        for (auto it = bj.begin(); it != bj.end(); ++it)
+        for (auto it = j->data.begin(); it != j->data.end(); ++it)
         {
             if (!it.value().is_string())
             {
-                LOG(ERROR) << "Key not a string in map";
+                LOG(ERROR) << "Key '" << it.key() << "' is not a string in JSON map";
+                continue;
             }
-            else
-            {
-                result.insert(make_pair<string, string>(it.key(), it.value()));
-            }
+
+            result.insert(make_pair(it.key(), it.value()));
         }
 
         return result;
-    };
+    }
 }
-#endif //SPLASHKIT_JSON_DRIVER_H
+
+#endif // SPLASHKIT_JSON_DRIVER_H

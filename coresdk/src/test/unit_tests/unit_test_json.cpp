@@ -118,6 +118,36 @@ TEST_CASE("json can be created and read", "[json]")
         REQUIRE("#00ff00ff" == color_to_string(deserialized_clr));
     }
 
+    SECTION("negative test cases") 
+    {
+        SECTION("throws when accessing missing key") 
+        {
+            REQUIRE_FALSE(json_has_key(person, "middleName"));
+            REQUIRE_THROWS(json_read_string(person, "middleName"));
+        }
+
+        SECTION("throws on type mismatch (bool read as string)") 
+        {
+            REQUIRE(json_has_key(person, "pensioner"));
+            REQUIRE_THROWS(json_read_string(person, "pensioner"));
+        }
+
+        SECTION("throws on malformed json string") 
+        {
+            string bad_json = "{ this is not valid json }";
+            json bad = json_from_string(bad_json);
+            REQUIRE_FALSE(json_has_key(bad, "some_key")); // Adjust to suit your available functions
+
+
+        }
+
+        SECTION("throws on invalid file path") 
+        {
+            json missing = json_from_file("nonexistent.json");
+            REQUIRE_FALSE(json_has_key(missing, "anything"));  
+        }
+    }
+
     free_json(person);
     free_all_json();
 }

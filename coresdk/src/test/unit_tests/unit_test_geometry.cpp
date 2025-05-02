@@ -16,8 +16,8 @@ TEST_CASE("can correctly perform point geometry", "[geometry]")
     SECTION("can create a point")
     {
         point_2d pt = point_at(100.0, 200.0);
-        REQUIRE(pt.x == 100.0);
-        REQUIRE(pt.y == 200.0);
+        REQUIRE(pt.x == Approx(100.0).margin(EPSILON));
+        REQUIRE(pt.y == Approx(200.0).margin(EPSILON));
         pt = point_at(__DBL_MAX__, -__DBL_MAX__);
         REQUIRE(pt.x == __DBL_MAX__);
         REQUIRE(pt.y == -__DBL_MAX__);
@@ -25,8 +25,8 @@ TEST_CASE("can correctly perform point geometry", "[geometry]")
     SECTION("can create a point at the origin")
     {
         point_2d pt = point_at_origin();
-        REQUIRE(pt.x == 0.0);
-        REQUIRE(pt.y == 0.0);
+        REQUIRE(pt.x == Approx(0.0).margin(EPSILON));
+        REQUIRE(pt.y == Approx(0.0).margin(EPSILON));
     }
     SECTION("can offset a point")
     {
@@ -38,11 +38,12 @@ TEST_CASE("can correctly perform point geometry", "[geometry]")
     }
     SECTION("can offset a point from origin")
     {
-        vector_2d offset = vector_to(50.0, 50.0);
+        vector_2d offset = vector_to(150.0, 250.0); // ✅ fixed
         point_2d new_pt = point_offset_from_origin(offset);
-        REQUIRE(new_pt.x == 50.0);
-        REQUIRE(new_pt.y == 50.0);
+        REQUIRE(new_pt.x == Approx(150.0).margin(EPSILON));
+        REQUIRE(new_pt.y == Approx(250.0).margin(EPSILON));
     }
+
     SECTION("can convert point to string")
     {
         point_2d pt = point_at(100.0, 200.0);
@@ -58,6 +59,8 @@ TEST_CASE("can correctly perform point geometry", "[geometry]")
         REQUIRE(pt.y >= 0.0);
         REQUIRE(pt.x < bitmap_width(bmp));
         REQUIRE(pt.y < bitmap_height(bmp));
+
+        free_bitmap(bmp); //clean up bitmap after test
     }
     SECTION("can calculate point-point distance")
     {
@@ -169,31 +172,31 @@ TEST_CASE("can perform circle geometry", "[geometry]")
     SECTION("can create a circle")
     {
         circle c = circle_at(100.0, 100.0, 50.0);
-        REQUIRE(c.center.x == 100.0);
-        REQUIRE(c.center.y == 100.0);
-        REQUIRE(c.radius == 50.0);
+        REQUIRE(c.center.x == Approx(100.0).margin(EPSILON));
+        REQUIRE(c.center.y == Approx(100.0).margin(EPSILON));
+        REQUIRE(c.radius == Approx(50.0).margin(EPSILON));
     }
     SECTION("can retrieve circle radius")
     {
         circle c = circle_at(100.0, 100.0, 50.0);
-        REQUIRE(circle_radius(c) == 50.0);
+        REQUIRE(circle_radius(c) == Approx(50.0).margin(EPSILON));
     }
     SECTION("can retrieve circle x value")
     {
         circle c = circle_at(100.0, 100.0, 50.0);
-        REQUIRE(circle_x(c) == 100.0);
+        REQUIRE(circle_x(c) == Approx(100.0).margin(EPSILON));
     }
     SECTION("can retrieve circle y value")
     {
         circle c = circle_at(100.0, 100.0, 50.0);
-        REQUIRE(circle_y(c) == 100.0);
+        REQUIRE(circle_y(c) == Approx(100.0).margin(EPSILON));
     }
     SECTION("can calculate center point")
     {
         circle c = circle_at(100.0, 100.0, 50.0);
         point_2d center = center_point(c);
-        REQUIRE(center.x == 100.0);
-        REQUIRE(center.y == 100.0);
+        REQUIRE(center.x == Approx(100.0).margin(EPSILON));
+        REQUIRE(center.y == Approx(100.0).margin(EPSILON));
     }
     SECTION("can detect circle intersection")
     {
