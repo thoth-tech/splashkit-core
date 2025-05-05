@@ -19702,7 +19702,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561950,
+    "parsed_at": 1746411289,
     "path": "coresdk/src/coresdk/drawing_options.h",
     "functions": [
       {
@@ -19818,9 +19818,9 @@
       {
         "signature": "drawing_options option_draw_to(window dest);",
         "name": "option_draw_to",
-        "method_name": null,
+        "method_name": "option_draw_to",
         "unique_global_name": "option_draw_to_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.option_draw_to_window",
         "suffix_name": null,
         "description": "Use this option to draw to a specified Window. Pass dest the Window you want to draw on.",
         "brief": null,
@@ -19848,6 +19848,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "option_draw_to",
+          "self": "dest",
           "suffix": "window",
           "group": "graphics"
         }
@@ -19855,9 +19858,9 @@
       {
         "signature": "drawing_options option_draw_to(window dest,drawing_options opts);",
         "name": "option_draw_to",
-        "method_name": null,
+        "method_name": "option_draw_to",
         "unique_global_name": "option_draw_to_window_with_options",
-        "unique_method_name": null,
+        "unique_method_name": "window.option_draw_to_window_with_options",
         "suffix_name": null,
         "description": "Use this option to draw to a Bitmap. Pass dest the Bitmap you want to draw on to.\nPass opts the other options you want use.",
         "brief": null,
@@ -19898,6 +19901,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "option_draw_to",
+          "self": "dest",
           "suffix": "window_with_options",
           "group": "graphics"
         }

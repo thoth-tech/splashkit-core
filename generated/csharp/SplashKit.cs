@@ -31174,6 +31174,25 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
+    /// Use this option to draw to a specified Window. Pass dest the Window you want to draw on.
+    /// </summary>
+    /// <returns>A drawing option that will draw to the indicated window.</returns>
+    public DrawingOptions OptionDrawTo()
+    {
+        return SplashKit.OptionDrawTo(this);
+    }
+
+    /// <summary>
+    /// Use this option to draw to a Bitmap. Pass dest the Bitmap you want to draw on to. Pass opts the other options you want use.
+    /// </summary>
+    /// <param name="opts"> Values for the other options.</param>
+    /// <returns>A drawing option that will draw to the indicated window.</returns>
+    public DrawingOptions OptionDrawTo(DrawingOptions opts)
+    {
+        return SplashKit.OptionDrawTo(this, opts);
+    }
+
+    /// <summary>
     /// Draws an ellipse on the given window, using the provided location, and size.
     /// </summary>
     /// <param name="clr"> The color of the ellipse</param>
