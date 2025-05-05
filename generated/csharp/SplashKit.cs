@@ -31686,6 +31686,60 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
+    /// Ends reading text for the passed in window.
+    /// </summary>
+    public void EndReadingText()
+    {
+        SplashKit.EndReadingText(this);
+    }
+
+    /// <summary>
+    /// Returns true when the window is reading text.
+    /// </summary>
+    /// <returns>True when window is setup to read input from the user.</returns>
+    public bool ReadingText()
+    {
+        return SplashKit.ReadingText(this);
+    }
+
+    /// <summary>
+    /// Start reading text in the window within the bounds of the supplied rectangle.
+    /// </summary>
+    /// <param name="rect"> The area where the text will be entered.</param>
+    public void StartReadingText(Rectangle rect)
+    {
+        SplashKit.StartReadingText(this, rect);
+    }
+
+    /// <summary>
+    /// Start reading text in the window within the bounds of the supplied rectangle. The text will start with an initial value.
+    /// </summary>
+    /// <param name="rect"> The area where the text will be entered.</param>
+    /// <param name="initialText"> The initial text, which may be edited by the user.</param>
+    public void StartReadingText(Rectangle rect, string initialText)
+    {
+        SplashKit.StartReadingText(this, rect, initialText);
+    }
+
+    /// <summary>
+    /// Did the user press escape and cancel the enterring of text?
+    /// </summary>
+    /// <returns>True when the use has cancelled text entry</returns>
+    public bool TextEntryCancelled()
+    {
+        return SplashKit.TextEntryCancelled(this);
+    }
+
+    /// <summary>
+    /// The text the user has currently enterred on the current window.
+    /// </summary>
+    /// <returns>The user's text entry</returns>
+    public string TextInput()
+    {
+        return SplashKit.TextInput(this);
+    }
+
+    /// <summary>
     /// Draw a triangle on a given window, using the supplied drawing options.
     /// </summary>
     /// <param name="clr"> The color for the triangle</param>

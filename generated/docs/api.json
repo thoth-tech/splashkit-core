@@ -46361,9 +46361,9 @@
       {
         "signature": "void end_reading_text(window wind);",
         "name": "end_reading_text",
-        "method_name": null,
+        "method_name": "end_reading_text",
         "unique_global_name": "end_reading_text_in_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.end_reading_text_in_window",
         "suffix_name": null,
         "description": "Ends reading text for the passed in window.",
         "brief": null,
@@ -46391,6 +46391,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "end_reading_text",
+          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         },
@@ -46402,6 +46405,7 @@
             "def end_reading_text_in_window(wind):"
           ],
           "csharp": [
+            "public void Window.EndReadingText();",
             "public static void SplashKit.EndReadingText(Window wind);"
           ],
           "pascal": [
@@ -46449,9 +46453,9 @@
       {
         "signature": "bool reading_text(window wind);",
         "name": "reading_text",
-        "method_name": null,
+        "method_name": "reading_text",
         "unique_global_name": "reading_text_in_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.reading_text_in_window",
         "suffix_name": null,
         "description": "Returns true when the window is reading text.",
         "brief": null,
@@ -46479,6 +46483,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "reading_text",
+          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         },
@@ -46490,6 +46497,7 @@
             "def reading_text_in_window(wind):"
           ],
           "csharp": [
+            "public bool Window.ReadingText();",
             "public static bool SplashKit.ReadingText(Window wind);"
           ],
           "pascal": [
@@ -46614,9 +46622,9 @@
       {
         "signature": "void start_reading_text(window wind,rectangle rect);",
         "name": "start_reading_text",
-        "method_name": null,
+        "method_name": "start_reading_text",
         "unique_global_name": "start_reading_text_in_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.start_reading_text_in_window",
         "suffix_name": null,
         "description": "Start reading text in the window within the bounds of the\nsupplied rectangle.",
         "brief": null,
@@ -46657,6 +46665,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "start_reading_text",
+          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         },
@@ -46668,6 +46679,7 @@
             "def start_reading_text_in_window(wind, rect):"
           ],
           "csharp": [
+            "public void Window.StartReadingText(Rectangle rect);",
             "public static void SplashKit.StartReadingText(Window wind, Rectangle rect);"
           ],
           "pascal": [
@@ -46678,9 +46690,9 @@
       {
         "signature": "void start_reading_text(window wind,rectangle rect,string initial_text);",
         "name": "start_reading_text",
-        "method_name": null,
+        "method_name": "start_reading_text",
         "unique_global_name": "start_reading_text_in_window_with_initial_text",
-        "unique_method_name": null,
+        "unique_method_name": "window.start_reading_text_in_window_with_initial_text",
         "suffix_name": null,
         "description": "Start reading text in the window within the bounds of the\nsupplied rectangle. The text will start with an initial value.",
         "brief": null,
@@ -46734,6 +46746,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "start_reading_text",
+          "self": "wind",
           "suffix": "in_window_with_initial_text",
           "group": "input"
         },
@@ -46745,6 +46760,7 @@
             "def start_reading_text_in_window_with_initial_text(wind, rect, initial_text):"
           ],
           "csharp": [
+            "public void Window.StartReadingText(Rectangle rect, string initialText);",
             "public static void SplashKit.StartReadingText(Window wind, Rectangle rect, string initialText);"
           ],
           "pascal": [
@@ -46792,9 +46808,9 @@
       {
         "signature": "bool text_entry_cancelled(window wind);",
         "name": "text_entry_cancelled",
-        "method_name": null,
+        "method_name": "text_entry_cancelled",
         "unique_global_name": "text_entry_cancelled_in_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.text_entry_cancelled_in_window",
         "suffix_name": null,
         "description": "Did the user press escape and cancel the enterring of text?",
         "brief": null,
@@ -46822,6 +46838,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "text_entry_cancelled",
+          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         },
@@ -46833,6 +46852,7 @@
             "def text_entry_cancelled_in_window(wind):"
           ],
           "csharp": [
+            "public bool Window.TextEntryCancelled();",
             "public static bool SplashKit.TextEntryCancelled(Window wind);"
           ],
           "pascal": [
@@ -46880,9 +46900,9 @@
       {
         "signature": "string text_input(window wind);",
         "name": "text_input",
-        "method_name": null,
+        "method_name": "text_input",
         "unique_global_name": "text_input_in_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.text_input_in_window",
         "suffix_name": null,
         "description": "The text the user has currently enterred on the current window.",
         "brief": null,
@@ -46910,6 +46930,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "text_input",
+          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         },
@@ -46921,6 +46944,7 @@
             "def text_input_in_window(wind):"
           ],
           "csharp": [
+            "public string Window.TextInput();",
             "public static string SplashKit.TextInput(Window wind);"
           ],
           "pascal": [
