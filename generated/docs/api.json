@@ -28701,9 +28701,9 @@
         "attributes": {
           "class": "window",
           "method": "take_screenshot",
+          "self": "wind",
           "suffix": "of_window",
-          "group": "graphics",
-          "self": "wind"
+          "group": "graphics"
         },
         "signatures": {
           "cpp": [
