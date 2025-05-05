@@ -1808,9 +1808,9 @@
       {
         "signature": "void free_animation(animation ani);",
         "name": "free_animation",
-        "method_name": null,
+        "method_name": "free",
         "unique_global_name": "free_animation",
-        "unique_method_name": null,
+        "unique_method_name": "animation.free",
         "suffix_name": null,
         "description": "Disposes of the resources used in the animation.",
         "brief": null,
@@ -1840,6 +1840,7 @@
         "attributes": {
           "class": "animation",
           "destructor": true,
+          "method": "free",
           "self": "ani",
           "group": "animations",
           "static": "animation"
@@ -1852,6 +1853,7 @@
             "def free_animation(ani):"
           ],
           "csharp": [
+            "public void Animation.Free();",
             "public static void SplashKit.FreeAnimation(Animation ani);"
           ],
           "pascal": [
@@ -1862,9 +1864,9 @@
       {
         "signature": "void free_animation_script(animation_script script_to_free);",
         "name": "free_animation_script",
-        "method_name": null,
+        "method_name": "free",
         "unique_global_name": "free_animation_script",
-        "unique_method_name": null,
+        "unique_method_name": "animation_script.free",
         "suffix_name": null,
         "description": "Frees loaded animation frames data. Use this when you will no\nlonger be using the animation for any purpose, including within\nsprite.",
         "brief": null,
@@ -1894,6 +1896,7 @@
         "attributes": {
           "class": "animation_script",
           "destructor": true,
+          "method": "free",
           "self": "script_to_free",
           "group": "animations",
           "static": "animation"
@@ -1906,6 +1909,7 @@
             "def free_animation_script(script_to_free):"
           ],
           "csharp": [
+            "public void AnimationScript.Free();",
             "public static void SplashKit.FreeAnimationScript(AnimationScript scriptToFree);"
           ],
           "pascal": [
@@ -2998,9 +3002,9 @@
       {
         "signature": "void free_music(music effect);",
         "name": "free_music",
-        "method_name": null,
+        "method_name": "free",
         "unique_global_name": "free_music",
-        "unique_method_name": null,
+        "unique_method_name": "music.free",
         "suffix_name": null,
         "description": "Releases the SplashKit resources associated with music.",
         "brief": null,
@@ -3030,6 +3034,7 @@
         "attributes": {
           "class": "music",
           "destructor": true,
+          "method": "free",
           "self": "effect",
           "group": "audio",
           "static": "audio"
@@ -3042,6 +3047,7 @@
             "def free_music(effect):"
           ],
           "csharp": [
+            "public void Music.Free();",
             "public static void SplashKit.FreeMusic(Music effect);"
           ],
           "pascal": [
@@ -52155,9 +52161,9 @@
       {
         "signature": "void free_json(json j);",
         "name": "free_json",
-        "method_name": null,
+        "method_name": "free",
         "unique_global_name": "free_json",
-        "unique_method_name": null,
+        "unique_method_name": "json.free",
         "suffix_name": null,
         "description": "Frees the SplashKit resources associated with the `json` object.",
         "brief": null,
@@ -52187,6 +52193,7 @@
         "attributes": {
           "class": "json",
           "destructor": true,
+          "method": "free",
           "self": "j",
           "group": "json",
           "static": "json"
@@ -52199,6 +52206,7 @@
             "def free_json(j):"
           ],
           "csharp": [
+            "public void Json.Free();",
             "public static void SplashKit.FreeJson(Json j);"
           ],
           "pascal": [
@@ -72798,9 +72806,9 @@
       {
         "signature": "void close_adc(adc_device adc);",
         "name": "close_adc",
-        "method_name": null,
+        "method_name": "close",
         "unique_global_name": "close_adc",
-        "unique_method_name": null,
+        "unique_method_name": "adc_device.close",
         "suffix_name": null,
         "description": "Closes an ADC device given its pointer.",
         "brief": null,
@@ -72830,6 +72838,7 @@
         "attributes": {
           "class": "adc_device",
           "destructor": true,
+          "method": "close",
           "self": "adc",
           "group": "raspberry",
           "static": "raspberry"
@@ -72842,6 +72851,7 @@
             "def close_adc(adc):"
           ],
           "csharp": [
+            "public void AdcDevice.Close();",
             "public static void SplashKit.CloseAdc(AdcDevice adc);"
           ],
           "pascal": [
@@ -85043,9 +85053,9 @@
       {
         "signature": "void free_timer(timer to_free);",
         "name": "free_timer",
-        "method_name": null,
+        "method_name": "free",
         "unique_global_name": "free_timer",
-        "unique_method_name": null,
+        "unique_method_name": "timer.free",
         "suffix_name": null,
         "description": "Free the memory used to store this timer.",
         "brief": null,
@@ -85075,9 +85085,10 @@
         "attributes": {
           "class": "timer",
           "destructor": true,
+          "method": "free",
+          "self": "to_free",
           "group": "timers",
-          "static": "timers",
-          "self": "to_free"
+          "static": "timers"
         },
         "signatures": {
           "cpp": [
@@ -85087,6 +85098,7 @@
             "def free_timer(to_free):"
           ],
           "csharp": [
+            "public void Timer.Free();",
             "public static void SplashKit.FreeTimer(Timer toFree);"
           ],
           "pascal": [

@@ -3,7 +3,7 @@
     "group": "animations",
     "brief": "Animations in SplashKit can be used to move between cells in\nbitmaps and sprites. Each animation generates a number sequence\nthat can then be used when drawing bitmaps.",
     "description": null,
-    "parsed_at": 1745561942,
+    "parsed_at": 1746413764,
     "path": "coresdk/src/coresdk/animations.h",
     "functions": [
       {
@@ -1425,9 +1425,9 @@
       {
         "signature": "void free_animation(animation ani);",
         "name": "free_animation",
-        "method_name": null,
+        "method_name": "free",
         "unique_global_name": "free_animation",
-        "unique_method_name": null,
+        "unique_method_name": "animation.free",
         "suffix_name": null,
         "description": "Disposes of the resources used in the animation.",
         "brief": null,
@@ -1457,6 +1457,7 @@
         "attributes": {
           "class": "animation",
           "destructor": true,
+          "method": "free",
           "self": "ani",
           "group": "animations",
           "static": "animation"
@@ -1465,9 +1466,9 @@
       {
         "signature": "void free_animation_script(animation_script script_to_free);",
         "name": "free_animation_script",
-        "method_name": null,
+        "method_name": "free",
         "unique_global_name": "free_animation_script",
-        "unique_method_name": null,
+        "unique_method_name": "animation_script.free",
         "suffix_name": null,
         "description": "Frees loaded animation frames data. Use this when you will no\nlonger be using the animation for any purpose, including within\nsprite.",
         "brief": null,
@@ -1497,6 +1498,7 @@
         "attributes": {
           "class": "animation_script",
           "destructor": true,
+          "method": "free",
           "self": "script_to_free",
           "group": "animations",
           "static": "animation"
@@ -7255,7 +7257,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561945,
+    "parsed_at": 1746413765,
     "path": "coresdk/src/coresdk/clipping.h",
     "functions": [
       {
@@ -19702,7 +19704,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561950,
+    "parsed_at": 1746413766,
     "path": "coresdk/src/coresdk/drawing_options.h",
     "functions": [
       {
@@ -23293,7 +23295,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561952,
+    "parsed_at": 1746413766,
     "path": "coresdk/src/coresdk/graphics.h",
     "functions": [
       {
@@ -29929,7 +29931,7 @@
     "group": "json",
     "brief": "SplashKit Json allows you to create and read JSON objects.",
     "description": "Splashkit's JSON library allows you to easily create or read JSON objects and\nmanipulate them to/from a JSON string or from a file containing a JSON\nstring. Create a new JSON object with a call to `create_json()` and\nread or write data to it by calling methods like\n`json_add_string(json j, string key, string value)` and\n`json_read_string(json j, string key)`.",
-    "parsed_at": 1745561954,
+    "parsed_at": 1746413768,
     "path": "coresdk/src/coresdk/json.h",
     "functions": [
       {
@@ -30026,9 +30028,9 @@
       {
         "signature": "void free_json(json j);",
         "name": "free_json",
-        "method_name": null,
+        "method_name": "free",
         "unique_global_name": "free_json",
-        "unique_method_name": null,
+        "unique_method_name": "json.free",
         "suffix_name": null,
         "description": "Frees the SplashKit resources associated with the `json` object.",
         "brief": null,
@@ -30058,6 +30060,7 @@
         "attributes": {
           "class": "json",
           "destructor": true,
+          "method": "free",
           "self": "j",
           "group": "json",
           "static": "json"
@@ -36566,7 +36569,7 @@
     "group": "audio",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561957,
+    "parsed_at": 1746413768,
     "path": "coresdk/src/coresdk/music.h",
     "functions": [
       {
@@ -36870,9 +36873,9 @@
       {
         "signature": "void free_music(music effect);",
         "name": "free_music",
-        "method_name": null,
+        "method_name": "free",
         "unique_global_name": "free_music",
-        "unique_method_name": null,
+        "unique_method_name": "music.free",
         "suffix_name": null,
         "description": "Releases the SplashKit resources associated with music.",
         "brief": null,
@@ -36902,6 +36905,7 @@
         "attributes": {
           "class": "music",
           "destructor": true,
+          "method": "free",
           "self": "effect",
           "group": "audio",
           "static": "audio"
@@ -40910,7 +40914,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561959,
+    "parsed_at": 1746413769,
     "path": "coresdk/src/coresdk/point_drawing.h",
     "functions": [
       {
@@ -42230,7 +42234,7 @@
     "group": "geometry",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561960,
+    "parsed_at": 1746413770,
     "path": "coresdk/src/coresdk/point_geometry.h",
     "functions": [
       {
@@ -44070,7 +44074,7 @@
     "group": "raspberry",
     "brief": "Provides support for using an ADC device with the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1745561960,
+    "parsed_at": 1746413771,
     "path": "coresdk/src/coresdk/raspi_adc.h",
     "functions": [
       {
@@ -44113,9 +44117,9 @@
       {
         "signature": "void close_adc(adc_device adc);",
         "name": "close_adc",
-        "method_name": null,
+        "method_name": "close",
         "unique_global_name": "close_adc",
-        "unique_method_name": null,
+        "unique_method_name": "adc_device.close",
         "suffix_name": null,
         "description": "Closes an ADC device given its pointer.",
         "brief": null,
@@ -44145,6 +44149,7 @@
         "attributes": {
           "class": "adc_device",
           "destructor": true,
+          "method": "close",
           "self": "adc",
           "group": "raspberry",
           "static": "raspberry"
@@ -44517,7 +44522,7 @@
     "group": "raspberry",
     "brief": "Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1745561961,
+    "parsed_at": 1746413772,
     "path": "coresdk/src/coresdk/raspi_gpio.h",
     "functions": [
       {
@@ -45738,7 +45743,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561962,
+    "parsed_at": 1746413774,
     "path": "coresdk/src/coresdk/rectangle_drawing.h",
     "functions": [
       {
@@ -61170,7 +61175,7 @@
     "group": "input",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561966,
+    "parsed_at": 1746413775,
     "path": "coresdk/src/coresdk/text_input.h",
     "functions": [
       {
@@ -61705,7 +61710,7 @@
     "group": "timers",
     "brief": "Timers in SplashKit can be used to track the passing of time.",
     "description": null,
-    "parsed_at": 1745561967,
+    "parsed_at": 1746413775,
     "path": "coresdk/src/coresdk/timers.h",
     "functions": [
       {
@@ -61774,9 +61779,9 @@
       {
         "signature": "void free_timer(timer to_free);",
         "name": "free_timer",
-        "method_name": null,
+        "method_name": "free",
         "unique_global_name": "free_timer",
-        "unique_method_name": null,
+        "unique_method_name": "timer.free",
         "suffix_name": null,
         "description": "Free the memory used to store this timer.",
         "brief": null,
@@ -61806,9 +61811,10 @@
         "attributes": {
           "class": "timer",
           "destructor": true,
+          "method": "free",
+          "self": "to_free",
           "group": "timers",
-          "static": "timers",
-          "self": "to_free"
+          "static": "timers"
         }
       },
       {
@@ -65514,7 +65520,7 @@
     "group": "types",
     "brief": "SplashKit Types simplifies data type creation and management for streamlined programming.",
     "description": null,
-    "parsed_at": 1745561968,
+    "parsed_at": 1746413777,
     "path": "coresdk/src/coresdk/types.h",
     "functions": [
 

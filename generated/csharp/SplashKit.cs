@@ -26990,6 +26990,14 @@ public class Json : PointerWrapper
     }
 
     /// <summary>
+    /// Frees the SplashKit resources associated with the `json` object.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeJson(this);
+    }
+
+    /// <summary>
     /// Returns the count of keys in the top-level `json` object.
     /// </summary>
     /// <returns>The count of keys in the top-level `json` object.</returns>
@@ -27294,6 +27302,14 @@ public class Music : PointerWrapper
     public void FadeIn(int times, int ms)
     {
         SplashKit.FadeMusicIn(this, times, ms);
+    }
+
+    /// <summary>
+    /// Releases the SplashKit resources associated with music.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeMusic(this);
     }
 
     /// <summary>
@@ -27726,6 +27742,14 @@ public class AdcDevice : PointerWrapper
     {
         SplashKit.CloseAdc(this);
     }
+    /// <summary>
+    /// Closes an ADC device given its pointer.
+    /// </summary>
+    public void Close()
+    {
+        SplashKit.CloseAdc(this);
+    }
+
     /// <summary>
     /// Reads an 8-bit value from the specified ADC channel on the device.
     /// </summary>
@@ -28914,6 +28938,14 @@ public class Timer : PointerWrapper
         SplashKit.FreeTimer(this);
     }
     /// <summary>
+    /// Free the memory used to store this timer.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeTimer(this);
+    }
+
+    /// <summary>
     /// Pause the timer, getting ticks from a paused timer will continue to return the same time.
     /// </summary>
     public void Pause()
@@ -29106,6 +29138,14 @@ public class Animation : PointerWrapper
     }
 
     /// <summary>
+    /// Disposes of the resources used in the animation.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeAnimation(this);
+    }
+
+    /// <summary>
     /// Restarts an `animation`.
     /// </summary>
     public void Restart()
@@ -29239,6 +29279,14 @@ public class AnimationScript : PointerWrapper
     public Animation CreateAnimation(string name, bool withSound)
     {
         return SplashKit.CreateAnimation(this, name, withSound);
+    }
+
+    /// <summary>
+    /// Frees loaded animation frames data. Use this when you will no longer be using the animation for any purpose, including within sprite.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeAnimationScript(this);
     }
 
     /// <summary>
