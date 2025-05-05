@@ -44070,7 +44070,7 @@
     "group": "raspberry",
     "brief": "Provides support for using an ADC device with the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1745561960,
+    "parsed_at": 1746408891,
     "path": "coresdk/src/coresdk/raspi_adc.h",
     "functions": [
       {
@@ -44517,7 +44517,7 @@
     "group": "raspberry",
     "brief": "Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1745561961,
+    "parsed_at": 1746408892,
     "path": "coresdk/src/coresdk/raspi_gpio.h",
     "functions": [
       {
@@ -45738,7 +45738,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561962,
+    "parsed_at": 1746408894,
     "path": "coresdk/src/coresdk/rectangle_drawing.h",
     "functions": [
       {
@@ -47502,9 +47502,9 @@
       {
         "signature": "void fill_quad_on_window(window destination,color clr,const quad &q,const drawing_options &opts);",
         "name": "fill_quad_on_window",
-        "method_name": null,
+        "method_name": "fill_quad",
         "unique_global_name": "fill_quad_on_window_with_options",
-        "unique_method_name": null,
+        "unique_method_name": "window.fill_quad_with_options",
         "suffix_name": null,
         "description": "Fill a quad on the supplied window using the supplied drawing options.",
         "brief": null,
@@ -47572,8 +47572,10 @@
         },
         "attributes": {
           "class": "window",
+          "method": "fill_quad",
           "suffix": "with_options",
-          "group": "graphics"
+          "group": "graphics",
+          "self": "destination"
         }
       },
       {
@@ -65514,7 +65516,7 @@
     "group": "types",
     "brief": "SplashKit Types simplifies data type creation and management for streamlined programming.",
     "description": null,
-    "parsed_at": 1745561968,
+    "parsed_at": 1746408895,
     "path": "coresdk/src/coresdk/types.h",
     "functions": [
 

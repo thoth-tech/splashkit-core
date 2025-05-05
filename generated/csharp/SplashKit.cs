@@ -31443,6 +31443,17 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
+    /// Fill a quad on the supplied window using the supplied drawing options.
+    /// </summary>
+    /// <param name="clr"> The color for the quad</param>
+    /// <param name="q"> The details of the quad</param>
+    /// <param name="opts"> The drawing options</param>
+    public void FillQuad(Color clr, Quad q, DrawingOptions opts)
+    {
+        SplashKit.FillQuadOnWindow(this, clr, q, opts);
+    }
+
+    /// <summary>
     /// Fill a rectangle on the supplied window onto the current window.
     /// </summary>
     /// <param name="clr"> The color of the rectangle</param>

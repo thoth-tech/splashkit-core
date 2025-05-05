@@ -37333,9 +37333,9 @@
       {
         "signature": "void fill_quad_on_window(window destination,color clr,const quad &q,const drawing_options &opts);",
         "name": "fill_quad_on_window",
-        "method_name": null,
+        "method_name": "fill_quad",
         "unique_global_name": "fill_quad_on_window_with_options",
-        "unique_method_name": null,
+        "unique_method_name": "window.fill_quad_with_options",
         "suffix_name": null,
         "description": "Fill a quad on the supplied window using the supplied drawing options.",
         "brief": null,
@@ -37403,8 +37403,10 @@
         },
         "attributes": {
           "class": "window",
+          "method": "fill_quad",
           "suffix": "with_options",
-          "group": "graphics"
+          "group": "graphics",
+          "self": "destination"
         },
         "signatures": {
           "cpp": [
@@ -37414,6 +37416,7 @@
             "def fill_quad_on_window_with_options(destination, clr, q, opts):"
           ],
           "csharp": [
+            "public void Window.FillQuad(Color clr, Quad q, DrawingOptions opts);",
             "public static void SplashKit.FillQuadOnWindow(Window destination, Color clr, Quad q, DrawingOptions opts);"
           ],
           "pascal": [
