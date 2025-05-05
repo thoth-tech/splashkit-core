@@ -31174,6 +31174,49 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
+    /// Returns the rectangle of the current clip area for a window
+    /// </summary>
+    /// <returns>The current clipping rectangle for the window</returns>
+    public Rectangle CurrentClip()
+    {
+        return SplashKit.CurrentClip(this);
+    }
+
+    /// <summary>
+    /// Remove the last clipping rectangle pushed to the window. This will then apply the previously pushed clipping rectangle.
+    /// </summary>
+    public void PopClip()
+    {
+        SplashKit.PopClip(this);
+    }
+
+    /// <summary>
+    /// Add the clipping rectangle of a window and uses the intersect between the new rectangle and previous clip.  When a clipping rectangle is provided, drawing operations will only affect the area specified in the current clipping rectangle.
+    /// </summary>
+    /// <param name="r"> The new clipping rectangle</param>
+    public void PushClip(Rectangle r)
+    {
+        SplashKit.PushClip(this, r);
+    }
+
+    /// <summary>
+    /// Reset the clipping rectangle on a window. This will clear all of the clipping rectangles pushed to the window.
+    /// </summary>
+    public void ResetClip()
+    {
+        SplashKit.ResetClip(this);
+    }
+
+    /// <summary>
+    /// Set the clip rectangle of the window. This will clear any existing clipping rectangles pushed to the window, and use the supplied rectangle for clipping.
+    /// </summary>
+    /// <param name="r"> The new clipping rectangle</param>
+    public void SetClip(Rectangle r)
+    {
+        SplashKit.SetClip(this, r);
+    }
+
+    /// <summary>
     /// Use this option to draw to a specified Window. Pass dest the Window you want to draw on.
     /// </summary>
     /// <returns>A drawing option that will draw to the indicated window.</returns>

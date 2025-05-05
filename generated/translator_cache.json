@@ -7255,7 +7255,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561945,
+    "parsed_at": 1746411944,
     "path": "coresdk/src/coresdk/clipping.h",
     "functions": [
       {
@@ -7321,9 +7321,9 @@
       {
         "signature": "rectangle current_clip(window wnd);",
         "name": "current_clip",
-        "method_name": null,
+        "method_name": "current_clip",
         "unique_global_name": "current_clip_for_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.current_clip_for_window",
         "suffix_name": null,
         "description": "Returns the rectangle of the current clip area for a window",
         "brief": null,
@@ -7351,6 +7351,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "current_clip",
+          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -7358,9 +7361,9 @@
       {
         "signature": "void pop_clip(window wnd);",
         "name": "pop_clip",
-        "method_name": null,
+        "method_name": "pop_clip",
         "unique_global_name": "pop_clip_for_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.pop_clip_for_window",
         "suffix_name": null,
         "description": "Remove the last clipping rectangle pushed to the window. This\nwill then apply the previously pushed clipping rectangle.",
         "brief": null,
@@ -7388,6 +7391,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "pop_clip",
+          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -7455,9 +7461,9 @@
       {
         "signature": "void push_clip(window wnd,const rectangle &r);",
         "name": "push_clip",
-        "method_name": null,
+        "method_name": "push_clip",
         "unique_global_name": "push_clip_for_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.push_clip_for_window",
         "suffix_name": null,
         "description": "Add the clipping rectangle of a window and uses the intersect between\nthe new rectangle and previous clip.\n\nWhen a clipping rectangle is provided, drawing operations will only\naffect the area specified in the current clipping rectangle.",
         "brief": null,
@@ -7498,6 +7504,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "push_clip",
+          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -7651,9 +7660,9 @@
       {
         "signature": "void reset_clip(window wnd);",
         "name": "reset_clip",
-        "method_name": null,
+        "method_name": "reset_clip",
         "unique_global_name": "reset_clip_for_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.reset_clip_for_window",
         "suffix_name": null,
         "description": "Reset the clipping rectangle on a window. This will clear all\nof the clipping rectangles pushed to the window.",
         "brief": null,
@@ -7681,6 +7690,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "reset_clip",
+          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -7774,9 +7786,9 @@
       {
         "signature": "void set_clip(window wnd,const rectangle &r);",
         "name": "set_clip",
-        "method_name": null,
+        "method_name": "set_clip",
         "unique_global_name": "set_clip_for_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.set_clip_for_window",
         "suffix_name": null,
         "description": "Set the clip rectangle of the window. This will clear any existing\nclipping rectangles pushed to the window, and use the supplied rectangle\nfor clipping.",
         "brief": null,
@@ -7817,6 +7829,9 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "set_clip",
+          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
