@@ -31364,6 +31364,27 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
+    /// Returns the color of the pixel at the x,y location on the given window.
+    /// </summary>
+    /// <param name="pt"> The position of the pixel</param>
+    /// <returns>The color of the pixel at the supplied location</returns>
+    public Color GetPixel(Point2D pt)
+    {
+        return SplashKit.GetPixelFromWindow(this, pt);
+    }
+
+    /// <summary>
+    /// Returns the color of the pixel at the x,y location on the given window.
+    /// </summary>
+    /// <param name="x"> The distance from the left edge of the window to the pixel to read</param>
+    /// <param name="y"> The distance from the top of the window to the pixel to read</param>
+    /// <returns>The color of the pixel at the supplied location</returns>
+    public Color GetPixel(double x, double y)
+    {
+        return SplashKit.GetPixelFromWindow(this, x, y);
+    }
+
+    /// <summary>
     /// Draw a quad on the supplied window to the current window.
     /// </summary>
     /// <param name="clr"> The color for the quad</param>

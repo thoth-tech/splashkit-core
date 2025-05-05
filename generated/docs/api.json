@@ -35096,9 +35096,9 @@
       {
         "signature": "color get_pixel_from_window(window destination,const point_2d &pt);",
         "name": "get_pixel_from_window",
-        "method_name": null,
+        "method_name": "get_pixel",
         "unique_global_name": "get_pixel_from_window_at_point_from_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.get_pixel_at_point_from_window",
         "suffix_name": null,
         "description": "Returns the color of the pixel at the x,y location on the given\nwindow.",
         "brief": null,
@@ -35139,8 +35139,11 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "get_pixel",
           "suffix": "at_point_from_window",
-          "group": "graphics"
+          "group": "graphics",
+          "self": "destination"
         },
         "signatures": {
           "cpp": [
@@ -35150,6 +35153,7 @@
             "def get_pixel_from_window_at_point_from_window(destination, pt):"
           ],
           "csharp": [
+            "public Color Window.GetPixel(Point2D pt);",
             "public static Color SplashKit.GetPixelFromWindow(Window destination, Point2D pt);"
           ],
           "pascal": [
@@ -35160,9 +35164,9 @@
       {
         "signature": "color get_pixel_from_window(window destination,double x,double y);",
         "name": "get_pixel_from_window",
-        "method_name": null,
+        "method_name": "get_pixel",
         "unique_global_name": "get_pixel_from_window_from_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.get_pixel_from_window",
         "suffix_name": null,
         "description": "Returns the color of the pixel at the x,y location on the given\nwindow.",
         "brief": null,
@@ -35217,8 +35221,10 @@
         },
         "attributes": {
           "class": "window",
+          "method": "get_pixel",
           "suffix": "from_window",
-          "group": "graphics"
+          "group": "graphics",
+          "self": "destination"
         },
         "signatures": {
           "cpp": [
@@ -35228,6 +35234,7 @@
             "def get_pixel_from_window_from_window(destination, x, y):"
           ],
           "csharp": [
+            "public Color Window.GetPixel(double x, double y);",
             "public static Color SplashKit.GetPixelFromWindow(Window destination, double x, double y);"
           ],
           "pascal": [
