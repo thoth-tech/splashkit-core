@@ -101,7 +101,9 @@ namespace splashkit_lib
      *                 already, then the name will be changed to generate a
      *                 unique filename.
      *
+     * @attribute class   window
      * @attribute suffix  of_window
+     * @attribute method  take_screenshot
      */
     void take_screenshot(window wind, const string &basename);
 

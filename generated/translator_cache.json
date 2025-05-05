@@ -23293,7 +23293,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561952,
+    "parsed_at": 1746410665,
     "path": "coresdk/src/coresdk/graphics.h",
     "functions": [
       {
@@ -23804,9 +23804,9 @@
       {
         "signature": "void take_screenshot(window wind,const string &basename);",
         "name": "take_screenshot",
-        "method_name": null,
+        "method_name": "take_screenshot",
         "unique_global_name": "take_screenshot_of_window",
-        "unique_method_name": null,
+        "unique_method_name": "window.take_screenshot_of_window",
         "suffix_name": null,
         "description": "Saves a screenshot of the current window to a bitmap file. The file will\nbe saved onto the user's desktop.",
         "brief": null,
@@ -23847,8 +23847,11 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "take_screenshot",
           "suffix": "of_window",
-          "group": "graphics"
+          "group": "graphics",
+          "self": "wind"
         }
       }
     ],

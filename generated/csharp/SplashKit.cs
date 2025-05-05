@@ -31270,6 +31270,15 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
+    /// Saves a screenshot of the current window to a bitmap file. The file will be saved onto the user's desktop.
+    /// </summary>
+    /// <param name="basename"> The base of the filename. If there is a file of this name already, then the name will be changed to generate a unique filename.</param>
+    public void TakeScreenshot(string basename)
+    {
+        SplashKit.TakeScreenshot(this, basename);
+    }
+
+    /// <summary>
     /// Draws the bitmap supplied into `bmp` to the given window. at `x` and `y`.
     /// </summary>
     /// <param name="bmp"> the bitmap which will be drawn to the screen</param>
