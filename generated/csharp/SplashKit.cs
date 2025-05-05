@@ -31385,6 +31385,15 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
+    /// Returns a random point on the provided window.
+    /// </summary>
+    /// <returns>A point within the bounds of the window</returns>
+    public Point2D RandomPoint()
+    {
+        return SplashKit.RandomWindowPoint(this);
+    }
+
+    /// <summary>
     /// Draw a quad on the supplied window to the current window.
     /// </summary>
     /// <param name="clr"> The color for the quad</param>

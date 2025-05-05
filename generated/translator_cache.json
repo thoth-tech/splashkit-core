@@ -42235,7 +42235,7 @@
     "group": "geometry",
     "brief": null,
     "description": null,
-    "parsed_at": 1745561960,
+    "parsed_at": 1746410146,
     "path": "coresdk/src/coresdk/point_geometry.h",
     "functions": [
       {
@@ -43157,9 +43157,9 @@
       {
         "signature": "point_2d random_window_point(window wind);",
         "name": "random_window_point",
-        "method_name": null,
+        "method_name": "random_point",
         "unique_global_name": "random_window_point",
-        "unique_method_name": null,
+        "unique_method_name": "window.random_point",
         "suffix_name": null,
         "description": "Returns a random point on the provided window.",
         "brief": null,
@@ -43187,8 +43187,11 @@
           }
         },
         "attributes": {
+          "class": "window",
+          "method": "random_point",
           "group": "geometry",
-          "static": "geometry"
+          "static": "geometry",
+          "self": "wind"
         }
       },
       {
