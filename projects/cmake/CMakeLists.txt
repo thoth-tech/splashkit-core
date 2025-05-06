@@ -12,6 +12,13 @@ set(SK_LIB "${CMAKE_CURRENT_SOURCE_DIR}/../../coresdk/lib")
 set(SK_OUT "${CMAKE_CURRENT_SOURCE_DIR}/../../out")
 set(SK_BIN "${CMAKE_CURRENT_SOURCE_DIR}/../../bin")
 
+# Option to use GCOV for coverage when compiling and linking
+option(USE_COVERAGE "Enable coverage during the build" OFF)
+if(USE_COVERAGE)
+    add_compile_options(--coverage)
+    add_link_options(--coverage)
+endif()
+
 # Includes for CTest/Catch2 integration
 include(CTest)
 include("${CMAKE_CURRENT_SOURCE_DIR}/catch/Catch.cmake")
@@ -291,3 +298,38 @@ catch_discover_tests(skunit_tests)
 
 install(TARGETS SplashKitBackend DESTINATION lib)
 install(FILES ${INCLUDE_FILES} DESTINATION include/SplashKitBackend)
+
+# Coverage collection with LCOV
+# Get absolute path to SK_SRC so we can pass it to LCOV
+# and collect coverage only for src files
+get_filename_component(SRC_ABS ${SK_SRC} ABSOLUTE)
+message(SRC_ABS="${SRC_ABS}")
+
+find_program(LCOV lcov REQUIRED)
+set(LCOV_BASE lcov-base.info)
+set(LCOV_TEST lcov-test.info)
+set(LCOV_TOTAL lcov.info)
+set(LCOV_LOG lcov.log)
+set(LCOV_ERR lcov.err)
+add_custom_target(init-coverage
+    COMMENT "Collecting initial coverage"
+    COMMAND lcov --capture --initial --directory ${CMAKE_CURRENT_BINARY_DIR} --include "'${SRC_ABS}*'"
+        --output-file ${LCOV_BASE} 2>${LCOV_ERR} >${LCOV_LOG})
+add_dependencies(init-coverage reset-coverage)
+
+add_custom_target(reset-coverage
+    COMMENT "Reset all coverage counters to zero"
+    COMMAND lcov --quiet --zerocounters --directory ${CMAKE_CURRENT_BINARY_DIR}
+        --output-file ${LCOV_BASE}
+    COMMAND lcov --quiet --zerocounters --directory ${CMAKE_CURRENT_BINARY_DIR}
+        --output-file ${LCOV_TEST}
+    COMMAND lcov --quiet --zerocounters --directory ${CMAKE_CURRENT_BINARY_DIR}
+        --output-file ${LCOV_TOTAL})
+
+add_custom_target(capture-coverage
+    COMMENT "Capture coverage data"
+    DEPENDS ${LCOV_BASE}
+    COMMAND lcov --capture --directory ${CMAKE_CURRENT_BINARY_DIR} --output-file ${LCOV_TEST} --include "'${SRC_ABS}*'"
+        2>${LCOV_ERR} >${LCOV_LOG}
+    COMMAND lcov --add-tracefile ${LCOV_BASE} --add-tracefile ${LCOV_TEST} --output-file ${LCOV_TOTAL}
+        >>${LCOV_LOG})
