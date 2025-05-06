@@ -228,64 +228,64 @@ namespace splashkit_lib
 #endif
     }
 
-    connection remote_raspi_init(const string &name, const string &host, unsigned short int port)
+    void remote_raspi_init()
     {
-        return sk_remote_gpio_init(name, host, port);
+        sk_remote_gpio_init();
     }
 
-    void remote_raspi_set_mode(connection pi, gpio_pin pin, gpio_pin_mode mode)
+    void remote_raspi_set_mode(gpio_pin pin, gpio_pin_mode mode)
     {
         int bcmPin = boardToBCM(pin);
-        if (bcmPin >= 2) sk_remote_gpio_set_mode(pi, bcmPin, mode);
+        if (bcmPin >= 2) sk_remote_gpio_set_mode(bcmPin, mode);
     }
 
-    gpio_pin_mode remote_raspi_get_mode(connection pi, gpio_pin pin)
+    gpio_pin_mode remote_raspi_get_mode(gpio_pin pin)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) return static_cast<gpio_pin_mode>(sk_remote_gpio_get_mode(pi, bcmPin));
+        if(bcmPin >= 2) return static_cast<gpio_pin_mode>(sk_remote_gpio_get_mode(bcmPin));
         else return GPIO_DEFAULT_MODE;
     }
 
-    void remote_raspi_set_pull_up_down(connection pi, gpio_pin pin, pull_up_down pud)
+    void remote_raspi_set_pull_up_down(gpio_pin pin, pull_up_down pud)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) sk_remote_gpio_set_pull_up_down(pi, bcmPin, pud);
+        if(bcmPin >= 2) sk_remote_gpio_set_pull_up_down(bcmPin, pud);
     }
 
-    void remote_raspi_write(connection pi, gpio_pin pin, gpio_pin_value value)
+    void remote_raspi_write(gpio_pin pin, gpio_pin_value value)
     {
         int bcmPin = boardToBCM(pin);
         
-        if(bcmPin >= 2) sk_remote_gpio_write(pi, bcmPin, value);
+        if(bcmPin >= 2) sk_remote_gpio_write(bcmPin, value);
     }
 
-    gpio_pin_value remote_raspi_read(connection pi, gpio_pin pin)
+    gpio_pin_value remote_raspi_read(gpio_pin pin)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) return static_cast<gpio_pin_value>(sk_remote_gpio_read(pi, bcmPin));
+        if(bcmPin >= 2) return static_cast<gpio_pin_value>(sk_remote_gpio_read(bcmPin));
         else return GPIO_DEFAULT_VALUE;
     }
 
-    void remote_raspi_set_pwm_range(connection pi, gpio_pin pin, int range)
+    void remote_raspi_set_pwm_range(gpio_pin pin, int range)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) sk_remote_set_pwm_range(pi, bcmPin, range);
+        if(bcmPin >= 2) sk_remote_set_pwm_range(bcmPin, range);
     }
 
-    void remote_raspi_set_pwm_frequency(connection pi, gpio_pin pin, int frequency)
+    void remote_raspi_set_pwm_frequency(gpio_pin pin, int frequency)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) sk_remote_set_pwm_frequency(pi, bcmPin, frequency);
+        if(bcmPin >= 2) sk_remote_set_pwm_frequency(bcmPin, frequency);
     }
 
-    void remote_raspi_set_pwm_dutycycle(connection pi, gpio_pin pin, int dutycycle)
+    void remote_raspi_set_pwm_dutycycle(gpio_pin pin, int dutycycle)
     {
         int bcmPin = boardToBCM(pin);
-        if(bcmPin >= 2) sk_remote_set_pwm_dutycycle(pi, bcmPin, dutycycle);
+        if(bcmPin >= 2) sk_remote_set_pwm_dutycycle(bcmPin, dutycycle);
     }
 
-    bool remote_raspi_cleanup(connection pi)
+    bool remote_raspi_cleanup()
     {
-        return sk_remote_gpio_cleanup(pi);
+        return sk_remote_gpio_cleanup();
     }
 }

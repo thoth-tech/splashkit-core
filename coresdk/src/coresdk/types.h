@@ -427,7 +427,7 @@ namespace splashkit_lib
         GPIO_ALT2 = 6,
         GPIO_ALT3 = 7,
         GPIO_ALT4 = 3,
-        GPIO_ALT5 = 2,
+        GPIO_PWM = 2,
         GPIO_DEFAULT_MODE = -1,
     };
 
