@@ -19,6 +19,14 @@
 
 #endif
 
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <termios.h>
+#include <unistd.h>
+#endif
+
+
 
 using namespace std;
 // Use https://abyz.me.uk/rpi/pigpio/pdif2.html for local command reference
@@ -361,18 +369,20 @@ namespace splashkit_lib
     
     
         std::cout << "Running command: " << command << std::endl;
-    
         std::array<char, 128> buffer;
         std::string result;
+        #ifdef _WIN32
+            #define popen _popen
+            #define pclose _pclose
+        #endif
     
         // Use popen to capture output
-        std::unique_ptr<FILE, decltype(&_pclose)> pipe(_popen(command.c_str(), "r"), _pclose);
+        std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(command.c_str(), "r"), pclose);
         if (!pipe) {
             std::cerr << "Failed to run command." << std::endl;
             return "";
         }
-    
-        // Read command output
+
         while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
             result += buffer.data();
         }
@@ -383,20 +393,27 @@ namespace splashkit_lib
     std::string get_hidden_input(const std::string& prompt) {
         std::string input;
         std::cout << prompt << ": ";
-    
-        // Turn off echo
-        HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
-        DWORD mode;
-        GetConsoleMode(hStdin, &mode);
-        SetConsoleMode(hStdin, mode & ~ENABLE_ECHO_INPUT);
-    
-        std::getline(std::cin, input);
-    
-        // Restore console mode
-        SetConsoleMode(hStdin, mode);
-        std::cout << std::endl;
+        #ifdef _WIN32
+            HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
+            DWORD mode;
+            GetConsoleMode(hStdin, &mode);
+            SetConsoleMode(hStdin, mode & ~ENABLE_ECHO_INPUT);
+            std::getline(std::cin, input);
+            SetConsoleMode(hStdin, mode);
+            std::cout << std::endl;
+        #else
+            termios oldt, newt;
+            tcgetattr(STDIN_FILENO, &oldt);
+            newt = oldt;
+            newt.c_lflag &= ~ECHO;
+            tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+            std::getline(std::cin, input);
+            tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+            std::cout << std::endl;
+        #endif
         return input;
     }
+    
     
     
     std::string get_user_input(const std::string& message) {

@@ -116,25 +116,8 @@ else()
                    -lstdc++fs")
 endif()
 
-find_path(BCM_HOST_INCLUDE_DIR bcm_host.h 
-    HINTS /usr/include /usr/local/include /opt/vc/include 
-    PATH_SUFFIXES interface/vcos/pthreads interface/vmcs_host/linux
-)
-
-if (BCM_HOST_INCLUDE_DIR)
+if (ARCH MATCHES "armv7l|aarch64|armv6l" OR DEVICE_MODEL MATCHES "Raspberry Pi")
     message("Raspberry Pi detected")
-
-    find_path(pigpio_INCLUDE_DIR NAMES pigpio.h pigpiod_if.h pigpiod_if2.h HINTS /usr/include)
-
-    # Find the pigpio libraries.
-    find_library(pigpio_LIBRARY NAMES libpigpio.so HINTS /usr/lib)
-
-    find_library(pigpiod_if_LIBRARY NAMES libpigpiod_if.so HINTS /usr/lib)
-    find_library(pigpiod_if2_LIBRARY NAMES libpigpiod_if2.so HINTS /usr/lib)
-    if(pigpiod_if2_LIBRARY)
-        set(pigpiod_if_LIBRARY ${pigpiod_if2_LIBRARY})
-        # target_link_libraries(SplashKitBackend ${LIB_FLAGS} pigpiod_if2)
-    endif()
          
     # Add necessary directories for Raspberry Pi
     include_directories(/usr/include)
@@ -301,30 +284,32 @@ set_target_properties(skunit_tests
 #This targets library after sktest is dealt with
 # Find the WiringPi headers.
 
-    if (BCM_HOST_INCLUDE_DIR)
-        find_path(WIRINGPI_INCLUDE_DIR NAMES wiringPi.h HINTS /usr/include /usr/local/include)
+if (ARCH MATCHES "armv7l|aarch64|armv6l" OR DEVICE_MODEL MATCHES "Raspberry Pi")
+    find_path(WIRINGPI_INCLUDE_DIR NAMES wiringPi.h HINTS /usr/include /usr/local/include)
 
-        # Find the WiringPi library.
-        find_library(WIRINGPI_LIBRARY NAMES wiringPi libwiringPi.so HINTS /usr/lib /usr/local/lib /home/jp/WiringPi/wiringPi)
+    # Find the WiringPi library.
+    find_library(WIRINGPI_LIBRARY NAMES wiringPi libwiringPi.so HINTS /usr/lib /usr/local/lib /home/jp/WiringPi/wiringPi)
 
-        if (WIRINGPI_LIBRARY)
-            message(STATUS "Found WiringPi library: ${WIRINGPI_LIBRARY}")
-            
-            set_target_properties(SplashKitBackend PROPERTIES
-                IMPORTED_LOCATION "/home/jp/Documents/splashkit-core/out/lib/libSplashKitBackend.a"
-            )
+    if (WIRINGPI_LIBRARY)
+        message(STATUS "Found WiringPi library: ${WIRINGPI_LIBRARY}")
+        
+        set_target_properties(SplashKitBackend PROPERTIES
+            IMPORTED_LOCATION "/home/jp/Documents/splashkit-core/out/lib/libSplashKitBackend.a"
+        )
 
-            target_link_libraries(sktest SplashKitBackend ${WIRINGPI_LIBRARY})
-        else()
-            message(FATAL_ERROR "WiringPi library not found. Cannot link.")
-        endif()
-
-        if(WIRINGPI_INCLUDE_DIR)
-            include_directories(${WIRINGPI_INCLUDE_DIR})
-        else()
-            message(FATAL_ERROR "WiringPi headers not found.")
-        endif()
+        target_link_libraries(sktest SplashKitBackend ${WIRINGPI_LIBRARY})
+    else()
+        message(FATAL_ERROR "WiringPi library not found. Cannot link.")
     endif()
+
+    if(WIRINGPI_INCLUDE_DIR)
+        include_directories(${WIRINGPI_INCLUDE_DIR})
+    else()
+        message(FATAL_ERROR "WiringPi headers not found.")
+    endif()
+else()
+    message(FATAL_ERROR "RPi missing")
+endif()
 
 
 
