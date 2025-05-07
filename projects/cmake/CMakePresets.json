@@ -43,7 +43,17 @@
             "cacheVariables": {
                 "CMAKE_C_COMPILER": "clang",
                 "CMAKE_CXX_COMPILER": "clang++",
-                "CMAKE_BUILD_TYPE": "Debug"
+                "CMAKE_BUILD_TYPE": "Debug",
+                "USE_COVERAGE": "OFF"
+            }
+        },
+        {
+            "name": "macOSCoverage",
+            "displayName": "macOS with coverage",
+            "description": "macOS clang",
+            "inherits": "macOS",
+            "cacheVariables": {
+                "USE_COVERAGE": "ON"
             }
         }
     ]
