@@ -91,6 +91,10 @@ void remote_gpio_valid_tests()
     // Read the value of GPIO pin 11
     int value = remote_raspi_read(PIN_11);
     cout << "GPIO 11 value: " << value << endl;
+
+    // Write LOW to GPIO pin 11
+    cout << "Writing LOW to GPIO pin 11" << endl;
+    remote_raspi_write(PIN_11, GPIO_LOW);
 }
 void remote_gpio_invalid_tests()
 {
@@ -142,7 +146,6 @@ void run_gpio_tests()
 void run_remote_gpio_tests()
 {
 
-    cout << "This test requires a remote Raspberry Pi running the Pigpio Daemon\n";
     remote_raspi_init();
 
     remote_gpio_valid_tests();

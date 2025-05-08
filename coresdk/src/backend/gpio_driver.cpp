@@ -42,10 +42,8 @@ namespace splashkit_lib
 
     int base_clock = 19200000;
 
-    std::string password;
     std::string username;
     std::string ip;
-    std::string path;
 
     #ifdef RASPBERRY_PI
     int pi = -1;
@@ -362,7 +360,7 @@ namespace splashkit_lib
     #endif
 
 
-    std::string sk_send_command(const std::string& ip, const std::string& user, const std::string& password, const std::string& gpio_cmd, const std::string& path) {
+    std::string sk_send_command(const std::string& ip, const std::string& user, const std::string& gpio_cmd, const std::string& path) {
         // Construct the full plink command using PowerShell
 
         #ifdef _WIN32
@@ -392,33 +390,7 @@ namespace splashkit_lib
         }
     
         return result;
-    }
-    
-    std::string get_hidden_input(const std::string& prompt) {
-        std::string input;
-        std::cout << prompt << ": ";
-        #ifdef _WIN32
-            HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
-            DWORD mode;
-            GetConsoleMode(hStdin, &mode);
-            SetConsoleMode(hStdin, mode & ~ENABLE_ECHO_INPUT);
-            std::getline(std::cin, input);
-            SetConsoleMode(hStdin, mode);
-            std::cout << std::endl;
-        #else
-            termios oldt, newt;
-            tcgetattr(STDIN_FILENO, &oldt);
-            newt = oldt;
-            newt.c_lflag &= ~ECHO;
-            tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-            std::getline(std::cin, input);
-            tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-            std::cout << std::endl;
-        #endif
-        return input;
-    }
-    
-    
+    }    
     
     std::string get_user_input(const std::string& message) {
         while (true) {
@@ -433,13 +405,9 @@ namespace splashkit_lib
     void sk_remote_gpio_init() {
         std::string temp_ip = get_user_input("Provide the Raspberry Pi's IP Address");
         std::string temp_user = get_user_input("Provide the Raspberry Pi's Username");
-        std::string temp_password = get_hidden_input("Provide the Raspberry Pi's Password"); 
-        std::string temp_path = get_user_input("Provide the Project's Location Path In The Form Of \"C:\\Users\\file\" While Keeping The Quotation Marks & The Double Slashes");
-    
-        password = temp_password;
+        
         username = temp_user;
         ip = temp_ip;
-        path = temp_path;
     }
     
     // // Wrapper functions
@@ -468,7 +436,7 @@ namespace splashkit_lib
         }
     
         // Send the command to set pin mode
-        std::string output = sk_send_command(ip, username, password, "gpio -g mode " + std::to_string(pin) + " " + mode_str, path);
+        std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " " + mode_str, path);
     
         std::cout << "Pin: " << pin << " Mode: " << mode_str << std::endl;
         r_pin_modes[pin] = mode;
@@ -503,7 +471,7 @@ namespace splashkit_lib
         {
             return;
         }
-        std::string output = sk_send_command(ip, username, password, "gpio -g write " + std::to_string(pin) + " " + std::to_string(value), path);
+        std::string output = sk_send_command(ip, username, "gpio -g write " + std::to_string(pin) + " " + std::to_string(value), path);
     }
     
     int sk_remote_gpio_read(int pin) {
@@ -512,7 +480,7 @@ namespace splashkit_lib
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
             return -1;
         }
-        std::string output = sk_send_command(ip, username, password, "gpio -g read " + std::to_string(pin), path);
+        std::string output = sk_send_command(ip, username, "gpio -g read " + std::to_string(pin), path);
         
         // Trim output (in case of newline or extra whitespace)
         output.erase(std::remove_if(output.begin(), output.end(), ::isspace), output.end());
@@ -545,12 +513,12 @@ namespace splashkit_lib
             default: 
                 return;
         }
-        std::string output = sk_send_command(ip, username, password, "gpio -g mode " + std::to_string(pin) + " " + pud_str, path);
+        std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " " + pud_str, path);
     }
     
     void setup_pwm(int pin)
     {
-        std::string output = sk_send_command(ip, username, password, "gpio -g mode " + std::to_string(pin) + " pwm", path);
+        std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " pwm", path);
     }
     
     void sk_remote_set_pwm_range(int pin, int range) {
@@ -572,7 +540,7 @@ namespace splashkit_lib
             setup_pwm(pin);        
             r_pin_modes[pin] = GPIO_PWM;
         }
-        std::string output = sk_send_command(ip, username, password, "gpio -g pwmr " + std::to_string(range), path);
+        std::string output = sk_send_command(ip, username, "gpio -g pwmr " + std::to_string(range), path);
         r_pwm_range[pin] = range;
     }
     
@@ -598,8 +566,8 @@ namespace splashkit_lib
             setup_pwm(pin);        
             r_pin_modes[pin] = GPIO_PWM;
         }
-        std::string output = sk_send_command(ip, username, password, "gpio pwm-ms", path);
-    output = sk_send_command(ip, username, password, "gpio -g pwmc " + std::to_string(clock_divisor), path);
+        std::string output = sk_send_command(ip, username, "gpio pwm-ms", path);
+    output = sk_send_command(ip, username, "gpio -g pwmc " + std::to_string(clock_divisor), path);
         r_pwm_range[pin] = range;
         r_pin_modes[pin] = 2;
     }
@@ -624,7 +592,7 @@ namespace splashkit_lib
             setup_pwm(pin);        
             r_pin_modes[pin] = GPIO_PWM;
         }
-        std::string output = sk_send_command(ip, username, password, "gpio -g pwm " + std::to_string(pin) + " " + std::to_string(dutycycle), path);
+        std::string output = sk_send_command(ip, username, "gpio -g pwm " + std::to_string(pin) + " " + std::to_string(dutycycle), path);
         r_pwm_range[pin] = range;
     }
     
