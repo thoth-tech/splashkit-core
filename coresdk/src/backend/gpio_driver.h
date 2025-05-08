@@ -30,6 +30,9 @@
 // Size of GPIO board
 #define PI_SIZE 40
 
+// Size of base clock
+#define base_clock 19200000
+
 namespace splashkit_lib
 {
 

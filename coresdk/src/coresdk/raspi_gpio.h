@@ -12,7 +12,6 @@
 #include <stdint.h>
 #include "networking.h"
 #include "types.h"
-#include "backend_types.h"
 
 namespace splashkit_lib
 {

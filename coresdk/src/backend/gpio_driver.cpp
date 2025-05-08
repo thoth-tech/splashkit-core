@@ -39,9 +39,6 @@ namespace splashkit_lib
     //Add map to track items for remote gpio
     std::unordered_map<int, int> r_pin_modes;
     std::unordered_map<int, int> r_pwm_range;
-
-    int base_clock = 19200000;
-
     std::string username;
     std::string ip;
 
@@ -52,7 +49,7 @@ namespace splashkit_lib
     std::unordered_map<int, int> pwm_range;
     std::unordered_map<int, int> handle_channel;
 
-    // Check if pigpio_init() has been called before any other GPIO functions
+    // Check if wiringPiSetupGpio() has been called before any other GPIO functions
     bool check_pi()
     {
         if (pi < 0)
@@ -204,6 +201,7 @@ namespace splashkit_lib
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_DUTYRANGE);
                 return;
             }
+            //Save values to map to use for other functions (pigpio did this automatically)
             pinMode(pin, PWM_OUTPUT); 
             pin_modes[pin] = PWM_OUTPUT;
             pwmSetMode(PWM_MODE_MS);
@@ -212,11 +210,9 @@ namespace splashkit_lib
         }
     }
 
-    // Find out what the clock divisor is using base clock, frequency and range
     // Set frequency by setting both the range & clock
     void sk_set_pwm_frequency(int pin, int frequency)
     {
-
         if(check_pi())
         {
             //Checks whether the pins are in the correct range
@@ -232,6 +228,7 @@ namespace splashkit_lib
                 LOG(ERROR) << sk_gpio_error_message(PI_BAD_DUTYRANGE);
                 return;
             }
+            // Find out what the clock divisor is using base clock, frequency and range
             double divisor = static_cast<double>(base_clock) / (frequency * range);
             int clock_divisor = static_cast<int>(divisor + 0.5);
             //Checks if the new frequency is in a safe limit
@@ -245,7 +242,7 @@ namespace splashkit_lib
         }
     }
 
-    //Value must not be more than range (100% to 0%)
+    //Value must not be more than range (0% to 100%)
     void sk_set_pwm_dutycycle(int pin, int dutycycle)
     {
         if(check_pi())
@@ -275,7 +272,6 @@ namespace splashkit_lib
 
     void sk_gpio_clear_bank_1()
     {
-        //clear_bank_1(pi, PI4B_GPIO_BITMASK);
         if(check_pi())
         {
             // Manually go through each pin and reset it to 0 (LOW)
@@ -292,7 +288,7 @@ namespace splashkit_lib
         }
     }
 
-    //Delete function sk_gpio_cleanup
+    //Delete function sk_gpio_cleanup since this cleans up everytime the RPi switches off (no predefined function for it)
     
     // WiringPi's version of spi_open doesn't need the variable flag so I removed it
     int sk_spi_open(int channel, int speed)
@@ -336,7 +332,7 @@ namespace splashkit_lib
     {
         if(check_pi())
         {
-            //If handle is -1, it doesn't existzzz
+            //If handle is -1, it doesn't exist
             if (handle == -1)
             {
                 return -1;
@@ -359,10 +355,10 @@ namespace splashkit_lib
 
     #endif
 
-
+    //WiringPi doesn't have remote gpio functionality so this function sends a ssh command to the RPi
     std::string sk_send_command(const std::string& ip, const std::string& user, const std::string& gpio_cmd) {
-        // Construct the full plink command using PowerShell
-
+        
+        // Construct the full plink command using ssh (build it for windows)
         #ifdef _WIN32
             std::string command = "C:\\msys64\\usr\\bin\\bash.exe -lc \"ssh " + user + "@" + ip + " '" + gpio_cmd + "'\"";
         #else
@@ -373,6 +369,8 @@ namespace splashkit_lib
         std::cout << "Running command: " << command << std::endl;
         std::array<char, 128> buffer;
         std::string result;
+
+        //Redefine variables for windows
         #ifdef _WIN32
             #define popen _popen
             #define pclose _pclose
@@ -392,40 +390,43 @@ namespace splashkit_lib
         return result;
     }    
     
+    //Retrieves user input for a specific variable
     std::string get_user_input(const std::string& message) {
         while (true) {
             std::string input;
             std::cout << message << ": ";
             std::getline(std::cin, input);
+            //Ensures that the input isn't empty
             if (!input.empty()) return input;
             std::cout << "Input cannot be empty. Try again.\n";
         }
     }
     
     void sk_remote_gpio_init() {
+        //This gets the user input for the RPi address and username since it's unique for every user
         std::string temp_ip = get_user_input("Provide the Raspberry Pi's IP Address");
         std::string temp_user = get_user_input("Provide the Raspberry Pi's Username");
         
+        //Saves these values to the global variables
         username = temp_user;
         ip = temp_ip;
     }
     
-    // // Wrapper functions
+    // Wrapper functions
     void sk_remote_gpio_set_mode(int pin, int mode) {
         // Checks whether the pins are in the correct range
         if (pin < 0 || pin > 40) 
         { 
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
             return;
-        }
-    
+        }    
         // Checks if the mode is valid
         if (mode < 0 || mode > 7)
         {
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_MODE);
             return;
-        }
-    
+        }    
+
         // Construct the correct GPIO mode string
         std::string mode_str;
         switch (mode) {
@@ -437,8 +438,8 @@ namespace splashkit_lib
     
         // Send the command to set pin mode
         std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " " + mode_str);
-    
-        std::cout << "Pin: " << pin << " Mode: " << mode_str << std::endl;
+        
+        //Save value to the map specifically for remote values
         r_pin_modes[pin] = mode;
     }
     
@@ -451,30 +452,34 @@ namespace splashkit_lib
             return -1;
         }
         int mode = r_pin_modes.count(pin) ? r_pin_modes[pin] : -1;
-        std::cout<<mode;
         return mode;
     }
     
     void sk_remote_gpio_write(int pin, int value) {
+        //Checks whether the pins are in the correct range
         if (pin < 0 || pin > 40) 
         { 
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
             return;
         }
+        //Checks whether the value is in the correct range
         if (value < 0 || value > 1) 
         { 
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
             return;
         }
         int mode = sk_remote_gpio_get_mode(pin);
+        //Ensures that the mode of the pin is set to high
         if (mode != 1)
         {
+            LOG(ERROR) << sk_gpio_error_message(PI_BAD_MODE);
             return;
         }
         std::string output = sk_send_command(ip, username, "gpio -g write " + std::to_string(pin) + " " + std::to_string(value));
     }
     
     int sk_remote_gpio_read(int pin) {
+        //Checks whether the pins are in the correct range
         if (pin < 0 || pin > 40) 
         { 
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
@@ -485,27 +490,29 @@ namespace splashkit_lib
         // Trim output (in case of newline or extra whitespace)
         output.erase(std::remove_if(output.begin(), output.end(), ::isspace), output.end());
     
-    
+        //For regular results, return numerical values
         if (output == "1") return 1;
         if (output == "0") return 0;
     
-        std::cerr << "Unexpected GPIO read result: " << output << std::endl;
-        // Indicate error
+        LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
         return -1; 
     }
     
     
     void sk_remote_gpio_set_pull_up_down(int pin, int pud) {
+        //Checks whether the pins are in the correct range
         if (pin < 0 || pin > 40) 
         { 
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
             return;
         }
+        //Checks whether the pud is in the correct range
         if (pud < 0 || pud > 1) 
         { 
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
             return;
         }
+        //Checks for the pud value and if it's correct, make the final output a string using the value
         std::string pud_str;
         switch (pud) {
             case 0: pud_str = "down"; break;
@@ -516,12 +523,14 @@ namespace splashkit_lib
         std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " " + pud_str);
     }
     
+    //This function setpu the pwm for use
     void setup_pwm(int pin)
     {
         std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " pwm");
     }
     
     void sk_remote_set_pwm_range(int pin, int range) {
+        //Checks whether the pins are in the correct range
         if (pin < 0 || pin > 40) 
         { 
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
@@ -534,17 +543,20 @@ namespace splashkit_lib
             return;
         }
         int mode = sk_remote_gpio_get_mode(pin);
-        //num for pwm
+        //Checks if the mode is pwm
         if (mode != GPIO_PWM)
         {
-            setup_pwm(pin);        
+            setup_pwm(pin);  
+            //Save value to the map specifically for remote values      
             r_pin_modes[pin] = GPIO_PWM;
         }
         std::string output = sk_send_command(ip, username, "gpio -g pwmr " + std::to_string(range));
+        //Save value to the map specifically for remote values
         r_pwm_range[pin] = range;
     }
     
     void sk_remote_set_pwm_frequency(int pin, int frequency) {
+        //Checks whether the pins are in the correct range
         if (pin < 0 || pin > 40) 
         { 
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
@@ -560,19 +572,23 @@ namespace splashkit_lib
         double divisor = static_cast<double>(base_clock) / (frequency * range);
         int clock_divisor = static_cast<int>(divisor + 0.5);
         int mode = sk_remote_gpio_get_mode(pin);
-        //num for pwm
+        //Checks if the mode is pwm
         if (mode != GPIO_PWM)
         {
-            setup_pwm(pin);        
+            setup_pwm(pin);    
+            //Save value to the map specifically for remote values    
             r_pin_modes[pin] = GPIO_PWM;
         }
+        // For some function, the output is needed but here, it isn't but two commands need to be run
         std::string output = sk_send_command(ip, username, "gpio pwm-ms");
-    output = sk_send_command(ip, username, "gpio -g pwmc " + std::to_string(clock_divisor));
+        output = sk_send_command(ip, username, "gpio -g pwmc " + std::to_string(clock_divisor));
+        //Save value to the map specifically for remote values
         r_pwm_range[pin] = range;
         r_pin_modes[pin] = 2;
     }
     
-    void sk_remote_set_pwm_dutycycle(int pin, int dutycycle) {
+    void sk_remote_set_pwm_dutycycle(int pin, int dutycycle) {\
+        //Checks whether the pins are in the correct range
         if (pin < 0 || pin > 40) 
         { 
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
@@ -586,13 +602,15 @@ namespace splashkit_lib
             return;
         }
         int mode = sk_remote_gpio_get_mode(pin);
-        //num for pwm
+        //Checks if the mode is pwm
         if (mode != GPIO_PWM)
         {
             setup_pwm(pin);        
+            //Save value to the map specifically for remote values
             r_pin_modes[pin] = GPIO_PWM;
         }
         std::string output = sk_send_command(ip, username, "gpio -g pwm " + std::to_string(pin) + " " + std::to_string(dutycycle));
+        //Save value to the map specifically for remote values
         r_pwm_range[pin] = range;
     }
     
@@ -609,9 +627,12 @@ namespace splashkit_lib
         }
     }
 
+    //A cleanup function is useful for remote GPIO since it runs on ssh and not WiringPi
     bool sk_remote_gpio_cleanup() {
         std::cout << "Cleaning up remote GPIO...\n";
+        //Clear out dictionary values
         sk_remote_clear_bank_1();
+        //Reset username and ip to empty
         username = "";
         ip = "";
         return true;

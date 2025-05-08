@@ -93,6 +93,7 @@ void remote_gpio_valid_tests()
     cout << "GPIO 11 value: " << value << endl;
 
     // Write LOW to GPIO pin 11
+    // To turn off LED/other output device    
     cout << "Writing LOW to GPIO pin 11" << endl;
     remote_raspi_write(PIN_11, GPIO_LOW);
 }
