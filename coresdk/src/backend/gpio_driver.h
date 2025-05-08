@@ -51,7 +51,7 @@ namespace splashkit_lib
   
     #endif
     
-    std::string sk_send_command(const std::string& ip, const std::string& user, const std::string& gpio_cmd, const std::string& path);
+    std::string sk_send_command(const std::string& ip, const std::string& user, const std::string& gpio_cmd);
     std::string get_hidden_input(const std::string& prompt);
     std::string get_user_input(const std::string& message);
     void sk_remote_gpio_init();

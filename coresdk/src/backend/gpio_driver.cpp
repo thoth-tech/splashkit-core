@@ -360,7 +360,7 @@ namespace splashkit_lib
     #endif
 
 
-    std::string sk_send_command(const std::string& ip, const std::string& user, const std::string& gpio_cmd, const std::string& path) {
+    std::string sk_send_command(const std::string& ip, const std::string& user, const std::string& gpio_cmd) {
         // Construct the full plink command using PowerShell
 
         #ifdef _WIN32
@@ -436,7 +436,7 @@ namespace splashkit_lib
         }
     
         // Send the command to set pin mode
-        std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " " + mode_str, path);
+        std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " " + mode_str);
     
         std::cout << "Pin: " << pin << " Mode: " << mode_str << std::endl;
         r_pin_modes[pin] = mode;
@@ -471,7 +471,7 @@ namespace splashkit_lib
         {
             return;
         }
-        std::string output = sk_send_command(ip, username, "gpio -g write " + std::to_string(pin) + " " + std::to_string(value), path);
+        std::string output = sk_send_command(ip, username, "gpio -g write " + std::to_string(pin) + " " + std::to_string(value));
     }
     
     int sk_remote_gpio_read(int pin) {
@@ -480,7 +480,7 @@ namespace splashkit_lib
             LOG(ERROR) << sk_gpio_error_message(PI_BAD_GPIO);
             return -1;
         }
-        std::string output = sk_send_command(ip, username, "gpio -g read " + std::to_string(pin), path);
+        std::string output = sk_send_command(ip, username, "gpio -g read " + std::to_string(pin));
         
         // Trim output (in case of newline or extra whitespace)
         output.erase(std::remove_if(output.begin(), output.end(), ::isspace), output.end());
@@ -513,12 +513,12 @@ namespace splashkit_lib
             default: 
                 return;
         }
-        std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " " + pud_str, path);
+        std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " " + pud_str);
     }
     
     void setup_pwm(int pin)
     {
-        std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " pwm", path);
+        std::string output = sk_send_command(ip, username, "gpio -g mode " + std::to_string(pin) + " pwm");
     }
     
     void sk_remote_set_pwm_range(int pin, int range) {
@@ -540,7 +540,7 @@ namespace splashkit_lib
             setup_pwm(pin);        
             r_pin_modes[pin] = GPIO_PWM;
         }
-        std::string output = sk_send_command(ip, username, "gpio -g pwmr " + std::to_string(range), path);
+        std::string output = sk_send_command(ip, username, "gpio -g pwmr " + std::to_string(range));
         r_pwm_range[pin] = range;
     }
     
@@ -566,8 +566,8 @@ namespace splashkit_lib
             setup_pwm(pin);        
             r_pin_modes[pin] = GPIO_PWM;
         }
-        std::string output = sk_send_command(ip, username, "gpio pwm-ms", path);
-    output = sk_send_command(ip, username, "gpio -g pwmc " + std::to_string(clock_divisor), path);
+        std::string output = sk_send_command(ip, username, "gpio pwm-ms");
+    output = sk_send_command(ip, username, "gpio -g pwmc " + std::to_string(clock_divisor));
         r_pwm_range[pin] = range;
         r_pin_modes[pin] = 2;
     }
@@ -592,7 +592,7 @@ namespace splashkit_lib
             setup_pwm(pin);        
             r_pin_modes[pin] = GPIO_PWM;
         }
-        std::string output = sk_send_command(ip, username, "gpio -g pwm " + std::to_string(pin) + " " + std::to_string(dutycycle), path);
+        std::string output = sk_send_command(ip, username, "gpio -g pwm " + std::to_string(pin) + " " + std::to_string(dutycycle));
         r_pwm_range[pin] = range;
     }
     
@@ -613,9 +613,7 @@ namespace splashkit_lib
         std::cout << "Cleaning up remote GPIO...\n";
         sk_remote_clear_bank_1();
         username = "";
-        password = "";
         ip = "";
-        path = "";
         return true;
     }
     
