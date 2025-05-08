@@ -307,8 +307,6 @@ if (ARCH MATCHES "armv7l|aarch64|armv6l" OR DEVICE_MODEL MATCHES "Raspberry Pi")
     else()
         message(FATAL_ERROR "WiringPi headers not found.")
     endif()
-else()
-    message(FATAL_ERROR "RPi missing")
 endif()
 
 

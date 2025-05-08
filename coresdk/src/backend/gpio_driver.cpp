@@ -364,9 +364,13 @@ namespace splashkit_lib
 
     std::string sk_send_command(const std::string& ip, const std::string& user, const std::string& password, const std::string& gpio_cmd, const std::string& path) {
         // Construct the full plink command using PowerShell
-        std::string command = "powershell -Command \"Set-Location -Path '" + path + "'; & '.\\coresdk\\src\\backend\\plink.exe' -ssh '" + user + "@" + ip +
-                          "' -pw '" + password + "' '" + gpio_cmd + "'\"";
-    
+
+        #ifdef _WIN32
+            std::string command = "C:\\msys64\\usr\\bin\\bash.exe -lc \"ssh " + user + "@" + ip + " '" + gpio_cmd + "'\"";
+        #else
+            std::string command = "ssh " + user + "@" + ip + " '" + gpio_cmd + "'";
+        #endif
+
     
         std::cout << "Running command: " << command << std::endl;
         std::array<char, 128> buffer;
