@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(splashkit)
 
+set(CMAKE_BUILD_TYPE Debug)
+
 cmake_policy(SET CMP0083 NEW)
 include(CheckPIESupported)
 check_pie_supported()
