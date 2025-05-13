@@ -1017,12 +1017,10 @@ void __sklib__draw_pixel_on_window__window__color__point_2d_ref(__sklib_window d
 void __sklib__draw_pixel_on_window__window__color__point_2d_ref__drawing_options(__sklib_window destination, __sklib_color clr, const __sklib_point_2d pt, __sklib_drawing_options opts);
 void __sklib__draw_pixel_on_window__window__color__double__double(__sklib_window destination, __sklib_color clr, double x, double y);
 void __sklib__draw_pixel_on_window__window__color__double__double__drawing_options(__sklib_window destination, __sklib_color clr, double x, double y, __sklib_drawing_options opts);
-__sklib_color __sklib__get_pixel__bitmap__point_2d_ref(__sklib_bitmap bmp, const __sklib_point_2d pt);
-__sklib_color __sklib__get_pixel__bitmap__double__double(__sklib_bitmap bmp, double x, double y);
 __sklib_color __sklib__get_pixel__point_2d_ref(const __sklib_point_2d pt);
 __sklib_color __sklib__get_pixel__double__double(double x, double y);
-__sklib_color __sklib__get_pixel__window__point_2d_ref(__sklib_window wnd, const __sklib_point_2d pt);
-__sklib_color __sklib__get_pixel__window__double__double(__sklib_window wnd, double x, double y);
+__sklib_color __sklib__get_pixel_from_bitmap__bitmap__point_2d_ref(__sklib_bitmap bmp, const __sklib_point_2d pt);
+__sklib_color __sklib__get_pixel_from_bitmap__bitmap__double__double(__sklib_bitmap bmp, double x, double y);
 __sklib_color __sklib__get_pixel_from_window__window__point_2d_ref(__sklib_window destination, const __sklib_point_2d pt);
 __sklib_color __sklib__get_pixel_from_window__window__double__double(__sklib_window destination, double x, double y);
 __sklib_point_2d __sklib__point_at__double__double(double x, double y);

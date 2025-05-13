@@ -3576,23 +3576,17 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__draw_pixel_on_window__window__color__double__double__drawing_options", CharSet=CharSet.Ansi)]
     private static extern void __sklib__draw_pixel_on_window__window__color__double__double__drawing_options(__sklib_ptr destination, __sklib_color clr, double x, double y, __sklib_drawing_options opts);
 
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel__bitmap__point_2d_ref", CharSet=CharSet.Ansi)]
-    private static extern __sklib_color __sklib__get_pixel__bitmap__point_2d_ref(__sklib_ptr bmp, __sklib_point_2d pt);
-
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel__bitmap__double__double", CharSet=CharSet.Ansi)]
-    private static extern __sklib_color __sklib__get_pixel__bitmap__double__double(__sklib_ptr bmp, double x, double y);
-
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel__point_2d_ref", CharSet=CharSet.Ansi)]
     private static extern __sklib_color __sklib__get_pixel__point_2d_ref(__sklib_point_2d pt);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel__double__double", CharSet=CharSet.Ansi)]
     private static extern __sklib_color __sklib__get_pixel__double__double(double x, double y);
 
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel__window__point_2d_ref", CharSet=CharSet.Ansi)]
-    private static extern __sklib_color __sklib__get_pixel__window__point_2d_ref(__sklib_ptr wnd, __sklib_point_2d pt);
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel_from_bitmap__bitmap__point_2d_ref", CharSet=CharSet.Ansi)]
+    private static extern __sklib_color __sklib__get_pixel_from_bitmap__bitmap__point_2d_ref(__sklib_ptr bmp, __sklib_point_2d pt);
 
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel__window__double__double", CharSet=CharSet.Ansi)]
-    private static extern __sklib_color __sklib__get_pixel__window__double__double(__sklib_ptr wnd, double x, double y);
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel_from_bitmap__bitmap__double__double", CharSet=CharSet.Ansi)]
+    private static extern __sklib_color __sklib__get_pixel_from_bitmap__bitmap__double__double(__sklib_ptr bmp, double x, double y);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel_from_window__window__point_2d_ref", CharSet=CharSet.Ansi)]
     private static extern __sklib_color __sklib__get_pixel_from_window__window__point_2d_ref(__sklib_ptr destination, __sklib_point_2d pt);
@@ -17331,41 +17325,6 @@ namespace SplashKitSDK
       __sklib__draw_pixel_on_window__window__color__double__double__drawing_options(__skparam__destination, __skparam__clr, __skparam__x, __skparam__y, __skparam__opts);
     }
     /// <summary>
-    /// Returns the color of the pixel at the location on the supplied bitmap.
-    /// </summary>
-    /// <param name="bmp"> The bitmap to get the color from</param>
-    /// <param name="pt"> The position of the pixel</param>
-    /// <returns>The color of the pixel at the supplied location</returns>
-    public static Color GetPixel(Bitmap bmp, Point2D pt)
-    {
-      __sklib_ptr __skparam__bmp;
-      __sklib_point_2d __skparam__pt;
-      __sklib_color __skreturn;
-      __skparam__bmp = __skadapter__to_sklib_bitmap(bmp);
-      __skparam__pt = __skadapter__to_sklib_point_2d(pt);
-      __skreturn = __sklib__get_pixel__bitmap__point_2d_ref(__skparam__bmp, __skparam__pt);
-      return __skadapter__to_color(__skreturn);
-    }
-    /// <summary>
-    /// Returns the color of the pixel at the x,y location on the supplied bitmap.
-    /// </summary>
-    /// <param name="bmp"> The bitmap to get the color from</param>
-    /// <param name="x"> The distance from the left edge of the bitmap to the pixel to read</param>
-    /// <param name="y"> The distance from the top of the bitmap to the pixel to read</param>
-    /// <returns>The color of the pixel at the supplied location</returns>
-    public static Color GetPixel(Bitmap bmp, double x, double y)
-    {
-      __sklib_ptr __skparam__bmp;
-      double __skparam__x;
-      double __skparam__y;
-      __sklib_color __skreturn;
-      __skparam__bmp = __skadapter__to_sklib_bitmap(bmp);
-      __skparam__x = __skadapter__to_sklib_double(x);
-      __skparam__y = __skadapter__to_sklib_double(y);
-      __skreturn = __sklib__get_pixel__bitmap__double__double(__skparam__bmp, __skparam__x, __skparam__y);
-      return __skadapter__to_color(__skreturn);
-    }
-    /// <summary>
     /// Returns the color of the pixel at the x,y location on the current window.
     /// </summary>
     /// <param name="pt"> The position of the pixel</param>
@@ -17395,38 +17354,38 @@ namespace SplashKitSDK
       return __skadapter__to_color(__skreturn);
     }
     /// <summary>
-    /// Returns the color of the pixel at the location on the supplied window.
+    /// Returns the color of the pixel at the location on the supplied bitmap.
     /// </summary>
-    /// <param name="wnd"> The window to get the color from</param>
+    /// <param name="bmp"> The bitmap to get the color from</param>
     /// <param name="pt"> The position of the pixel</param>
     /// <returns>The color of the pixel at the supplied location</returns>
-    public static Color GetPixel(Window wnd, Point2D pt)
+    public static Color GetPixelFromBitmap(Bitmap bmp, Point2D pt)
     {
-      __sklib_ptr __skparam__wnd;
+      __sklib_ptr __skparam__bmp;
       __sklib_point_2d __skparam__pt;
       __sklib_color __skreturn;
-      __skparam__wnd = __skadapter__to_sklib_window(wnd);
+      __skparam__bmp = __skadapter__to_sklib_bitmap(bmp);
       __skparam__pt = __skadapter__to_sklib_point_2d(pt);
-      __skreturn = __sklib__get_pixel__window__point_2d_ref(__skparam__wnd, __skparam__pt);
+      __skreturn = __sklib__get_pixel_from_bitmap__bitmap__point_2d_ref(__skparam__bmp, __skparam__pt);
       return __skadapter__to_color(__skreturn);
     }
     /// <summary>
-    /// Returns the color of the pixel at the x,y location on the supplied window.
+    /// Returns the color of the pixel at the x,y location on the supplied bitmap.
     /// </summary>
-    /// <param name="wnd"> The window to get the color from</param>
-    /// <param name="x"> The distance from the left edge of the window to the pixel to read</param>
-    /// <param name="y"> The distance from the top of the window to the pixel to read</param>
+    /// <param name="bmp"> The bitmap to get the color from</param>
+    /// <param name="x"> The distance from the left edge of the bitmap to the pixel to read</param>
+    /// <param name="y"> The distance from the top of the bitmap to the pixel to read</param>
     /// <returns>The color of the pixel at the supplied location</returns>
-    public static Color GetPixel(Window wnd, double x, double y)
+    public static Color GetPixelFromBitmap(Bitmap bmp, double x, double y)
     {
-      __sklib_ptr __skparam__wnd;
+      __sklib_ptr __skparam__bmp;
       double __skparam__x;
       double __skparam__y;
       __sklib_color __skreturn;
-      __skparam__wnd = __skadapter__to_sklib_window(wnd);
+      __skparam__bmp = __skadapter__to_sklib_bitmap(bmp);
       __skparam__x = __skadapter__to_sklib_double(x);
       __skparam__y = __skadapter__to_sklib_double(y);
-      __skreturn = __sklib__get_pixel__window__double__double(__skparam__wnd, __skparam__x, __skparam__y);
+      __skreturn = __sklib__get_pixel_from_bitmap__bitmap__double__double(__skparam__bmp, __skparam__x, __skparam__y);
       return __skadapter__to_color(__skreturn);
     }
     /// <summary>
@@ -30229,6 +30188,27 @@ public class Bitmap : PointerWrapper
     }
 
     /// <summary>
+    /// Returns the color of the pixel at the location on the supplied bitmap.
+    /// </summary>
+    /// <param name="pt"> The position of the pixel</param>
+    /// <returns>The color of the pixel at the supplied location</returns>
+    public Color GetPixel(Point2D pt)
+    {
+        return SplashKit.GetPixelFromBitmap(this, pt);
+    }
+
+    /// <summary>
+    /// Returns the color of the pixel at the x,y location on the supplied bitmap.
+    /// </summary>
+    /// <param name="x"> The distance from the left edge of the bitmap to the pixel to read</param>
+    /// <param name="y"> The distance from the top of the bitmap to the pixel to read</param>
+    /// <returns>The color of the pixel at the supplied location</returns>
+    public Color GetPixel(double x, double y)
+    {
+        return SplashKit.GetPixelFromBitmap(this, x, y);
+    }
+
+    /// <summary>
     /// Draw a quad on the supplied bitmap to the current bitmap.
     /// </summary>
     /// <param name="clr"> The color for the quad</param>
@@ -31361,6 +31341,27 @@ public class Window : PointerWrapper
     public void DrawLine(Color clr, double x1, double y1, double x2, double y2, DrawingOptions opts)
     {
         SplashKit.DrawLineOnWindow(this, clr, x1, y1, x2, y2, opts);
+    }
+
+    /// <summary>
+    /// Returns the color of the pixel at the x,y location on the given window.
+    /// </summary>
+    /// <param name="pt"> The position of the pixel</param>
+    /// <returns>The color of the pixel at the supplied location</returns>
+    public Color GetPixel(Point2D pt)
+    {
+        return SplashKit.GetPixelFromWindow(this, pt);
+    }
+
+    /// <summary>
+    /// Returns the color of the pixel at the x,y location on the given window.
+    /// </summary>
+    /// <param name="x"> The distance from the left edge of the window to the pixel to read</param>
+    /// <param name="y"> The distance from the top of the window to the pixel to read</param>
+    /// <returns>The color of the pixel at the supplied location</returns>
+    public Color GetPixel(double x, double y)
+    {
+        return SplashKit.GetPixelFromWindow(this, x, y);
     }
 
     /// <summary>

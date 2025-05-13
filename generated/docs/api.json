@@ -34698,147 +34698,6 @@
         }
       },
       {
-        "signature": "color get_pixel(bitmap bmp,const point_2d &pt);",
-        "name": "get_pixel",
-        "method_name": null,
-        "unique_global_name": "get_pixel_from_bitmap_at_point",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "Returns the color of the pixel at the location on the supplied\nbitmap.",
-        "brief": null,
-        "return": {
-          "type": "color",
-          "description": "The color of the pixel at the supplied location",
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
-          "bmp": {
-            "type": "bitmap",
-            "description": "The bitmap to get the color from",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "pt": {
-            "type": "point_2d",
-            "description": "The position of the pixel",
-            "is_pointer": false,
-            "is_const": true,
-            "is_reference": true,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          }
-        },
-        "attributes": {
-          "suffix": "from_bitmap_at_point",
-          "group": "graphics"
-        },
-        "signatures": {
-          "cpp": [
-            "color get_pixel(bitmap bmp, const point_2d &pt)"
-          ],
-          "python": [
-            "def get_pixel_from_bitmap_at_point(bmp, pt):"
-          ],
-          "csharp": [
-            "public static Color SplashKit.GetPixel(Bitmap bmp, Point2D pt);"
-          ],
-          "pascal": [
-            "function GetPixel(bmp: Bitmap; const pt: Point2D): Color"
-          ]
-        }
-      },
-      {
-        "signature": "color get_pixel(bitmap bmp,double x,double y);",
-        "name": "get_pixel",
-        "method_name": null,
-        "unique_global_name": "get_pixel_from_bitmap",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "Returns the color of the pixel at the x,y location on the supplied\nbitmap.",
-        "brief": null,
-        "return": {
-          "type": "color",
-          "description": "The color of the pixel at the supplied location",
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
-          "bmp": {
-            "type": "bitmap",
-            "description": "The bitmap to get the color from",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "x": {
-            "type": "double",
-            "description": "The distance from the left edge of the bitmap to the pixel\nto read",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "y": {
-            "type": "double",
-            "description": "The distance from the top of the bitmap to the pixel to read",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          }
-        },
-        "attributes": {
-          "suffix": "from_bitmap",
-          "group": "graphics"
-        },
-        "signatures": {
-          "cpp": [
-            "color get_pixel(bitmap bmp, double x, double y)"
-          ],
-          "python": [
-            "def get_pixel_from_bitmap(bmp, x, y):"
-          ],
-          "csharp": [
-            "public static Color SplashKit.GetPixel(Bitmap bmp, double x, double y);"
-          ],
-          "pascal": [
-            "function GetPixel(bmp: Bitmap; x: Double; y: Double): Color"
-          ]
-        }
-      },
-      {
         "signature": "color get_pixel(const point_2d &pt);",
         "name": "get_pixel",
         "method_name": null,
@@ -34953,13 +34812,13 @@
         }
       },
       {
-        "signature": "color get_pixel(window wnd,const point_2d &pt);",
-        "name": "get_pixel",
-        "method_name": null,
-        "unique_global_name": "get_pixel_from_window_at_point",
-        "unique_method_name": null,
+        "signature": "color get_pixel_from_bitmap(bitmap bmp,const point_2d &pt);",
+        "name": "get_pixel_from_bitmap",
+        "method_name": "get_pixel",
+        "unique_global_name": "get_pixel_from_bitmap_at_point",
+        "unique_method_name": "bitmap.get_pixel_at_point",
         "suffix_name": null,
-        "description": "Returns the color of the pixel at the location on the supplied\nwindow.",
+        "description": "Returns the color of the pixel at the location on the supplied\nbitmap.",
         "brief": null,
         "return": {
           "type": "color",
@@ -34970,9 +34829,9 @@
           "type_parameter": null
         },
         "parameters": {
-          "wnd": {
-            "type": "window",
-            "description": "The window to get the color from",
+          "bmp": {
+            "type": "bitmap",
+            "description": "The bitmap to get the color from",
             "is_pointer": false,
             "is_const": false,
             "is_reference": false,
@@ -34998,32 +34857,36 @@
           }
         },
         "attributes": {
-          "suffix": "from_window_at_point",
-          "group": "graphics"
+          "class": "bitmap",
+          "method": "get_pixel",
+          "suffix": "at_point",
+          "group": "graphics",
+          "self": "bmp"
         },
         "signatures": {
           "cpp": [
-            "color get_pixel(window wnd, const point_2d &pt)"
+            "color get_pixel_from_bitmap(bitmap bmp, const point_2d &pt)"
           ],
           "python": [
-            "def get_pixel_from_window_at_point(wnd, pt):"
+            "def get_pixel_from_bitmap_at_point(bmp, pt):"
           ],
           "csharp": [
-            "public static Color SplashKit.GetPixel(Window wnd, Point2D pt);"
+            "public Color Bitmap.GetPixel(Point2D pt);",
+            "public static Color SplashKit.GetPixelFromBitmap(Bitmap bmp, Point2D pt);"
           ],
           "pascal": [
-            "function GetPixel(wnd: Window; const pt: Point2D): Color"
+            "function GetPixelFromBitmap(bmp: Bitmap; const pt: Point2D): Color"
           ]
         }
       },
       {
-        "signature": "color get_pixel(window wnd,double x,double y);",
-        "name": "get_pixel",
-        "method_name": null,
-        "unique_global_name": "get_pixel_from_window",
-        "unique_method_name": null,
+        "signature": "color get_pixel_from_bitmap(bitmap bmp,double x,double y);",
+        "name": "get_pixel_from_bitmap",
+        "method_name": "get_pixel",
+        "unique_global_name": "get_pixel_from_bitmap",
+        "unique_method_name": "bitmap.get_pixel",
         "suffix_name": null,
-        "description": "Returns the color of the pixel at the x,y location on the supplied\nwindow.",
+        "description": "Returns the color of the pixel at the x,y location on the supplied\nbitmap.",
         "brief": null,
         "return": {
           "type": "color",
@@ -35034,9 +34897,9 @@
           "type_parameter": null
         },
         "parameters": {
-          "wnd": {
-            "type": "window",
-            "description": "The window to get the color from",
+          "bmp": {
+            "type": "bitmap",
+            "description": "The bitmap to get the color from",
             "is_pointer": false,
             "is_const": false,
             "is_reference": false,
@@ -35049,7 +34912,7 @@
           },
           "x": {
             "type": "double",
-            "description": "The distance from the left edge of the window to the pixel\nto read",
+            "description": "The distance from the left edge of the bitmap to the pixel\nto read",
             "is_pointer": false,
             "is_const": false,
             "is_reference": false,
@@ -35062,7 +34925,7 @@
           },
           "y": {
             "type": "double",
-            "description": "The distance from the top of the window to the pixel to read",
+            "description": "The distance from the top of the bitmap to the pixel to read",
             "is_pointer": false,
             "is_const": false,
             "is_reference": false,
@@ -35075,30 +34938,33 @@
           }
         },
         "attributes": {
-          "suffix": "from_window",
-          "group": "graphics"
+          "class": "bitmap",
+          "method": "get_pixel",
+          "group": "graphics",
+          "self": "bmp"
         },
         "signatures": {
           "cpp": [
-            "color get_pixel(window wnd, double x, double y)"
+            "color get_pixel_from_bitmap(bitmap bmp, double x, double y)"
           ],
           "python": [
-            "def get_pixel_from_window(wnd, x, y):"
+            "def get_pixel_from_bitmap(bmp, x, y):"
           ],
           "csharp": [
-            "public static Color SplashKit.GetPixel(Window wnd, double x, double y);"
+            "public Color Bitmap.GetPixel(double x, double y);",
+            "public static Color SplashKit.GetPixelFromBitmap(Bitmap bmp, double x, double y);"
           ],
           "pascal": [
-            "function GetPixel(wnd: Window; x: Double; y: Double): Color"
+            "function GetPixelFromBitmap(bmp: Bitmap; x: Double; y: Double): Color"
           ]
         }
       },
       {
         "signature": "color get_pixel_from_window(window destination,const point_2d &pt);",
         "name": "get_pixel_from_window",
-        "method_name": null,
-        "unique_global_name": "get_pixel_from_window_at_point_from_window",
-        "unique_method_name": null,
+        "method_name": "get_pixel",
+        "unique_global_name": "get_pixel_from_window_at_point",
+        "unique_method_name": "window.get_pixel_at_point",
         "suffix_name": null,
         "description": "Returns the color of the pixel at the x,y location on the given\nwindow.",
         "brief": null,
@@ -35139,17 +35005,21 @@
           }
         },
         "attributes": {
-          "suffix": "at_point_from_window",
-          "group": "graphics"
+          "class": "window",
+          "method": "get_pixel",
+          "suffix": "at_point",
+          "group": "graphics",
+          "self": "destination"
         },
         "signatures": {
           "cpp": [
             "color get_pixel_from_window(window destination, const point_2d &pt)"
           ],
           "python": [
-            "def get_pixel_from_window_at_point_from_window(destination, pt):"
+            "def get_pixel_from_window_at_point(destination, pt):"
           ],
           "csharp": [
+            "public Color Window.GetPixel(Point2D pt);",
             "public static Color SplashKit.GetPixelFromWindow(Window destination, Point2D pt);"
           ],
           "pascal": [
@@ -35160,9 +35030,9 @@
       {
         "signature": "color get_pixel_from_window(window destination,double x,double y);",
         "name": "get_pixel_from_window",
-        "method_name": null,
-        "unique_global_name": "get_pixel_from_window_from_window",
-        "unique_method_name": null,
+        "method_name": "get_pixel",
+        "unique_global_name": "get_pixel_from_window",
+        "unique_method_name": "window.get_pixel",
         "suffix_name": null,
         "description": "Returns the color of the pixel at the x,y location on the given\nwindow.",
         "brief": null,
@@ -35217,17 +35087,19 @@
         },
         "attributes": {
           "class": "window",
-          "suffix": "from_window",
-          "group": "graphics"
+          "method": "get_pixel",
+          "group": "graphics",
+          "self": "destination"
         },
         "signatures": {
           "cpp": [
             "color get_pixel_from_window(window destination, double x, double y)"
           ],
           "python": [
-            "def get_pixel_from_window_from_window(destination, x, y):"
+            "def get_pixel_from_window(destination, x, y):"
           ],
           "csharp": [
+            "public Color Window.GetPixel(double x, double y);",
             "public static Color SplashKit.GetPixelFromWindow(Window destination, double x, double y);"
           ],
           "pascal": [
