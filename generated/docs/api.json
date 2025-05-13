@@ -72741,9 +72741,549 @@
     ]
   },
   "raspberry": {
-    "brief": "Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.",
+    "brief": "Provides support for using an ADC device with the GPIO pins on the Raspberry Pi.Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.",
     "description": "",
     "functions": [
+      {
+        "signature": "adc_device adc_device_named(const string &name);",
+        "name": "adc_device_named",
+        "method_name": null,
+        "unique_global_name": "adc_device_named",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Retrieve an ADC device that has been loaded.",
+        "brief": null,
+        "return": {
+          "type": "adc_device",
+          "description": "The adc_device pointer if found; otherwise, nullptr.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "The name of the ADC device.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "adc_device adc_device_named(const string &name)"
+          ],
+          "python": [
+            "def adc_device_named(name):"
+          ],
+          "csharp": [
+            "public static AdcDevice SplashKit.AdcDeviceNamed(string name);"
+          ],
+          "pascal": [
+            "function AdcDeviceNamed(const name: String): AdcDevice"
+          ]
+        }
+      },
+      {
+        "signature": "void close_adc(adc_device adc);",
+        "name": "close_adc",
+        "method_name": null,
+        "unique_global_name": "close_adc",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Closes an ADC device given its pointer.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "adc": {
+            "type": "adc_device",
+            "description": "The ADC device to close.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "adc_device",
+          "destructor": true,
+          "self": "adc",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "void close_adc(adc_device adc)"
+          ],
+          "python": [
+            "def close_adc(adc):"
+          ],
+          "csharp": [
+            "public static void SplashKit.CloseAdc(AdcDevice adc);"
+          ],
+          "pascal": [
+            "procedure CloseAdc(adc: AdcDevice)"
+          ]
+        }
+      },
+      {
+        "signature": "void close_adc(const string &name);",
+        "name": "close_adc",
+        "method_name": null,
+        "unique_global_name": "close_adc_named",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Closes an ADC device given its name.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "The name of the ADC device to close.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "named",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "void close_adc(const string &name)"
+          ],
+          "python": [
+            "def close_adc_named(name):"
+          ],
+          "csharp": [
+            "public static void SplashKit.CloseAdc(string name);"
+          ],
+          "pascal": [
+            "procedure CloseAdc(const name: String)"
+          ]
+        }
+      },
+      {
+        "signature": "void close_all_adc();",
+        "name": "close_all_adc",
+        "method_name": null,
+        "unique_global_name": "close_all_adc",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Closes all ADC devices that have been opened.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "void close_all_adc()"
+          ],
+          "python": [
+            "def close_all_adc():"
+          ],
+          "csharp": [
+            "public static void SplashKit.CloseAllAdc();"
+          ],
+          "pascal": [
+            "procedure CloseAllAdc()"
+          ]
+        }
+      },
+      {
+        "signature": "bool has_adc_device(const string &name);",
+        "name": "has_adc_device",
+        "method_name": null,
+        "unique_global_name": "has_adc_device",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Checks if an ADC device with the given name has been loaded.",
+        "brief": null,
+        "return": {
+          "type": "bool",
+          "description": "true if an ADC device with the supplied name exists.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "The name used to identify the ADC device.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "bool has_adc_device(const string &name)"
+          ],
+          "python": [
+            "def has_adc_device(name):"
+          ],
+          "csharp": [
+            "public static bool SplashKit.HasAdcDevice(string name);"
+          ],
+          "pascal": [
+            "function HasAdcDevice(const name: String): Boolean"
+          ]
+        }
+      },
+      {
+        "signature": "adc_device open_adc(const string &name,adc_type type);",
+        "name": "open_adc",
+        "method_name": null,
+        "unique_global_name": "open_adc",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Opens an ADC device with the specified name and type. Defaults to bus 1 and address 0x48.",
+        "brief": null,
+        "return": {
+          "type": "adc_device",
+          "description": "A valid adc_device on success, or nullptr on failure.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "The name of the ADC device to open.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "type": {
+            "type": "adc_type",
+            "description": "The type of ADC device (e.g., ADS7830, PCF8591).",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "adc_device",
+          "constructor": true,
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "adc_device open_adc(const string &name, adc_type type)"
+          ],
+          "python": [
+            "def open_adc(name, type):"
+          ],
+          "csharp": [
+            "public static AdcDevice SplashKit.OpenAdc(string name, AdcType type);",
+            "public AdcDevice(string name, AdcType type);"
+          ],
+          "pascal": [
+            "function OpenAdc(const name: String; type: AdcType): AdcDevice"
+          ]
+        }
+      },
+      {
+        "signature": "adc_device open_adc(const string &name,int bus,int address,adc_type type);",
+        "name": "open_adc",
+        "method_name": null,
+        "unique_global_name": "open_adc_with_bus",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Loads an ADC device on the specified I2C bus at a given address.",
+        "brief": null,
+        "return": {
+          "type": "adc_device",
+          "description": "A valid adc_device on success, or nullptr on failure.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "The name to assign this ADC device.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "bus": {
+            "type": "int",
+            "description": "The I2C bus number.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "address": {
+            "type": "int",
+            "description": "The I2C address of the ADC device.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "type": {
+            "type": "adc_type",
+            "description": "The type of ADC device (e.g., ADS7830, PCF8591).",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "adc_device",
+          "constructor": true,
+          "suffix": "with_bus",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "adc_device open_adc(const string &name, int bus, int address, adc_type type)"
+          ],
+          "python": [
+            "def open_adc_with_bus(name, bus, address, type):"
+          ],
+          "csharp": [
+            "public static AdcDevice SplashKit.OpenAdc(string name, int bus, int address, AdcType type);",
+            "public AdcDevice(string name, int bus, int address, AdcType type);"
+          ],
+          "pascal": [
+            "function OpenAdc(const name: String; bus: Integer; address: Integer; type: AdcType): AdcDevice"
+          ]
+        }
+      },
+      {
+        "signature": "int read_adc(adc_device adc,adc_pin channel);",
+        "name": "read_adc",
+        "method_name": "read",
+        "unique_global_name": "read_adc",
+        "unique_method_name": "adc_device.read",
+        "suffix_name": null,
+        "description": "Reads an 8-bit value from the specified ADC channel on the device.",
+        "brief": null,
+        "return": {
+          "type": "int",
+          "description": "The ADC conversion value (0–255), or -1 on error.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "adc": {
+            "type": "adc_device",
+            "description": "The ADC device to read from.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "channel": {
+            "type": "adc_pin",
+            "description": "The channel number to read (range depends on ADC type).",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "adc_device",
+          "method": "read",
+          "self": "adc",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "int read_adc(adc_device adc, adc_pin channel)"
+          ],
+          "python": [
+            "def read_adc(adc, channel):"
+          ],
+          "csharp": [
+            "public int AdcDevice.Read(AdcPin channel);",
+            "public static int SplashKit.ReadAdc(AdcDevice adc, AdcPin channel);"
+          ],
+          "pascal": [
+            "function ReadAdc(adc: AdcDevice; channel: AdcPin): Integer"
+          ]
+        }
+      },
+      {
+        "signature": "int read_adc(const string &name,adc_pin channel);",
+        "name": "read_adc",
+        "method_name": null,
+        "unique_global_name": "read_adc_named",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Reads an 8-bit value from the specified ADC channel on the device using its name.",
+        "brief": null,
+        "return": {
+          "type": "int",
+          "description": "The ADC conversion value (0–255), or -1 on error.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "The ADC name string to close.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "channel": {
+            "type": "adc_pin",
+            "description": "The channel number to read (range depends on ADC type).",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "named",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "cpp": [
+            "int read_adc(const string &name, adc_pin channel)"
+          ],
+          "python": [
+            "def read_adc_named(name, channel):"
+          ],
+          "csharp": [
+            "public static int SplashKit.ReadAdc(string name, AdcPin channel);"
+          ],
+          "pascal": [
+            "function ReadAdc(const name: String; channel: AdcPin): Integer"
+          ]
+        }
+      },
       {
         "signature": "bool has_gpio();",
         "name": "has_gpio",
@@ -74282,7 +74822,22 @@
       }
     ],
     "typedefs": [
-
+      {
+        "signature": "typedef struct _adc_data *adc_device;",
+        "name": "adc_device",
+        "description": "The `adc_device` type is used to refer to ADC (Analog-to-Digital Converter)\ndevices that can be managed by the SplashKit ADC code. ADC devices are:\n\n- loaded with `load_adc_device`,\n\n- accessed using `adc_device_named` or checked with `has_adc_device`,\n\n- read using `read_adc_channel` to retrieve analog values from specific channels,\n\n- and must be released using `free_adc_device` (to release a specific\nADC device) or `free_all_adc_devices` (to release all loaded ADC devices).\n\nADC devices allow you to interface with external analog sensors or inputs,\nconverting their signals into digital values for processing in your application.\n\nYou can check if an ADC device is loaded using `has_adc_device`.\n\nUse `free_adc_device` to release resources associated with a specific ADC device,\nor `free_all_adc_devices` to clean up all ADC devices.",
+        "brief": null,
+        "attributes": {
+          "class": "adc_device",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "is_function_pointer": false,
+        "aliased_type": null,
+        "aliased_identifier": null,
+        "is_pointer": false,
+        "new_identifier": null
+      }
     ],
     "structs": [
 
@@ -93323,6 +93878,76 @@
       }
     ],
     "enums": [
+      {
+        "signature": "enum adc_pin {ADC_PIN_0 = 0,ADC_PIN_1 = 1,ADC_PIN_2 = 2,ADC_PIN_3 = 3,ADC_PIN_4 = 4,ADC_PIN_5 = 5,ADC_PIN_6 = 6,ADC_PIN_7 = 7,// ADC_SDA = 8,// ADC_SCL = 9,// ADC_VREF = 10,// ADC_COM = 12,// ADC_AD0 = 13,// ADC_AD1 = 14,};",
+        "name": "adc_pin",
+        "description": "ADC Pins:",
+        "brief": null,
+        "constants": {
+          "ADC_PIN_0": {
+            "description": "Analog Input Channel 0",
+            "number": 0
+          },
+          "ADC_PIN_1": {
+            "description": "Analog Input Channel 1",
+            "number": 1
+          },
+          "ADC_PIN_2": {
+            "description": "Analog Input Channel 2",
+            "number": 2
+          },
+          "ADC_PIN_3": {
+            "description": "Analog Input Channel 3",
+            "number": 3
+          },
+          "ADC_PIN_4": {
+            "description": "Analog Input Channel 4",
+            "number": 4
+          },
+          "ADC_PIN_5": {
+            "description": "Analog Input Channel 5",
+            "number": 5
+          },
+          "ADC_PIN_6": {
+            "description": "Analog Input Channel 6",
+            "number": 6
+          },
+          "ADC_PIN_7": {
+            "description": "Analog Input Channel 7",
+            "number": 7
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "cpp": "class adc_pin {ADC_PIN_0 = 0, ADC_PIN_1 = 1, ADC_PIN_2 = 2, ADC_PIN_3 = 3, ADC_PIN_4 = 4, ADC_PIN_5 = 5, ADC_PIN_6 = 6, ADC_PIN_7 = 7};",
+          "python": "public enum {AdcPin.adc_pin_0 = 0, AdcPin.adc_pin_1 = 1, AdcPin.adc_pin_2 = 2, AdcPin.adc_pin_3 = 3, AdcPin.adc_pin_4 = 4, AdcPin.adc_pin_5 = 5, AdcPin.adc_pin_6 = 6, AdcPin.adc_pin_7 = 7}",
+          "csharp": "public enum {AdcPin.AdcPin0 = 0, AdcPin.AdcPin1 = 1, AdcPin.AdcPin2 = 2, AdcPin.AdcPin3 = 3, AdcPin.AdcPin4 = 4, AdcPin.AdcPin5 = 5, AdcPin.AdcPin6 = 6, AdcPin.AdcPin7 = 7}",
+          "pascal": "public enum {AdcPin.AdcPin0 = 0, AdcPin.AdcPin1 = 1, AdcPin.AdcPin2 = 2, AdcPin.AdcPin3 = 3, AdcPin.AdcPin4 = 4, AdcPin.AdcPin5 = 5, AdcPin.AdcPin6 = 6, AdcPin.AdcPin7 = 7}"
+        }
+      },
+      {
+        "signature": "enum adc_type {ADS7830 = 0,// PCF8591 = 1,};",
+        "name": "adc_type",
+        "description": "ADC Type:",
+        "brief": null,
+        "constants": {
+          "ADS7830": {
+            "description": "8-Bit, 8-Channel Sampling A/D Converter with I2C Interface",
+            "number": 0
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "cpp": "class adc_type {ADS7830 = 0};",
+          "python": "public enum {AdcType.ads7830 = 0}",
+          "csharp": "public enum {AdcType.Ads7830 = 0}",
+          "pascal": "public enum {AdcType.Ads7830 = 0}"
+        }
+      },
       {
         "signature": "enum drawing_dest {DRAW_TO_SCREEN, // no camera effectDRAW_TO_WORLD, // camera effectDRAW_DEFAULT // camera effect on screen, but not on bitmaps};",
         "name": "drawing_dest",
