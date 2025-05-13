@@ -16,35 +16,84 @@
 1. [Create a fork](https://guides.github.com/activities/forking/) of SplashKit.
 2. Clone the forked repository into your preferred location.
 
-   ```sh
+   sh
    git clone --recursive -j2 https://github.com/<username>/splashkit-core.git
-   ```
+   
 
-3. Build the test project:
+3. Initialise submodules if they weren't included during clone:
+
+   sh
+   git submodule update --init --recursive
+   
+
+4. Build the test project:
 
    - In a terminal application, go into the cloned directory of your SplashKit
      fork, and type:
 
-     ```sh
+     sh
      cd projects/cmake
      cmake .
      make
-     ```
+     
 
-4. Run the test program by executing
+   - For Apple Silicon (arm64) Macs, you may need to specify the architecture:
 
-   ```sh
+     sh
+     cd projects/cmake
+     # Clean any previous build files if you encounter errors
+     rm -rf CMakeFiles CMakeCache.txt
+     cmake . -DCMAKE_OSX_ARCHITECTURES=arm64
+     make
+     
+
+5. Run the test program by executing
+
+   sh
    cd ../../bin
    ./sktest
-   ```
+   
 
-5. Add features to code in
+6. Generate Code Coverage Report (requires lcov)
+
+   SplashKit includes a CMake preset for generating code coverage reports using lcov. To use it:
 
    ```sh
-   ./coresdk
+   # Install lcov if you don't have it
+   brew install lcov
+
+   # Navigate to the cmake directory from the repository root
+   cd projects/cmake
+
+   # Configure the project with coverage flags
+   cmake --preset macOSCoverage -S .
+
+   # Build the project
+   cmake --build --preset macOSCoverage
+
+   # Run the tests to generate coverage data
+   cd ../../bin && ./skunit_tests
+
+   # Generate the coverage report
+   cd ..
+   lcov --capture --directory projects/cmake/build/macOSCoverage --output-file coverage.info --ignore-errors inconsistent,unsupported,format,count --include "/coresdk/src/coresdk/" --include "/coresdk/src/backend/"
+
+   # Create an HTML report
+   genhtml coverage.info --output-directory coverage_report --ignore-errors inconsistent,corrupt,unsupported,category
+
+   # Open the report
+   open coverage_report/index.html
    ```
 
-6. Add test code into `coresdk/src/test`. Now you should be good to go.
+   The report will show which parts of your code are covered by tests and which parts are not covered. This helps identify areas that need additional testing.
+
+7. Add features to code in
+
+   sh
+   ./coresdk
+   
+
+8. Add test code into `coresdk/src/test`. Now you should be good to go.
 
 ## Linux
 
@@ -247,3 +296,4 @@ You can find the SplashKit Translator repository on GitHub: [https://github.com/
 The SplashKit NuGet package provides the SplashKit library for .NET projects. It allows you to easily add the SplashKit library to your C++ or C# projects.[2]
 You can find the SplashKit NuGet package on the NuGet Gallery: [https://www.nuget.org/packages/SplashKit](https://www.nuget.org/packages/SplashKit)
 To use the SplashKit NuGet package, you can follow the instructions provided on the package page, such as adding the package reference to your project file or using the NuGet Package Manager Console.
+
