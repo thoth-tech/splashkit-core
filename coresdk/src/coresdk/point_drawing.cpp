@@ -42,22 +42,6 @@ namespace splashkit_lib
         draw_pixel(clr, pt.x, pt.y, opts);
     }
 
-    color get_pixel(bitmap bmp, double x, double y)
-    {
-        if ( INVALID_PTR(bmp, BITMAP_PTR) )
-        {
-            LOG(WARNING) << "Attempting to get pixel from invalid bitmap";
-            return COLOR_WHITE;
-        }
-
-        return sk_read_pixel(&bmp->image.surface, static_cast<int>(x), static_cast<int>(y));
-    }
-
-    color get_pixel(bitmap bmp, const point_2d &pt)
-    {
-        return get_pixel(bmp, pt.x, pt.y);
-    }
-
     color get_pixel(window wnd, double x, double y)
     {
         if ( INVALID_PTR(wnd, WINDOW_PTR) )
@@ -132,5 +116,21 @@ namespace splashkit_lib
     color get_pixel_from_window(window destination, const point_2d &pt)
     {
         return get_pixel(destination, pt.x, pt.y);
+    }
+
+    color get_pixel_from_bitmap(bitmap bmp, double x, double y)
+    {
+        if ( INVALID_PTR(bmp, BITMAP_PTR) )
+        {
+            LOG(WARNING) << "Attempting to get pixel from invalid bitmap";
+            return COLOR_WHITE;
+        }
+
+        return sk_read_pixel(&bmp->image.surface, static_cast<int>(x), static_cast<int>(y));
+    }
+
+    color get_pixel_from_bitmap(bitmap bmp, const point_2d &pt)
+    {
+        return get_pixel_from_bitmap(bmp, pt.x, pt.y);
     }
 }
