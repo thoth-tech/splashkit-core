@@ -41,31 +41,15 @@ namespace splashkit_lib
     {
         draw_pixel(clr, pt.x, pt.y, opts);
     }
-
-    color get_pixel(window wnd, double x, double y)
-    {
-        if ( INVALID_PTR(wnd, WINDOW_PTR) )
-        {
-            LOG(WARNING) << "Attempting to get pixel from invalid window";
-            return COLOR_WHITE;
-        }
-
-        return sk_read_pixel(&wnd->image.surface, static_cast<int>(x), static_cast<int>(y));
-    }
-
-    color get_pixel(window wnd, const point_2d &pt)
-    {
-        return get_pixel(wnd, pt.x, pt.y);
-    }
     
     color get_pixel(double x, double y)
     {
-        return get_pixel(current_window(), x, y);
+        return get_pixel_from_window(current_window(), x, y);
     }
     
     color get_pixel(const point_2d &pt)
     {
-        return get_pixel(current_window(), pt.x, pt.y);
+        return get_pixel_from_window(current_window(), pt.x, pt.y);
     }
     
     void draw_pixel_on_window(window destination, color clr, double x, double y)
@@ -110,12 +94,18 @@ namespace splashkit_lib
     
     color get_pixel_from_window(window destination, double x, double y)
     {
-        return get_pixel(destination, x, y);
+        if ( INVALID_PTR(destination, WINDOW_PTR) )
+        {
+            LOG(WARNING) << "Attempting to get pixel from invalid window";
+            return COLOR_WHITE;
+        }
+
+        return sk_read_pixel(&destination->image.surface, static_cast<int>(x), static_cast<int>(y));
     }
     
     color get_pixel_from_window(window destination, const point_2d &pt)
     {
-        return get_pixel(destination, pt.x, pt.y);
+        return get_pixel_from_window(destination, pt.x, pt.y);
     }
 
     color get_pixel_from_bitmap(bitmap bmp, double x, double y)
