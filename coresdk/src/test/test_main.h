@@ -33,6 +33,7 @@ void run_networking_test();
 void run_udp_networking_test();
 void run_tcp_networking_test();
 void run_gpio_tests();
+void run_gpio_adc_tests();
 void run_remote_gpio_tests();
 void run_gpio_spi_tests();
 void run_terminal_test();
