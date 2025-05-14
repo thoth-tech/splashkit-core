@@ -1,76 +1,66 @@
 {
-    "version": 8,
-    "cmakeMinimumRequired": {
-      "major": 3,
-      "minor": 10,
-      "patch": 0
-    },
-    "configurePresets": [
+  "version": 8,
+  "configurePresets": [
       {
-        "name": "Linux",
-        "displayName": "Linux without coverage",
-        "description": "Linux gcc g++",
-        "binaryDir": "${sourceDir}/build",
-        "cacheVariables": {
-          "CMAKE_C_COMPILER": "gcc",
-          "CMAKE_CXX_COMPILER": "g++",
-          "CMAKE_BUILD_TYPE": "Debug",
-          "USE_COVERAGE": "OFF"
-        }
+          "name": "Linux",
+          "displayName": "Linux without coverage",
+          "description": "Linux gcc g++",
+          "binaryDir": "${sourceDir}/build",
+          "cacheVariables": {
+              "CMAKE_C_COMPILER": "gcc",
+              "CMAKE_CXX_COMPILER": "g++",
+              "CMAKE_BUILD_TYPE": "Debug",
+              "USE_COVERAGE": "OFF"
+          }
       },
       {
-        "name": "LinuxCoverage",
-        "displayName": "Linux with coverage",
-        "description": "Linux gcc g++",
-        "inherits": "Linux",
-        "cacheVariables": {
-          "USE_COVERAGE": "ON"
-        }
+          "name": "LinuxCoverage",
+          "displayName": "Linux with coverage",
+          "description": "Linux gcc g++",
+          "inherits": "Linux",
+          "cacheVariables": {
+              "USE_COVERAGE": "ON"
+          }
       },
       {
-        "name": "Windows",
-        "displayName": "Windows",
-        "description": "Windows mingw64 gcc",
-        "generator": "MinGW Makefiles",
-        "binaryDir": "${sourceDir}/build",
-        "cacheVariables": {
-          "CMAKE_C_COMPILER": "gcc",
-          "CMAKE_CXX_COMPILER": "g++",
-          "CMAKE_BUILD_TYPE": "Debug"
-        }
+          "name": "Windows",
+          "displayName": "Windows",
+          "description": "Windows mingw64 gcc",
+          "generator": "MinGW Makefiles",
+          "binaryDir": "${sourceDir}/build",
+          "cacheVariables": {
+              "CMAKE_C_COMPILER": "gcc",
+              "CMAKE_CXX_COMPILER": "g++",
+              "CMAKE_BUILD_TYPE": "Debug"
+          }
       },
       {
-        "name": "macOS",
-        "displayName": "macOS",
-        "description": "macOS clang",
-        "generator": "Unix Makefiles",
-        "binaryDir": "${sourceDir}/build",
-        "cacheVariables": {
-          "CMAKE_C_COMPILER": "clang",
-          "CMAKE_CXX_COMPILER": "clang++",
-          "CMAKE_BUILD_TYPE": "Debug",
-          "USE_COVERAGE": "OFF"
-        }
+          "name": "macOS",
+          "displayName": "macOS",
+          "description": "macOS clang",
+          "generator": "Unix Makefiles",
+          "binaryDir": "${sourceDir}/build",
+          "cacheVariables": {
+              "CMAKE_C_COMPILER": "clang",
+              "CMAKE_CXX_COMPILER": "clang++",
+              "CMAKE_BUILD_TYPE": "Debug",
+              "USE_COVERAGE": "OFF"
+          }
       },
       {
-        "name": "macOSCoverage",
-        "displayName": "macOS Code Coverage",
-        "description": "Configuration for macOS with code coverage enabled",
-        "generator": "Ninja",
-        "binaryDir": "${sourceDir}/build/${presetName}",
-        "cacheVariables": {
-          "CMAKE_BUILD_TYPE": "Debug",
-          "CMAKE_CXX_FLAGS": "--coverage -g -O0",
-          "CMAKE_C_FLAGS": "--coverage -g -O0",
-          "CMAKE_EXE_LINKER_FLAGS": "--coverage"
-        }
+          "name": "macOSCoverage",
+          "displayName": "macOS with coverage",
+          "description": "macOS clang",
+          "inherits": "macOS",
+          "cacheVariables": {
+              "USE_COVERAGE": "ON"
+          }
       }
-    ],
-    "buildPresets": [
-      {
-        "name": "macOSCoverage",
-        "configurePreset": "macOSCoverage"
-      }
-    ]
-  }
-  
+  ],
+  "buildPresets": [
+    {
+      "name": "macOSCoverage",
+      "configurePreset": "macOSCoverage"
+    }
+  ]
+}
