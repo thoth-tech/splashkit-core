@@ -1,3 +1,4 @@
+```
 # SplashKit Development
 
 ## macOS
@@ -296,4 +297,4 @@ You can find the SplashKit Translator repository on GitHub: [https://github.com/
 The SplashKit NuGet package provides the SplashKit library for .NET projects. It allows you to easily add the SplashKit library to your C++ or C# projects.[2]
 You can find the SplashKit NuGet package on the NuGet Gallery: [https://www.nuget.org/packages/SplashKit](https://www.nuget.org/packages/SplashKit)
 To use the SplashKit NuGet package, you can follow the instructions provided on the package page, such as adding the package reference to your project file or using the NuGet Package Manager Console.
-
+```
