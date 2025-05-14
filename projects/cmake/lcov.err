@@ -1,0 +1,2 @@
+lcov: ERROR: (empty) no .gcno files found in /Users/trungpham/Documents/splashkit-core/projects/cmake/build
+	(use "lcov --ignore-errors empty ..." to bypass this error)
