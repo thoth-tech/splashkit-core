@@ -1,8 +1,9 @@
 /**
  * @header raspi_motor_driver
- * @brief Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.
+ * @brief Provides support for using a motor driver with the GPIO pins on the Raspberry Pi.
  * @author Aditya Parmar
- * @attribute group raspberry
+ * 
+ * @attribute group  raspberry
  * @attribute static raspberry
  */
 #ifndef RASPI_MOTOR_DRIVER_H
