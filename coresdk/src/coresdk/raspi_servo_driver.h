@@ -72,14 +72,6 @@ namespace splashkit_lib
   servo_device open_servo(const std::string &name, gpio_pin control_pin);
 
   /**
-   * Send a raw pulse‐width (in microseconds).
-   * Typical hobby servos want ~500…2500 µs.
-   * @param dev  The servo device to control.
-   * @param pulse_width_us  The pulse width in microseconds.
-   */
-  void set_servo_pulsewidth(servo_device dev, unsigned pulse_width_us);
-
-  /**
    * Convenience: map an angle (0…180°) into the 500…2500 µs range.
    * This is a linear mapping, so it may not be accurate for all servos.
    * @param dev  The servo device to control.

@@ -57,15 +57,7 @@ namespace splashkit_lib
   #endif
   }
 
-  void set_servo_pulsewidth(servo_device dev, unsigned pw_us) {
-  #ifdef RASPBERRY_PI
-    if (!dev) return;
-    // pigpio raspi_set_pwm_dutycycle clamps internally to 0..2500
-    raspi_set_pwm_dutycycle(dev->pin, pw_us);
-  #else
-    LOG(ERROR) << "Servo driver not supported on this platform";
-  #endif
-  }
+
 
   void set_servo_angle(servo_device dev, double angle) {
   #ifdef RASPBERRY_PI
