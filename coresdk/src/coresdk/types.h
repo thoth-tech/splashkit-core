@@ -490,6 +490,17 @@ namespace splashkit_lib
     };
 
     /**
+     * Motor Movement Directions:
+     * @constant MOTOR_FORWARD  Motor moves forward.
+     * @constant MOTOR_BACKWARD Motor moves backward.
+     *  
+     * */
+      enum motor_direction {
+        MOTOR_FORWARD,
+        MOTOR_BACKWARD
+    };
+
+    /**
      * ADC Type:
      *
      * @constant ADS7830  8-Bit, 8-Channel Sampling A/D Converter with I2C Interface
@@ -498,6 +509,17 @@ namespace splashkit_lib
     {
        ADS7830 = 0,
     //    PCF8591 = 1,
+    };
+
+    enum motor_driver_type
+    {
+        L298N = 0,
+        // L293D = 1,
+        // TB6612FNG = 2,
+        // DRV8835 = 3,
+        // DRV8834 = 4,
+        // DRV8825 = 5,
+        // A4988 = 6,
     };
 
     /**
