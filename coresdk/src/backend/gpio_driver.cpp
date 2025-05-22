@@ -353,11 +353,12 @@ namespace splashkit_lib
     int sk_get_servo_pulsewidth(int pin)
     {
         if (!check_pi())
-            return;
+            return -1;
         int result = get_servo_pulsewidth(pi, pin);
         if (result < 0)
         {
             LOG(ERROR) << sk_gpio_error_message(result);
+            return -1;
         }
         return result;
     }
