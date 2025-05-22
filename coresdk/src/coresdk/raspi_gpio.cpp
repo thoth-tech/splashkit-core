@@ -252,7 +252,7 @@ namespace splashkit_lib
             if (std::find(std::begin(pwmPins), std::end(pwmPins), pin) == std::end(pwmPins))
             {
                 LOG(ERROR) << "Pin " << pin << " is not a PWM pin";
-                return;
+                return -1
             }
             int bcmPin = boardToBCM(pin);
             // if the pin is not a PWM pin, return
