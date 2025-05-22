@@ -145,6 +145,27 @@ namespace splashkit_lib
      * @returns        The data returned from the spi transfer
      */
     string raspi_spi_transfer(int handle, const string &send, int count, int &bytes_transfered);
+
+    /**
+     * @brief Sets the pulse width for the specified pin.
+     *
+     * This function sets the pulse width for the specified pin.
+     *
+     * @param pin         The pin to set the pulse width for.
+     * @param pulsewidth  The pulse width to set for the pin.
+     */
+    void raspi_set_servo_pulsewidth(gpio_pin pin, int pulsewidth);
+
+
+    /**
+     * @brief Gets the pulse width for the specified pin.
+     *
+     * This function retrieves the pulse width for the specified pin.
+     *
+     * @param pin  The pin to get the pulse width for.
+     * @returns    The pulse width of the pin.
+     */
+    int raspi_get_servo_pulsewidth(gpio_pin pin);
 	
     /**
      * @brief Cleans up and releases any resources used by the GPIO library.
