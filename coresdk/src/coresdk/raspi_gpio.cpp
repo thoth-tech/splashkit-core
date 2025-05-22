@@ -252,7 +252,7 @@ namespace splashkit_lib
             if (std::find(std::begin(pwmPins), std::end(pwmPins), pin) == std::end(pwmPins))
             {
                 LOG(ERROR) << "Pin " << pin << " is not a PWM pin";
-                return -1
+                return -1;
             }
             int bcmPin = boardToBCM(pin);
             // if the pin is not a PWM pin, return
@@ -283,7 +283,7 @@ namespace splashkit_lib
             if (std::find(std::begin(pwmPins), std::end(pwmPins), pin) == std::end(pwmPins))
             {
                 LOG(ERROR) << "Pin " << pin << " is not a PWM pin";
-                return;
+                return; // ← early return so we don’t drive an unsupported pin
             }
             int bcmPin = boardToBCM(pin);
             sk_set_servo_pulsewidth(bcmPin, pulsewidth);
