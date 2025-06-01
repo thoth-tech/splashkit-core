@@ -36,6 +36,7 @@ jobs:
         run: |
           export PATH=../coresdk/lib/${{ matrix.path }}:$PATH
           pwd
-          ntldd -R ./skunit_tests
+          ntldd ./skunit_tests
+          ls -lha
           echo $PATH
           ./skunit_tests
