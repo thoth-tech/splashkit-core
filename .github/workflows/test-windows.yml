@@ -34,5 +34,4 @@ jobs:
       - name: execute
         working-directory: ./bin
         run: |
-          export PATH=../coresdk/lib/${{ matrix.path }}:$PATH
           ./skunit_tests.exe
