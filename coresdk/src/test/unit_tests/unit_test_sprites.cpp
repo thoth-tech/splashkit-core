@@ -37,11 +37,8 @@ TEST_CASE("sprites can be created and freed", "[sprite]")
 {
     SECTION("can detect non-existent sprite")
     {
-        REQUIRE_FALSE(has_sprite("non_existent"));
-        bitmap non_bmp = bitmap_named("non_existent");
-        REQUIRE(non_bmp == nullptr);
-        REQUIRE_FALSE(has_sprite("non_existent"));
-        sprite no_sprite = create_sprite("non-existent", non_bmp);
+        REQUIRE_FALSE(has_bitmap("non_existent"));
+        REQUIRE_THROWS(create_sprite("non-existent", bitmap_named("non_existent")));
         REQUIRE_FALSE(has_sprite("non_existent"));
     }
     SECTION("can create and free sprite")

@@ -19,9 +19,8 @@ TEST_CASE("music can be loaded, controlled and freed", "[music]")
     }
     SECTION("can detect non-existent music")
     {
-        music no_mus = load_music("non_existent", "non_existent.mp3");
-        REQUIRE(no_mus == nullptr);
-        REQUIRE(has_music("non_existent") == false);
+        REQUIRE_THROWS(load_music("non_existent", "non_existent.mp3"));
+        REQUIRE_FALSE(has_music("non_existent"));
     }
     SECTION("can load, control and free music")
     {

@@ -44,8 +44,7 @@ namespace splashkit_lib
 
             if ( ! file_exists(file_path) )
             {
-                LOG(WARNING) << cat({ "Unable to locate file for ", name, " (", file_path, ")"});
-                return nullptr;
+                throw std::invalid_argument("Unable to locate file for " + name + " (" + file_path + ")");
             }
         }
 

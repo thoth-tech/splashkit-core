@@ -19,10 +19,8 @@ TEST_CASE("sound effects can be loaded, played and freed", "[sound_effect]")
     }    
     SECTION("can detect non-existent sound effect")
     {
-        REQUIRE(has_sound_effect("non_existent") == false);
-        sound_effect no_snd = load_sound_effect("non_existent", "non_existent.mp3");
-        REQUIRE(no_snd == nullptr);
-        REQUIRE(has_sound_effect("non_existent") == false);
+        REQUIRE_THROWS(load_sound_effect("non_existent", "non_existent.mp3"));
+        REQUIRE_FALSE(has_sound_effect("non_existent"));
     }
     SECTION("can load, play, stop and free sound effect")
     {

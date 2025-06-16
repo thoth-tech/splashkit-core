@@ -14,10 +14,8 @@ TEST_CASE("bitmaps can be created and freed", "[bitmap]")
 {
     SECTION("can detect non-existent bitmap")
     {
-        REQUIRE(has_bitmap("non_existent") == false);
-        bitmap no_bmp = load_bitmap("non_existent", "non_existent.jpg");
-        REQUIRE(no_bmp == nullptr);
-        REQUIRE(has_bitmap("non_existent") == false);
+        REQUIRE_THROWS(load_bitmap("non_existent", "non_existent.jpg"));
+        REQUIRE_FALSE(has_bitmap("non_existent"));
     }
     SECTION("can load and free bitmap")
     {

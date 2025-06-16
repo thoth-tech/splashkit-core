@@ -99,8 +99,7 @@ namespace splashkit_lib
 
             if ( ! file_exists(file_path) )
             {
-                LOG(WARNING) << cat({ "Unable to locate file for ", name, " (", file_path, ")"});
-                return nullptr;
+                throw std::invalid_argument("Unable to locate file for " + name + " (" + file_path + ")");
             }
         }
 
@@ -450,8 +449,7 @@ namespace splashkit_lib
     {
         if ( INVALID_PTR(bmp, BITMAP_PTR))
         {
-            LOG(WARNING) << "Attempting to get width of invalid bitmap";
-            return 0;
+            throw std::invalid_argument("Attempting to get width of invalid bitmap");
         }
 
         return bmp->image.surface.width;
