@@ -806,9 +806,9 @@ TEST_CASE("convert a binary string to an integer", "[bin_to_dec]")
     {
         REQUIRE(bin_to_dec("1010") == 10);
     }
-    SECTION("input is invalid binary: throws exception")
+    SECTION("input is invalid binary")
     {
-        REQUIRE_THROWS(bin_to_dec("2"));
+        REQUIRE(bin_to_dec("2") == 0);
     }
 }
 TEST_CASE("convert a hex string to binary", "[hex_to_bin]")
@@ -817,9 +817,9 @@ TEST_CASE("convert a hex string to binary", "[hex_to_bin]")
     {
         REQUIRE(hex_to_bin("A") == "1010");
     }
-    SECTION("input contains invalid symbol G: throws exception")
+    SECTION("input contains invalid symbol G")
     {
-        REQUIRE_THROWS(hex_to_bin("G"));
+        REQUIRE(hex_to_bin("G") == "");
     }
 }
 TEST_CASE("convert a binary string to hex", "[bin_to_hex]")
@@ -828,21 +828,14 @@ TEST_CASE("convert a binary string to hex", "[bin_to_hex]")
     {
         REQUIRE(bin_to_hex("1010") == "A");
     }
-    SECTION("input is invalid binary: throws exception")
+    SECTION("input is invalid binary")
     {
-        REQUIRE_THROWS(bin_to_hex("2"));
+        REQUIRE(bin_to_hex("2") == "");
     }
 }
 TEST_CASE("convert an integer to octal", "[dec_to_oct]")
 {
-    SECTION("integer is converted to an octal string")
-    {
-        REQUIRE(dec_to_oct(64) == "100");
-    }
-    SECTION("input uses invalid integer 0: throws exception")
-    {
-        REQUIRE_THROWS(dec_to_oct(0));
-    }
+    REQUIRE(dec_to_oct(64) == "100");
 }
 TEST_CASE("convert an octal string to an integer", "[oct_to_dec]")
 {
@@ -850,9 +843,9 @@ TEST_CASE("convert an octal string to an integer", "[oct_to_dec]")
     {
         REQUIRE(oct_to_dec("100") == 64);
     }
-    SECTION("input uses invalid symbol 8: throws exception")
+    SECTION("input uses invalid symbol 8")
     {
-        REQUIRE_THROWS(oct_to_dec("8"));
+        REQUIRE(oct_to_dec("8") == 0);
     }
 }
 TEST_CASE("convert an octal string to binary", "[oct_to_bin]")
@@ -861,9 +854,9 @@ TEST_CASE("convert an octal string to binary", "[oct_to_bin]")
     {
         REQUIRE(oct_to_bin("12") == "1010");
     }
-    SECTION("input uses invalid symbol 8: throws exception")
+    SECTION("input uses invalid symbol 8")
     {
-        REQUIRE_THROWS(oct_to_bin("8"));
+        REQUIRE(oct_to_bin("8") == "");
     }
 }
 TEST_CASE("convert a binary string to octal", "[bin_to_oct]")
@@ -872,9 +865,9 @@ TEST_CASE("convert a binary string to octal", "[bin_to_oct]")
     {
         REQUIRE(bin_to_oct("1010") == "12");
     }
-    SECTION("input is invalid binary: throws exception")
+    SECTION("input is invalid binary")
     {
-        REQUIRE_THROWS(bin_to_oct("2"));
+        REQUIRE(bin_to_oct("2") == "");
     }
 }
 TEST_CASE("convert a hex string to octal", "[hex_to_oct]")
@@ -883,9 +876,9 @@ TEST_CASE("convert a hex string to octal", "[hex_to_oct]")
     {
         REQUIRE(hex_to_oct("A") == "12");
     }
-    SECTION("input uses the invalid symbol G: throws exception")
+    SECTION("input uses the invalid symbol G")
     {
-        REQUIRE_THROWS(hex_to_oct("G"));
+        REQUIRE(hex_to_oct("G") == "");
     }
 }
 TEST_CASE("convert a hex string to an integer", "[hex_to_dec]")
@@ -894,9 +887,9 @@ TEST_CASE("convert a hex string to an integer", "[hex_to_dec]")
     {
         REQUIRE(hex_to_dec("A") == 10);
     }
-    SECTION("input uses the invalid symbol G: throws exception")
+    SECTION("input uses the invalid symbol G")
     {
-        REQUIRE_THROWS(hex_to_dec("G"));
+        REQUIRE(hex_to_dec("G") == 0);
     }
 }
 TEST_CASE("convert an octal string to hex", "[oct_to_hex]")
@@ -905,9 +898,9 @@ TEST_CASE("convert an octal string to hex", "[oct_to_hex]")
     {
         REQUIRE(oct_to_hex("12") == "A");
     }
-    SECTION("input uses the invalid symbol 8: throws exception")
+    SECTION("input uses the invalid symbol 8")
     {
-        REQUIRE_THROWS(oct_to_hex("8"));
+        REQUIRE(oct_to_hex("8") == "");
     }
 }
 TEST_CASE("encode a string in base64 format", "[base64_encode]")

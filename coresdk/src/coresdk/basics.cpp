@@ -28,7 +28,8 @@ namespace splashkit_lib
     string ltrim(const string &text)
     {
         string s = text;
-        s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c) { return !std::isspace(c);}));
+        s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](int c)
+                                        { return !std::isspace(c); }));
         return s;
     }
 
@@ -36,7 +37,10 @@ namespace splashkit_lib
     string rtrim(const string &text)
     {
         string s = text;
-        s.erase(std::find_if(s.rbegin(), s.rend(), [](int c) { return !std::isspace(c);}).base(), s.end());
+        s.erase(std::find_if(s.rbegin(), s.rend(), [](int c)
+                             { return !std::isspace(c); })
+                    .base(),
+                s.end());
         return s;
     }
 
@@ -82,7 +86,7 @@ namespace splashkit_lib
     {
         if (substr.empty())
             return text;
-        
+
         string result = text;
         size_t pos = 0;
         while ((pos = result.find(substr, pos)) != string::npos)
@@ -113,11 +117,12 @@ namespace splashkit_lib
     bool is_integer(const string &text)
     {
         string s = trim(text);
-        if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
-        
-        char * p;
+        if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+')))
+            return false;
+
+        char *p;
         strtol(s.c_str(), &p, 10);
-        
+
         return (*p == 0);
     }
 
@@ -129,22 +134,23 @@ namespace splashkit_lib
     bool is_number(const string &text)
     {
         string s = trim(text);
-        if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false;
-        
-        char * p;
+        if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+')))
+            return false;
+
+        char *p;
         strtod(s.c_str(), &p);
-        
+
         return (*p == 0);
     }
 
     int convert_to_integer(const string &text)
     {
-        return std::stoi( text );
+        return std::stoi(text);
     }
 
     double convert_to_double(const string &text)
     {
-        return std::stod( text );
+        return std::stod(text);
     }
 
     bool is_binary(const string &bin_str)
@@ -196,7 +202,8 @@ namespace splashkit_lib
     {
         if (!is_binary(bin_str))
         {
-            throw std::invalid_argument("Invalid binary string passed to bin_to_dec");
+            LOG(ERROR) << "Invalid binary string passed to bin_to_dec, returning 0";
+            return 0;
         }
 
         return stoi(bin_str, nullptr, 2);
@@ -206,7 +213,8 @@ namespace splashkit_lib
     {
         if (!is_hex(hex_str))
         {
-            throw std::invalid_argument("Invalid hexadecimal string passed to hex_to_bin");
+            LOG(ERROR) << "Invalid hexadecimal string passed to hex_to_bin, returning empty string";
+            return "";
         }
 
         string bin_string;
@@ -240,7 +248,8 @@ namespace splashkit_lib
     {
         if (!is_binary(bin_str))
         {
-            throw std::invalid_argument("Invalid binary string passed to bin_to_hex, returning empty string");
+            LOG(ERROR) << "Invalid binary string passed to bin_to_hex, returning empty string";
+            return "";
         }
 
         string hex_string;
@@ -271,7 +280,8 @@ namespace splashkit_lib
     {
         if (decimal_value == 0)
         {
-            throw std::invalid_argument("Invalid decimal value passed to dec_to_oct");
+            LOG(ERROR) << "Invalid decimal value passed to dec_to_oct: " << decimal_value << ", returning 0";
+            return "0";
         }
 
         string octal_string;
@@ -287,7 +297,8 @@ namespace splashkit_lib
     {
         if (!is_octal(octal_string))
         {
-            throw std::invalid_argument("Invalid octal string passed to oct_to_dec");
+            LOG(ERROR) << "Invalid octal string passed to oct_to_dec: " << octal_string << ", returning 0";
+            return 0;
         }
 
         return stoi(octal_string, nullptr, 8);
@@ -297,7 +308,8 @@ namespace splashkit_lib
     {
         if (!is_hex(hex_string))
         {
-            throw std::invalid_argument("Invalid octal string passed to hex_to_dec");
+            LOG(ERROR) << "Invalid octal string passed to hex_to_dec: " << hex_string << ", returning 0";
+            return 0;
         }
 
         return stoi(hex_string, nullptr, 16);
@@ -307,7 +319,8 @@ namespace splashkit_lib
     {
         if (!is_octal(octal_str))
         {
-            throw std::invalid_argument("Invalid octal string passed to oct_to_bin");
+            LOG(ERROR) << "Invalid octal string passed to oct_to_bin: " << octal_str << ", returning empty string";
+            return "";
         }
 
         string bin_string;
@@ -330,7 +343,8 @@ namespace splashkit_lib
     {
         if (!is_binary(bin_str))
         {
-            throw std::invalid_argument("Invalid binary string passed to bin_to_oct");
+            LOG(ERROR) << "Invalid binary string passed to bin_to_oct: " << bin_str << ", returning empty string";
+            return "";
         }
 
         string octal_string;
@@ -360,7 +374,8 @@ namespace splashkit_lib
     {
         if (!is_hex(hex_str))
         {
-            throw std::invalid_argument("Invalid hexadecimal string passed to hex_to_oct");
+            LOG(ERROR) << "Invalid hexadecimal string passed to hex_to_oct: " << hex_str << ", returning empty string";
+            return "";
         }
 
         string bin_str = hex_to_bin(hex_str);
@@ -371,7 +386,8 @@ namespace splashkit_lib
     {
         if (!is_octal(octal_str))
         {
-            throw std::invalid_argument("Invalid octal string passed to oct_to_hex");
+            LOG(ERROR) << "Invalid octal string passed to oct_to_hex: " << octal_str << ", returning empty string";
+            return "";
         }
 
         string bin_str = oct_to_bin(octal_str);
@@ -434,7 +450,6 @@ namespace splashkit_lib
         return decoded;
     }
 
-
     double square_root(int number)
     {
         if (number == 0 || number == 1)
@@ -445,7 +460,8 @@ namespace splashkit_lib
 
     bool is_prime_number(int number)
     {
-        if (number <= 1) return false;
+        if (number <= 1)
+            return false;
         for (int i = 2; i <= square_root(number); i++)
         {
             if (number % i == 0)
