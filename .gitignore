@@ -9,6 +9,9 @@
 # Icon must end with two \r
 Icon
 
+# environment variables
+.env
+.env.production
 
 # Thumbnails
 ._*
