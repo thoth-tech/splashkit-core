@@ -1808,9 +1808,9 @@
       {
         "signature": "void free_animation(animation ani);",
         "name": "free_animation",
-        "method_name": "free",
+        "method_name": null,
         "unique_global_name": "free_animation",
-        "unique_method_name": "animation.free",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Disposes of the resources used in the animation.",
         "brief": null,
@@ -1840,7 +1840,6 @@
         "attributes": {
           "class": "animation",
           "destructor": true,
-          "method": "free",
           "self": "ani",
           "group": "animations",
           "static": "animation"
@@ -1853,7 +1852,6 @@
             "def free_animation(ani):"
           ],
           "csharp": [
-            "public void Animation.Free();",
             "public static void SplashKit.FreeAnimation(Animation ani);"
           ],
           "pascal": [
@@ -1864,9 +1862,9 @@
       {
         "signature": "void free_animation_script(animation_script script_to_free);",
         "name": "free_animation_script",
-        "method_name": "free",
+        "method_name": null,
         "unique_global_name": "free_animation_script",
-        "unique_method_name": "animation_script.free",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Frees loaded animation frames data. Use this when you will no\nlonger be using the animation for any purpose, including within\nsprite.",
         "brief": null,
@@ -1896,7 +1894,6 @@
         "attributes": {
           "class": "animation_script",
           "destructor": true,
-          "method": "free",
           "self": "script_to_free",
           "group": "animations",
           "static": "animation"
@@ -1909,7 +1906,6 @@
             "def free_animation_script(script_to_free):"
           ],
           "csharp": [
-            "public void AnimationScript.Free();",
             "public static void SplashKit.FreeAnimationScript(AnimationScript scriptToFree);"
           ],
           "pascal": [
@@ -3002,9 +2998,9 @@
       {
         "signature": "void free_music(music effect);",
         "name": "free_music",
-        "method_name": "free",
+        "method_name": null,
         "unique_global_name": "free_music",
-        "unique_method_name": "music.free",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Releases the SplashKit resources associated with music.",
         "brief": null,
@@ -3034,7 +3030,6 @@
         "attributes": {
           "class": "music",
           "destructor": true,
-          "method": "free",
           "self": "effect",
           "group": "audio",
           "static": "audio"
@@ -3047,7 +3042,6 @@
             "def free_music(effect):"
           ],
           "csharp": [
-            "public void Music.Free();",
             "public static void SplashKit.FreeMusic(Music effect);"
           ],
           "pascal": [
@@ -51824,13 +51818,13 @@
         }
       },
       {
-        "signature": "string text_box(const string& value);",
+        "signature": "string text_box(const string& label_text,const string& value,const rectangle& rect);",
         "name": "text_box",
         "method_name": null,
-        "unique_global_name": "text_box",
+        "unique_global_name": "text_box_at_position",
         "unique_method_name": null,
         "suffix_name": null,
-        "description": "Creates a text entry box with a label.\nReturns the updated value of the text box.",
+        "description": "Creates a text entry box at a specific position on screen.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string, rectangle_from(0,0,100,100));\n```",
         "brief": null,
         "return": {
           "type": "string",
@@ -51841,9 +51835,9 @@
           "type_parameter": null
         },
         "parameters": {
-          "value": {
+          "label_text": {
             "type": "string",
-            "description": "The current value of the text box",
+            "description": "Unique identifier for the text box (not drawn)",
             "is_pointer": false,
             "is_const": true,
             "is_reference": true,
@@ -51853,45 +51847,7 @@
             ],
             "is_vector": false,
             "type_parameter": null
-          }
-        },
-        "attributes": {
-          "group": "interface",
-          "static": "interface"
-        },
-        "signatures": {
-          "cpp": [
-            "string text_box(const string &value)"
-          ],
-          "python": [
-            "def text_box(value):"
-          ],
-          "csharp": [
-            "public static string SplashKit.TextBox(string value);"
-          ],
-          "pascal": [
-            "function TextBox(const value: String): String"
-          ]
-        }
-      },
-      {
-        "signature": "string text_box(const string& value,const rectangle& rect);",
-        "name": "text_box",
-        "method_name": null,
-        "unique_global_name": "text_box_at_position",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "Creates a text entry box at a specific position on screen.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string);\n```",
-        "brief": null,
-        "return": {
-          "type": "string",
-          "description": "The updated value of the text box",
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
+          },
           "value": {
             "type": "string",
             "description": "The current value of the text box",
@@ -51926,16 +51882,16 @@
         },
         "signatures": {
           "cpp": [
-            "string text_box(const string &value, const rectangle &rect)"
+            "string text_box(const string &label_text, const string &value, const rectangle &rect)"
           ],
           "python": [
-            "def text_box_at_position(value, rect):"
+            "def text_box_at_position(label_text, value, rect):"
           ],
           "csharp": [
-            "public static string SplashKit.TextBox(string value, Rectangle rect);"
+            "public static string SplashKit.TextBox(string labelText, string value, Rectangle rect);"
           ],
           "pascal": [
-            "function TextBox(const value: String; const rect: Rectangle): String"
+            "function TextBox(const labelText: String; const value: String; const rect: Rectangle): String"
           ]
         }
       },
@@ -51943,7 +51899,7 @@
         "signature": "string text_box(const string& label_text,const string& value);",
         "name": "text_box",
         "method_name": null,
-        "unique_global_name": "text_box_labeled",
+        "unique_global_name": "text_box",
         "unique_method_name": null,
         "suffix_name": null,
         "description": "Creates a text entry box with a label.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string);\n```",
@@ -51959,7 +51915,7 @@
         "parameters": {
           "label_text": {
             "type": "string",
-            "description": "The label to show in front of the text box",
+            "description": "Unique identifier for the text box (not drawn)",
             "is_pointer": false,
             "is_const": true,
             "is_reference": true,
@@ -51985,7 +51941,6 @@
           }
         },
         "attributes": {
-          "suffix": "labeled",
           "group": "interface",
           "static": "interface"
         },
@@ -51994,13 +51949,91 @@
             "string text_box(const string &label_text, const string &value)"
           ],
           "python": [
-            "def text_box_labeled(label_text, value):"
+            "def text_box(label_text, value):"
           ],
           "csharp": [
             "public static string SplashKit.TextBox(string labelText, string value);"
           ],
           "pascal": [
             "function TextBox(const labelText: String; const value: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "string text_box(const string& label_text,const string& value,bool show_label);",
+        "name": "text_box",
+        "method_name": null,
+        "unique_global_name": "text_box_labeled",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Creates a text entry box with a label that can be shown.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string, true);\n```",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The updated value of the text box",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "label_text": {
+            "type": "string",
+            "description": "Unique identifier for the text box (not drawn)",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "value": {
+            "type": "string",
+            "description": "The current value of the text box",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "show_label": {
+            "type": "bool",
+            "description": "Whether to show the label or not",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "labeled",
+          "group": "interface",
+          "static": "interface"
+        },
+        "signatures": {
+          "cpp": [
+            "string text_box(const string &label_text, const string &value, bool show_label)"
+          ],
+          "python": [
+            "def text_box_labeled(label_text, value, show_label):"
+          ],
+          "csharp": [
+            "public static string SplashKit.TextBox(string labelText, string value, bool showLabel);"
+          ],
+          "pascal": [
+            "function TextBox(const labelText: String; const value: String; showLabel: Boolean): String"
           ]
         }
       }
@@ -52161,9 +52194,9 @@
       {
         "signature": "void free_json(json j);",
         "name": "free_json",
-        "method_name": "free",
+        "method_name": null,
         "unique_global_name": "free_json",
-        "unique_method_name": "json.free",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Frees the SplashKit resources associated with the `json` object.",
         "brief": null,
@@ -52193,7 +52226,6 @@
         "attributes": {
           "class": "json",
           "destructor": true,
-          "method": "free",
           "self": "j",
           "group": "json",
           "static": "json"
@@ -52206,7 +52238,6 @@
             "def free_json(j):"
           ],
           "csharp": [
-            "public void Json.Free();",
             "public static void SplashKit.FreeJson(Json j);"
           ],
           "pascal": [
@@ -72806,9 +72837,9 @@
       {
         "signature": "void close_adc(adc_device adc);",
         "name": "close_adc",
-        "method_name": "close",
+        "method_name": null,
         "unique_global_name": "close_adc",
-        "unique_method_name": "adc_device.close",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Closes an ADC device given its pointer.",
         "brief": null,
@@ -72838,7 +72869,6 @@
         "attributes": {
           "class": "adc_device",
           "destructor": true,
-          "method": "close",
           "self": "adc",
           "group": "raspberry",
           "static": "raspberry"
@@ -72851,7 +72881,6 @@
             "def close_adc(adc):"
           ],
           "csharp": [
-            "public void AdcDevice.Close();",
             "public static void SplashKit.CloseAdc(AdcDevice adc);"
           ],
           "pascal": [
@@ -85053,9 +85082,9 @@
       {
         "signature": "void free_timer(timer to_free);",
         "name": "free_timer",
-        "method_name": "free",
+        "method_name": null,
         "unique_global_name": "free_timer",
-        "unique_method_name": "timer.free",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Free the memory used to store this timer.",
         "brief": null,
@@ -85085,10 +85114,9 @@
         "attributes": {
           "class": "timer",
           "destructor": true,
-          "method": "free",
-          "self": "to_free",
           "group": "timers",
-          "static": "timers"
+          "static": "timers",
+          "self": "to_free"
         },
         "signatures": {
           "cpp": [
@@ -85098,7 +85126,6 @@
             "def free_timer(to_free):"
           ],
           "csharp": [
-            "public void Timer.Free();",
             "public static void SplashKit.FreeTimer(Timer toFree);"
           ],
           "pascal": [

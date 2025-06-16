@@ -2871,14 +2871,14 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__start_treenode__string_ref", CharSet=CharSet.Ansi)]
     private static extern int __sklib__start_treenode__string_ref(__sklib_string labelText);
 
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref", CharSet=CharSet.Ansi)]
-    private static extern __sklib_string __sklib__text_box__string_ref(__sklib_string value);
-
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__rectangle_ref", CharSet=CharSet.Ansi)]
-    private static extern __sklib_string __sklib__text_box__string_ref__rectangle_ref(__sklib_string value, __sklib_rectangle rect);
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__string_ref__rectangle_ref", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__text_box__string_ref__string_ref__rectangle_ref(__sklib_string labelText, __sklib_string value, __sklib_rectangle rect);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__string_ref", CharSet=CharSet.Ansi)]
     private static extern __sklib_string __sklib__text_box__string_ref__string_ref(__sklib_string labelText, __sklib_string value);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__string_ref__bool", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__text_box__string_ref__string_ref__bool(__sklib_string labelText, __sklib_string value, int showLabel);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__create_json", CharSet=CharSet.Ansi)]
     private static extern __sklib_ptr __sklib__create_json();
@@ -13997,40 +13997,30 @@ namespace SplashKitSDK
       return __skadapter__to_bool(__skreturn);
     }
     /// <summary>
-    /// Creates a text entry box with a label. Returns the updated value of the text box.
+    /// Creates a text entry box at a specific position on screen. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string, rectangle_from(0,0,100,100)); ```
     /// </summary>
-    /// <param name="value"> The current value of the text box</param>
-    /// <returns>The updated value of the text box</returns>
-    public static string TextBox(string value)
-    {
-      __sklib_string __skparam__value;
-      __sklib_string __skreturn;
-      __skparam__value = __skadapter__to_sklib_string(value);
-      __skreturn = __sklib__text_box__string_ref(__skparam__value);
-    __skadapter__free__sklib_string(ref __skparam__value);
-      return __skadapter__to_string(__skreturn);
-    }
-    /// <summary>
-    /// Creates a text entry box at a specific position on screen. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string); ```
-    /// </summary>
+    /// <param name="labelText"> Unique identifier for the text box (not drawn)</param>
     /// <param name="value"> The current value of the text box</param>
     /// <param name="rect"> The rectangle to display the button in</param>
     /// <returns>The updated value of the text box</returns>
-    public static string TextBox(string value, Rectangle rect)
+    public static string TextBox(string labelText, string value, Rectangle rect)
     {
+      __sklib_string __skparam__label_text;
       __sklib_string __skparam__value;
       __sklib_rectangle __skparam__rect;
       __sklib_string __skreturn;
+      __skparam__label_text = __skadapter__to_sklib_string(labelText);
       __skparam__value = __skadapter__to_sklib_string(value);
       __skparam__rect = __skadapter__to_sklib_rectangle(rect);
-      __skreturn = __sklib__text_box__string_ref__rectangle_ref(__skparam__value, __skparam__rect);
+      __skreturn = __sklib__text_box__string_ref__string_ref__rectangle_ref(__skparam__label_text, __skparam__value, __skparam__rect);
+    __skadapter__free__sklib_string(ref __skparam__label_text);
     __skadapter__free__sklib_string(ref __skparam__value);
       return __skadapter__to_string(__skreturn);
     }
     /// <summary>
     /// Creates a text entry box with a label. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string); ```
     /// </summary>
-    /// <param name="labelText"> The label to show in front of the text box</param>
+    /// <param name="labelText"> Unique identifier for the text box (not drawn)</param>
     /// <param name="value"> The current value of the text box</param>
     /// <returns>The updated value of the text box</returns>
     public static string TextBox(string labelText, string value)
@@ -14041,6 +14031,27 @@ namespace SplashKitSDK
       __skparam__label_text = __skadapter__to_sklib_string(labelText);
       __skparam__value = __skadapter__to_sklib_string(value);
       __skreturn = __sklib__text_box__string_ref__string_ref(__skparam__label_text, __skparam__value);
+    __skadapter__free__sklib_string(ref __skparam__label_text);
+    __skadapter__free__sklib_string(ref __skparam__value);
+      return __skadapter__to_string(__skreturn);
+    }
+    /// <summary>
+    /// Creates a text entry box with a label that can be shown. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string, true); ```
+    /// </summary>
+    /// <param name="labelText"> Unique identifier for the text box (not drawn)</param>
+    /// <param name="value"> The current value of the text box</param>
+    /// <param name="showLabel"> Whether to show the label or not</param>
+    /// <returns>The updated value of the text box</returns>
+    public static string TextBox(string labelText, string value, bool showLabel)
+    {
+      __sklib_string __skparam__label_text;
+      __sklib_string __skparam__value;
+      int __skparam__show_label;
+      __sklib_string __skreturn;
+      __skparam__label_text = __skadapter__to_sklib_string(labelText);
+      __skparam__value = __skadapter__to_sklib_string(value);
+      __skparam__show_label = __skadapter__to_sklib_bool(showLabel);
+      __skreturn = __sklib__text_box__string_ref__string_ref__bool(__skparam__label_text, __skparam__value, __skparam__show_label);
     __skadapter__free__sklib_string(ref __skparam__label_text);
     __skadapter__free__sklib_string(ref __skparam__value);
       return __skadapter__to_string(__skreturn);
@@ -26990,14 +27001,6 @@ public class Json : PointerWrapper
     }
 
     /// <summary>
-    /// Frees the SplashKit resources associated with the `json` object.
-    /// </summary>
-    public void Free()
-    {
-        SplashKit.FreeJson(this);
-    }
-
-    /// <summary>
     /// Returns the count of keys in the top-level `json` object.
     /// </summary>
     /// <returns>The count of keys in the top-level `json` object.</returns>
@@ -27302,14 +27305,6 @@ public class Music : PointerWrapper
     public void FadeIn(int times, int ms)
     {
         SplashKit.FadeMusicIn(this, times, ms);
-    }
-
-    /// <summary>
-    /// Releases the SplashKit resources associated with music.
-    /// </summary>
-    public void Free()
-    {
-        SplashKit.FreeMusic(this);
     }
 
     /// <summary>
@@ -27742,14 +27737,6 @@ public class AdcDevice : PointerWrapper
     {
         SplashKit.CloseAdc(this);
     }
-    /// <summary>
-    /// Closes an ADC device given its pointer.
-    /// </summary>
-    public void Close()
-    {
-        SplashKit.CloseAdc(this);
-    }
-
     /// <summary>
     /// Reads an 8-bit value from the specified ADC channel on the device.
     /// </summary>
@@ -28938,14 +28925,6 @@ public class Timer : PointerWrapper
         SplashKit.FreeTimer(this);
     }
     /// <summary>
-    /// Free the memory used to store this timer.
-    /// </summary>
-    public void Free()
-    {
-        SplashKit.FreeTimer(this);
-    }
-
-    /// <summary>
     /// Pause the timer, getting ticks from a paused timer will continue to return the same time.
     /// </summary>
     public void Pause()
@@ -29138,14 +29117,6 @@ public class Animation : PointerWrapper
     }
 
     /// <summary>
-    /// Disposes of the resources used in the animation.
-    /// </summary>
-    public void Free()
-    {
-        SplashKit.FreeAnimation(this);
-    }
-
-    /// <summary>
     /// Restarts an `animation`.
     /// </summary>
     public void Restart()
@@ -29279,14 +29250,6 @@ public class AnimationScript : PointerWrapper
     public Animation CreateAnimation(string name, bool withSound)
     {
         return SplashKit.CreateAnimation(this, name, withSound);
-    }
-
-    /// <summary>
-    /// Frees loaded animation frames data. Use this when you will no longer be using the animation for any purpose, including within sprite.
-    /// </summary>
-    public void Free()
-    {
-        SplashKit.FreeAnimationScript(this);
     }
 
     /// <summary>
