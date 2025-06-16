@@ -61,6 +61,7 @@ namespace splashkit_lib
         DISPLAY_PTR =               0x44495350, //'DISP';
         QUERY_PTR =                 0x51555259, //'QURY';
         JSON_PTR =                  0x4a534f4e, //'JSON';
+        ADC_PTR=                    0x41444350, //'ADCP';
         NONE_PTR =                  0x4e4f4e45  //'NONE';
     };
 

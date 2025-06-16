@@ -455,13 +455,13 @@ TEST_CASE("sprite speed can be set and retrieved", "[sprite]")
     {
         sprite_set_velocity(sprt, vector_to(10.0, -10.0));
         sprite_set_speed(sprt, 20.0);
-        REQUIRE(sprite_speed(sprt) == Approx(20.0).margin(__DBL_EPSILON__));
+        REQUIRE(sprite_speed(sprt) == Catch::Detail::Approx(20.0).margin(__DBL_EPSILON__));
         sprite_set_speed(sprt, 50.0);
-        REQUIRE(sprite_speed(sprt) == Approx(50.0).margin(__DBL_EPSILON__));
+        REQUIRE(sprite_speed(sprt) == Catch::Detail::Approx(50.0).margin(__DBL_EPSILON__));
         sprite_set_speed(sprt, -800.0);
-        REQUIRE(sprite_speed(sprt) == Approx(800.0).margin(__DBL_EPSILON__));
+        REQUIRE(sprite_speed(sprt) == Catch::Detail::Approx(800.0).margin(__DBL_EPSILON__));
         sprite_set_speed(sprt, __DBL_MAX__);
-        REQUIRE(sprite_speed(sprt) == Approx(__DBL_MAX__).margin(__DBL_EPSILON__));
+        REQUIRE(sprite_speed(sprt) == Catch::Detail::Approx(__DBL_MAX__).margin(__DBL_EPSILON__));
     }
     free_sprite(sprt);
 }
@@ -481,19 +481,19 @@ TEST_CASE("sprite heading can be set and retrieved", "[sprite]")
         sprite_set_heading(sprt, 0.0f);
         REQUIRE(sprite_heading(sprt) == 0.0f);
         sprite_set_heading(sprt, 180.0f);
-        REQUIRE(sprite_heading(sprt) == Approx(180.0f).margin(__FLT_EPSILON__));
+        REQUIRE(sprite_heading(sprt) == Catch::Detail::Approx(180.0f).margin(__FLT_EPSILON__));
         sprite_set_heading(sprt, 270.0f);
-        REQUIRE(sprite_heading(sprt) == Approx(-90.0f).margin(__FLT_EPSILON__));
+        REQUIRE(sprite_heading(sprt) == Catch::Detail::Approx(-90.0f).margin(__FLT_EPSILON__));
         sprite_set_heading(sprt, -90.0f);
-        REQUIRE(sprite_heading(sprt) == Approx(-90.0f).margin(__FLT_EPSILON__));
+        REQUIRE(sprite_heading(sprt) == Catch::Detail::Approx(-90.0f).margin(__FLT_EPSILON__));
         sprite_set_heading(sprt, 360.0f);
-        REQUIRE(sprite_heading(sprt) == Approx(0.0f).margin(__FLT_EPSILON__));
+        REQUIRE(sprite_heading(sprt) == Catch::Detail::Approx(0.0f).margin(__FLT_EPSILON__));
         sprite_set_heading(sprt, 450.0f);
-        REQUIRE(sprite_heading(sprt) == Approx(90.0f).margin(__FLT_EPSILON__));
+        REQUIRE(sprite_heading(sprt) == Catch::Detail::Approx(90.0f).margin(__FLT_EPSILON__));
         sprite_set_heading(sprt, -450.0f);
-        REQUIRE(sprite_heading(sprt) == Approx(-90.0f).margin(__FLT_EPSILON__));
+        REQUIRE(sprite_heading(sprt) == Catch::Detail::Approx(-90.0f).margin(__FLT_EPSILON__));
         sprite_set_heading(sprt, 360.0f * 10000 + 1.0f);
-        REQUIRE(sprite_heading(sprt) == Approx(1.0).margin(__FLT_EPSILON__));
+        REQUIRE(sprite_heading(sprt) == Catch::Detail::Approx(1.0).margin(__FLT_EPSILON__));
     }
     free_sprite(sprt);
 }
