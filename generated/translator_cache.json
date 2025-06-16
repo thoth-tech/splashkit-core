@@ -3,7 +3,7 @@
     "group": "animations",
     "brief": "Animations in SplashKit can be used to move between cells in\nbitmaps and sprites. Each animation generates a number sequence\nthat can then be used when drawing bitmaps.",
     "description": null,
-    "parsed_at": 1746414447,
+    "parsed_at": 1745561942,
     "path": "coresdk/src/coresdk/animations.h",
     "functions": [
       {
@@ -7255,7 +7255,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1746414448,
+    "parsed_at": 1745561945,
     "path": "coresdk/src/coresdk/clipping.h",
     "functions": [
       {
@@ -7321,9 +7321,9 @@
       {
         "signature": "rectangle current_clip(window wnd);",
         "name": "current_clip",
-        "method_name": "current_clip",
+        "method_name": null,
         "unique_global_name": "current_clip_for_window",
-        "unique_method_name": "window.current_clip_for_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns the rectangle of the current clip area for a window",
         "brief": null,
@@ -7351,9 +7351,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "current_clip",
-          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -7361,9 +7358,9 @@
       {
         "signature": "void pop_clip(window wnd);",
         "name": "pop_clip",
-        "method_name": "pop_clip",
+        "method_name": null,
         "unique_global_name": "pop_clip_for_window",
-        "unique_method_name": "window.pop_clip_for_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Remove the last clipping rectangle pushed to the window. This\nwill then apply the previously pushed clipping rectangle.",
         "brief": null,
@@ -7391,9 +7388,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "pop_clip",
-          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -7461,9 +7455,9 @@
       {
         "signature": "void push_clip(window wnd,const rectangle &r);",
         "name": "push_clip",
-        "method_name": "push_clip",
+        "method_name": null,
         "unique_global_name": "push_clip_for_window",
-        "unique_method_name": "window.push_clip_for_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Add the clipping rectangle of a window and uses the intersect between\nthe new rectangle and previous clip.\n\nWhen a clipping rectangle is provided, drawing operations will only\naffect the area specified in the current clipping rectangle.",
         "brief": null,
@@ -7504,9 +7498,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "push_clip",
-          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -7660,9 +7651,9 @@
       {
         "signature": "void reset_clip(window wnd);",
         "name": "reset_clip",
-        "method_name": "reset_clip",
+        "method_name": null,
         "unique_global_name": "reset_clip_for_window",
-        "unique_method_name": "window.reset_clip_for_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Reset the clipping rectangle on a window. This will clear all\nof the clipping rectangles pushed to the window.",
         "brief": null,
@@ -7690,9 +7681,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "reset_clip",
-          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -7786,9 +7774,9 @@
       {
         "signature": "void set_clip(window wnd,const rectangle &r);",
         "name": "set_clip",
-        "method_name": "set_clip",
+        "method_name": null,
         "unique_global_name": "set_clip_for_window",
-        "unique_method_name": "window.set_clip_for_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Set the clip rectangle of the window. This will clear any existing\nclipping rectangles pushed to the window, and use the supplied rectangle\nfor clipping.",
         "brief": null,
@@ -7829,9 +7817,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "set_clip",
-          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -19717,7 +19702,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1746414449,
+    "parsed_at": 1745561950,
     "path": "coresdk/src/coresdk/drawing_options.h",
     "functions": [
       {
@@ -19833,9 +19818,9 @@
       {
         "signature": "drawing_options option_draw_to(window dest);",
         "name": "option_draw_to",
-        "method_name": "option_draw_to",
+        "method_name": null,
         "unique_global_name": "option_draw_to_window",
-        "unique_method_name": "window.option_draw_to_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Use this option to draw to a specified Window. Pass dest the Window you want to draw on.",
         "brief": null,
@@ -19863,9 +19848,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "option_draw_to",
-          "self": "dest",
           "suffix": "window",
           "group": "graphics"
         }
@@ -19873,9 +19855,9 @@
       {
         "signature": "drawing_options option_draw_to(window dest,drawing_options opts);",
         "name": "option_draw_to",
-        "method_name": "option_draw_to",
+        "method_name": null,
         "unique_global_name": "option_draw_to_window_with_options",
-        "unique_method_name": "window.option_draw_to_window_with_options",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Use this option to draw to a Bitmap. Pass dest the Bitmap you want to draw on to.\nPass opts the other options you want use.",
         "brief": null,
@@ -19916,9 +19898,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "option_draw_to",
-          "self": "dest",
           "suffix": "window_with_options",
           "group": "graphics"
         }
@@ -23314,7 +23293,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1746414450,
+    "parsed_at": 1745561952,
     "path": "coresdk/src/coresdk/graphics.h",
     "functions": [
       {
@@ -23825,9 +23804,9 @@
       {
         "signature": "void take_screenshot(window wind,const string &basename);",
         "name": "take_screenshot",
-        "method_name": "take_screenshot",
+        "method_name": null,
         "unique_global_name": "take_screenshot_of_window",
-        "unique_method_name": "window.take_screenshot_of_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Saves a screenshot of the current window to a bitmap file. The file will\nbe saved onto the user's desktop.",
         "brief": null,
@@ -23868,9 +23847,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "take_screenshot",
-          "self": "wind",
           "suffix": "of_window",
           "group": "graphics"
         }
@@ -26511,7 +26487,7 @@
     "group": "interface",
     "brief": "SplashKit Interface provides functions to create user interfaces, with elements such as draggable panels, buttons and text boxes.",
     "description": "SplashKit`s interface library provides various functions for creating\npanels, and drawing interface elements such as buttons, text boxes, and more",
-    "parsed_at": 1745561954,
+    "parsed_at": 1747026729,
     "path": "coresdk/src/coresdk/interface.h",
     "functions": [
       {
@@ -29797,13 +29773,13 @@
         }
       },
       {
-        "signature": "string text_box(const string& value);",
+        "signature": "string text_box(const string& label_text,const string& value,const rectangle& rect);",
         "name": "text_box",
         "method_name": null,
-        "unique_global_name": "text_box",
+        "unique_global_name": "text_box_at_position",
         "unique_method_name": null,
         "suffix_name": null,
-        "description": "Creates a text entry box with a label.\nReturns the updated value of the text box.",
+        "description": "Creates a text entry box at a specific position on screen.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string, rectangle_from(0,0,100,100));\n```",
         "brief": null,
         "return": {
           "type": "string",
@@ -29814,9 +29790,9 @@
           "type_parameter": null
         },
         "parameters": {
-          "value": {
+          "label_text": {
             "type": "string",
-            "description": "The current value of the text box",
+            "description": "Unique identifier for the text box (not drawn)",
             "is_pointer": false,
             "is_const": true,
             "is_reference": true,
@@ -29826,31 +29802,7 @@
             ],
             "is_vector": false,
             "type_parameter": null
-          }
-        },
-        "attributes": {
-          "group": "interface",
-          "static": "interface"
-        }
-      },
-      {
-        "signature": "string text_box(const string& value,const rectangle& rect);",
-        "name": "text_box",
-        "method_name": null,
-        "unique_global_name": "text_box_at_position",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "Creates a text entry box at a specific position on screen.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string);\n```",
-        "brief": null,
-        "return": {
-          "type": "string",
-          "description": "The updated value of the text box",
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
+          },
           "value": {
             "type": "string",
             "description": "The current value of the text box",
@@ -29888,7 +29840,7 @@
         "signature": "string text_box(const string& label_text,const string& value);",
         "name": "text_box",
         "method_name": null,
-        "unique_global_name": "text_box_labeled",
+        "unique_global_name": "text_box",
         "unique_method_name": null,
         "suffix_name": null,
         "description": "Creates a text entry box with a label.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string);\n```",
@@ -29904,7 +29856,7 @@
         "parameters": {
           "label_text": {
             "type": "string",
-            "description": "The label to show in front of the text box",
+            "description": "Unique identifier for the text box (not drawn)",
             "is_pointer": false,
             "is_const": true,
             "is_reference": true,
@@ -29921,6 +29873,69 @@
             "is_pointer": false,
             "is_const": true,
             "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "interface",
+          "static": "interface"
+        }
+      },
+      {
+        "signature": "string text_box(const string& label_text,const string& value,bool show_label);",
+        "name": "text_box",
+        "method_name": null,
+        "unique_global_name": "text_box_labeled",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Creates a text entry box with a label that can be shown.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string, true);\n```",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The updated value of the text box",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "label_text": {
+            "type": "string",
+            "description": "Unique identifier for the text box (not drawn)",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "value": {
+            "type": "string",
+            "description": "The current value of the text box",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "show_label": {
+            "type": "bool",
+            "description": "Whether to show the label or not",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
             "is_array": false,
             "array_dimension_sizes": [
 
@@ -29953,7 +29968,7 @@
     "group": "json",
     "brief": "SplashKit Json allows you to create and read JSON objects.",
     "description": "Splashkit's JSON library allows you to easily create or read JSON objects and\nmanipulate them to/from a JSON string or from a file containing a JSON\nstring. Create a new JSON object with a call to `create_json()` and\nread or write data to it by calling methods like\n`json_add_string(json j, string key, string value)` and\n`json_read_string(json j, string key)`.",
-    "parsed_at": 1746414451,
+    "parsed_at": 1745561954,
     "path": "coresdk/src/coresdk/json.h",
     "functions": [
       {
@@ -36590,7 +36605,7 @@
     "group": "audio",
     "brief": null,
     "description": null,
-    "parsed_at": 1746414452,
+    "parsed_at": 1745561957,
     "path": "coresdk/src/coresdk/music.h",
     "functions": [
       {
@@ -40934,7 +40949,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1746414453,
+    "parsed_at": 1745561959,
     "path": "coresdk/src/coresdk/point_drawing.h",
     "functions": [
       {
@@ -42125,9 +42140,9 @@
       {
         "signature": "color get_pixel_from_window(window destination,const point_2d &pt);",
         "name": "get_pixel_from_window",
-        "method_name": "get_pixel",
+        "method_name": null,
         "unique_global_name": "get_pixel_from_window_at_point_from_window",
-        "unique_method_name": "window.get_pixel_at_point_from_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns the color of the pixel at the x,y location on the given\nwindow.",
         "brief": null,
@@ -42168,19 +42183,16 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "get_pixel",
           "suffix": "at_point_from_window",
-          "group": "graphics",
-          "self": "destination"
+          "group": "graphics"
         }
       },
       {
         "signature": "color get_pixel_from_window(window destination,double x,double y);",
         "name": "get_pixel_from_window",
-        "method_name": "get_pixel",
+        "method_name": null,
         "unique_global_name": "get_pixel_from_window_from_window",
-        "unique_method_name": "window.get_pixel_from_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns the color of the pixel at the x,y location on the given\nwindow.",
         "brief": null,
@@ -42235,10 +42247,8 @@
         },
         "attributes": {
           "class": "window",
-          "method": "get_pixel",
           "suffix": "from_window",
-          "group": "graphics",
-          "self": "destination"
+          "group": "graphics"
         }
       }
     ],
@@ -42259,7 +42269,7 @@
     "group": "geometry",
     "brief": null,
     "description": null,
-    "parsed_at": 1746414454,
+    "parsed_at": 1745561960,
     "path": "coresdk/src/coresdk/point_geometry.h",
     "functions": [
       {
@@ -43181,9 +43191,9 @@
       {
         "signature": "point_2d random_window_point(window wind);",
         "name": "random_window_point",
-        "method_name": "random_point",
+        "method_name": null,
         "unique_global_name": "random_window_point",
-        "unique_method_name": "window.random_point",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns a random point on the provided window.",
         "brief": null,
@@ -43211,11 +43221,8 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "random_point",
           "group": "geometry",
-          "static": "geometry",
-          "self": "wind"
+          "static": "geometry"
         }
       },
       {
@@ -44102,7 +44109,7 @@
     "group": "raspberry",
     "brief": "Provides support for using an ADC device with the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1746414454,
+    "parsed_at": 1747026729,
     "path": "coresdk/src/coresdk/raspi_adc.h",
     "functions": [
       {
@@ -44549,7 +44556,7 @@
     "group": "raspberry",
     "brief": "Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1746408892,
+    "parsed_at": 1745561961,
     "path": "coresdk/src/coresdk/raspi_gpio.h",
     "functions": [
       {
@@ -45770,7 +45777,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1746414456,
+    "parsed_at": 1745561962,
     "path": "coresdk/src/coresdk/rectangle_drawing.h",
     "functions": [
       {
@@ -47534,9 +47541,9 @@
       {
         "signature": "void fill_quad_on_window(window destination,color clr,const quad &q,const drawing_options &opts);",
         "name": "fill_quad_on_window",
-        "method_name": "fill_quad",
+        "method_name": null,
         "unique_global_name": "fill_quad_on_window_with_options",
-        "unique_method_name": "window.fill_quad_with_options",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Fill a quad on the supplied window using the supplied drawing options.",
         "brief": null,
@@ -47604,10 +47611,8 @@
         },
         "attributes": {
           "class": "window",
-          "method": "fill_quad",
           "suffix": "with_options",
-          "group": "graphics",
-          "self": "destination"
+          "group": "graphics"
         }
       },
       {
@@ -61204,7 +61209,7 @@
     "group": "input",
     "brief": null,
     "description": null,
-    "parsed_at": 1746414457,
+    "parsed_at": 1745561966,
     "path": "coresdk/src/coresdk/text_input.h",
     "functions": [
       {
@@ -61308,9 +61313,9 @@
       {
         "signature": "void end_reading_text(window wind);",
         "name": "end_reading_text",
-        "method_name": "end_reading_text",
+        "method_name": null,
         "unique_global_name": "end_reading_text_in_window",
-        "unique_method_name": "window.end_reading_text_in_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Ends reading text for the passed in window.",
         "brief": null,
@@ -61338,9 +61343,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "end_reading_text",
-          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         }
@@ -61371,9 +61373,9 @@
       {
         "signature": "bool reading_text(window wind);",
         "name": "reading_text",
-        "method_name": "reading_text",
+        "method_name": null,
         "unique_global_name": "reading_text_in_window",
-        "unique_method_name": "window.reading_text_in_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns true when the window is reading text.",
         "brief": null,
@@ -61401,9 +61403,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "reading_text",
-          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         }
@@ -61497,9 +61496,9 @@
       {
         "signature": "void start_reading_text(window wind,rectangle rect);",
         "name": "start_reading_text",
-        "method_name": "start_reading_text",
+        "method_name": null,
         "unique_global_name": "start_reading_text_in_window",
-        "unique_method_name": "window.start_reading_text_in_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Start reading text in the window within the bounds of the\nsupplied rectangle.",
         "brief": null,
@@ -61540,9 +61539,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "start_reading_text",
-          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         }
@@ -61550,9 +61546,9 @@
       {
         "signature": "void start_reading_text(window wind,rectangle rect,string initial_text);",
         "name": "start_reading_text",
-        "method_name": "start_reading_text",
+        "method_name": null,
         "unique_global_name": "start_reading_text_in_window_with_initial_text",
-        "unique_method_name": "window.start_reading_text_in_window_with_initial_text",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Start reading text in the window within the bounds of the\nsupplied rectangle. The text will start with an initial value.",
         "brief": null,
@@ -61606,9 +61602,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "start_reading_text",
-          "self": "wind",
           "suffix": "in_window_with_initial_text",
           "group": "input"
         }
@@ -61639,9 +61632,9 @@
       {
         "signature": "bool text_entry_cancelled(window wind);",
         "name": "text_entry_cancelled",
-        "method_name": "text_entry_cancelled",
+        "method_name": null,
         "unique_global_name": "text_entry_cancelled_in_window",
-        "unique_method_name": "window.text_entry_cancelled_in_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Did the user press escape and cancel the enterring of text?",
         "brief": null,
@@ -61669,9 +61662,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "text_entry_cancelled",
-          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         }
@@ -61702,9 +61692,9 @@
       {
         "signature": "string text_input(window wind);",
         "name": "text_input",
-        "method_name": "text_input",
+        "method_name": null,
         "unique_global_name": "text_input_in_window",
-        "unique_method_name": "window.text_input_in_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "The text the user has currently enterred on the current window.",
         "brief": null,
@@ -61732,9 +61722,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "text_input",
-          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         }
@@ -61757,7 +61744,7 @@
     "group": "timers",
     "brief": "Timers in SplashKit can be used to track the passing of time.",
     "description": null,
-    "parsed_at": 1746414457,
+    "parsed_at": 1745561967,
     "path": "coresdk/src/coresdk/timers.h",
     "functions": [
       {
@@ -65566,7 +65553,7 @@
     "group": "types",
     "brief": "SplashKit Types simplifies data type creation and management for streamlined programming.",
     "description": null,
-    "parsed_at": 1746408895,
+    "parsed_at": 1747026730,
     "path": "coresdk/src/coresdk/types.h",
     "functions": [
 

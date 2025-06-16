@@ -2871,14 +2871,14 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__start_treenode__string_ref", CharSet=CharSet.Ansi)]
     private static extern int __sklib__start_treenode__string_ref(__sklib_string labelText);
 
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref", CharSet=CharSet.Ansi)]
-    private static extern __sklib_string __sklib__text_box__string_ref(__sklib_string value);
-
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__rectangle_ref", CharSet=CharSet.Ansi)]
-    private static extern __sklib_string __sklib__text_box__string_ref__rectangle_ref(__sklib_string value, __sklib_rectangle rect);
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__string_ref__rectangle_ref", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__text_box__string_ref__string_ref__rectangle_ref(__sklib_string labelText, __sklib_string value, __sklib_rectangle rect);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__string_ref", CharSet=CharSet.Ansi)]
     private static extern __sklib_string __sklib__text_box__string_ref__string_ref(__sklib_string labelText, __sklib_string value);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__string_ref__bool", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__text_box__string_ref__string_ref__bool(__sklib_string labelText, __sklib_string value, int showLabel);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__create_json", CharSet=CharSet.Ansi)]
     private static extern __sklib_ptr __sklib__create_json();
@@ -13997,40 +13997,30 @@ namespace SplashKitSDK
       return __skadapter__to_bool(__skreturn);
     }
     /// <summary>
-    /// Creates a text entry box with a label. Returns the updated value of the text box.
+    /// Creates a text entry box at a specific position on screen. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string, rectangle_from(0,0,100,100)); ```
     /// </summary>
-    /// <param name="value"> The current value of the text box</param>
-    /// <returns>The updated value of the text box</returns>
-    public static string TextBox(string value)
-    {
-      __sklib_string __skparam__value;
-      __sklib_string __skreturn;
-      __skparam__value = __skadapter__to_sklib_string(value);
-      __skreturn = __sklib__text_box__string_ref(__skparam__value);
-    __skadapter__free__sklib_string(ref __skparam__value);
-      return __skadapter__to_string(__skreturn);
-    }
-    /// <summary>
-    /// Creates a text entry box at a specific position on screen. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string); ```
-    /// </summary>
+    /// <param name="labelText"> Unique identifier for the text box (not drawn)</param>
     /// <param name="value"> The current value of the text box</param>
     /// <param name="rect"> The rectangle to display the button in</param>
     /// <returns>The updated value of the text box</returns>
-    public static string TextBox(string value, Rectangle rect)
+    public static string TextBox(string labelText, string value, Rectangle rect)
     {
+      __sklib_string __skparam__label_text;
       __sklib_string __skparam__value;
       __sklib_rectangle __skparam__rect;
       __sklib_string __skreturn;
+      __skparam__label_text = __skadapter__to_sklib_string(labelText);
       __skparam__value = __skadapter__to_sklib_string(value);
       __skparam__rect = __skadapter__to_sklib_rectangle(rect);
-      __skreturn = __sklib__text_box__string_ref__rectangle_ref(__skparam__value, __skparam__rect);
+      __skreturn = __sklib__text_box__string_ref__string_ref__rectangle_ref(__skparam__label_text, __skparam__value, __skparam__rect);
+    __skadapter__free__sklib_string(ref __skparam__label_text);
     __skadapter__free__sklib_string(ref __skparam__value);
       return __skadapter__to_string(__skreturn);
     }
     /// <summary>
     /// Creates a text entry box with a label. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string); ```
     /// </summary>
-    /// <param name="labelText"> The label to show in front of the text box</param>
+    /// <param name="labelText"> Unique identifier for the text box (not drawn)</param>
     /// <param name="value"> The current value of the text box</param>
     /// <returns>The updated value of the text box</returns>
     public static string TextBox(string labelText, string value)
@@ -14041,6 +14031,27 @@ namespace SplashKitSDK
       __skparam__label_text = __skadapter__to_sklib_string(labelText);
       __skparam__value = __skadapter__to_sklib_string(value);
       __skreturn = __sklib__text_box__string_ref__string_ref(__skparam__label_text, __skparam__value);
+    __skadapter__free__sklib_string(ref __skparam__label_text);
+    __skadapter__free__sklib_string(ref __skparam__value);
+      return __skadapter__to_string(__skreturn);
+    }
+    /// <summary>
+    /// Creates a text entry box with a label that can be shown. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string, true); ```
+    /// </summary>
+    /// <param name="labelText"> Unique identifier for the text box (not drawn)</param>
+    /// <param name="value"> The current value of the text box</param>
+    /// <param name="showLabel"> Whether to show the label or not</param>
+    /// <returns>The updated value of the text box</returns>
+    public static string TextBox(string labelText, string value, bool showLabel)
+    {
+      __sklib_string __skparam__label_text;
+      __sklib_string __skparam__value;
+      int __skparam__show_label;
+      __sklib_string __skreturn;
+      __skparam__label_text = __skadapter__to_sklib_string(labelText);
+      __skparam__value = __skadapter__to_sklib_string(value);
+      __skparam__show_label = __skadapter__to_sklib_bool(showLabel);
+      __skreturn = __sklib__text_box__string_ref__string_ref__bool(__skparam__label_text, __skparam__value, __skparam__show_label);
     __skadapter__free__sklib_string(ref __skparam__label_text);
     __skadapter__free__sklib_string(ref __skparam__value);
       return __skadapter__to_string(__skreturn);
@@ -31174,68 +31185,6 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
-    /// Returns the rectangle of the current clip area for a window
-    /// </summary>
-    /// <returns>The current clipping rectangle for the window</returns>
-    public Rectangle CurrentClip()
-    {
-        return SplashKit.CurrentClip(this);
-    }
-
-    /// <summary>
-    /// Remove the last clipping rectangle pushed to the window. This will then apply the previously pushed clipping rectangle.
-    /// </summary>
-    public void PopClip()
-    {
-        SplashKit.PopClip(this);
-    }
-
-    /// <summary>
-    /// Add the clipping rectangle of a window and uses the intersect between the new rectangle and previous clip.  When a clipping rectangle is provided, drawing operations will only affect the area specified in the current clipping rectangle.
-    /// </summary>
-    /// <param name="r"> The new clipping rectangle</param>
-    public void PushClip(Rectangle r)
-    {
-        SplashKit.PushClip(this, r);
-    }
-
-    /// <summary>
-    /// Reset the clipping rectangle on a window. This will clear all of the clipping rectangles pushed to the window.
-    /// </summary>
-    public void ResetClip()
-    {
-        SplashKit.ResetClip(this);
-    }
-
-    /// <summary>
-    /// Set the clip rectangle of the window. This will clear any existing clipping rectangles pushed to the window, and use the supplied rectangle for clipping.
-    /// </summary>
-    /// <param name="r"> The new clipping rectangle</param>
-    public void SetClip(Rectangle r)
-    {
-        SplashKit.SetClip(this, r);
-    }
-
-    /// <summary>
-    /// Use this option to draw to a specified Window. Pass dest the Window you want to draw on.
-    /// </summary>
-    /// <returns>A drawing option that will draw to the indicated window.</returns>
-    public DrawingOptions OptionDrawTo()
-    {
-        return SplashKit.OptionDrawTo(this);
-    }
-
-    /// <summary>
-    /// Use this option to draw to a Bitmap. Pass dest the Bitmap you want to draw on to. Pass opts the other options you want use.
-    /// </summary>
-    /// <param name="opts"> Values for the other options.</param>
-    /// <returns>A drawing option that will draw to the indicated window.</returns>
-    public DrawingOptions OptionDrawTo(DrawingOptions opts)
-    {
-        return SplashKit.OptionDrawTo(this, opts);
-    }
-
-    /// <summary>
     /// Draws an ellipse on the given window, using the provided location, and size.
     /// </summary>
     /// <param name="clr"> The color of the ellipse</param>
@@ -31329,15 +31278,6 @@ public class Window : PointerWrapper
     public void FillEllipse(Color clr, double x, double y, double width, double height, DrawingOptions opts)
     {
         SplashKit.FillEllipseOnWindow(this, clr, x, y, width, height, opts);
-    }
-
-    /// <summary>
-    /// Saves a screenshot of the current window to a bitmap file. The file will be saved onto the user's desktop.
-    /// </summary>
-    /// <param name="basename"> The base of the filename. If there is a file of this name already, then the name will be changed to generate a unique filename.</param>
-    public void TakeScreenshot(string basename)
-    {
-        SplashKit.TakeScreenshot(this, basename);
     }
 
     /// <summary>
@@ -31435,36 +31375,6 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
-    /// Returns the color of the pixel at the x,y location on the given window.
-    /// </summary>
-    /// <param name="pt"> The position of the pixel</param>
-    /// <returns>The color of the pixel at the supplied location</returns>
-    public Color GetPixel(Point2D pt)
-    {
-        return SplashKit.GetPixelFromWindow(this, pt);
-    }
-
-    /// <summary>
-    /// Returns the color of the pixel at the x,y location on the given window.
-    /// </summary>
-    /// <param name="x"> The distance from the left edge of the window to the pixel to read</param>
-    /// <param name="y"> The distance from the top of the window to the pixel to read</param>
-    /// <returns>The color of the pixel at the supplied location</returns>
-    public Color GetPixel(double x, double y)
-    {
-        return SplashKit.GetPixelFromWindow(this, x, y);
-    }
-
-    /// <summary>
-    /// Returns a random point on the provided window.
-    /// </summary>
-    /// <returns>A point within the bounds of the window</returns>
-    public Point2D RandomPoint()
-    {
-        return SplashKit.RandomWindowPoint(this);
-    }
-
-    /// <summary>
     /// Draw a quad on the supplied window to the current window.
     /// </summary>
     /// <param name="clr"> The color for the quad</param>
@@ -31541,17 +31451,6 @@ public class Window : PointerWrapper
     public void FillQuad(Color clr, Quad q)
     {
         SplashKit.FillQuadOnWindow(this, clr, q);
-    }
-
-    /// <summary>
-    /// Fill a quad on the supplied window using the supplied drawing options.
-    /// </summary>
-    /// <param name="clr"> The color for the quad</param>
-    /// <param name="q"> The details of the quad</param>
-    /// <param name="opts"> The drawing options</param>
-    public void FillQuad(Color clr, Quad q, DrawingOptions opts)
-    {
-        SplashKit.FillQuadOnWindow(this, clr, q, opts);
     }
 
     /// <summary>
@@ -31683,60 +31582,6 @@ public class Window : PointerWrapper
     public void DrawText(string text, Color clr, Font fnt, int fontSize, double x, double y, DrawingOptions opts)
     {
         SplashKit.DrawTextOnWindow(this, text, clr, fnt, fontSize, x, y, opts);
-    }
-
-    /// <summary>
-    /// Ends reading text for the passed in window.
-    /// </summary>
-    public void EndReadingText()
-    {
-        SplashKit.EndReadingText(this);
-    }
-
-    /// <summary>
-    /// Returns true when the window is reading text.
-    /// </summary>
-    /// <returns>True when window is setup to read input from the user.</returns>
-    public bool ReadingText()
-    {
-        return SplashKit.ReadingText(this);
-    }
-
-    /// <summary>
-    /// Start reading text in the window within the bounds of the supplied rectangle.
-    /// </summary>
-    /// <param name="rect"> The area where the text will be entered.</param>
-    public void StartReadingText(Rectangle rect)
-    {
-        SplashKit.StartReadingText(this, rect);
-    }
-
-    /// <summary>
-    /// Start reading text in the window within the bounds of the supplied rectangle. The text will start with an initial value.
-    /// </summary>
-    /// <param name="rect"> The area where the text will be entered.</param>
-    /// <param name="initialText"> The initial text, which may be edited by the user.</param>
-    public void StartReadingText(Rectangle rect, string initialText)
-    {
-        SplashKit.StartReadingText(this, rect, initialText);
-    }
-
-    /// <summary>
-    /// Did the user press escape and cancel the enterring of text?
-    /// </summary>
-    /// <returns>True when the use has cancelled text entry</returns>
-    public bool TextEntryCancelled()
-    {
-        return SplashKit.TextEntryCancelled(this);
-    }
-
-    /// <summary>
-    /// The text the user has currently enterred on the current window.
-    /// </summary>
-    /// <returns>The user's text entry</returns>
-    public string TextInput()
-    {
-        return SplashKit.TextInput(this);
     }
 
     /// <summary>
