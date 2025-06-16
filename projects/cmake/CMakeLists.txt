@@ -292,6 +292,11 @@ add_executable(skunit_tests ${UNIT_TEST_SOURCE_FILES})
 set_property(TARGET skunit_tests PROPERTY POSITION_INDEPENDENT_CODE FALSE)
 
 # target_link_options(skunit_tests PUBLIC "LINKER:-U,___darwin_check_fd_set_overflow")
+
+# Disable logs in skunit_tests (but not in sktest)
+target_compile_options(skunit_tests PRIVATE -DELPP_DISABLE_LOGS)
+target_compile_options(SplashKitBackend PRIVATE -DELPP_DISABLE_LOGS)
+
 target_link_libraries(skunit_tests SplashKitBackend)
 target_link_libraries(skunit_tests ${LIB_FLAGS})
 

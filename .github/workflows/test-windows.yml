@@ -34,9 +34,4 @@ jobs:
       - name: execute
         working-directory: ./bin
         run: |
-          export PATH=../coresdk/lib/${{ matrix.path }}:$PATH
-          pwd
-          ntldd ./skunit_tests
-          ls -lha
-          echo $PATH
-          ./skunit_tests
+          ./skunit_tests.exe
