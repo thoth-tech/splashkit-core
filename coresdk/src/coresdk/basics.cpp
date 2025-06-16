@@ -196,8 +196,7 @@ namespace splashkit_lib
     {
         if (!is_binary(bin_str))
         {
-            LOG(ERROR) << "Invalid binary string passed to bin_to_dec, returning 0";            
-            return 0;
+            throw std::invalid_argument("Invalid binary string passed to bin_to_dec");
         }
 
         return stoi(bin_str, nullptr, 2);
@@ -207,8 +206,7 @@ namespace splashkit_lib
     {
         if (!is_hex(hex_str))
         {
-            LOG(ERROR) << "Invalid hexadecimal string passed to hex_to_bin, returning empty string";            
-            return "";
+            throw std::invalid_argument("Invalid hexadecimal string passed to hex_to_bin");
         }
 
         string bin_string;
@@ -242,8 +240,7 @@ namespace splashkit_lib
     {
         if (!is_binary(bin_str))
         {
-            LOG(ERROR) << "Invalid binary string passed to bin_to_hex, returning empty string";            
-            return "";
+            throw std::invalid_argument("Invalid binary string passed to bin_to_hex, returning empty string");
         }
 
         string hex_string;
@@ -274,8 +271,7 @@ namespace splashkit_lib
     {
         if (decimal_value == 0)
         {
-            LOG(ERROR) << "Invalid decimal value passed to dec_to_oct: " << decimal_value << ", returning 0";              
-            return "0";   
+            throw std::invalid_argument("Invalid decimal value passed to dec_to_oct");
         }
 
         string octal_string;
@@ -291,8 +287,7 @@ namespace splashkit_lib
     {
         if (!is_octal(octal_string))
         {
-            LOG(ERROR) << "Invalid octal string passed to oct_to_dec: " << octal_string << ", returning 0";           
-            return 0;
+            throw std::invalid_argument("Invalid octal string passed to oct_to_dec");
         }
 
         return stoi(octal_string, nullptr, 8);
@@ -302,8 +297,7 @@ namespace splashkit_lib
     {
         if (!is_hex(hex_string))
         {
-            LOG(ERROR) << "Invalid octal string passed to hex_to_dec: " << hex_string << ", returning 0";           
-            return 0;
+            throw std::invalid_argument("Invalid octal string passed to hex_to_dec");
         }
 
         return stoi(hex_string, nullptr, 16);
@@ -313,8 +307,7 @@ namespace splashkit_lib
     {
         if (!is_octal(octal_str))
         {
-            LOG(ERROR) << "Invalid octal string passed to oct_to_bin: " << octal_str << ", returning empty string";            
-            return "";
+            throw std::invalid_argument("Invalid octal string passed to oct_to_bin");
         }
 
         string bin_string;
@@ -337,8 +330,7 @@ namespace splashkit_lib
     {
         if (!is_binary(bin_str))
         {
-            LOG(ERROR) << "Invalid binary string passed to bin_to_oct: " << bin_str << ", returning empty string";            
-            return "";
+            throw std::invalid_argument("Invalid binary string passed to bin_to_oct");
         }
 
         string octal_string;
@@ -368,8 +360,7 @@ namespace splashkit_lib
     {
         if (!is_hex(hex_str))
         {
-            LOG(ERROR) << "Invalid hexadecimal string passed to hex_to_oct: " << hex_str << ", returning empty string";            
-            return "";
+            throw std::invalid_argument("Invalid hexadecimal string passed to hex_to_oct");
         }
 
         string bin_str = hex_to_bin(hex_str);
@@ -380,8 +371,7 @@ namespace splashkit_lib
     {
         if (!is_octal(octal_str))
         {
-            LOG(ERROR) << "Invalid octal string passed to oct_to_hex: " << octal_str << ", returning empty string";            
-            return "";
+            throw std::invalid_argument("Invalid octal string passed to oct_to_hex");
         }
 
         string bin_str = oct_to_bin(octal_str);
