@@ -141,7 +141,8 @@ namespace splashkit_lib
      * @param y   The distance from the top edge of the window to the
      *            pixel
      *
-     * @attribute class  window
+     * @attribute class   window
+     * @attribute method  draw_pixel
      */
     void draw_pixel_on_window(window destination, color clr, double x, double y);
     
@@ -156,8 +157,9 @@ namespace splashkit_lib
      *            pixel
      * @param opts The drawing options
      *
-     * @attribute class  window
+     * @attribute class   window
      * @attribute suffix  with_options
+     * @attribute method  draw_pixel
      */
     void draw_pixel_on_window(window destination, color clr, double x, double y, drawing_options opts);
     
@@ -168,8 +170,9 @@ namespace splashkit_lib
      * @param clr The color of the pixel
      * @param pt  The location of the pixel to draw
      *
-     * @attribute class  window
+     * @attribute class   window
      * @attribute suffix  at_point
+     * @attribute method  draw_pixel
      */
     void draw_pixel_on_window(window destination, color clr, const point_2d &pt);
     
@@ -181,8 +184,9 @@ namespace splashkit_lib
      * @param pt  The location of the pixel to draw
      * @param opts The drawing options
      *
-     * @attribute class  window
+     * @attribute class   window
      * @attribute suffix  at_point_with_options
+     * @attribute method  draw_pixel
      */
     void draw_pixel_on_window(window destination, color clr, const point_2d &pt, drawing_options opts);
     
