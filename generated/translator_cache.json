@@ -26487,7 +26487,7 @@
     "group": "interface",
     "brief": "SplashKit Interface provides functions to create user interfaces, with elements such as draggable panels, buttons and text boxes.",
     "description": "SplashKit`s interface library provides various functions for creating\npanels, and drawing interface elements such as buttons, text boxes, and more",
-    "parsed_at": 1745561954,
+    "parsed_at": 1747026729,
     "path": "coresdk/src/coresdk/interface.h",
     "functions": [
       {
@@ -29773,13 +29773,13 @@
         }
       },
       {
-        "signature": "string text_box(const string& value);",
+        "signature": "string text_box(const string& label_text,const string& value,const rectangle& rect);",
         "name": "text_box",
         "method_name": null,
-        "unique_global_name": "text_box",
+        "unique_global_name": "text_box_at_position",
         "unique_method_name": null,
         "suffix_name": null,
-        "description": "Creates a text entry box with a label.\nReturns the updated value of the text box.",
+        "description": "Creates a text entry box at a specific position on screen.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string, rectangle_from(0,0,100,100));\n```",
         "brief": null,
         "return": {
           "type": "string",
@@ -29790,9 +29790,9 @@
           "type_parameter": null
         },
         "parameters": {
-          "value": {
+          "label_text": {
             "type": "string",
-            "description": "The current value of the text box",
+            "description": "Unique identifier for the text box (not drawn)",
             "is_pointer": false,
             "is_const": true,
             "is_reference": true,
@@ -29802,31 +29802,7 @@
             ],
             "is_vector": false,
             "type_parameter": null
-          }
-        },
-        "attributes": {
-          "group": "interface",
-          "static": "interface"
-        }
-      },
-      {
-        "signature": "string text_box(const string& value,const rectangle& rect);",
-        "name": "text_box",
-        "method_name": null,
-        "unique_global_name": "text_box_at_position",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "Creates a text entry box at a specific position on screen.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string);\n```",
-        "brief": null,
-        "return": {
-          "type": "string",
-          "description": "The updated value of the text box",
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
+          },
           "value": {
             "type": "string",
             "description": "The current value of the text box",
@@ -29864,7 +29840,7 @@
         "signature": "string text_box(const string& label_text,const string& value);",
         "name": "text_box",
         "method_name": null,
-        "unique_global_name": "text_box_labeled",
+        "unique_global_name": "text_box",
         "unique_method_name": null,
         "suffix_name": null,
         "description": "Creates a text entry box with a label.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string);\n```",
@@ -29880,7 +29856,7 @@
         "parameters": {
           "label_text": {
             "type": "string",
-            "description": "The label to show in front of the text box",
+            "description": "Unique identifier for the text box (not drawn)",
             "is_pointer": false,
             "is_const": true,
             "is_reference": true,
@@ -29897,6 +29873,69 @@
             "is_pointer": false,
             "is_const": true,
             "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "interface",
+          "static": "interface"
+        }
+      },
+      {
+        "signature": "string text_box(const string& label_text,const string& value,bool show_label);",
+        "name": "text_box",
+        "method_name": null,
+        "unique_global_name": "text_box_labeled",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Creates a text entry box with a label that can be shown.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string, true);\n```",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The updated value of the text box",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "label_text": {
+            "type": "string",
+            "description": "Unique identifier for the text box (not drawn)",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "value": {
+            "type": "string",
+            "description": "The current value of the text box",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "show_label": {
+            "type": "bool",
+            "description": "Whether to show the label or not",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
             "is_array": false,
             "array_dimension_sizes": [
 
@@ -44070,7 +44109,7 @@
     "group": "raspberry",
     "brief": "Provides support for using an ADC device with the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1745561960,
+    "parsed_at": 1747026729,
     "path": "coresdk/src/coresdk/raspi_adc.h",
     "functions": [
       {
@@ -65514,7 +65553,7 @@
     "group": "types",
     "brief": "SplashKit Types simplifies data type creation and management for streamlined programming.",
     "description": null,
-    "parsed_at": 1745561968,
+    "parsed_at": 1747026730,
     "path": "coresdk/src/coresdk/types.h",
     "functions": [
 
