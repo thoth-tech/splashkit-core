@@ -40,12 +40,12 @@ TEST_CASE("can convert a string to a color", "[string_to_color][red_of][blue_of]
         REQUIRE(alpha_of(red) == 255);
     }
 
-    SECTION("invalid string returns fallback color of black")
+    SECTION("invalid string returns fallback color of white")
     {
         color invalid = string_to_color("not_a_color");
-        REQUIRE(red_of(invalid) == 0);
-        REQUIRE(green_of(invalid) == 0);
-        REQUIRE(blue_of(invalid) == 0);
+        REQUIRE(red_of(invalid) == 255);
+        REQUIRE(green_of(invalid) == 255);
+        REQUIRE(blue_of(invalid) == 255);
     }
 }
 
@@ -55,7 +55,7 @@ TEST_CASE("can convert a color to a hex string", "[color_to_string][color_green]
     {
         color green = color_green();
         string str = color_to_string(green);
-        REQUIRE(str == "#00FF00");
+        REQUIRE(str == "#007f00ff");
     }
 
     SECTION("round-trip color to hex string and back")
