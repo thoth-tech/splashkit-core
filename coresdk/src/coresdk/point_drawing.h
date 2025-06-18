@@ -200,8 +200,9 @@ namespace splashkit_lib
      * @param  y   The distance from the top of the window to the pixel to read
      * @return     The color of the pixel at the supplied location
      *
-     * @attribute class  window
+     * @attribute class   window
      * @attribute suffix  from_window
+     * @attribute method  get_pixel
      */
     color get_pixel_from_window(window destination, double x, double y);
     
@@ -213,7 +214,9 @@ namespace splashkit_lib
      * @param  pt  The position of the pixel
      * @return     The color of the pixel at the supplied location
      *
+     * @attribute class   window
      * @attribute suffix  at_point_from_window
+     * @attribute method  get_pixel
      */
     color get_pixel_from_window(window destination, const point_2d &pt);
     
