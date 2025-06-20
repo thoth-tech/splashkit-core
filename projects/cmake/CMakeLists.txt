@@ -17,6 +17,10 @@ set(SK_BIN "${CMAKE_CURRENT_SOURCE_DIR}/../../bin")
 # FLAGS
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 
+# Includes for CTest/Catch2 integration
+include(CTest)
+include("${CMAKE_CURRENT_SOURCE_DIR}/catch/Catch.cmake")
+
 if (WIN32 OR MSYS OR MINGW)
   SET(MSYS "true")
   add_definitions(-DWINDOWS)
@@ -248,7 +252,6 @@ elseif (APPLE)
     )
 endif()
 
-
 # SET OUTPUT TO /path/to/splashkit/out/lib
 set_target_properties(SplashKitBackend
     PROPERTIES
@@ -301,6 +304,8 @@ set_target_properties(skunit_tests
         PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${SK_BIN}
         )
+# Discover and register Catch2 tests
+catch_discover_tests(skunit_tests)
 #### END sktest EXECUTABLE ####
 
 install(TARGETS SplashKitBackend DESTINATION lib)
