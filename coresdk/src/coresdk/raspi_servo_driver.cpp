@@ -9,7 +9,6 @@
 #include "raspi_servo_driver.h"
 #include "raspi_gpio.h" // for raspi_init()
 
-
 #include <algorithm> // for std::clamp
 
 namespace splashkit_lib
@@ -35,7 +34,6 @@ namespace splashkit_lib
     auto it = _servo_devices.find(name);
     return (it != _servo_devices.end()) ? it->second : nullptr;
   }
-
 
   servo_device open_servo(const std::string &name, gpio_pin control_pin)
   {
@@ -70,8 +68,9 @@ namespace splashkit_lib
   void set_servo_angle(servo_device dev, double angle)
   {
 #ifdef RASPBERRY_PI
-    if (!dev)
+    if (!dev || dev->id != SERVO_DRIVER_PTR)
       return;
+
     // clamp to [0,180]
     angle = std::clamp(angle, 0.0, 180.0);
     unsigned pw = static_cast<unsigned>(
@@ -86,7 +85,7 @@ namespace splashkit_lib
   void stop_servo(servo_device dev)
   {
 #ifdef RASPBERRY_PI
-    if (!dev)
+    if (!dev || dev->id != SERVO_DRIVER_PTR)
       return;
     // 0 µs stops pulses
     raspi_set_pwm_dutycycle(dev->pin, 0);
@@ -98,7 +97,7 @@ namespace splashkit_lib
   void close_servo(servo_device dev)
   {
 #ifdef RASPBERRY_PI
-    if (!dev)
+    if (!dev || dev->id != SERVO_DRIVER_PTR)
       return;
     // make sure pulses are off
     raspi_set_pwm_dutycycle(dev->pin, 0);

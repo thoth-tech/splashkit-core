@@ -1,7 +1,4 @@
-/***********************************************
- * XQuestCode || Aditya Parmar
- * © 2024 Aditya Parmar. All Rights Reserved.
- ***********************************************/
+// created by XQuestCode || Aditya Parmar
 #include <iostream>
 #include <limits>
 #include <unistd.h> // for usleep()

@@ -511,6 +511,11 @@ namespace splashkit_lib
     //    PCF8591 = 1,
     };
 
+    /**
+     * Motor Driver Types:
+     * @constant L298N  Dual H-Bridge Motor Driver
+     */
+
     enum motor_driver_type
     {
         L298N = 0,

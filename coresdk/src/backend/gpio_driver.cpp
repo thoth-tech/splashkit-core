@@ -1,7 +1,6 @@
 // gpio_driver.cpp
 // This file is part of the SplashKit Core Library.
-// Copyright (©) 2024 Aditya Parmar. All Rights Reserved.
-
+// created by XQuestCode || Aditya Parmar
 #include "network_driver.h"
 #include "gpio_driver.h"
 #include "easylogging++.h"

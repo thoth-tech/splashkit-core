@@ -1,6 +1,6 @@
 // gpio_driver.h
 // This file is part of the SplashKit Core Library.
-// Copyright (©) 2024 Aditya Parmar. All Rights Reserved.
+// created by XQuestCode || Aditya Parmar
 
 #ifndef SPLASHKIT_GPIO_H
 #define SPLASHKIT_GPIO_H

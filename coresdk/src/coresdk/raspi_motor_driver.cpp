@@ -69,7 +69,7 @@ namespace splashkit_lib
     void set_motor_direction(motor_device dev, motor_direction dir)
     {
 #ifdef RASPBERRY_PI
-        if (!dev)
+        if (!dev || dev->id != MOTOR_DRIVER_PTR)
             return;
         dev->dir = dir;
         if (dir == MOTOR_FORWARD)
@@ -90,6 +90,8 @@ namespace splashkit_lib
     void set_motor_speed(motor_device dev, double speed)
     {
 #ifdef RASPBERRY_PI
+        if (!dev || dev->id != MOTOR_DRIVER_PTR)
+            return;
         // input speed goes from 0 to 1
         // output speed goes from 0 to 255
         int pwm_speed = static_cast<int>(speed * 255);
@@ -105,8 +107,6 @@ namespace splashkit_lib
             LOG(WARNING) << "Motor speed cant be "
                          << "greater than 1, setting to 1";
         }
-        if (!dev)
-            return;
 
         raspi_set_pwm_dutycycle(dev->en, pwm_speed);
 #else
@@ -117,7 +117,7 @@ namespace splashkit_lib
     void stop_motor(motor_device dev)
     {
 #ifdef RASPBERRY_PI
-        if (!dev)
+        if (!dev || dev->id != MOTOR_DRIVER_PTR)
             return;
         // Brake: both inputs high
         raspi_write(dev->in1, GPIO_HIGH);
@@ -131,7 +131,7 @@ namespace splashkit_lib
     void close_motor(motor_device dev)
     {
 #ifdef RASPBERRY_PI
-        if (!dev)
+        if (!dev || dev->id != MOTOR_DRIVER_PTR)
             return;
         raspi_write(dev->in1, GPIO_LOW);
         raspi_write(dev->in2, GPIO_LOW);
