@@ -49,8 +49,8 @@ void test_drawing_on_new_window()
     save_bitmap(user_image, "4");
     
     // Get pixel from bitmap
-    color bitmap_clr0 = get_pixel_from_bitmap(user_image1, 0, 0);
-    color bitmap_clr1 = get_pixel_from_bitmap(user_image1, 0, 10);
+    color bitmap_clr0 = get_pixel(user_image1, 0, 0);
+    color bitmap_clr1 = get_pixel(user_image1, 0, 10);
     string bitmap_clr_str0 = "Clr@0,0 " + color_to_string(bitmap_clr0);
     string bitmap_clr_str1 = "Clr@0,10 " + color_to_string(bitmap_clr1);
     draw_text_on_window(my_window, bitmap_clr_str0, COLOR_BLACK, 0, 20);
@@ -192,7 +192,7 @@ void run_graphics_test()
         
         fill_rectangle_on_window(w2, COLOR_MAGENTA, 100, 100, 100, 100);
         
-        clr2 = get_pixel_from_window(w2, mouse_position());
+        clr2 = get_pixel(w2, mouse_position());
         
         string clr_string2   = "Color " + color_to_string(clr2);
         string r_string2     = "Red   " + to_string(red_of(clr2));
