@@ -3285,10 +3285,6 @@ sklib.__sklib__get_pixel__window__point_2d_ref.argtypes = [ c_void_p, _sklib_poi
 sklib.__sklib__get_pixel__window__point_2d_ref.restype = _sklib_color
 sklib.__sklib__get_pixel__window__double__double.argtypes = [ c_void_p, c_double, c_double ]
 sklib.__sklib__get_pixel__window__double__double.restype = _sklib_color
-sklib.__sklib__get_pixel_from_window__window__point_2d_ref.argtypes = [ c_void_p, _sklib_point_2d ]
-sklib.__sklib__get_pixel_from_window__window__point_2d_ref.restype = _sklib_color
-sklib.__sklib__get_pixel_from_window__window__double__double.argtypes = [ c_void_p, c_double, c_double ]
-sklib.__sklib__get_pixel_from_window__window__double__double.restype = _sklib_color
 sklib.__sklib__point_at__double__double.argtypes = [ c_double, c_double ]
 sklib.__sklib__point_at__double__double.restype = _sklib_point_2d
 sklib.__sklib__point_at_origin.argtypes = [  ]
@@ -8109,17 +8105,6 @@ def get_pixel_from_window ( wnd, x, y ):
     __skparam__x = __skadapter__to_sklib_double(x)
     __skparam__y = __skadapter__to_sklib_double(y)
     __skreturn = sklib.__sklib__get_pixel__window__double__double(__skparam__wnd, __skparam__x, __skparam__y)
-    return __skadapter__to_color(__skreturn)
-def get_pixel_from_window_at_point_from_window ( destination, pt ):
-    __skparam__destination = __skadapter__to_sklib_window(destination)
-    __skparam__pt = __skadapter__to_sklib_point_2d(pt)
-    __skreturn = sklib.__sklib__get_pixel_from_window__window__point_2d_ref(__skparam__destination, __skparam__pt)
-    return __skadapter__to_color(__skreturn)
-def get_pixel_from_window_from_window ( destination, x, y ):
-    __skparam__destination = __skadapter__to_sklib_window(destination)
-    __skparam__x = __skadapter__to_sklib_double(x)
-    __skparam__y = __skadapter__to_sklib_double(y)
-    __skreturn = sklib.__sklib__get_pixel_from_window__window__double__double(__skparam__destination, __skparam__x, __skparam__y)
     return __skadapter__to_color(__skreturn)
 def point_at ( x, y ):
     __skparam__x = __skadapter__to_sklib_double(x)

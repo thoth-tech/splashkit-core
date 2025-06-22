@@ -1023,8 +1023,6 @@ __sklib_color __sklib__get_pixel__point_2d_ref(const __sklib_point_2d pt);
 __sklib_color __sklib__get_pixel__double__double(double x, double y);
 __sklib_color __sklib__get_pixel__window__point_2d_ref(__sklib_window wnd, const __sklib_point_2d pt);
 __sklib_color __sklib__get_pixel__window__double__double(__sklib_window wnd, double x, double y);
-__sklib_color __sklib__get_pixel_from_window__window__point_2d_ref(__sklib_window destination, const __sklib_point_2d pt);
-__sklib_color __sklib__get_pixel_from_window__window__double__double(__sklib_window destination, double x, double y);
 __sklib_point_2d __sklib__point_at__double__double(double x, double y);
 __sklib_point_2d __sklib__point_at_origin();
 int __sklib__point_in_circle__point_2d_ref__circle_ref(const __sklib_point_2d pt, const __sklib_circle c);

@@ -3594,12 +3594,6 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel__window__double__double", CharSet=CharSet.Ansi)]
     private static extern __sklib_color __sklib__get_pixel__window__double__double(__sklib_ptr wnd, double x, double y);
 
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel_from_window__window__point_2d_ref", CharSet=CharSet.Ansi)]
-    private static extern __sklib_color __sklib__get_pixel_from_window__window__point_2d_ref(__sklib_ptr destination, __sklib_point_2d pt);
-
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel_from_window__window__double__double", CharSet=CharSet.Ansi)]
-    private static extern __sklib_color __sklib__get_pixel_from_window__window__double__double(__sklib_ptr destination, double x, double y);
-
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__point_at__double__double", CharSet=CharSet.Ansi)]
     private static extern __sklib_point_2d __sklib__point_at__double__double(double x, double y);
 
@@ -5911,7 +5905,7 @@ namespace SplashKitSDK
     /// </summary>
     /// <param name="number1"> First number</param>
     /// <param name="number2"> Second number</param>
-    /// <returns>Greatest common divisor of the two numbers, or 0 if either of the numbers is not a valid integer above 0</returns>
+    /// <returns>Greatest common divisor of the two numbers, or 0 if both numbers are 0</returns>
     public static int GreatestCommonDivisor(int number1, int number2)
     {
       int __skparam__number1;
@@ -6084,7 +6078,7 @@ namespace SplashKitSDK
     /// </summary>
     /// <param name="number1"> First number</param>
     /// <param name="number2"> Second number</param>
-    /// <returns>Least common multiple of the two numbers, or 0 if either of the numbers is not a valid integer above 0</returns>
+    /// <returns>Least common multiple of the two numbers, or 0 if either of the numbers are 0</returns>
     public static int LeastCommonMultiple(int number1, int number2)
     {
       int __skparam__number1;
@@ -17441,41 +17435,6 @@ namespace SplashKitSDK
       return __skadapter__to_color(__skreturn);
     }
     /// <summary>
-    /// Returns the color of the pixel at the x,y location on the given window.
-    /// </summary>
-    /// <param name="destination"> The window to draw the pixel on</param>
-    /// <param name="pt"> The position of the pixel</param>
-    /// <returns>The color of the pixel at the supplied location</returns>
-    public static Color GetPixelFromWindow(Window destination, Point2D pt)
-    {
-      __sklib_ptr __skparam__destination;
-      __sklib_point_2d __skparam__pt;
-      __sklib_color __skreturn;
-      __skparam__destination = __skadapter__to_sklib_window(destination);
-      __skparam__pt = __skadapter__to_sklib_point_2d(pt);
-      __skreturn = __sklib__get_pixel_from_window__window__point_2d_ref(__skparam__destination, __skparam__pt);
-      return __skadapter__to_color(__skreturn);
-    }
-    /// <summary>
-    /// Returns the color of the pixel at the x,y location on the given window.
-    /// </summary>
-    /// <param name="destination"> The window to draw the pixel on</param>
-    /// <param name="x"> The distance from the left edge of the window to the pixel to read</param>
-    /// <param name="y"> The distance from the top of the window to the pixel to read</param>
-    /// <returns>The color of the pixel at the supplied location</returns>
-    public static Color GetPixelFromWindow(Window destination, double x, double y)
-    {
-      __sklib_ptr __skparam__destination;
-      double __skparam__x;
-      double __skparam__y;
-      __sklib_color __skreturn;
-      __skparam__destination = __skadapter__to_sklib_window(destination);
-      __skparam__x = __skadapter__to_sklib_double(x);
-      __skparam__y = __skadapter__to_sklib_double(y);
-      __skreturn = __sklib__get_pixel_from_window__window__double__double(__skparam__destination, __skparam__x, __skparam__y);
-      return __skadapter__to_color(__skreturn);
-    }
-    /// <summary>
     /// Returns a point at the given location.
     /// </summary>
     /// <param name="x"> The x value of the coordinate</param>
@@ -27001,6 +26960,14 @@ public class Json : PointerWrapper
     }
 
     /// <summary>
+    /// Frees the SplashKit resources associated with the `json` object.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeJson(this);
+    }
+
+    /// <summary>
     /// Returns the count of keys in the top-level `json` object.
     /// </summary>
     /// <returns>The count of keys in the top-level `json` object.</returns>
@@ -27305,6 +27272,14 @@ public class Music : PointerWrapper
     public void FadeIn(int times, int ms)
     {
         SplashKit.FadeMusicIn(this, times, ms);
+    }
+
+    /// <summary>
+    /// Releases the SplashKit resources associated with music.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeMusic(this);
     }
 
     /// <summary>
@@ -27737,6 +27712,14 @@ public class AdcDevice : PointerWrapper
     {
         SplashKit.CloseAdc(this);
     }
+    /// <summary>
+    /// Closes an ADC device given its pointer.
+    /// </summary>
+    public void Close()
+    {
+        SplashKit.CloseAdc(this);
+    }
+
     /// <summary>
     /// Reads an 8-bit value from the specified ADC channel on the device.
     /// </summary>
@@ -28925,6 +28908,14 @@ public class Timer : PointerWrapper
         SplashKit.FreeTimer(this);
     }
     /// <summary>
+    /// Free the memory used to store this timer.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeTimer(this);
+    }
+
+    /// <summary>
     /// Pause the timer, getting ticks from a paused timer will continue to return the same time.
     /// </summary>
     public void Pause()
@@ -29117,6 +29108,14 @@ public class Animation : PointerWrapper
     }
 
     /// <summary>
+    /// Disposes of the resources used in the animation.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeAnimation(this);
+    }
+
+    /// <summary>
     /// Restarts an `animation`.
     /// </summary>
     public void Restart()
@@ -29250,6 +29249,14 @@ public class AnimationScript : PointerWrapper
     public Animation CreateAnimation(string name, bool withSound)
     {
         return SplashKit.CreateAnimation(this, name, withSound);
+    }
+
+    /// <summary>
+    /// Frees loaded animation frames data. Use this when you will no longer be using the animation for any purpose, including within sprite.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeAnimationScript(this);
     }
 
     /// <summary>
@@ -31185,6 +31192,68 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
+    /// Returns the rectangle of the current clip area for a window
+    /// </summary>
+    /// <returns>The current clipping rectangle for the window</returns>
+    public Rectangle CurrentClip()
+    {
+        return SplashKit.CurrentClip(this);
+    }
+
+    /// <summary>
+    /// Remove the last clipping rectangle pushed to the window. This will then apply the previously pushed clipping rectangle.
+    /// </summary>
+    public void PopClip()
+    {
+        SplashKit.PopClip(this);
+    }
+
+    /// <summary>
+    /// Add the clipping rectangle of a window and uses the intersect between the new rectangle and previous clip.  When a clipping rectangle is provided, drawing operations will only affect the area specified in the current clipping rectangle.
+    /// </summary>
+    /// <param name="r"> The new clipping rectangle</param>
+    public void PushClip(Rectangle r)
+    {
+        SplashKit.PushClip(this, r);
+    }
+
+    /// <summary>
+    /// Reset the clipping rectangle on a window. This will clear all of the clipping rectangles pushed to the window.
+    /// </summary>
+    public void ResetClip()
+    {
+        SplashKit.ResetClip(this);
+    }
+
+    /// <summary>
+    /// Set the clip rectangle of the window. This will clear any existing clipping rectangles pushed to the window, and use the supplied rectangle for clipping.
+    /// </summary>
+    /// <param name="r"> The new clipping rectangle</param>
+    public void SetClip(Rectangle r)
+    {
+        SplashKit.SetClip(this, r);
+    }
+
+    /// <summary>
+    /// Use this option to draw to a specified Window. Pass dest the Window you want to draw on.
+    /// </summary>
+    /// <returns>A drawing option that will draw to the indicated window.</returns>
+    public DrawingOptions OptionDrawTo()
+    {
+        return SplashKit.OptionDrawTo(this);
+    }
+
+    /// <summary>
+    /// Use this option to draw to a Bitmap. Pass dest the Bitmap you want to draw on to. Pass opts the other options you want use.
+    /// </summary>
+    /// <param name="opts"> Values for the other options.</param>
+    /// <returns>A drawing option that will draw to the indicated window.</returns>
+    public DrawingOptions OptionDrawTo(DrawingOptions opts)
+    {
+        return SplashKit.OptionDrawTo(this, opts);
+    }
+
+    /// <summary>
     /// Draws an ellipse on the given window, using the provided location, and size.
     /// </summary>
     /// <param name="clr"> The color of the ellipse</param>
@@ -31278,6 +31347,15 @@ public class Window : PointerWrapper
     public void FillEllipse(Color clr, double x, double y, double width, double height, DrawingOptions opts)
     {
         SplashKit.FillEllipseOnWindow(this, clr, x, y, width, height, opts);
+    }
+
+    /// <summary>
+    /// Saves a screenshot of the current window to a bitmap file. The file will be saved onto the user's desktop.
+    /// </summary>
+    /// <param name="basename"> The base of the filename. If there is a file of this name already, then the name will be changed to generate a unique filename.</param>
+    public void TakeScreenshot(string basename)
+    {
+        SplashKit.TakeScreenshot(this, basename);
     }
 
     /// <summary>
@@ -31375,6 +31453,59 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
+    /// Draws an individual pixel to the given window.
+    /// </summary>
+    /// <param name="clr"> The color of the pixel</param>
+    /// <param name="pt"> The location of the pixel to draw</param>
+    public void DrawPixel(Color clr, Point2D pt)
+    {
+        SplashKit.DrawPixelOnWindow(this, clr, pt);
+    }
+
+    /// <summary>
+    /// Draws an individual pixel to the given window with the given drawing options.
+    /// </summary>
+    /// <param name="clr"> The color of the pixel</param>
+    /// <param name="pt"> The location of the pixel to draw</param>
+    /// <param name="opts"> The drawing options</param>
+    public void DrawPixel(Color clr, Point2D pt, DrawingOptions opts)
+    {
+        SplashKit.DrawPixelOnWindow(this, clr, pt, opts);
+    }
+
+    /// <summary>
+    /// Draws an individual pixel to the given window.
+    /// </summary>
+    /// <param name="clr"> The color of the pixel</param>
+    /// <param name="x"> The distance from the left edge of the window to the pixel</param>
+    /// <param name="y"> The distance from the top edge of the window to the pixel</param>
+    public void DrawPixel(Color clr, double x, double y)
+    {
+        SplashKit.DrawPixelOnWindow(this, clr, x, y);
+    }
+
+    /// <summary>
+    /// Draws an individual pixel to the given window with the given drawing options.
+    /// </summary>
+    /// <param name="clr"> The color of the pixel</param>
+    /// <param name="x"> The distance from the left edge of the window to the pixel</param>
+    /// <param name="y"> The distance from the top edge of the window to the pixel</param>
+    /// <param name="opts"> The drawing options</param>
+    public void DrawPixel(Color clr, double x, double y, DrawingOptions opts)
+    {
+        SplashKit.DrawPixelOnWindow(this, clr, x, y, opts);
+    }
+
+    /// <summary>
+    /// Returns a random point on the provided window.
+    /// </summary>
+    /// <returns>A point within the bounds of the window</returns>
+    public Point2D RandomPoint()
+    {
+        return SplashKit.RandomWindowPoint(this);
+    }
+
+    /// <summary>
     /// Draw a quad on the supplied window to the current window.
     /// </summary>
     /// <param name="clr"> The color for the quad</param>
@@ -31451,6 +31582,17 @@ public class Window : PointerWrapper
     public void FillQuad(Color clr, Quad q)
     {
         SplashKit.FillQuadOnWindow(this, clr, q);
+    }
+
+    /// <summary>
+    /// Fill a quad on the supplied window using the supplied drawing options.
+    /// </summary>
+    /// <param name="clr"> The color for the quad</param>
+    /// <param name="q"> The details of the quad</param>
+    /// <param name="opts"> The drawing options</param>
+    public void FillQuad(Color clr, Quad q, DrawingOptions opts)
+    {
+        SplashKit.FillQuadOnWindow(this, clr, q, opts);
     }
 
     /// <summary>
@@ -31582,6 +31724,60 @@ public class Window : PointerWrapper
     public void DrawText(string text, Color clr, Font fnt, int fontSize, double x, double y, DrawingOptions opts)
     {
         SplashKit.DrawTextOnWindow(this, text, clr, fnt, fontSize, x, y, opts);
+    }
+
+    /// <summary>
+    /// Ends reading text for the passed in window.
+    /// </summary>
+    public void EndReadingText()
+    {
+        SplashKit.EndReadingText(this);
+    }
+
+    /// <summary>
+    /// Returns true when the window is reading text.
+    /// </summary>
+    /// <returns>True when window is setup to read input from the user.</returns>
+    public bool ReadingText()
+    {
+        return SplashKit.ReadingText(this);
+    }
+
+    /// <summary>
+    /// Start reading text in the window within the bounds of the supplied rectangle.
+    /// </summary>
+    /// <param name="rect"> The area where the text will be entered.</param>
+    public void StartReadingText(Rectangle rect)
+    {
+        SplashKit.StartReadingText(this, rect);
+    }
+
+    /// <summary>
+    /// Start reading text in the window within the bounds of the supplied rectangle. The text will start with an initial value.
+    /// </summary>
+    /// <param name="rect"> The area where the text will be entered.</param>
+    /// <param name="initialText"> The initial text, which may be edited by the user.</param>
+    public void StartReadingText(Rectangle rect, string initialText)
+    {
+        SplashKit.StartReadingText(this, rect, initialText);
+    }
+
+    /// <summary>
+    /// Did the user press escape and cancel the enterring of text?
+    /// </summary>
+    /// <returns>True when the use has cancelled text entry</returns>
+    public bool TextEntryCancelled()
+    {
+        return SplashKit.TextEntryCancelled(this);
+    }
+
+    /// <summary>
+    /// The text the user has currently enterred on the current window.
+    /// </summary>
+    /// <returns>The user's text entry</returns>
+    public string TextInput()
+    {
+        return SplashKit.TextInput(this);
     }
 
     /// <summary>
