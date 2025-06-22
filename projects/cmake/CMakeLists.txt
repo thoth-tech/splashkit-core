@@ -278,6 +278,11 @@ add_custom_command(TARGET sktest
     PRE_BUILD COMMAND
     ${CMAKE_COMMAND} -E copy_directory "${SK_SRC}/test/Resources" $<TARGET_FILE_DIR:sktest>/Resources)
 
+# Test if windows build works with folders inside Resources
+add_custom_command(TARGET sktest
+    PRE_BUILD COMMAND
+    ${CMAKE_COMMAND} -E copy_directory "${SK_SRC}/test/Resources/" $<TARGET_FILE_DIR:sktest>)
+
 # if (MSYS)
 #     add_custom_command(TARGET sktest
 #         PRE_BUILD COMMAND
