@@ -304,6 +304,16 @@ set_target_properties(skunit_tests
         PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ${SK_BIN}
         )
+
+# Copy resources folder into projects/cmake folder for CTest
+add_custom_command(
+    TARGET skunit_tests 
+    PRE_BUILD 
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${SK_SRC}/test/Resources" 
+    "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
+)
+
 # Discover and register Catch2 tests
 catch_discover_tests(skunit_tests)
 #### END sktest EXECUTABLE ####
