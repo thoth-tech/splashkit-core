@@ -3273,18 +3273,18 @@ sklib.__sklib__draw_pixel_on_window__window__color__double__double.argtypes = [ 
 sklib.__sklib__draw_pixel_on_window__window__color__double__double.restype = None
 sklib.__sklib__draw_pixel_on_window__window__color__double__double__drawing_options.argtypes = [ c_void_p, _sklib_color, c_double, c_double, _sklib_drawing_options ]
 sklib.__sklib__draw_pixel_on_window__window__color__double__double__drawing_options.restype = None
+sklib.__sklib__get_pixel__bitmap__point_2d_ref.argtypes = [ c_void_p, _sklib_point_2d ]
+sklib.__sklib__get_pixel__bitmap__point_2d_ref.restype = _sklib_color
+sklib.__sklib__get_pixel__bitmap__double__double.argtypes = [ c_void_p, c_double, c_double ]
+sklib.__sklib__get_pixel__bitmap__double__double.restype = _sklib_color
 sklib.__sklib__get_pixel__point_2d_ref.argtypes = [ _sklib_point_2d ]
 sklib.__sklib__get_pixel__point_2d_ref.restype = _sklib_color
 sklib.__sklib__get_pixel__double__double.argtypes = [ c_double, c_double ]
 sklib.__sklib__get_pixel__double__double.restype = _sklib_color
-sklib.__sklib__get_pixel_from_bitmap__bitmap__point_2d_ref.argtypes = [ c_void_p, _sklib_point_2d ]
-sklib.__sklib__get_pixel_from_bitmap__bitmap__point_2d_ref.restype = _sklib_color
-sklib.__sklib__get_pixel_from_bitmap__bitmap__double__double.argtypes = [ c_void_p, c_double, c_double ]
-sklib.__sklib__get_pixel_from_bitmap__bitmap__double__double.restype = _sklib_color
-sklib.__sklib__get_pixel_from_window__window__point_2d_ref.argtypes = [ c_void_p, _sklib_point_2d ]
-sklib.__sklib__get_pixel_from_window__window__point_2d_ref.restype = _sklib_color
-sklib.__sklib__get_pixel_from_window__window__double__double.argtypes = [ c_void_p, c_double, c_double ]
-sklib.__sklib__get_pixel_from_window__window__double__double.restype = _sklib_color
+sklib.__sklib__get_pixel__window__point_2d_ref.argtypes = [ c_void_p, _sklib_point_2d ]
+sklib.__sklib__get_pixel__window__point_2d_ref.restype = _sklib_color
+sklib.__sklib__get_pixel__window__double__double.argtypes = [ c_void_p, c_double, c_double ]
+sklib.__sklib__get_pixel__window__double__double.restype = _sklib_color
 sklib.__sklib__point_at__double__double.argtypes = [ c_double, c_double ]
 sklib.__sklib__point_at__double__double.restype = _sklib_point_2d
 sklib.__sklib__point_at_origin.argtypes = [  ]
@@ -8075,6 +8075,17 @@ def draw_pixel_on_window_with_options ( destination, clr, x, y, opts ):
     __skparam__y = __skadapter__to_sklib_double(y)
     __skparam__opts = __skadapter__to_sklib_drawing_options(opts)
     sklib.__sklib__draw_pixel_on_window__window__color__double__double__drawing_options(__skparam__destination, __skparam__clr, __skparam__x, __skparam__y, __skparam__opts)
+def get_pixel_from_bitmap_at_point ( bmp, pt ):
+    __skparam__bmp = __skadapter__to_sklib_bitmap(bmp)
+    __skparam__pt = __skadapter__to_sklib_point_2d(pt)
+    __skreturn = sklib.__sklib__get_pixel__bitmap__point_2d_ref(__skparam__bmp, __skparam__pt)
+    return __skadapter__to_color(__skreturn)
+def get_pixel_from_bitmap ( bmp, x, y ):
+    __skparam__bmp = __skadapter__to_sklib_bitmap(bmp)
+    __skparam__x = __skadapter__to_sklib_double(x)
+    __skparam__y = __skadapter__to_sklib_double(y)
+    __skreturn = sklib.__sklib__get_pixel__bitmap__double__double(__skparam__bmp, __skparam__x, __skparam__y)
+    return __skadapter__to_color(__skreturn)
 def get_pixel_at_point ( pt ):
     __skparam__pt = __skadapter__to_sklib_point_2d(pt)
     __skreturn = sklib.__sklib__get_pixel__point_2d_ref(__skparam__pt)
@@ -8084,27 +8095,16 @@ def get_pixel ( x, y ):
     __skparam__y = __skadapter__to_sklib_double(y)
     __skreturn = sklib.__sklib__get_pixel__double__double(__skparam__x, __skparam__y)
     return __skadapter__to_color(__skreturn)
-def get_pixel_from_bitmap_at_point ( bmp, pt ):
-    __skparam__bmp = __skadapter__to_sklib_bitmap(bmp)
+def get_pixel_from_window_at_point ( wnd, pt ):
+    __skparam__wnd = __skadapter__to_sklib_window(wnd)
     __skparam__pt = __skadapter__to_sklib_point_2d(pt)
-    __skreturn = sklib.__sklib__get_pixel_from_bitmap__bitmap__point_2d_ref(__skparam__bmp, __skparam__pt)
+    __skreturn = sklib.__sklib__get_pixel__window__point_2d_ref(__skparam__wnd, __skparam__pt)
     return __skadapter__to_color(__skreturn)
-def get_pixel_from_bitmap ( bmp, x, y ):
-    __skparam__bmp = __skadapter__to_sklib_bitmap(bmp)
+def get_pixel_from_window ( wnd, x, y ):
+    __skparam__wnd = __skadapter__to_sklib_window(wnd)
     __skparam__x = __skadapter__to_sklib_double(x)
     __skparam__y = __skadapter__to_sklib_double(y)
-    __skreturn = sklib.__sklib__get_pixel_from_bitmap__bitmap__double__double(__skparam__bmp, __skparam__x, __skparam__y)
-    return __skadapter__to_color(__skreturn)
-def get_pixel_from_window_at_point ( destination, pt ):
-    __skparam__destination = __skadapter__to_sklib_window(destination)
-    __skparam__pt = __skadapter__to_sklib_point_2d(pt)
-    __skreturn = sklib.__sklib__get_pixel_from_window__window__point_2d_ref(__skparam__destination, __skparam__pt)
-    return __skadapter__to_color(__skreturn)
-def get_pixel_from_window ( destination, x, y ):
-    __skparam__destination = __skadapter__to_sklib_window(destination)
-    __skparam__x = __skadapter__to_sklib_double(x)
-    __skparam__y = __skadapter__to_sklib_double(y)
-    __skreturn = sklib.__sklib__get_pixel_from_window__window__double__double(__skparam__destination, __skparam__x, __skparam__y)
+    __skreturn = sklib.__sklib__get_pixel__window__double__double(__skparam__wnd, __skparam__x, __skparam__y)
     return __skadapter__to_color(__skreturn)
 def point_at ( x, y ):
     __skparam__x = __skadapter__to_sklib_double(x)

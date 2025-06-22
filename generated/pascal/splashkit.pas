@@ -1278,12 +1278,12 @@ procedure DrawPixelOnWindow(destination: Window; clr: Color; const pt: Point2D);
 procedure DrawPixelOnWindow(destination: Window; clr: Color; const pt: Point2D; opts: DrawingOptions);
 procedure DrawPixelOnWindow(destination: Window; clr: Color; x: Double; y: Double);
 procedure DrawPixelOnWindow(destination: Window; clr: Color; x: Double; y: Double; opts: DrawingOptions);
+function GetPixel(bmp: Bitmap; const pt: Point2D): Color;
+function GetPixel(bmp: Bitmap; x: Double; y: Double): Color;
 function GetPixel(const pt: Point2D): Color;
 function GetPixel(x: Double; y: Double): Color;
-function GetPixelFromBitmap(bmp: Bitmap; const pt: Point2D): Color;
-function GetPixelFromBitmap(bmp: Bitmap; x: Double; y: Double): Color;
-function GetPixelFromWindow(destination: Window; const pt: Point2D): Color;
-function GetPixelFromWindow(destination: Window; x: Double; y: Double): Color;
+function GetPixel(wnd: Window; const pt: Point2D): Color;
+function GetPixel(wnd: Window; x: Double; y: Double): Color;
 function PointAt(x: Double; y: Double): Point2D;
 function PointAtOrigin(): Point2D;
 function PointInCircle(const pt: Point2D; const c: Circle): Boolean;
@@ -3803,12 +3803,12 @@ procedure __sklib__draw_pixel_on_window__window__color__point_2d_ref(destination
 procedure __sklib__draw_pixel_on_window__window__color__point_2d_ref__drawing_options(destination: __sklib_ptr; clr: __sklib_color; const pt: __sklib_point_2d; opts: __sklib_drawing_options); cdecl; external;
 procedure __sklib__draw_pixel_on_window__window__color__double__double(destination: __sklib_ptr; clr: __sklib_color; x: Double; y: Double); cdecl; external;
 procedure __sklib__draw_pixel_on_window__window__color__double__double__drawing_options(destination: __sklib_ptr; clr: __sklib_color; x: Double; y: Double; opts: __sklib_drawing_options); cdecl; external;
+function __sklib__get_pixel__bitmap__point_2d_ref(bmp: __sklib_ptr; const pt: __sklib_point_2d): __sklib_color; cdecl; external;
+function __sklib__get_pixel__bitmap__double__double(bmp: __sklib_ptr; x: Double; y: Double): __sklib_color; cdecl; external;
 function __sklib__get_pixel__point_2d_ref(const pt: __sklib_point_2d): __sklib_color; cdecl; external;
 function __sklib__get_pixel__double__double(x: Double; y: Double): __sklib_color; cdecl; external;
-function __sklib__get_pixel_from_bitmap__bitmap__point_2d_ref(bmp: __sklib_ptr; const pt: __sklib_point_2d): __sklib_color; cdecl; external;
-function __sklib__get_pixel_from_bitmap__bitmap__double__double(bmp: __sklib_ptr; x: Double; y: Double): __sklib_color; cdecl; external;
-function __sklib__get_pixel_from_window__window__point_2d_ref(destination: __sklib_ptr; const pt: __sklib_point_2d): __sklib_color; cdecl; external;
-function __sklib__get_pixel_from_window__window__double__double(destination: __sklib_ptr; x: Double; y: Double): __sklib_color; cdecl; external;
+function __sklib__get_pixel__window__point_2d_ref(wnd: __sklib_ptr; const pt: __sklib_point_2d): __sklib_color; cdecl; external;
+function __sklib__get_pixel__window__double__double(wnd: __sklib_ptr; x: Double; y: Double): __sklib_color; cdecl; external;
 function __sklib__point_at__double__double(x: Double; y: Double): __sklib_point_2d; cdecl; external;
 function __sklib__point_at_origin(): __sklib_point_2d; cdecl; external;
 function __sklib__point_in_circle__point_2d_ref__circle_ref(const pt: __sklib_point_2d; const c: __sklib_circle): LongInt; cdecl; external;
@@ -12574,6 +12574,30 @@ begin
   __skparam__opts := __skadapter__to_sklib_drawing_options(opts);
   __sklib__draw_pixel_on_window__window__color__double__double__drawing_options(__skparam__destination, __skparam__clr, __skparam__x, __skparam__y, __skparam__opts);
 end;
+function GetPixel(bmp: Bitmap; const pt: Point2D): Color;
+var
+  __skparam__bmp: __sklib_ptr;
+  __skparam__pt: __sklib_point_2d;
+  __skreturn: __sklib_color;
+begin
+  __skparam__bmp := __skadapter__to_sklib_bitmap(bmp);
+  __skparam__pt := __skadapter__to_sklib_point_2d(pt);
+  __skreturn := __sklib__get_pixel__bitmap__point_2d_ref(__skparam__bmp, __skparam__pt);
+  result := __skadapter__to_color(__skreturn);
+end;
+function GetPixel(bmp: Bitmap; x: Double; y: Double): Color;
+var
+  __skparam__bmp: __sklib_ptr;
+  __skparam__x: Double;
+  __skparam__y: Double;
+  __skreturn: __sklib_color;
+begin
+  __skparam__bmp := __skadapter__to_sklib_bitmap(bmp);
+  __skparam__x := __skadapter__to_sklib_double(x);
+  __skparam__y := __skadapter__to_sklib_double(y);
+  __skreturn := __sklib__get_pixel__bitmap__double__double(__skparam__bmp, __skparam__x, __skparam__y);
+  result := __skadapter__to_color(__skreturn);
+end;
 function GetPixel(const pt: Point2D): Color;
 var
   __skparam__pt: __sklib_point_2d;
@@ -12594,52 +12618,28 @@ begin
   __skreturn := __sklib__get_pixel__double__double(__skparam__x, __skparam__y);
   result := __skadapter__to_color(__skreturn);
 end;
-function GetPixelFromBitmap(bmp: Bitmap; const pt: Point2D): Color;
+function GetPixel(wnd: Window; const pt: Point2D): Color;
 var
-  __skparam__bmp: __sklib_ptr;
+  __skparam__wnd: __sklib_ptr;
   __skparam__pt: __sklib_point_2d;
   __skreturn: __sklib_color;
 begin
-  __skparam__bmp := __skadapter__to_sklib_bitmap(bmp);
+  __skparam__wnd := __skadapter__to_sklib_window(wnd);
   __skparam__pt := __skadapter__to_sklib_point_2d(pt);
-  __skreturn := __sklib__get_pixel_from_bitmap__bitmap__point_2d_ref(__skparam__bmp, __skparam__pt);
+  __skreturn := __sklib__get_pixel__window__point_2d_ref(__skparam__wnd, __skparam__pt);
   result := __skadapter__to_color(__skreturn);
 end;
-function GetPixelFromBitmap(bmp: Bitmap; x: Double; y: Double): Color;
+function GetPixel(wnd: Window; x: Double; y: Double): Color;
 var
-  __skparam__bmp: __sklib_ptr;
+  __skparam__wnd: __sklib_ptr;
   __skparam__x: Double;
   __skparam__y: Double;
   __skreturn: __sklib_color;
 begin
-  __skparam__bmp := __skadapter__to_sklib_bitmap(bmp);
+  __skparam__wnd := __skadapter__to_sklib_window(wnd);
   __skparam__x := __skadapter__to_sklib_double(x);
   __skparam__y := __skadapter__to_sklib_double(y);
-  __skreturn := __sklib__get_pixel_from_bitmap__bitmap__double__double(__skparam__bmp, __skparam__x, __skparam__y);
-  result := __skadapter__to_color(__skreturn);
-end;
-function GetPixelFromWindow(destination: Window; const pt: Point2D): Color;
-var
-  __skparam__destination: __sklib_ptr;
-  __skparam__pt: __sklib_point_2d;
-  __skreturn: __sklib_color;
-begin
-  __skparam__destination := __skadapter__to_sklib_window(destination);
-  __skparam__pt := __skadapter__to_sklib_point_2d(pt);
-  __skreturn := __sklib__get_pixel_from_window__window__point_2d_ref(__skparam__destination, __skparam__pt);
-  result := __skadapter__to_color(__skreturn);
-end;
-function GetPixelFromWindow(destination: Window; x: Double; y: Double): Color;
-var
-  __skparam__destination: __sklib_ptr;
-  __skparam__x: Double;
-  __skparam__y: Double;
-  __skreturn: __sklib_color;
-begin
-  __skparam__destination := __skadapter__to_sklib_window(destination);
-  __skparam__x := __skadapter__to_sklib_double(x);
-  __skparam__y := __skadapter__to_sklib_double(y);
-  __skreturn := __sklib__get_pixel_from_window__window__double__double(__skparam__destination, __skparam__x, __skparam__y);
+  __skreturn := __sklib__get_pixel__window__double__double(__skparam__wnd, __skparam__x, __skparam__y);
   result := __skadapter__to_color(__skreturn);
 end;
 function PointAt(x: Double; y: Double): Point2D;
