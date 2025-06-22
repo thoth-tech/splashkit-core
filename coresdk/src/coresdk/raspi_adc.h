@@ -115,6 +115,7 @@ namespace splashkit_lib
      * @attribute class       adc_device
      * @attribute self        adc
      * @attribute destructor  true
+     * @attribute method      close
      */
     void close_adc(adc_device adc);
 
