@@ -58,6 +58,58 @@ namespace splashkit_lib
     void draw_pixel(color clr, const point_2d &pt, drawing_options opts);
 
     /**
+     * Returns the color of the pixel at the x,y location on the supplied
+     * bitmap.
+     *
+     * @param  bmp The bitmap to get the color from
+     * @param  x   The distance from the left edge of the bitmap to the pixel
+     *             to read
+     * @param  y   The distance from the top of the bitmap to the pixel to read
+     * @return     The color of the pixel at the supplied location
+     *
+     * @attribute suffix  from_bitmap
+     */
+    color get_pixel(bitmap bmp, double x, double y);
+
+    /**
+     * Returns the color of the pixel at the location on the supplied
+     * bitmap.
+     *
+     * @param  bmp The bitmap to get the color from
+     * @param  pt  The position of the pixel
+     * @return     The color of the pixel at the supplied location
+     *
+     * @attribute suffix  from_bitmap_at_point
+     */
+    color get_pixel(bitmap bmp, const point_2d &pt);
+
+    /**
+     * Returns the color of the pixel at the x,y location on the supplied
+     * window.
+     *
+     * @param  wnd The window to get the color from
+     * @param  x   The distance from the left edge of the window to the pixel
+     *             to read
+     * @param  y   The distance from the top of the window to the pixel to read
+     * @return     The color of the pixel at the supplied location
+     *
+     * @attribute suffix  from_window
+     */
+    color get_pixel(window wnd, double x, double y);
+
+    /**
+     * Returns the color of the pixel at the location on the supplied
+     * window.
+     *
+     * @param  wnd The window to get the color from
+     * @param  pt  The position of the pixel
+     * @return     The color of the pixel at the supplied location
+     *
+     * @attribute suffix  from_window_at_point
+     */
+    color get_pixel(window wnd, const point_2d &pt);
+
+    /**
      * Returns the color of the pixel at the x,y location on the current
      * window.
      *
@@ -135,35 +187,6 @@ namespace splashkit_lib
     void draw_pixel_on_window(window destination, color clr, const point_2d &pt, drawing_options opts);
     
     /**
-     * Returns the color of the pixel at the x,y location on the given
-     * window.
-     *
-     * @param destination The window to draw the pixel on
-     * @param  x   The distance from the left edge of the window to the pixel
-     *             to read
-     * @param  y   The distance from the top of the window to the pixel to read
-     * @return     The color of the pixel at the supplied location
-     *
-     * @attribute class  window
-     * @attribute method get_pixel
-     */
-    color get_pixel_from_window(window destination, double x, double y);
-    
-    /**
-     * Returns the color of the pixel at the x,y location on the given
-     * window.
-     *
-     * @param destination The window to draw the pixel on
-     * @param  pt  The position of the pixel
-     * @return     The color of the pixel at the supplied location
-     *
-     * @attribute class   window
-     * @attribute suffix  at_point
-     * @attribute method  get_pixel
-     */
-    color get_pixel_from_window(window destination, const point_2d &pt);
-    
-    /**
      * Draws an individual pixel to the given bitmap.
      *
      * @param destination the bitmap to draw the pixel on
@@ -221,34 +244,5 @@ namespace splashkit_lib
      * @attribute method  draw_pixel
      */
     void draw_pixel_on_bitmap(bitmap destination, color clr, const point_2d &pt, drawing_options opts);
-
-    /**
-     * Returns the color of the pixel at the x,y location on the supplied
-     * bitmap.
-     *
-     * @param  bmp The bitmap to get the color from
-     * @param  x   The distance from the left edge of the bitmap to the pixel
-     *             to read
-     * @param  y   The distance from the top of the bitmap to the pixel to read
-     * @return     The color of the pixel at the supplied location
-     *
-     * @attribute class  bitmap
-     * @attribute method get_pixel
-     */
-    color get_pixel_from_bitmap(bitmap bmp, double x, double y);
-
-    /**
-     * Returns the color of the pixel at the location on the supplied
-     * bitmap.
-     *
-     * @param  bmp The bitmap to get the color from
-     * @param  pt  The position of the pixel
-     * @return     The color of the pixel at the supplied location
-     *
-     * @attribute class   bitmap
-     * @attribute suffix  at_point
-     * @attribute method  get_pixel
-     */
-    color get_pixel_from_bitmap(bitmap bmp, const point_2d &pt);
 }
 #endif /* point_drawing_h */
