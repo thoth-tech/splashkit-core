@@ -1,7 +1,7 @@
 #
 # CMake file for generating the splashkit CPP library
 #
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.10)
 project(splashkit)
 
 # SK Directories relative to cmake project

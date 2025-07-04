@@ -70,6 +70,8 @@ if [[ $GENERATE_LIB ]]; then
 
   echo "Check you are happy to publish this, then publish using:"
 
+  source $SK_ROOT/.env
+  
   echo "dotnet nuget push ./bin/Release/*.nupkg  --api-key $API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate"
   
   cd "$APP_PATH"

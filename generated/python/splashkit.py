@@ -207,6 +207,17 @@ class SpriteEventKind(Enum):
     sprite_animation_ended_event = 1
     sprite_touched_event = 2
     sprite_clicked_event = 3
+class AdcPin(Enum):
+    adc_pin_0 = 0
+    adc_pin_1 = 1
+    adc_pin_2 = 2
+    adc_pin_3 = 3
+    adc_pin_4 = 4
+    adc_pin_5 = 5
+    adc_pin_6 = 6
+    adc_pin_7 = 7
+class AdcType(Enum):
+    ads7830 = 0
 class DrawingDest(Enum):
     draw_to_screen = 0
     draw_to_world = 1
@@ -640,6 +651,9 @@ class Message(_PointerWrapper):
 class ServerSocket(_PointerWrapper):
     def __init__(self, ptr):
         super().__init__(ptr)
+class AdcDevice(_PointerWrapper):
+    def __init__(self, ptr):
+        super().__init__(ptr)
 class SoundEffect(_PointerWrapper):
     def __init__(self, ptr):
         super().__init__(ptr)
@@ -843,6 +857,22 @@ def __skadapter__to_sprite_event_kind(v):
     return SpriteEventKind(v)
 
 def __skadapter__to_sklib_sprite_event_kind(v):
+    return c_int(v.value)
+
+def __skadapter__to_adc_pin(v):
+    if isinstance(v, AdcPin):
+        return v
+    return AdcPin(v)
+
+def __skadapter__to_sklib_adc_pin(v):
+    return c_int(v.value)
+
+def __skadapter__to_adc_type(v):
+    if isinstance(v, AdcType):
+        return v
+    return AdcType(v)
+
+def __skadapter__to_sklib_adc_type(v):
     return c_int(v.value)
 
 def __skadapter__to_drawing_dest(v):
@@ -1476,6 +1506,12 @@ def __skadapter__to_server_socket(v):
     return _find_pointer_resource(v, "ServerSocket")
 
 def __skadapter__to_sklib_server_socket(v):
+    return v
+
+def __skadapter__to_adc_device(v):
+    return _find_pointer_resource(v, "AdcDevice")
+
+def __skadapter__to_sklib_adc_device(v):
     return v
 
 def __skadapter__to_sound_effect(v):
@@ -2767,12 +2803,12 @@ sklib.__sklib__start_popup__string_ref.argtypes = [ _sklib_string ]
 sklib.__sklib__start_popup__string_ref.restype = c_int32
 sklib.__sklib__start_treenode__string_ref.argtypes = [ _sklib_string ]
 sklib.__sklib__start_treenode__string_ref.restype = c_int32
-sklib.__sklib__text_box__string_ref.argtypes = [ _sklib_string ]
-sklib.__sklib__text_box__string_ref.restype = _sklib_string
-sklib.__sklib__text_box__string_ref__rectangle_ref.argtypes = [ _sklib_string, _sklib_rectangle ]
-sklib.__sklib__text_box__string_ref__rectangle_ref.restype = _sklib_string
+sklib.__sklib__text_box__string_ref__string_ref__rectangle_ref.argtypes = [ _sklib_string, _sklib_string, _sklib_rectangle ]
+sklib.__sklib__text_box__string_ref__string_ref__rectangle_ref.restype = _sklib_string
 sklib.__sklib__text_box__string_ref__string_ref.argtypes = [ _sklib_string, _sklib_string ]
 sklib.__sklib__text_box__string_ref__string_ref.restype = _sklib_string
+sklib.__sklib__text_box__string_ref__string_ref__bool.argtypes = [ _sklib_string, _sklib_string, c_int32 ]
+sklib.__sklib__text_box__string_ref__string_ref__bool.restype = _sklib_string
 sklib.__sklib__create_json.argtypes = [  ]
 sklib.__sklib__create_json.restype = c_void_p
 sklib.__sklib__create_json__string.argtypes = [ _sklib_string ]
@@ -3249,10 +3285,6 @@ sklib.__sklib__get_pixel__window__point_2d_ref.argtypes = [ c_void_p, _sklib_poi
 sklib.__sklib__get_pixel__window__point_2d_ref.restype = _sklib_color
 sklib.__sklib__get_pixel__window__double__double.argtypes = [ c_void_p, c_double, c_double ]
 sklib.__sklib__get_pixel__window__double__double.restype = _sklib_color
-sklib.__sklib__get_pixel_from_window__window__point_2d_ref.argtypes = [ c_void_p, _sklib_point_2d ]
-sklib.__sklib__get_pixel_from_window__window__point_2d_ref.restype = _sklib_color
-sklib.__sklib__get_pixel_from_window__window__double__double.argtypes = [ c_void_p, c_double, c_double ]
-sklib.__sklib__get_pixel_from_window__window__double__double.restype = _sklib_color
 sklib.__sklib__point_at__double__double.argtypes = [ c_double, c_double ]
 sklib.__sklib__point_at__double__double.restype = _sklib_point_2d
 sklib.__sklib__point_at_origin.argtypes = [  ]
@@ -3319,6 +3351,24 @@ sklib.__sklib__rnd.argtypes = [  ]
 sklib.__sklib__rnd.restype = c_float
 sklib.__sklib__rnd__int.argtypes = [ c_int ]
 sklib.__sklib__rnd__int.restype = c_int
+sklib.__sklib__adc_device_named__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__adc_device_named__string_ref.restype = c_void_p
+sklib.__sklib__close_adc__adc_device.argtypes = [ c_void_p ]
+sklib.__sklib__close_adc__adc_device.restype = None
+sklib.__sklib__close_adc__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__close_adc__string_ref.restype = None
+sklib.__sklib__close_all_adc.argtypes = [  ]
+sklib.__sklib__close_all_adc.restype = None
+sklib.__sklib__has_adc_device__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__has_adc_device__string_ref.restype = c_int32
+sklib.__sklib__open_adc__string_ref__adc_type.argtypes = [ _sklib_string, c_int ]
+sklib.__sklib__open_adc__string_ref__adc_type.restype = c_void_p
+sklib.__sklib__open_adc__string_ref__int__int__adc_type.argtypes = [ _sklib_string, c_int, c_int, c_int ]
+sklib.__sklib__open_adc__string_ref__int__int__adc_type.restype = c_void_p
+sklib.__sklib__read_adc__adc_device__adc_pin.argtypes = [ c_void_p, c_int ]
+sklib.__sklib__read_adc__adc_device__adc_pin.restype = c_int
+sklib.__sklib__read_adc__string_ref__adc_pin.argtypes = [ _sklib_string, c_int ]
+sklib.__sklib__read_adc__string_ref__adc_pin.restype = c_int
 sklib.__sklib__has_gpio.argtypes = [  ]
 sklib.__sklib__has_gpio.restype = c_int32
 sklib.__sklib__raspi_cleanup.argtypes = [  ]
@@ -7014,19 +7064,22 @@ def start_treenode ( label_text ):
     __skparam__label_text = __skadapter__to_sklib_string(label_text)
     __skreturn = sklib.__sklib__start_treenode__string_ref(__skparam__label_text)
     return __skadapter__to_bool(__skreturn)
-def text_box ( value ):
-    __skparam__value = __skadapter__to_sklib_string(value)
-    __skreturn = sklib.__sklib__text_box__string_ref(__skparam__value)
-    return __skadapter__to_string(__skreturn)
-def text_box_at_position ( value, rect ):
+def text_box_at_position ( label_text, value, rect ):
+    __skparam__label_text = __skadapter__to_sklib_string(label_text)
     __skparam__value = __skadapter__to_sklib_string(value)
     __skparam__rect = __skadapter__to_sklib_rectangle(rect)
-    __skreturn = sklib.__sklib__text_box__string_ref__rectangle_ref(__skparam__value, __skparam__rect)
+    __skreturn = sklib.__sklib__text_box__string_ref__string_ref__rectangle_ref(__skparam__label_text, __skparam__value, __skparam__rect)
     return __skadapter__to_string(__skreturn)
-def text_box_labeled ( label_text, value ):
+def text_box ( label_text, value ):
     __skparam__label_text = __skadapter__to_sklib_string(label_text)
     __skparam__value = __skadapter__to_sklib_string(value)
     __skreturn = sklib.__sklib__text_box__string_ref__string_ref(__skparam__label_text, __skparam__value)
+    return __skadapter__to_string(__skreturn)
+def text_box_labeled ( label_text, value, show_label ):
+    __skparam__label_text = __skadapter__to_sklib_string(label_text)
+    __skparam__value = __skadapter__to_sklib_string(value)
+    __skparam__show_label = __skadapter__to_sklib_bool(show_label)
+    __skreturn = sklib.__sklib__text_box__string_ref__string_ref__bool(__skparam__label_text, __skparam__value, __skparam__show_label)
     return __skadapter__to_string(__skreturn)
 def create_json (  ):
     __skreturn = sklib.__sklib__create_json()
@@ -8053,17 +8106,6 @@ def get_pixel_from_window ( wnd, x, y ):
     __skparam__y = __skadapter__to_sklib_double(y)
     __skreturn = sklib.__sklib__get_pixel__window__double__double(__skparam__wnd, __skparam__x, __skparam__y)
     return __skadapter__to_color(__skreturn)
-def get_pixel_from_window_at_point_from_window ( destination, pt ):
-    __skparam__destination = __skadapter__to_sklib_window(destination)
-    __skparam__pt = __skadapter__to_sklib_point_2d(pt)
-    __skreturn = sklib.__sklib__get_pixel_from_window__window__point_2d_ref(__skparam__destination, __skparam__pt)
-    return __skadapter__to_color(__skreturn)
-def get_pixel_from_window_from_window ( destination, x, y ):
-    __skparam__destination = __skadapter__to_sklib_window(destination)
-    __skparam__x = __skadapter__to_sklib_double(x)
-    __skparam__y = __skadapter__to_sklib_double(y)
-    __skreturn = sklib.__sklib__get_pixel_from_window__window__double__double(__skparam__destination, __skparam__x, __skparam__y)
-    return __skadapter__to_color(__skreturn)
 def point_at ( x, y ):
     __skparam__x = __skadapter__to_sklib_double(x)
     __skparam__y = __skadapter__to_sklib_double(y)
@@ -8239,6 +8281,44 @@ def rnd (  ):
 def rnd_int ( ubound ):
     __skparam__ubound = __skadapter__to_sklib_int(ubound)
     __skreturn = sklib.__sklib__rnd__int(__skparam__ubound)
+    return __skadapter__to_int(__skreturn)
+def adc_device_named ( name ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    __skreturn = sklib.__sklib__adc_device_named__string_ref(__skparam__name)
+    return __skadapter__to_adc_device(__skreturn)
+def close_adc ( adc ):
+    __skparam__adc = __skadapter__to_sklib_adc_device(adc)
+    sklib.__sklib__close_adc__adc_device(__skparam__adc)
+def close_adc_named ( name ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    sklib.__sklib__close_adc__string_ref(__skparam__name)
+def close_all_adc (  ):
+    sklib.__sklib__close_all_adc()
+def has_adc_device ( name ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    __skreturn = sklib.__sklib__has_adc_device__string_ref(__skparam__name)
+    return __skadapter__to_bool(__skreturn)
+def open_adc ( name, type ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    __skparam__type = __skadapter__to_sklib_adc_type(type)
+    __skreturn = sklib.__sklib__open_adc__string_ref__adc_type(__skparam__name, __skparam__type)
+    return __skadapter__to_adc_device(__skreturn)
+def open_adc_with_bus ( name, bus, address, type ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    __skparam__bus = __skadapter__to_sklib_int(bus)
+    __skparam__address = __skadapter__to_sklib_int(address)
+    __skparam__type = __skadapter__to_sklib_adc_type(type)
+    __skreturn = sklib.__sklib__open_adc__string_ref__int__int__adc_type(__skparam__name, __skparam__bus, __skparam__address, __skparam__type)
+    return __skadapter__to_adc_device(__skreturn)
+def read_adc ( adc, channel ):
+    __skparam__adc = __skadapter__to_sklib_adc_device(adc)
+    __skparam__channel = __skadapter__to_sklib_adc_pin(channel)
+    __skreturn = sklib.__sklib__read_adc__adc_device__adc_pin(__skparam__adc, __skparam__channel)
+    return __skadapter__to_int(__skreturn)
+def read_adc_named ( name, channel ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    __skparam__channel = __skadapter__to_sklib_adc_pin(channel)
+    __skreturn = sklib.__sklib__read_adc__string_ref__adc_pin(__skparam__name, __skparam__channel)
     return __skadapter__to_int(__skreturn)
 def has_gpio (  ):
     __skreturn = sklib.__sklib__has_gpio()

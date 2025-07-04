@@ -104,6 +104,16 @@ namespace SplashKitSDK
     private static SpriteEventKind __skadapter__to_sprite_event_kind(int v) { return (SpriteEventKind)v; }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static int __skadapter__to_sklib_adc_pin(AdcPin v) { return (int)v; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static AdcPin __skadapter__to_adc_pin(int v) { return (AdcPin)v; }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static int __skadapter__to_sklib_adc_type(AdcType v) { return (int)v; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static AdcType __skadapter__to_adc_type(int v) { return (AdcType)v; }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static int __skadapter__to_sklib_drawing_dest(DrawingDest v) { return (int)v; }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static DrawingDest __skadapter__to_drawing_dest(int v) { return (DrawingDest)v; }
@@ -971,6 +981,11 @@ namespace SplashKitSDK
     private static IntPtr __skadapter__to_sklib_server_socket(ServerSocket v) { return v; }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static ServerSocket __skadapter__to_server_socket(IntPtr v) { return ServerSocket.FetchOrCreate(v); }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static IntPtr __skadapter__to_sklib_adc_device(AdcDevice v) { return v; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static AdcDevice __skadapter__to_adc_device(IntPtr v) { return AdcDevice.FetchOrCreate(v); }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static IntPtr __skadapter__to_sklib_sound_effect(SoundEffect v) { return v; }
@@ -2856,14 +2871,14 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__start_treenode__string_ref", CharSet=CharSet.Ansi)]
     private static extern int __sklib__start_treenode__string_ref(__sklib_string labelText);
 
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref", CharSet=CharSet.Ansi)]
-    private static extern __sklib_string __sklib__text_box__string_ref(__sklib_string value);
-
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__rectangle_ref", CharSet=CharSet.Ansi)]
-    private static extern __sklib_string __sklib__text_box__string_ref__rectangle_ref(__sklib_string value, __sklib_rectangle rect);
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__string_ref__rectangle_ref", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__text_box__string_ref__string_ref__rectangle_ref(__sklib_string labelText, __sklib_string value, __sklib_rectangle rect);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__string_ref", CharSet=CharSet.Ansi)]
     private static extern __sklib_string __sklib__text_box__string_ref__string_ref(__sklib_string labelText, __sklib_string value);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__text_box__string_ref__string_ref__bool", CharSet=CharSet.Ansi)]
+    private static extern __sklib_string __sklib__text_box__string_ref__string_ref__bool(__sklib_string labelText, __sklib_string value, int showLabel);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__create_json", CharSet=CharSet.Ansi)]
     private static extern __sklib_ptr __sklib__create_json();
@@ -3579,12 +3594,6 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel__window__double__double", CharSet=CharSet.Ansi)]
     private static extern __sklib_color __sklib__get_pixel__window__double__double(__sklib_ptr wnd, double x, double y);
 
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel_from_window__window__point_2d_ref", CharSet=CharSet.Ansi)]
-    private static extern __sklib_color __sklib__get_pixel_from_window__window__point_2d_ref(__sklib_ptr destination, __sklib_point_2d pt);
-
-    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__get_pixel_from_window__window__double__double", CharSet=CharSet.Ansi)]
-    private static extern __sklib_color __sklib__get_pixel_from_window__window__double__double(__sklib_ptr destination, double x, double y);
-
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__point_at__double__double", CharSet=CharSet.Ansi)]
     private static extern __sklib_point_2d __sklib__point_at__double__double(double x, double y);
 
@@ -3683,6 +3692,33 @@ namespace SplashKitSDK
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__rnd__int", CharSet=CharSet.Ansi)]
     private static extern int __sklib__rnd__int(int ubound);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__adc_device_named__string_ref", CharSet=CharSet.Ansi)]
+    private static extern __sklib_ptr __sklib__adc_device_named__string_ref(__sklib_string name);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__close_adc__adc_device", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__close_adc__adc_device(__sklib_ptr adc);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__close_adc__string_ref", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__close_adc__string_ref(__sklib_string name);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__close_all_adc", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__close_all_adc();
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__has_adc_device__string_ref", CharSet=CharSet.Ansi)]
+    private static extern int __sklib__has_adc_device__string_ref(__sklib_string name);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__open_adc__string_ref__adc_type", CharSet=CharSet.Ansi)]
+    private static extern __sklib_ptr __sklib__open_adc__string_ref__adc_type(__sklib_string name, int type);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__open_adc__string_ref__int__int__adc_type", CharSet=CharSet.Ansi)]
+    private static extern __sklib_ptr __sklib__open_adc__string_ref__int__int__adc_type(__sklib_string name, int bus, int address, int type);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__read_adc__adc_device__adc_pin", CharSet=CharSet.Ansi)]
+    private static extern int __sklib__read_adc__adc_device__adc_pin(__sklib_ptr adc, int channel);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__read_adc__string_ref__adc_pin", CharSet=CharSet.Ansi)]
+    private static extern int __sklib__read_adc__string_ref__adc_pin(__sklib_string name, int channel);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__has_gpio", CharSet=CharSet.Ansi)]
     private static extern int __sklib__has_gpio();
@@ -5869,7 +5905,7 @@ namespace SplashKitSDK
     /// </summary>
     /// <param name="number1"> First number</param>
     /// <param name="number2"> Second number</param>
-    /// <returns>Greatest common divisor of the two numbers, or 0 if either of the numbers is not a valid integer above 0</returns>
+    /// <returns>Greatest common divisor of the two numbers, or 0 if both numbers are 0</returns>
     public static int GreatestCommonDivisor(int number1, int number2)
     {
       int __skparam__number1;
@@ -6042,7 +6078,7 @@ namespace SplashKitSDK
     /// </summary>
     /// <param name="number1"> First number</param>
     /// <param name="number2"> Second number</param>
-    /// <returns>Least common multiple of the two numbers, or 0 if either of the numbers is not a valid integer above 0</returns>
+    /// <returns>Least common multiple of the two numbers, or 0 if either of the numbers are 0</returns>
     public static int LeastCommonMultiple(int number1, int number2)
     {
       int __skparam__number1;
@@ -13955,40 +13991,30 @@ namespace SplashKitSDK
       return __skadapter__to_bool(__skreturn);
     }
     /// <summary>
-    /// Creates a text entry box with a label. Returns the updated value of the text box.
+    /// Creates a text entry box at a specific position on screen. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string, rectangle_from(0,0,100,100)); ```
     /// </summary>
-    /// <param name="value"> The current value of the text box</param>
-    /// <returns>The updated value of the text box</returns>
-    public static string TextBox(string value)
-    {
-      __sklib_string __skparam__value;
-      __sklib_string __skreturn;
-      __skparam__value = __skadapter__to_sklib_string(value);
-      __skreturn = __sklib__text_box__string_ref(__skparam__value);
-    __skadapter__free__sklib_string(ref __skparam__value);
-      return __skadapter__to_string(__skreturn);
-    }
-    /// <summary>
-    /// Creates a text entry box at a specific position on screen. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string); ```
-    /// </summary>
+    /// <param name="labelText"> Unique identifier for the text box (not drawn)</param>
     /// <param name="value"> The current value of the text box</param>
     /// <param name="rect"> The rectangle to display the button in</param>
     /// <returns>The updated value of the text box</returns>
-    public static string TextBox(string value, Rectangle rect)
+    public static string TextBox(string labelText, string value, Rectangle rect)
     {
+      __sklib_string __skparam__label_text;
       __sklib_string __skparam__value;
       __sklib_rectangle __skparam__rect;
       __sklib_string __skreturn;
+      __skparam__label_text = __skadapter__to_sklib_string(labelText);
       __skparam__value = __skadapter__to_sklib_string(value);
       __skparam__rect = __skadapter__to_sklib_rectangle(rect);
-      __skreturn = __sklib__text_box__string_ref__rectangle_ref(__skparam__value, __skparam__rect);
+      __skreturn = __sklib__text_box__string_ref__string_ref__rectangle_ref(__skparam__label_text, __skparam__value, __skparam__rect);
+    __skadapter__free__sklib_string(ref __skparam__label_text);
     __skadapter__free__sklib_string(ref __skparam__value);
       return __skadapter__to_string(__skreturn);
     }
     /// <summary>
     /// Creates a text entry box with a label. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string); ```
     /// </summary>
-    /// <param name="labelText"> The label to show in front of the text box</param>
+    /// <param name="labelText"> Unique identifier for the text box (not drawn)</param>
     /// <param name="value"> The current value of the text box</param>
     /// <returns>The updated value of the text box</returns>
     public static string TextBox(string labelText, string value)
@@ -13999,6 +14025,27 @@ namespace SplashKitSDK
       __skparam__label_text = __skadapter__to_sklib_string(labelText);
       __skparam__value = __skadapter__to_sklib_string(value);
       __skreturn = __sklib__text_box__string_ref__string_ref(__skparam__label_text, __skparam__value);
+    __skadapter__free__sklib_string(ref __skparam__label_text);
+    __skadapter__free__sklib_string(ref __skparam__value);
+      return __skadapter__to_string(__skreturn);
+    }
+    /// <summary>
+    /// Creates a text entry box with a label that can be shown. Returns the updated value of the text box.  Example usage: ```c++ my_string = text_box("Name", my_string, true); ```
+    /// </summary>
+    /// <param name="labelText"> Unique identifier for the text box (not drawn)</param>
+    /// <param name="value"> The current value of the text box</param>
+    /// <param name="showLabel"> Whether to show the label or not</param>
+    /// <returns>The updated value of the text box</returns>
+    public static string TextBox(string labelText, string value, bool showLabel)
+    {
+      __sklib_string __skparam__label_text;
+      __sklib_string __skparam__value;
+      int __skparam__show_label;
+      __sklib_string __skreturn;
+      __skparam__label_text = __skadapter__to_sklib_string(labelText);
+      __skparam__value = __skadapter__to_sklib_string(value);
+      __skparam__show_label = __skadapter__to_sklib_bool(showLabel);
+      __skreturn = __sklib__text_box__string_ref__string_ref__bool(__skparam__label_text, __skparam__value, __skparam__show_label);
     __skadapter__free__sklib_string(ref __skparam__label_text);
     __skadapter__free__sklib_string(ref __skparam__value);
       return __skadapter__to_string(__skreturn);
@@ -17388,41 +17435,6 @@ namespace SplashKitSDK
       return __skadapter__to_color(__skreturn);
     }
     /// <summary>
-    /// Returns the color of the pixel at the x,y location on the given window.
-    /// </summary>
-    /// <param name="destination"> The window to draw the pixel on</param>
-    /// <param name="pt"> The position of the pixel</param>
-    /// <returns>The color of the pixel at the supplied location</returns>
-    public static Color GetPixelFromWindow(Window destination, Point2D pt)
-    {
-      __sklib_ptr __skparam__destination;
-      __sklib_point_2d __skparam__pt;
-      __sklib_color __skreturn;
-      __skparam__destination = __skadapter__to_sklib_window(destination);
-      __skparam__pt = __skadapter__to_sklib_point_2d(pt);
-      __skreturn = __sklib__get_pixel_from_window__window__point_2d_ref(__skparam__destination, __skparam__pt);
-      return __skadapter__to_color(__skreturn);
-    }
-    /// <summary>
-    /// Returns the color of the pixel at the x,y location on the given window.
-    /// </summary>
-    /// <param name="destination"> The window to draw the pixel on</param>
-    /// <param name="x"> The distance from the left edge of the window to the pixel to read</param>
-    /// <param name="y"> The distance from the top of the window to the pixel to read</param>
-    /// <returns>The color of the pixel at the supplied location</returns>
-    public static Color GetPixelFromWindow(Window destination, double x, double y)
-    {
-      __sklib_ptr __skparam__destination;
-      double __skparam__x;
-      double __skparam__y;
-      __sklib_color __skreturn;
-      __skparam__destination = __skadapter__to_sklib_window(destination);
-      __skparam__x = __skadapter__to_sklib_double(x);
-      __skparam__y = __skadapter__to_sklib_double(y);
-      __skreturn = __sklib__get_pixel_from_window__window__double__double(__skparam__destination, __skparam__x, __skparam__y);
-      return __skadapter__to_color(__skreturn);
-    }
-    /// <summary>
     /// Returns a point at the given location.
     /// </summary>
     /// <param name="x"> The x value of the coordinate</param>
@@ -17975,6 +17987,135 @@ namespace SplashKitSDK
       int __skreturn;
       __skparam__ubound = __skadapter__to_sklib_int(ubound);
       __skreturn = __sklib__rnd__int(__skparam__ubound);
+      return __skadapter__to_int(__skreturn);
+    }
+    /// <summary>
+    /// Retrieve an ADC device that has been loaded.
+    /// </summary>
+    /// <param name="name"> The name of the ADC device.</param>
+    /// <returns>The adc_device pointer if found; otherwise, nullptr.</returns>
+    public static AdcDevice AdcDeviceNamed(string name)
+    {
+      __sklib_string __skparam__name;
+      __sklib_ptr __skreturn;
+      __skparam__name = __skadapter__to_sklib_string(name);
+      __skreturn = __sklib__adc_device_named__string_ref(__skparam__name);
+    __skadapter__free__sklib_string(ref __skparam__name);
+      return __skadapter__to_adc_device(__skreturn);
+    }
+    /// <summary>
+    /// Closes an ADC device given its pointer.
+    /// </summary>
+    /// <param name="adc"> The ADC device to close.</param>
+    public static void CloseAdc(AdcDevice adc)
+    {
+      __sklib_ptr __skparam__adc;
+      __skparam__adc = __skadapter__to_sklib_adc_device(adc);
+      __sklib__close_adc__adc_device(__skparam__adc);
+    }
+    /// <summary>
+    /// Closes an ADC device given its name.
+    /// </summary>
+    /// <param name="name"> The name of the ADC device to close.</param>
+    public static void CloseAdc(string name)
+    {
+      __sklib_string __skparam__name;
+      __skparam__name = __skadapter__to_sklib_string(name);
+      __sklib__close_adc__string_ref(__skparam__name);
+    __skadapter__free__sklib_string(ref __skparam__name);
+    }
+    /// <summary>
+    /// Closes all ADC devices that have been opened.
+    /// </summary>
+    public static void CloseAllAdc()
+    {
+      __sklib__close_all_adc();
+    }
+    /// <summary>
+    /// Checks if an ADC device with the given name has been loaded.
+    /// </summary>
+    /// <param name="name"> The name used to identify the ADC device.</param>
+    /// <returns>true if an ADC device with the supplied name exists.</returns>
+    public static bool HasAdcDevice(string name)
+    {
+      __sklib_string __skparam__name;
+      int __skreturn;
+      __skparam__name = __skadapter__to_sklib_string(name);
+      __skreturn = __sklib__has_adc_device__string_ref(__skparam__name);
+    __skadapter__free__sklib_string(ref __skparam__name);
+      return __skadapter__to_bool(__skreturn);
+    }
+    /// <summary>
+    /// Opens an ADC device with the specified name and type. Defaults to bus 1 and address 0x48.
+    /// </summary>
+    /// <param name="name"> The name of the ADC device to open.</param>
+    /// <param name="type"> The type of ADC device (e.g., ADS7830, PCF8591).</param>
+    /// <returns>A valid adc_device on success, or nullptr on failure.</returns>
+    public static AdcDevice OpenAdc(string name, AdcType type)
+    {
+      __sklib_string __skparam__name;
+      int __skparam__type;
+      __sklib_ptr __skreturn;
+      __skparam__name = __skadapter__to_sklib_string(name);
+      __skparam__type = __skadapter__to_sklib_adc_type(type);
+      __skreturn = __sklib__open_adc__string_ref__adc_type(__skparam__name, __skparam__type);
+    __skadapter__free__sklib_string(ref __skparam__name);
+      return __skadapter__to_adc_device(__skreturn);
+    }
+    /// <summary>
+    /// Loads an ADC device on the specified I2C bus at a given address.
+    /// </summary>
+    /// <param name="name"> The name to assign this ADC device.</param>
+    /// <param name="bus"> The I2C bus number.</param>
+    /// <param name="address"> The I2C address of the ADC device.</param>
+    /// <param name="type"> The type of ADC device (e.g., ADS7830, PCF8591).</param>
+    /// <returns>A valid adc_device on success, or nullptr on failure.</returns>
+    public static AdcDevice OpenAdc(string name, int bus, int address, AdcType type)
+    {
+      __sklib_string __skparam__name;
+      int __skparam__bus;
+      int __skparam__address;
+      int __skparam__type;
+      __sklib_ptr __skreturn;
+      __skparam__name = __skadapter__to_sklib_string(name);
+      __skparam__bus = __skadapter__to_sklib_int(bus);
+      __skparam__address = __skadapter__to_sklib_int(address);
+      __skparam__type = __skadapter__to_sklib_adc_type(type);
+      __skreturn = __sklib__open_adc__string_ref__int__int__adc_type(__skparam__name, __skparam__bus, __skparam__address, __skparam__type);
+    __skadapter__free__sklib_string(ref __skparam__name);
+      return __skadapter__to_adc_device(__skreturn);
+    }
+    /// <summary>
+    /// Reads an 8-bit value from the specified ADC channel on the device.
+    /// </summary>
+    /// <param name="adc"> The ADC device to read from.</param>
+    /// <param name="channel"> The channel number to read (range depends on ADC type).</param>
+    /// <returns>The ADC conversion value (0–255), or -1 on error.</returns>
+    public static int ReadAdc(AdcDevice adc, AdcPin channel)
+    {
+      __sklib_ptr __skparam__adc;
+      int __skparam__channel;
+      int __skreturn;
+      __skparam__adc = __skadapter__to_sklib_adc_device(adc);
+      __skparam__channel = __skadapter__to_sklib_adc_pin(channel);
+      __skreturn = __sklib__read_adc__adc_device__adc_pin(__skparam__adc, __skparam__channel);
+      return __skadapter__to_int(__skreturn);
+    }
+    /// <summary>
+    /// Reads an 8-bit value from the specified ADC channel on the device using its name.
+    /// </summary>
+    /// <param name="name"> The ADC name string to close.</param>
+    /// <param name="channel"> The channel number to read (range depends on ADC type).</param>
+    /// <returns>The ADC conversion value (0–255), or -1 on error.</returns>
+    public static int ReadAdc(string name, AdcPin channel)
+    {
+      __sklib_string __skparam__name;
+      int __skparam__channel;
+      int __skreturn;
+      __skparam__name = __skadapter__to_sklib_string(name);
+      __skparam__channel = __skadapter__to_sklib_adc_pin(channel);
+      __skreturn = __sklib__read_adc__string_ref__adc_pin(__skparam__name, __skparam__channel);
+    __skadapter__free__sklib_string(ref __skparam__name);
       return __skadapter__to_int(__skreturn);
     }
     /// <summary>
@@ -25633,6 +25774,21 @@ namespace SplashKitSDK
     SpriteTouchedEvent,
     SpriteClickedEvent
   }
+  public enum AdcPin
+  {
+    AdcPin0 = 0,
+    AdcPin1 = 1,
+    AdcPin2 = 2,
+    AdcPin3 = 3,
+    AdcPin4 = 4,
+    AdcPin5 = 5,
+    AdcPin6 = 6,
+    AdcPin7 = 7
+  }
+  public enum AdcType
+  {
+    Ads7830 = 0
+  }
   public enum DrawingDest
   {
     DrawToScreen,
@@ -26804,6 +26960,14 @@ public class Json : PointerWrapper
     }
 
     /// <summary>
+    /// Frees the SplashKit resources associated with the `json` object.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeJson(this);
+    }
+
+    /// <summary>
     /// Returns the count of keys in the top-level `json` object.
     /// </summary>
     /// <returns>The count of keys in the top-level `json` object.</returns>
@@ -27108,6 +27272,14 @@ public class Music : PointerWrapper
     public void FadeIn(int times, int ms)
     {
         SplashKit.FadeMusicIn(this, times, ms);
+    }
+
+    /// <summary>
+    /// Releases the SplashKit resources associated with music.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeMusic(this);
     }
 
     /// <summary>
@@ -27502,6 +27674,62 @@ public class ServerSocket : PointerWrapper
     {
         get { return SplashKit.ServerHasNewConnection(this); }
     }
+}
+/// <summary>
+/// This class represents AdcDevice, which wraps a pointer to SplashKit resources.
+/// </summary>
+public class AdcDevice : PointerWrapper
+{
+  private AdcDevice(IntPtr ptr) : base(ptr, true) {}
+
+  internal static AdcDevice FetchOrCreate(IntPtr ptr)
+  {
+    #pragma warning disable CS8603
+    if (ptr == IntPtr.Zero) return null;
+
+    if (_ptrRegister.ContainsKey(ptr)) return _ptrRegister[ptr] as AdcDevice;
+    #pragma warning restore CS8603
+    return new AdcDevice(ptr);
+  }
+
+    /// <summary>
+    /// Creates a new instance of AdcDevice using the provided parameters.
+    /// </summary>
+    /// <param name="name"> The name of the ADC device to open.</param>
+    /// <param name="type"> The type of ADC device (e.g., ADS7830, PCF8591).</param>
+    public AdcDevice(string name, AdcType type) : base ( SplashKit.OpenAdc(name, type), false )
+    { }
+    /// <summary>
+    /// Creates a new instance of AdcDevice using the provided parameters.
+    /// </summary>
+    /// <param name="name"> The name to assign this ADC device.</param>
+    /// <param name="bus"> The I2C bus number.</param>
+    /// <param name="address"> The I2C address of the ADC device.</param>
+    /// <param name="type"> The type of ADC device (e.g., ADS7830, PCF8591).</param>
+    public AdcDevice(string name, int bus, int address, AdcType type) : base ( SplashKit.OpenAdc(name, bus, address, type), false )
+    { }
+    protected internal override void DoFree()
+    {
+        SplashKit.CloseAdc(this);
+    }
+    /// <summary>
+    /// Closes an ADC device given its pointer.
+    /// </summary>
+    public void Close()
+    {
+        SplashKit.CloseAdc(this);
+    }
+
+    /// <summary>
+    /// Reads an 8-bit value from the specified ADC channel on the device.
+    /// </summary>
+    /// <param name="channel"> The channel number to read (range depends on ADC type).</param>
+    /// <returns>The ADC conversion value (0–255), or -1 on error.</returns>
+    public int Read(AdcPin channel)
+    {
+        return SplashKit.ReadAdc(this, channel);
+    }
+
 }
 /// <summary>
 /// This class represents SoundEffect, which wraps a pointer to SplashKit resources.
@@ -28680,6 +28908,14 @@ public class Timer : PointerWrapper
         SplashKit.FreeTimer(this);
     }
     /// <summary>
+    /// Free the memory used to store this timer.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeTimer(this);
+    }
+
+    /// <summary>
     /// Pause the timer, getting ticks from a paused timer will continue to return the same time.
     /// </summary>
     public void Pause()
@@ -28872,6 +29108,14 @@ public class Animation : PointerWrapper
     }
 
     /// <summary>
+    /// Disposes of the resources used in the animation.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeAnimation(this);
+    }
+
+    /// <summary>
     /// Restarts an `animation`.
     /// </summary>
     public void Restart()
@@ -29005,6 +29249,14 @@ public class AnimationScript : PointerWrapper
     public Animation CreateAnimation(string name, bool withSound)
     {
         return SplashKit.CreateAnimation(this, name, withSound);
+    }
+
+    /// <summary>
+    /// Frees loaded animation frames data. Use this when you will no longer be using the animation for any purpose, including within sprite.
+    /// </summary>
+    public void Free()
+    {
+        SplashKit.FreeAnimationScript(this);
     }
 
     /// <summary>
@@ -30940,6 +31192,68 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
+    /// Returns the rectangle of the current clip area for a window
+    /// </summary>
+    /// <returns>The current clipping rectangle for the window</returns>
+    public Rectangle CurrentClip()
+    {
+        return SplashKit.CurrentClip(this);
+    }
+
+    /// <summary>
+    /// Remove the last clipping rectangle pushed to the window. This will then apply the previously pushed clipping rectangle.
+    /// </summary>
+    public void PopClip()
+    {
+        SplashKit.PopClip(this);
+    }
+
+    /// <summary>
+    /// Add the clipping rectangle of a window and uses the intersect between the new rectangle and previous clip.  When a clipping rectangle is provided, drawing operations will only affect the area specified in the current clipping rectangle.
+    /// </summary>
+    /// <param name="r"> The new clipping rectangle</param>
+    public void PushClip(Rectangle r)
+    {
+        SplashKit.PushClip(this, r);
+    }
+
+    /// <summary>
+    /// Reset the clipping rectangle on a window. This will clear all of the clipping rectangles pushed to the window.
+    /// </summary>
+    public void ResetClip()
+    {
+        SplashKit.ResetClip(this);
+    }
+
+    /// <summary>
+    /// Set the clip rectangle of the window. This will clear any existing clipping rectangles pushed to the window, and use the supplied rectangle for clipping.
+    /// </summary>
+    /// <param name="r"> The new clipping rectangle</param>
+    public void SetClip(Rectangle r)
+    {
+        SplashKit.SetClip(this, r);
+    }
+
+    /// <summary>
+    /// Use this option to draw to a specified Window. Pass dest the Window you want to draw on.
+    /// </summary>
+    /// <returns>A drawing option that will draw to the indicated window.</returns>
+    public DrawingOptions OptionDrawTo()
+    {
+        return SplashKit.OptionDrawTo(this);
+    }
+
+    /// <summary>
+    /// Use this option to draw to a Bitmap. Pass dest the Bitmap you want to draw on to. Pass opts the other options you want use.
+    /// </summary>
+    /// <param name="opts"> Values for the other options.</param>
+    /// <returns>A drawing option that will draw to the indicated window.</returns>
+    public DrawingOptions OptionDrawTo(DrawingOptions opts)
+    {
+        return SplashKit.OptionDrawTo(this, opts);
+    }
+
+    /// <summary>
     /// Draws an ellipse on the given window, using the provided location, and size.
     /// </summary>
     /// <param name="clr"> The color of the ellipse</param>
@@ -31033,6 +31347,15 @@ public class Window : PointerWrapper
     public void FillEllipse(Color clr, double x, double y, double width, double height, DrawingOptions opts)
     {
         SplashKit.FillEllipseOnWindow(this, clr, x, y, width, height, opts);
+    }
+
+    /// <summary>
+    /// Saves a screenshot of the current window to a bitmap file. The file will be saved onto the user's desktop.
+    /// </summary>
+    /// <param name="basename"> The base of the filename. If there is a file of this name already, then the name will be changed to generate a unique filename.</param>
+    public void TakeScreenshot(string basename)
+    {
+        SplashKit.TakeScreenshot(this, basename);
     }
 
     /// <summary>
@@ -31130,6 +31453,59 @@ public class Window : PointerWrapper
     }
 
     /// <summary>
+    /// Draws an individual pixel to the given window.
+    /// </summary>
+    /// <param name="clr"> The color of the pixel</param>
+    /// <param name="pt"> The location of the pixel to draw</param>
+    public void DrawPixel(Color clr, Point2D pt)
+    {
+        SplashKit.DrawPixelOnWindow(this, clr, pt);
+    }
+
+    /// <summary>
+    /// Draws an individual pixel to the given window with the given drawing options.
+    /// </summary>
+    /// <param name="clr"> The color of the pixel</param>
+    /// <param name="pt"> The location of the pixel to draw</param>
+    /// <param name="opts"> The drawing options</param>
+    public void DrawPixel(Color clr, Point2D pt, DrawingOptions opts)
+    {
+        SplashKit.DrawPixelOnWindow(this, clr, pt, opts);
+    }
+
+    /// <summary>
+    /// Draws an individual pixel to the given window.
+    /// </summary>
+    /// <param name="clr"> The color of the pixel</param>
+    /// <param name="x"> The distance from the left edge of the window to the pixel</param>
+    /// <param name="y"> The distance from the top edge of the window to the pixel</param>
+    public void DrawPixel(Color clr, double x, double y)
+    {
+        SplashKit.DrawPixelOnWindow(this, clr, x, y);
+    }
+
+    /// <summary>
+    /// Draws an individual pixel to the given window with the given drawing options.
+    /// </summary>
+    /// <param name="clr"> The color of the pixel</param>
+    /// <param name="x"> The distance from the left edge of the window to the pixel</param>
+    /// <param name="y"> The distance from the top edge of the window to the pixel</param>
+    /// <param name="opts"> The drawing options</param>
+    public void DrawPixel(Color clr, double x, double y, DrawingOptions opts)
+    {
+        SplashKit.DrawPixelOnWindow(this, clr, x, y, opts);
+    }
+
+    /// <summary>
+    /// Returns a random point on the provided window.
+    /// </summary>
+    /// <returns>A point within the bounds of the window</returns>
+    public Point2D RandomPoint()
+    {
+        return SplashKit.RandomWindowPoint(this);
+    }
+
+    /// <summary>
     /// Draw a quad on the supplied window to the current window.
     /// </summary>
     /// <param name="clr"> The color for the quad</param>
@@ -31206,6 +31582,17 @@ public class Window : PointerWrapper
     public void FillQuad(Color clr, Quad q)
     {
         SplashKit.FillQuadOnWindow(this, clr, q);
+    }
+
+    /// <summary>
+    /// Fill a quad on the supplied window using the supplied drawing options.
+    /// </summary>
+    /// <param name="clr"> The color for the quad</param>
+    /// <param name="q"> The details of the quad</param>
+    /// <param name="opts"> The drawing options</param>
+    public void FillQuad(Color clr, Quad q, DrawingOptions opts)
+    {
+        SplashKit.FillQuadOnWindow(this, clr, q, opts);
     }
 
     /// <summary>
@@ -31337,6 +31724,60 @@ public class Window : PointerWrapper
     public void DrawText(string text, Color clr, Font fnt, int fontSize, double x, double y, DrawingOptions opts)
     {
         SplashKit.DrawTextOnWindow(this, text, clr, fnt, fontSize, x, y, opts);
+    }
+
+    /// <summary>
+    /// Ends reading text for the passed in window.
+    /// </summary>
+    public void EndReadingText()
+    {
+        SplashKit.EndReadingText(this);
+    }
+
+    /// <summary>
+    /// Returns true when the window is reading text.
+    /// </summary>
+    /// <returns>True when window is setup to read input from the user.</returns>
+    public bool ReadingText()
+    {
+        return SplashKit.ReadingText(this);
+    }
+
+    /// <summary>
+    /// Start reading text in the window within the bounds of the supplied rectangle.
+    /// </summary>
+    /// <param name="rect"> The area where the text will be entered.</param>
+    public void StartReadingText(Rectangle rect)
+    {
+        SplashKit.StartReadingText(this, rect);
+    }
+
+    /// <summary>
+    /// Start reading text in the window within the bounds of the supplied rectangle. The text will start with an initial value.
+    /// </summary>
+    /// <param name="rect"> The area where the text will be entered.</param>
+    /// <param name="initialText"> The initial text, which may be edited by the user.</param>
+    public void StartReadingText(Rectangle rect, string initialText)
+    {
+        SplashKit.StartReadingText(this, rect, initialText);
+    }
+
+    /// <summary>
+    /// Did the user press escape and cancel the enterring of text?
+    /// </summary>
+    /// <returns>True when the use has cancelled text entry</returns>
+    public bool TextEntryCancelled()
+    {
+        return SplashKit.TextEntryCancelled(this);
+    }
+
+    /// <summary>
+    /// The text the user has currently enterred on the current window.
+    /// </summary>
+    /// <returns>The user's text entry</returns>
+    public string TextInput()
+    {
+        return SplashKit.TextInput(this);
     }
 
     /// <summary>

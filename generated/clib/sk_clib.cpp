@@ -3332,21 +3332,24 @@ int __sklib__start_treenode__string_ref(const __sklib_string label_text) {
     bool __skreturn = start_treenode(__skparam__label_text);
     return __sklib__to_int(__skreturn);
 }
-__sklib_string __sklib__text_box__string_ref(const __sklib_string value) {
-    string __skparam__value = __sklib__to_string(value);
-    string __skreturn = text_box(__skparam__value);
-    return __sklib__to_sklib_string(__skreturn);
-}
-__sklib_string __sklib__text_box__string_ref__rectangle_ref(const __sklib_string value, const __sklib_rectangle rect) {
+__sklib_string __sklib__text_box__string_ref__string_ref__rectangle_ref(const __sklib_string label_text, const __sklib_string value, const __sklib_rectangle rect) {
+    string __skparam__label_text = __sklib__to_string(label_text);
     string __skparam__value = __sklib__to_string(value);
     rectangle __skparam__rect = __sklib__to_rectangle(rect);
-    string __skreturn = text_box(__skparam__value, __skparam__rect);
+    string __skreturn = text_box(__skparam__label_text, __skparam__value, __skparam__rect);
     return __sklib__to_sklib_string(__skreturn);
 }
 __sklib_string __sklib__text_box__string_ref__string_ref(const __sklib_string label_text, const __sklib_string value) {
     string __skparam__label_text = __sklib__to_string(label_text);
     string __skparam__value = __sklib__to_string(value);
     string __skreturn = text_box(__skparam__label_text, __skparam__value);
+    return __sklib__to_sklib_string(__skreturn);
+}
+__sklib_string __sklib__text_box__string_ref__string_ref__bool(const __sklib_string label_text, const __sklib_string value, int show_label) {
+    string __skparam__label_text = __sklib__to_string(label_text);
+    string __skparam__value = __sklib__to_string(value);
+    bool __skparam__show_label = __sklib__to_bool(show_label);
+    string __skreturn = text_box(__skparam__label_text, __skparam__value, __skparam__show_label);
     return __sklib__to_sklib_string(__skreturn);
 }
 __sklib_json __sklib__create_json() {
@@ -4612,19 +4615,6 @@ __sklib_color __sklib__get_pixel__window__double__double(__sklib_window wnd, dou
     color __skreturn = get_pixel(__skparam__wnd, __skparam__x, __skparam__y);
     return __sklib__to_sklib_color(__skreturn);
 }
-__sklib_color __sklib__get_pixel_from_window__window__point_2d_ref(__sklib_window destination, const __sklib_point_2d pt) {
-    window __skparam__destination = __sklib__to_window(destination);
-    point_2d __skparam__pt = __sklib__to_point_2d(pt);
-    color __skreturn = get_pixel_from_window(__skparam__destination, __skparam__pt);
-    return __sklib__to_sklib_color(__skreturn);
-}
-__sklib_color __sklib__get_pixel_from_window__window__double__double(__sklib_window destination, double x, double y) {
-    window __skparam__destination = __sklib__to_window(destination);
-    double __skparam__x = __sklib__to_double(x);
-    double __skparam__y = __sklib__to_double(y);
-    color __skreturn = get_pixel_from_window(__skparam__destination, __skparam__x, __skparam__y);
-    return __sklib__to_sklib_color(__skreturn);
-}
 __sklib_point_2d __sklib__point_at__double__double(double x, double y) {
     double __skparam__x = __sklib__to_double(x);
     double __skparam__y = __sklib__to_double(y);
@@ -4832,6 +4822,53 @@ float __sklib__rnd() {
 int __sklib__rnd__int(int ubound) {
     int __skparam__ubound = __sklib__to_int(ubound);
     int __skreturn = rnd(__skparam__ubound);
+    return __sklib__to_int(__skreturn);
+}
+__sklib_adc_device __sklib__adc_device_named__string_ref(const __sklib_string name) {
+    string __skparam__name = __sklib__to_string(name);
+    adc_device __skreturn = adc_device_named(__skparam__name);
+    return __sklib__to_sklib_adc_device(__skreturn);
+}
+void __sklib__close_adc__adc_device(__sklib_adc_device adc) {
+    adc_device __skparam__adc = __sklib__to_adc_device(adc);
+    close_adc(__skparam__adc);
+}
+void __sklib__close_adc__string_ref(const __sklib_string name) {
+    string __skparam__name = __sklib__to_string(name);
+    close_adc(__skparam__name);
+}
+void __sklib__close_all_adc() {
+    close_all_adc();
+}
+int __sklib__has_adc_device__string_ref(const __sklib_string name) {
+    string __skparam__name = __sklib__to_string(name);
+    bool __skreturn = has_adc_device(__skparam__name);
+    return __sklib__to_int(__skreturn);
+}
+__sklib_adc_device __sklib__open_adc__string_ref__adc_type(const __sklib_string name, int type) {
+    string __skparam__name = __sklib__to_string(name);
+    adc_type __skparam__type = __sklib__to_adc_type(type);
+    adc_device __skreturn = open_adc(__skparam__name, __skparam__type);
+    return __sklib__to_sklib_adc_device(__skreturn);
+}
+__sklib_adc_device __sklib__open_adc__string_ref__int__int__adc_type(const __sklib_string name, int bus, int address, int type) {
+    string __skparam__name = __sklib__to_string(name);
+    int __skparam__bus = __sklib__to_int(bus);
+    int __skparam__address = __sklib__to_int(address);
+    adc_type __skparam__type = __sklib__to_adc_type(type);
+    adc_device __skreturn = open_adc(__skparam__name, __skparam__bus, __skparam__address, __skparam__type);
+    return __sklib__to_sklib_adc_device(__skreturn);
+}
+int __sklib__read_adc__adc_device__adc_pin(__sklib_adc_device adc, int channel) {
+    adc_device __skparam__adc = __sklib__to_adc_device(adc);
+    adc_pin __skparam__channel = __sklib__to_adc_pin(channel);
+    int __skreturn = read_adc(__skparam__adc, __skparam__channel);
+    return __sklib__to_int(__skreturn);
+}
+int __sklib__read_adc__string_ref__adc_pin(const __sklib_string name, int channel) {
+    string __skparam__name = __sklib__to_string(name);
+    adc_pin __skparam__channel = __sklib__to_adc_pin(channel);
+    int __skreturn = read_adc(__skparam__name, __skparam__channel);
     return __sklib__to_int(__skreturn);
 }
 int __sklib__has_gpio() {
