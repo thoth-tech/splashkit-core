@@ -1,0 +1,8 @@
+LICENSE
+README.md
+setup.py
+languages/cpp/splashkit_starter.cpp
+splashkit.egg-info/PKG-INFO
+splashkit.egg-info/SOURCES.txt
+splashkit.egg-info/dependency_links.txt
+splashkit.egg-info/top_level.txt

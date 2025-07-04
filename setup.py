@@ -3,9 +3,7 @@ import os
 
 splashkit_module = Extension(
     name="splashkit",
-    sources=[
-        os.path.join("languages", "cpp", "splashkit_starter.cpp")
-    ],
+    sources=[os.path.join("languages", "cpp", "splashkit_starter.cpp")],
     include_dirs=[os.path.join("languages", "cpp")],
     language="c++",
 )

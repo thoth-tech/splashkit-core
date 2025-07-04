@@ -8,7 +8,7 @@
 
 #include <cstdlib>
 
-extern void SPLASHKIT_MAIN();
+extern "C" void SPLASHKIT_MAIN();
 
 int main()
 {
