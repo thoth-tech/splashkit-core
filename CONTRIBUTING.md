@@ -38,16 +38,17 @@
      ```
 
    - For Apple Silicon (arm64) Macs, you may need to specify the architecture:
-   
+
      ```sh
      cd projects/cmake
      # Clean any previous build files if you encounter errors
-     rm -rf CMakeFiles CMakeCache.txt
+     ./clean.sh
      cmake . -DCMAKE_OSX_ARCHITECTURES=arm64
      make
      ```
 
 5. Run the test program by executing:
+
    ```sh
    cd ../../bin
    ./sktest
@@ -93,7 +94,6 @@
    ```
 
 8. Add test code into `coresdk/src/test`. Now you should be good to go.
-
 
 ## Linux
 
