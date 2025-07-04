@@ -4615,19 +4615,6 @@ __sklib_color __sklib__get_pixel__window__double__double(__sklib_window wnd, dou
     color __skreturn = get_pixel(__skparam__wnd, __skparam__x, __skparam__y);
     return __sklib__to_sklib_color(__skreturn);
 }
-__sklib_color __sklib__get_pixel_from_window__window__point_2d_ref(__sklib_window destination, const __sklib_point_2d pt) {
-    window __skparam__destination = __sklib__to_window(destination);
-    point_2d __skparam__pt = __sklib__to_point_2d(pt);
-    color __skreturn = get_pixel_from_window(__skparam__destination, __skparam__pt);
-    return __sklib__to_sklib_color(__skreturn);
-}
-__sklib_color __sklib__get_pixel_from_window__window__double__double(__sklib_window destination, double x, double y) {
-    window __skparam__destination = __sklib__to_window(destination);
-    double __skparam__x = __sklib__to_double(x);
-    double __skparam__y = __sklib__to_double(y);
-    color __skreturn = get_pixel_from_window(__skparam__destination, __skparam__x, __skparam__y);
-    return __sklib__to_sklib_color(__skreturn);
-}
 __sklib_point_2d __sklib__point_at__double__double(double x, double y) {
     double __skparam__x = __sklib__to_double(x);
     double __skparam__y = __sklib__to_double(y);
