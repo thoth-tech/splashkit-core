@@ -17,6 +17,13 @@ set(SK_BIN "${CMAKE_CURRENT_SOURCE_DIR}/../../bin")
 # FLAGS
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 
+# Option to use GCOV for coverage when compiling and linking
+option(USE_COVERAGE "Enable coverage during the build" OFF)
+if(USE_COVERAGE)
+    add_compile_options(--coverage)
+    add_link_options(--coverage)
+endif()
+
 # Includes for CTest/Catch2 integration
 include(CTest)
 include("${CMAKE_CURRENT_SOURCE_DIR}/catch/Catch.cmake")
@@ -325,3 +332,57 @@ catch_discover_tests(skunit_tests)
 
 install(TARGETS SplashKitBackend DESTINATION lib)
 install(FILES ${INCLUDE_FILES} DESTINATION include/SplashKitBackend)
+
+# Coverage collection with LCOV
+# Get absolute path to SK_SRC so we can pass it to LCOV
+# and collect coverage only for src files
+get_filename_component(SRC_ABS ${SK_SRC} ABSOLUTE)
+message(SRC_ABS="${SRC_ABS}")
+
+if(USE_COVERAGE)
+    if(APPLE OR MSYS)
+        find_program(GCOVR gcovr REQUIRED)
+    else()
+        find_program(LCOV lcov REQUIRED)
+        set(LCOV_BASE lcov-base.info)
+        set(LCOV_TEST lcov-test.info)
+        set(LCOV_LOG lcov.log)
+        set(LCOV_ERR lcov.err)
+    endif()
+    set(LCOV_TOTAL lcov.info)
+endif()
+
+# lcov coverage targets
+# Collect baseline coverage before running tests
+add_custom_target(lcov-init-coverage
+    COMMENT "Collecting initial coverage with lcov"
+    COMMAND lcov --capture --initial --directory ${CMAKE_CURRENT_BINARY_DIR} --include "'${SRC_ABS}*'"
+        --output-file ${LCOV_BASE} 2>${LCOV_ERR} >${LCOV_LOG}
+)
+add_dependencies(lcov-init-coverage lcov-reset-coverage)
+
+add_custom_target(lcov-reset-coverage
+    COMMENT "Reset all coverage counters to zero with lcov"
+    COMMAND lcov --quiet --zerocounters --directory ${CMAKE_CURRENT_BINARY_DIR}
+        --output-file ${LCOV_BASE}
+    COMMAND lcov --quiet --zerocounters --directory ${CMAKE_CURRENT_BINARY_DIR}
+        --output-file ${LCOV_TEST}
+    COMMAND lcov --quiet --zerocounters --directory ${CMAKE_CURRENT_BINARY_DIR}
+        --output-file ${LCOV_TOTAL}
+)
+
+# Collect post-test coverage data
+add_custom_target(lcov-capture-coverage
+    COMMENT "Capture coverage data with lcov"
+    DEPENDS ${LCOV_BASE}
+    COMMAND lcov --capture --directory ${CMAKE_CURRENT_BINARY_DIR} --output-file ${LCOV_TEST} --include "'${SRC_ABS}*'"
+        2>${LCOV_ERR} >${LCOV_LOG}
+    COMMAND lcov --add-tracefile ${LCOV_BASE} --add-tracefile ${LCOV_TEST} --output-file ${LCOV_TOTAL}
+        >>${LCOV_LOG}
+)
+
+# gcovr post-test coverage target
+add_custom_target(gcovr-capture-coverage
+    COMMENT "Capture coverage data with gcovr"
+    COMMAND gcovr --root ../../.. --lcov ${LCOV_TOTAL} --filter ".*/coresdk/src/.*"
+)
