@@ -70,6 +70,9 @@ namespace splashkit_lib
      *
      * @param  wind The window
      * @return      A point within the bounds of the window
+     * 
+     * @attribute class   window
+     * @attribute method  random_point
      */
     point_2d random_window_point(window wind);
 
@@ -195,7 +198,7 @@ namespace splashkit_lib
      * @param  pt2 The other point
      * @return     The distance between the two points
      */
-    float point_point_distance(const point_2d &pt1, const point_2d &pt2);
+    double point_point_distance(const point_2d &pt1, const point_2d &pt2);
 
     /**
      * Returns the distance from a point to a line.

@@ -132,7 +132,7 @@ namespace splashkit_lib
      * @param  rect The rectangle.
      * @return      Its distance from the top of the screen.
      */
-    float rectangle_top(const rectangle &rect);
+    double rectangle_top(const rectangle &rect);
 
     /**
      * The location of the bottom of the rectangle.
@@ -141,7 +141,7 @@ namespace splashkit_lib
      * @return      The distance from the top of the screen to the bottom of
      *              the rectangle.
      */
-    float rectangle_bottom(const rectangle &rect);
+    double rectangle_bottom(const rectangle &rect);
 
     /**
      * The location of the left edge of the rectangle.
@@ -150,7 +150,7 @@ namespace splashkit_lib
      * @return      The distance from the left of the screen to the left side of
      *              the rectangle.
      */
-    float rectangle_left(const rectangle &rect);
+    double rectangle_left(const rectangle &rect);
 
     /**
      * The location of the right edge of the rectangle.
@@ -159,7 +159,7 @@ namespace splashkit_lib
      * @return      The distance from the left of the screen to the right side
      *              of the rectangle.
      */
-    float rectangle_right(const rectangle &rect);
+    double rectangle_right(const rectangle &rect);
 
     /**
      *  Get a text representation of the passed in rectangle.
@@ -177,6 +177,44 @@ namespace splashkit_lib
      * @return              A new rectangle created inset from `rect`
      */
     rectangle inset_rectangle(const rectangle &rect, float inset_amount);
+
+    /**
+     * Detects if a ray intersects a rectangle.
+     * 
+     * @param origin        The starting point of the ray
+     * @param heading       The direction of the ray as a vector
+     * @param rect          The rectangle to check for intersection
+     * @returns             True if the ray intersects the rectangle, false otherwise
+     */
+    bool rectangle_ray_intersection(const point_2d &origin, const vector_2d &heading, const rectangle &rect);
+
+    /**
+     * Detects if a ray intersects a rectangle. If an intersection is found, the
+     * `hit_point` and `hit_distance` are set to the point of intersection and the
+     * distance from the ray's origin to the intersection point. If the ray's `origin`
+     * is contained within the rectangle, `hit_point` is set to the `origin` and `hit_distance`
+     * is set to 0. If no intersection is found, `hit_point` and `hit_distance` are not modified.
+     * 
+     * @param origin        The starting point of the ray
+     * @param heading       The direction of the ray as a vector
+     * @param rect          The rectangle to check for intersection
+     * @param hit_point     The point to set to where the ray intersects the rectangle
+     * @param hit_distance  The double to set to the distance from the ray's origin to
+     *                      the intersection point
+     * @returns             True if the ray intersects the rectangle, false otherwise
+     * 
+     * @attribute suffix    with_hit_point_and_distance
+     */
+    bool rectangle_ray_intersection(const point_2d &origin, const vector_2d &heading, const rectangle &rect, point_2d &hit_point, double &hit_distance);
+
+    /**
+     * Detects if a rectangle intersects with a circle.
+     *
+     * @param  rect The rectangle to test
+     * @param  c    The circle to test
+     * @return      True if the rectangle and circle intersect, false otherwise
+     */
+    bool rectangle_circle_intersect(const rectangle &rect, const circle &c);
 
 }
 #endif /* rectangle_geometry_H */

@@ -872,16 +872,16 @@ namespace splashkit_lib
     unsigned int ipv4_to_dec(const string &a_ip);
 
     /**
-     * @brief Decodes an integer into it's ipv4 address representation
+     * @brief Decodes an integer into its ipv4 address representation
      *
-     * Decodes the supplied unsigned 32 bit integer into it's ipv4 address form
+     * Decodes the supplied unsigned 32-bit integer into its ipv4 address form
      * e.g. 2130706433 into 127.0.0.1
      *
      * @param ip integer to be decoded
      *
      * @returns ipv4 address string in X.X.X.X format
      */
-    string ipv4_to_str(unsigned int ip);
+    string dec_to_ipv4(unsigned int ip);
 
     /**
      * @brief Returns the ipv4 string for the current computer's ip
@@ -891,5 +891,48 @@ namespace splashkit_lib
      * @return ipv4 address string in X.X.X.X format
      */
     string my_ip();
+
+    /**
+     * @brief Validates if a given string represents a valid IPv4 address.
+     * 
+     * @param ip The string containing the IP address to validate
+     * @return bool Returns true if the string is a valid IPv4 address, false otherwise
+     */
+    bool is_valid_ipv4(const string &ip);
+
+    /**
+     * @brief Checks if a MAC address is valid
+     *
+     * Checks if the supplied MAC address is valid.
+     *
+     * @param mac_address MAC address to check
+     *
+     * @return true if the MAC address is valid
+     */
+    bool is_valid_mac(const string &mac_address);
+
+    /**
+     * @brief Converts a MAC address string to its hexadecimal representation
+     *
+     * Converts a MAC address into its hexadecimal representation.
+     * e.g. 0x0123456789AB from 01:23:45:67:89:AB
+     *
+     * @param mac_address MAC address to convert
+     *
+     * @return hexadecimal representation of MAC address as a string
+     */
+    string mac_to_hex(const string &mac_address);
+
+    /**
+     * @brief Converts a hexadecimal string to a MAC address
+     *
+     * Converts a hexadecimal representation of a MAC address back to its standard format.
+     * e.g. 01:23:45:67:89:AB from 0x0123456789AB
+     *
+     * @param hex_str hexadecimal string to convert
+     *
+     * @return MAC address as a string in the format XX:XX:XX:XX:XX:XX
+     */
+    string hex_to_mac(const string &hex_str);
 }
 #endif //SPLASHKIT_NETWORKING_H

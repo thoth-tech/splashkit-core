@@ -16,7 +16,6 @@ SK_OUT="${SK_ROOT}/out"
 SK_TOOLS="${SK_ROOT}/tools"
 
 SK_CMAKE_CLIB="${SK_TOOLS}/scripts/cmake/libsplashkit"
-SK_CMAKE_CPP="${SK_TOOLS}/scripts/cmake/splashkitcpp"
 SK_CMAKE_FPC="${SK_TOOLS}/scripts/cmake/splashkitpas"
 SK_CMAKE_PYTHON="${SK_TOOLS}/scripts/cmake/splashkit-python"
 SK_CMAKE_CSHARP="${SK_TOOLS}/scripts/cmake/splashkit-csharp"
@@ -58,8 +57,8 @@ if [[ $GENERATE_LIB ]]; then
   sleep 0.5
   cd "${SK_ROOT}/tools/translator/"
   
-  docker compose build
-  docker-compose run --rm  headerdoc clib,cpp,pascal,python,csharp,docs
+  # docker compose build
+  docker compose run --rm  headerdoc clib,cpp,pascal,python,csharp,docs
 
   cd "$APP_PATH/nuget-pkg"
 
@@ -71,6 +70,8 @@ if [[ $GENERATE_LIB ]]; then
 
   echo "Check you are happy to publish this, then publish using:"
 
+  source $SK_ROOT/.env
+  
   echo "dotnet nuget push ./bin/Release/*.nupkg  --api-key $API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate"
   
   cd "$APP_PATH"
@@ -125,7 +126,6 @@ do_make
 cd "${APP_PATH}"
 
 if [[ `uname` == MINGW* ]]; then
-  rm ${SK_OUT}/skm/lib/win32/*.a
   rm ${SK_OUT}/skm/lib/win64/*.a
 fi
 

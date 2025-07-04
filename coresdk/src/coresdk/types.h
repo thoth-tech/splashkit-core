@@ -15,6 +15,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <cstdint>
 
 using std::string;
 using std::vector;
@@ -360,7 +361,7 @@ namespace splashkit_lib
      * @constant PIN_39   Ground
      * @constant PIN_40   GPIO21 / SCLK (PCM)
      */
-    enum pins
+    enum gpio_pin
     {
         PIN_1 = 1,
         PIN_2 = 2,
@@ -403,7 +404,6 @@ namespace splashkit_lib
         PIN_39 = 39,
         PIN_40 = 40,
     };
-#include <cstdint>
 
     /**
      * GPIO Pin Modes:
@@ -418,7 +418,7 @@ namespace splashkit_lib
      * @constant GPIO_ALT5    Alternate function mode 5.
      * @constant GPIO_DEFAULT_MODE  Default mode.
      */
-    enum pin_modes
+    enum gpio_pin_mode
     {
         GPIO_INPUT = 0,
         GPIO_OUTPUT = 1,
@@ -434,15 +434,15 @@ namespace splashkit_lib
     /**
      * GPIO Pin Values:
      *
+     * @constant GPIO_DEFAULT_VALUE  Default value, indicates error.
      * @constant GPIO_LOW   Logic low (0).
      * @constant GPIO_HIGH  Logic high (1).
-     * @constant GPIO_DEFAULT_VALUE  Default value.
      */
-    enum pin_values
+    enum gpio_pin_value
     {
+        GPIO_DEFAULT_VALUE = -1,
         GPIO_LOW = 0,
-        GPIO_HIGH = 1,
-        GPIO_DEFAULT_VALUE = -1
+        GPIO_HIGH = 1
     };
 
     /**
@@ -457,6 +457,47 @@ namespace splashkit_lib
         PUD_OFF = 0,
         PUD_DOWN = 1,
         PUD_UP = 2
+    };
+
+    /**
+     * ADC Pins:
+     *
+     * @constant ADC_PIN_0  Analog Input Channel 0
+     * @constant ADC_PIN_1  Analog Input Channel 1
+     * @constant ADC_PIN_2  Analog Input Channel 2
+     * @constant ADC_PIN_3  Analog Input Channel 3
+     * @constant ADC_PIN_4  Analog Input Channel 4
+     * @constant ADC_PIN_5  Analog Input Channel 5
+     * @constant ADC_PIN_6  Analog Input Channel 6
+     * @constant ADC_PIN_7  Analog Input Channel 7
+     */
+    enum adc_pin
+    {
+        ADC_PIN_0 = 0,
+        ADC_PIN_1 = 1,
+        ADC_PIN_2 = 2,
+        ADC_PIN_3 = 3,
+        ADC_PIN_4 = 4,
+        ADC_PIN_5 = 5,
+        ADC_PIN_6 = 6,
+        ADC_PIN_7 = 7,
+        // ADC_SDA = 8,
+        // ADC_SCL = 9,
+        // ADC_VREF = 10,
+        // ADC_COM = 12,
+        // ADC_AD0 = 13,
+        // ADC_AD1 = 14,
+    };
+
+    /**
+     * ADC Type:
+     *
+     * @constant ADS7830  8-Bit, 8-Channel Sampling A/D Converter with I2C Interface
+     */
+    enum adc_type
+    {
+       ADS7830 = 0,
+    //    PCF8591 = 1,
     };
 
     /**

@@ -42,6 +42,7 @@
 #include "point_geometry.h"
 #include "quad_geometry.h"
 #include "random.h"
+#include "raspi_adc.h"
 #include "raspi_gpio.h"
 #include "rectangle_drawing.h"
 #include "rectangle_geometry.h"
@@ -100,6 +101,8 @@ __sklib_ptr __sklib__to_sklib_message(splashkit_lib::message v);
 message __sklib__to_message(__sklib_ptr v);
 __sklib_ptr __sklib__to_sklib_server_socket(splashkit_lib::server_socket v);
 server_socket __sklib__to_server_socket(__sklib_ptr v);
+__sklib_ptr __sklib__to_sklib_adc_device(splashkit_lib::adc_device v);
+adc_device __sklib__to_adc_device(__sklib_ptr v);
 __sklib_ptr __sklib__to_sklib_sound_effect(splashkit_lib::sound_effect v);
 sound_effect __sklib__to_sound_effect(__sklib_ptr v);
 __sklib_ptr __sklib__to_sklib_sprite(splashkit_lib::sprite v);
@@ -140,20 +143,24 @@ int __sklib__to_sklib_collision_test_kind(collision_test_kind v);
 collision_test_kind __sklib__to_collision_test_kind(int v);
 int __sklib__to_sklib_sprite_event_kind(sprite_event_kind v);
 sprite_event_kind __sklib__to_sprite_event_kind(int v);
+int __sklib__to_sklib_adc_pin(adc_pin v);
+adc_pin __sklib__to_adc_pin(int v);
+int __sklib__to_sklib_adc_type(adc_type v);
+adc_type __sklib__to_adc_type(int v);
 int __sklib__to_sklib_drawing_dest(drawing_dest v);
 drawing_dest __sklib__to_drawing_dest(int v);
 int __sklib__to_sklib_font_style(font_style v);
 font_style __sklib__to_font_style(int v);
+int __sklib__to_sklib_gpio_pin(gpio_pin v);
+gpio_pin __sklib__to_gpio_pin(int v);
+int __sklib__to_sklib_gpio_pin_mode(gpio_pin_mode v);
+gpio_pin_mode __sklib__to_gpio_pin_mode(int v);
+int __sklib__to_sklib_gpio_pin_value(gpio_pin_value v);
+gpio_pin_value __sklib__to_gpio_pin_value(int v);
 int __sklib__to_sklib_http_status_code(http_status_code v);
 http_status_code __sklib__to_http_status_code(int v);
 int __sklib__to_sklib_interface_style(interface_style v);
 interface_style __sklib__to_interface_style(int v);
-int __sklib__to_sklib_pin_modes(pin_modes v);
-pin_modes __sklib__to_pin_modes(int v);
-int __sklib__to_sklib_pin_values(pin_values v);
-pin_values __sklib__to_pin_values(int v);
-int __sklib__to_sklib_pins(pins v);
-pins __sklib__to_pins(int v);
 int __sklib__to_sklib_pull_up_down(pull_up_down v);
 pull_up_down __sklib__to_pull_up_down(int v);
 int __sklib__to_sklib_http_method(http_method v);

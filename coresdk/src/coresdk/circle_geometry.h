@@ -59,6 +59,42 @@ namespace splashkit_lib
     bool circles_intersect(double c1_x, double c1_y, double c1_radius, double c2_x, double c2_y, double c2_radius);
 
     /**
+     * Detects if a circle intersects with a triangle.
+     * 
+     * @param c The circle to test
+     * @param tri The triangle to test
+     * @returns True if the circle and triangle intersect
+     */
+    bool circle_triangle_intersect(const circle &c, const triangle &tri);
+
+    /**
+     * Detects if a circle intersects with a triangle. The closest point on the
+     * triangle to the circle is assigned to p, even if the circle and triangle do not
+     * intersect. If the centre of the circle is inside the triangle,
+     * the point assigned to p is the centre of the circle.
+     * 
+     * @param c The circle to test
+     * @param tri The triangle to test
+     * @param p The point to set to the closest point on the triangle to the circle
+     * @returns True if the circle and triangle intersect
+     *
+     * @attribute suffix get_closest_point
+     */
+    bool circle_triangle_intersect(const circle &c, const triangle &tri, point_2d &p);
+
+    /**
+     * Calculates the closest point on a triangle to a circle. If the circle and
+     * triangle do not intersect, the closest point on the triangle to the circle
+     * is returned. If the circle and triangle do intersect, the center of the
+     * circle is returned.
+     *
+     * @param c   The circle to test
+     * @param tri The triangle to test
+     * @returns   The closest point on the triangle to the circle
+     */
+    point_2d closest_point_on_triangle_from_circle(const circle &c, const triangle &tri);
+
+    /**
      *  Returns the center point of the circle.
      *
      * @param c   The circle to get the center point
@@ -115,6 +151,35 @@ namespace splashkit_lib
     float ray_circle_intersect_distance(const point_2d &ray_origin, const vector_2d &ray_heading, const circle &c);
 
     /**
+     * Detects if a ray intersects a circle.
+     * 
+     * @param origin        The starting point of the ray
+     * @param heading       The direction of the ray as a vector
+     * @param circ          The circle to check for intersection
+     * @returns             True if the ray intersects the circle, false otherwise
+     */
+    bool circle_ray_intersection(const point_2d &origin, const vector_2d &heading, const circle &circ);
+
+    /**
+     * Detects if a ray intersects a circle. If an intersection is found, the
+     * `hit_point` and `hit_distance` are set to the point of intersection and the
+     * distance from the ray's origin to the intersection point. If the ray's `origin`
+     * is contained within the circle, `hit_point` is set to the `origin` and `hit_distance`
+     * is set to 0. If no intersection is found, `hit_point` and `hit_distance` are not modified.
+     * 
+     * @param origin        The starting point of the ray
+     * @param heading       The direction of the ray as a vector
+     * @param circ          The circle to check for intersection
+     * @param hit_point     The point to set to where the ray intersects the circle
+     * @param hit_distance  The double to set to the distance from the ray's origin to
+     *                      the intersection point
+     * @returns             True if the ray intersects the circle, false otherwise
+     * 
+     * @attribute suffix    with_hit_point_and_distance
+     */
+    bool circle_ray_intersection(const point_2d &origin, const vector_2d &heading, const circle &circ, point_2d &hit_point, double &hit_distance);
+
+    /**
      *  Returns the circle radius.
      *
      * @param  c The circle
@@ -139,11 +204,15 @@ namespace splashkit_lib
     float circle_y(const circle &c);
 
     /**
-     * The closest point on the circle to the given point.
+     * Returns the closest point on a circle's circumference to
+     * a given point. If the point is equal to the center of the circle,
+     * the center point is returned.
      *
      * @param  from_pt The point to test from
-     * @param  c       The circle you want to get a point on its circumference
-     * @return         The point on c that is closest to the from point
+     * @param  c       The circle
+     * @return         The point on `c`'s circumference that is closest to
+     *                      `from_point`, or the center of the circle if the
+     *                      point equals `c`'s center. 
      */
     point_2d closest_point_on_circle(const point_2d &from_pt, const circle &c);
 
@@ -157,11 +226,11 @@ namespace splashkit_lib
     point_2d closest_point_on_line_from_circle(const circle &c, const line &l);
 
     /**
-     * Returns the closest point on a rectangle to a circle.
+     * Returns the closest point on a rectangle's perimeter to a circle.
      *
      * @param  c The circle
      * @param  rect The rectangle
-     * @return   The point that is closest to `c` on `rect`
+     * @return   The point that is closest to `c` on `rect`'s perimeter
      */
     point_2d closest_point_on_rect_from_circle(const circle &c, const rectangle &rect);
 
@@ -177,5 +246,13 @@ namespace splashkit_lib
      */
     bool tangent_points(const point_2d &from_pt, const circle &c, point_2d &p1, point_2d &p2);
 
+    /**
+     * Detects if a circle intersects with a quad.
+     *
+     * @param  c  The circle to test
+     * @param  q  The quad to test
+     * @return    True if the circle and quad intersect, false otherwise
+     */
+    bool circle_quad_intersect(const circle &c, const quad &q);
 }
 #endif /* circle_geometry_hpp */

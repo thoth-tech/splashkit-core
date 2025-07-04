@@ -23,7 +23,7 @@ namespace splashkit_lib
      * @param  y3 The y coordinate for the third point
      * @return    A triangle at the indicated points
      *
-     * @attribute suffix  _from_coordinates
+     * @attribute suffix  coordinates
      */
     triangle triangle_from(double x1, double y1, double x2, double y2, double x3, double y3);
 
@@ -45,6 +45,44 @@ namespace splashkit_lib
      * @return      True if the triangle and rect intersect
      */
     bool triangle_rectangle_intersect(const triangle &tri, const rectangle &rect);
+
+    /**
+     * Returns true if the triangle intersects with the quad.
+     *
+     * @param  tri  The triangle to test
+     * @param  q The quad to test
+     * @return      True if the triangle and quad intersect
+     */
+    bool triangle_quad_intersect(const triangle &tri, const quad &q);
+
+    /**
+     * Detects if a ray intersects a triangle.
+     * 
+     * @param origin        The starting point of the ray
+     * @param heading       The direction of the ray as a vector
+     * @param tri           The triangle to check for intersection
+     * @returns             True if the ray intersects the triangle, false otherwise
+     */
+    bool triangle_ray_intersection(const point_2d &origin, const vector_2d &heading, const triangle &tri);
+
+    /**
+     * Detects if a ray intersects a triangle. If an intersection is found, the
+     * `hit_point` and `hit_distance` are set to the point of intersection and the
+     * distance from the ray's origin to the intersection point. If the ray's `origin`
+     * is contained within the triangle, `hit_point` is set to the `origin` and `hit_distance`
+     * is set to 0. If no intersection is found, `hit_point` and `hit_distance` are not modified.
+     * 
+     * @param origin        The starting point of the ray
+     * @param heading       The direction of the ray as a vector
+     * @param tri           The triangle to check for intersection
+     * @param hit_point     The point to set to where the ray intersects the triangle
+     * @param hit_distance  The double to set to the distance from the ray's origin to
+     *                      the intersection point
+     * @returns             True if the ray intersects the triangle, false otherwise
+     * 
+     * @attribute suffix    with_hit_point_and_distance
+     */
+    bool triangle_ray_intersection(const point_2d &origin, const vector_2d &heading, const triangle &tri, point_2d &hit_point, double &hit_distance);
 
     /**
      * Returns true if the two triangles intersect.

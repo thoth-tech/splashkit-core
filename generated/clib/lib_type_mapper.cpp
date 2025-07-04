@@ -119,6 +119,12 @@ __sklib_ptr __sklib__to_sklib_server_socket(splashkit_lib::server_socket v) {
 server_socket __sklib__to_server_socket(__sklib_ptr v) {
     return static_cast<splashkit_lib::server_socket>(v);
 }
+__sklib_ptr __sklib__to_sklib_adc_device(splashkit_lib::adc_device v) {
+    return static_cast<__sklib_ptr>(v);
+}
+adc_device __sklib__to_adc_device(__sklib_ptr v) {
+    return static_cast<splashkit_lib::adc_device>(v);
+}
 __sklib_ptr __sklib__to_sklib_sound_effect(splashkit_lib::sound_effect v) {
     return static_cast<__sklib_ptr>(v);
 }
@@ -239,6 +245,18 @@ int __sklib__to_sklib_sprite_event_kind(sprite_event_kind v) {
 sprite_event_kind __sklib__to_sprite_event_kind(int v) {
     return static_cast<sprite_event_kind>(v);
 }
+int __sklib__to_sklib_adc_pin(adc_pin v) {
+    return static_cast<int>(v);
+}
+adc_pin __sklib__to_adc_pin(int v) {
+    return static_cast<adc_pin>(v);
+}
+int __sklib__to_sklib_adc_type(adc_type v) {
+    return static_cast<int>(v);
+}
+adc_type __sklib__to_adc_type(int v) {
+    return static_cast<adc_type>(v);
+}
 int __sklib__to_sklib_drawing_dest(drawing_dest v) {
     return static_cast<int>(v);
 }
@@ -251,6 +269,24 @@ int __sklib__to_sklib_font_style(font_style v) {
 font_style __sklib__to_font_style(int v) {
     return static_cast<font_style>(v);
 }
+int __sklib__to_sklib_gpio_pin(gpio_pin v) {
+    return static_cast<int>(v);
+}
+gpio_pin __sklib__to_gpio_pin(int v) {
+    return static_cast<gpio_pin>(v);
+}
+int __sklib__to_sklib_gpio_pin_mode(gpio_pin_mode v) {
+    return static_cast<int>(v);
+}
+gpio_pin_mode __sklib__to_gpio_pin_mode(int v) {
+    return static_cast<gpio_pin_mode>(v);
+}
+int __sklib__to_sklib_gpio_pin_value(gpio_pin_value v) {
+    return static_cast<int>(v);
+}
+gpio_pin_value __sklib__to_gpio_pin_value(int v) {
+    return static_cast<gpio_pin_value>(v);
+}
 int __sklib__to_sklib_http_status_code(http_status_code v) {
     return static_cast<int>(v);
 }
@@ -262,24 +298,6 @@ int __sklib__to_sklib_interface_style(interface_style v) {
 }
 interface_style __sklib__to_interface_style(int v) {
     return static_cast<interface_style>(v);
-}
-int __sklib__to_sklib_pin_modes(pin_modes v) {
-    return static_cast<int>(v);
-}
-pin_modes __sklib__to_pin_modes(int v) {
-    return static_cast<pin_modes>(v);
-}
-int __sklib__to_sklib_pin_values(pin_values v) {
-    return static_cast<int>(v);
-}
-pin_values __sklib__to_pin_values(int v) {
-    return static_cast<pin_values>(v);
-}
-int __sklib__to_sklib_pins(pins v) {
-    return static_cast<int>(v);
-}
-pins __sklib__to_pins(int v) {
-    return static_cast<pins>(v);
 }
 int __sklib__to_sklib_pull_up_down(pull_up_down v) {
     return static_cast<int>(v);

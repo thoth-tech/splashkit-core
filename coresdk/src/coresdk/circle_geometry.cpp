@@ -98,6 +98,41 @@ namespace splashkit_lib
             return (v - sqrt(d));
     }
 
+    bool circle_ray_intersection(const point_2d &origin, const vector_2d &heading, const circle &circ)
+    {
+        point_2d hit_point;
+        double hit_distance;
+        return circle_ray_intersection(origin, heading, circ, hit_point, hit_distance);
+    }
+
+    bool circle_ray_intersection(const point_2d &origin, const vector_2d &heading, const circle &circ, point_2d &hit_point, double &hit_distance)
+    {
+        vector_2d unit_heading = unit_vector(heading);
+        
+        // check whether unit heading is a zero vector
+        if (vector_magnitude_squared(unit_heading) < __DBL_EPSILON__)
+        {
+            return false;
+        }
+        
+        if (point_in_circle(origin, circ))
+        {
+            hit_point = origin;
+            hit_distance = 0.0;
+            return true;
+        }
+
+        float distance = ray_circle_intersect_distance(origin, unit_heading, circ);
+        if (distance < 0.0f)
+        {
+            return false;
+        }
+
+        hit_distance = static_cast<double>(distance);
+        hit_point = point_offset_by(origin, vector_multiply(unit_heading, hit_distance));
+        return true;
+    }
+
     bool circles_intersect(circle c1, circle c2)
     {
         return point_point_distance(c1.center, c2.center) < c1.radius + c2.radius;
@@ -108,6 +143,36 @@ namespace splashkit_lib
         return point_point_distance(point_at(c1_x, c1_y), point_at(c2_x, c2_y)) < c1_radius + c2_radius;
     }
 
+    bool circle_triangle_intersect(const circle &c, const triangle &tri)
+    {
+        point_2d p;
+        return circle_triangle_intersect(c, tri, p);
+    }
+
+    bool circle_triangle_intersect(const circle &c, const triangle &tri, point_2d &p)
+    {
+        // Check if the sphere center is inside the triangle
+        if (point_in_triangle(c.center, tri))
+        {
+            p = c.center;
+            return true;
+        }
+
+        int idx;
+        // Find the closest point on the triangle to the sphere center
+        p = closest_point_on_lines(c.center, lines_from(tri), idx);
+
+        // Circle and triangle intersect if the squared distance from circle
+        // center to point p is less than the squared circle radius
+        return vector_magnitude_squared(vector_point_to_point(c.center, p)) < c.radius * c.radius;
+    }
+
+    point_2d closest_point_on_triangle_from_circle(const circle &c, const triangle &tri)
+    {
+        point_2d p;
+        circle_triangle_intersect(c, tri, p);
+        return p;
+    }
 
     float circle_radius(const circle c)
     {
@@ -142,7 +207,7 @@ namespace splashkit_lib
 
     bool tangent_points(const point_2d &from_pt, const circle &c, point_2d &p1, point_2d &p2)
     {
-        vector_2d pm_c = vector_point_to_point(from_pt, c.center);
+        vector_2d pm_c = vector_point_to_point(c.center, from_pt);
 
         double sqr_len = vector_magnitude_squared(pm_c);
         double r_sqr = c.radius * c.radius;
@@ -161,5 +226,20 @@ namespace splashkit_lib
         p2.y = c.center.y + c.radius * (c.radius * pm_c.y - pm_c.x * root) * inv_sqr_len;
 
         return true;
+    }
+
+    bool circle_quad_intersect(const circle &c, const quad &q)
+    {
+        vector<triangle> q_tris = triangles_from(q);
+        
+        for (size_t i = 0; i < q_tris.size(); i++)
+        {
+            if (circle_triangle_intersect(c, q_tris[i]))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
