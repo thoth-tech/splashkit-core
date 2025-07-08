@@ -217,6 +217,6 @@ namespace splashkit_lib
 
     string triangle_to_string(const triangle  &tri)
     {
-        return "Triangle @" + point_to_string(tri.points[0]) + " - " + point_to_string(tri.points[1]) + " - " + point_to_string(tri.points[2]);
+        return "Triangle @ " + point_to_string(tri.points[0]) + " - " + point_to_string(tri.points[1]) + " - " + point_to_string(tri.points[2]);
     }
 }
