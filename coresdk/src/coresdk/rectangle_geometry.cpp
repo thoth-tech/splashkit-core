@@ -137,7 +137,7 @@ namespace splashkit_lib
     {
         ostringstream result;
 
-        result << "Rect @ " << rect.x << "," << rect.y << " - " << rect.width << "x" << rect.height;
+        result << "Rect @" << rect.x << "," << rect.y << " " << rect.width << "x" << rect.height;
 
         return result.str();
     }

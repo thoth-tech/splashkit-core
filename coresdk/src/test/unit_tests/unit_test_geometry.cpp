@@ -620,7 +620,7 @@ TEST_CASE("can perform triangle geometry", "[triangle]")
     SECTION("can convert triangle to string")
     {
         triangle t = triangle_from(point_at(0.0, 0.0), point_at(200.0, 0.0), point_at(100.0, 200.0));
-        REQUIRE(triangle_to_string(t) == "Triangle @ (0,0) - (200,0) - (100,200)");
+        REQUIRE(triangle_to_string(t) == "Triangle @(0,0) - (200,0) - (100,200)");
     }
     SECTION("can detect triangle-quad intersection")
     {
