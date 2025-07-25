@@ -146,10 +146,9 @@ namespace splashkit_lib
      * @returns Returns the newly created `animation`.
      *
      * @attribute class     animation_script
-     * @attribute self      script
      * @attribute method    create_animation
-     *
      * @attribute suffix    with_sound
+     * @attribute self      script
      */
     animation create_animation(animation_script script, const string &name, bool with_sound);
 
@@ -203,7 +202,10 @@ namespace splashkit_lib
      * @param with_sound    Denotes whether the `animation` should play audio.
      * @returns Returns the newly created `animation_script`.
      *
+     * @attribute class     animation_script
+     * @attribute method    create_animation
      * @attribute suffix    from_index_with_sound
+     * @attribute self      script
      */
     animation create_animation(animation_script script, int idx, bool with_sound);
 
