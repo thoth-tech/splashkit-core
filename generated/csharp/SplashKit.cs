@@ -149,6 +149,16 @@ namespace SplashKitSDK
     private static InterfaceStyle __skadapter__to_interface_style(int v) { return (InterfaceStyle)v; }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static int __skadapter__to_sklib_motor_direction(MotorDirection v) { return (int)v; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static MotorDirection __skadapter__to_motor_direction(int v) { return (MotorDirection)v; }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static int __skadapter__to_sklib_motor_driver_type(MotorDriverType v) { return (int)v; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static MotorDriverType __skadapter__to_motor_driver_type(int v) { return (MotorDriverType)v; }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static int __skadapter__to_sklib_pull_up_down(PullUpDown v) { return (int)v; }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static PullUpDown __skadapter__to_pull_up_down(int v) { return (PullUpDown)v; }
@@ -1362,6 +1372,12 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__draw_circle__color__circle_ref__drawing_options", CharSet=CharSet.Ansi)]
     private static extern void __sklib__draw_circle__color__circle_ref__drawing_options(__sklib_color clr, __sklib_circle c, __sklib_drawing_options opts);
 
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__draw_circle__color__point_2d_ref__double", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__draw_circle__color__point_2d_ref__double(__sklib_color clr, __sklib_point_2d pt, double radius);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__draw_circle__color__point_2d_ref__double__drawing_options", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__draw_circle__color__point_2d_ref__double__drawing_options(__sklib_color clr, __sklib_point_2d pt, double radius, __sklib_drawing_options opts);
+
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__draw_circle__color__double__double__double", CharSet=CharSet.Ansi)]
     private static extern void __sklib__draw_circle__color__double__double__double(__sklib_color clr, double x, double y, double radius);
 
@@ -1385,6 +1401,12 @@ namespace SplashKitSDK
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__fill_circle__color__circle_ref__drawing_options", CharSet=CharSet.Ansi)]
     private static extern void __sklib__fill_circle__color__circle_ref__drawing_options(__sklib_color clr, __sklib_circle c, __sklib_drawing_options opts);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__fill_circle__color__point_2d_ref__double", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__fill_circle__color__point_2d_ref__double(__sklib_color clr, __sklib_point_2d pt, double radius);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__fill_circle__color__point_2d_ref__double__drawing_options", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__fill_circle__color__point_2d_ref__double__drawing_options(__sklib_color clr, __sklib_point_2d pt, double radius, __sklib_drawing_options opts);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__fill_circle__color__double__double__double", CharSet=CharSet.Ansi)]
     private static extern void __sklib__fill_circle__color__double__double__double(__sklib_color clr, double x, double y, double radius);
@@ -3729,6 +3751,9 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_get_mode__gpio_pin", CharSet=CharSet.Ansi)]
     private static extern int __sklib__raspi_get_mode__gpio_pin(int pin);
 
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_get_servo_pulsewidth__gpio_pin", CharSet=CharSet.Ansi)]
+    private static extern int __sklib__raspi_get_servo_pulsewidth__gpio_pin(int pin);
+
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_init", CharSet=CharSet.Ansi)]
     private static extern void __sklib__raspi_init();
 
@@ -3749,6 +3774,9 @@ namespace SplashKitSDK
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_set_pwm_range__gpio_pin__int", CharSet=CharSet.Ansi)]
     private static extern void __sklib__raspi_set_pwm_range__gpio_pin__int(int pin, int range);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_set_servo_pulsewidth__gpio_pin__int", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__raspi_set_servo_pulsewidth__gpio_pin__int(int pin, int pulsewidth);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_spi_close__int", CharSet=CharSet.Ansi)]
     private static extern int __sklib__raspi_spi_close__int(int handle);
@@ -6636,6 +6664,41 @@ namespace SplashKitSDK
       __sklib__draw_circle__color__circle_ref__drawing_options(__skparam__clr, __skparam__c, __skparam__opts);
     }
     /// <summary>
+    /// Draw a circle at a point, with a specified radius, onto the current window.
+    /// </summary>
+    /// <param name="clr"> The color of the circle</param>
+    /// <param name="pt"> The location of the center of the circle</param>
+    /// <param name="radius"> The radius of the circle</param>
+    public static void DrawCircle(Color clr, Point2D pt, double radius)
+    {
+      __sklib_color __skparam__clr;
+      __sklib_point_2d __skparam__pt;
+      double __skparam__radius;
+      __skparam__clr = __skadapter__to_sklib_color(clr);
+      __skparam__pt = __skadapter__to_sklib_point_2d(pt);
+      __skparam__radius = __skadapter__to_sklib_double(radius);
+      __sklib__draw_circle__color__point_2d_ref__double(__skparam__clr, __skparam__pt, __skparam__radius);
+    }
+    /// <summary>
+    /// Draw a circle at a point, with a specified radius, using the supplied drawing options. This will use `drawing_options` to determine the destination.
+    /// </summary>
+    /// <param name="clr"> The color of the circle</param>
+    /// <param name="pt"> The location of the center of the circle</param>
+    /// <param name="radius"> The radius of the circle</param>
+    /// <param name="opts"> Drawing options to configure the drawing operation</param>
+    public static void DrawCircle(Color clr, Point2D pt, double radius, DrawingOptions opts)
+    {
+      __sklib_color __skparam__clr;
+      __sklib_point_2d __skparam__pt;
+      double __skparam__radius;
+      __sklib_drawing_options __skparam__opts;
+      __skparam__clr = __skadapter__to_sklib_color(clr);
+      __skparam__pt = __skadapter__to_sklib_point_2d(pt);
+      __skparam__radius = __skadapter__to_sklib_double(radius);
+      __skparam__opts = __skadapter__to_sklib_drawing_options(opts);
+      __sklib__draw_circle__color__point_2d_ref__double__drawing_options(__skparam__clr, __skparam__pt, __skparam__radius, __skparam__opts);
+    }
+    /// <summary>
     /// Draw a circle onto the current window. The circle is centred on its x, y coordinates, and has the provided radius.
     /// </summary>
     /// <param name="clr"> The color of the circle</param>
@@ -6798,6 +6861,41 @@ namespace SplashKitSDK
       __skparam__c = __skadapter__to_sklib_circle(c);
       __skparam__opts = __skadapter__to_sklib_drawing_options(opts);
       __sklib__fill_circle__color__circle_ref__drawing_options(__skparam__clr, __skparam__c, __skparam__opts);
+    }
+    /// <summary>
+    /// Fill a circle at a point, with a specified radius, onto the current window.
+    /// </summary>
+    /// <param name="clr"> The color of the circle</param>
+    /// <param name="pt"> The location of the center of the circle</param>
+    /// <param name="radius"> The radius of the circle</param>
+    public static void FillCircle(Color clr, Point2D pt, double radius)
+    {
+      __sklib_color __skparam__clr;
+      __sklib_point_2d __skparam__pt;
+      double __skparam__radius;
+      __skparam__clr = __skadapter__to_sklib_color(clr);
+      __skparam__pt = __skadapter__to_sklib_point_2d(pt);
+      __skparam__radius = __skadapter__to_sklib_double(radius);
+      __sklib__fill_circle__color__point_2d_ref__double(__skparam__clr, __skparam__pt, __skparam__radius);
+    }
+    /// <summary>
+    /// Fill a circle at a point, with a specified radius, using the supplied drawing options. This will use `drawing_options` to determine the destination.
+    /// </summary>
+    /// <param name="clr"> The color of the circle</param>
+    /// <param name="pt"> The location of the center of the circle</param>
+    /// <param name="radius"> The radius of the circle</param>
+    /// <param name="opts"> Drawing options to configure the drawing operation</param>
+    public static void FillCircle(Color clr, Point2D pt, double radius, DrawingOptions opts)
+    {
+      __sklib_color __skparam__clr;
+      __sklib_point_2d __skparam__pt;
+      double __skparam__radius;
+      __sklib_drawing_options __skparam__opts;
+      __skparam__clr = __skadapter__to_sklib_color(clr);
+      __skparam__pt = __skadapter__to_sklib_point_2d(pt);
+      __skparam__radius = __skadapter__to_sklib_double(radius);
+      __skparam__opts = __skadapter__to_sklib_drawing_options(opts);
+      __sklib__fill_circle__color__point_2d_ref__double__drawing_options(__skparam__clr, __skparam__pt, __skparam__radius, __skparam__opts);
     }
     /// <summary>
     /// Fill a circle onto the current window. The circle is centred on its x, y coordinates, and has the provided radius.
@@ -18149,6 +18247,19 @@ namespace SplashKitSDK
       return __skadapter__to_gpio_pin_mode(__skreturn);
     }
     /// <summary>
+    /// This function retrieves the pulse width for the specified pin.
+    /// </summary>
+    /// <param name="pin"> The pin to get the pulse width for.</param>
+    /// <returns>The pulse width of the pin.</returns>
+    public static int RaspiGetServoPulsewidth(GpioPin pin)
+    {
+      int __skparam__pin;
+      int __skreturn;
+      __skparam__pin = __skadapter__to_sklib_gpio_pin(pin);
+      __skreturn = __sklib__raspi_get_servo_pulsewidth__gpio_pin(__skparam__pin);
+      return __skadapter__to_int(__skreturn);
+    }
+    /// <summary>
     /// This function initializes the GPIO library for use. It should be called before any other GPIO functions.
     /// </summary>
     public static void RaspiInit()
@@ -18232,6 +18343,19 @@ namespace SplashKitSDK
       __skparam__pin = __skadapter__to_sklib_gpio_pin(pin);
       __skparam__range = __skadapter__to_sklib_int(range);
       __sklib__raspi_set_pwm_range__gpio_pin__int(__skparam__pin, __skparam__range);
+    }
+    /// <summary>
+    /// This function sets the pulse width for the specified pin.
+    /// </summary>
+    /// <param name="pin"> The pin to set the pulse width for.</param>
+    /// <param name="pulsewidth"> The pulse width to set for the pin.</param>
+    public static void RaspiSetServoPulsewidth(GpioPin pin, int pulsewidth)
+    {
+      int __skparam__pin;
+      int __skparam__pulsewidth;
+      __skparam__pin = __skadapter__to_sklib_gpio_pin(pin);
+      __skparam__pulsewidth = __skadapter__to_sklib_int(pulsewidth);
+      __sklib__raspi_set_servo_pulsewidth__gpio_pin__int(__skparam__pin, __skparam__pulsewidth);
     }
     /// <summary>
     /// This function closes SPI communication on a particular channel.
@@ -25891,6 +26015,15 @@ namespace SplashKitSDK
     Bubble = 4,
     BubbleMulticolored = 5
   }
+  public enum MotorDirection
+  {
+    MotorForward,
+    MotorBackward
+  }
+  public enum MotorDriverType
+  {
+    L298n = 0
+  }
   public enum PullUpDown
   {
     PudOff = 0,
@@ -27283,6 +27416,15 @@ public class Music : PointerWrapper
     }
 
     /// <summary>
+    /// Lets you test if music value is valid. This will return true when it is a valid music.
+    /// </summary>
+    /// <returns>true when the music is valid.</returns>
+    public bool IsValid()
+    {
+        return SplashKit.MusicValid(this);
+    }
+
+    /// <summary>
     /// Plays a music file once at full volume.
     /// </summary>
     public void Play()
@@ -27480,6 +27622,13 @@ public class Message : PointerWrapper
         SplashKit.CloseMessage(this);
     }
 
+    /// <summary>
+    /// Gets or sets the Connection property of the Message.
+    /// </summary>
+    public Connection Connection
+    {
+        get { return SplashKit.MessageConnection(this); }
+    }
     /// <summary>
     /// Gets or sets the Data property of the Message.
     /// </summary>
@@ -27810,6 +27959,15 @@ public class SoundEffect : PointerWrapper
     public void Play(int times, double volume)
     {
         SplashKit.PlaySoundEffect(this, times, volume);
+    }
+
+    /// <summary>
+    /// Lets you test if a sound effect is valid. This will return true when it is a valid sound effect.
+    /// </summary>
+    /// <returns>true when the sound effect is valid.</returns>
+    public bool IsValid()
+    {
+        return SplashKit.SoundEffectValid(this);
     }
 
     /// <summary>
@@ -29135,6 +29293,16 @@ public class Animation : PointerWrapper
     /// <summary>
     /// Updates the animation, updating the time spent and possibly moving to a new frame in the animation. This may play a sound effect if the new frame triggers a sound.
     /// </summary>
+    /// <param name="pct"> The amount that the frame time will be incremented</param>
+    /// <param name="withSound"> Denotes whether the `animation` should play audio.</param>
+    public void Update(float pct, bool withSound)
+    {
+        SplashKit.UpdateAnimation(this, pct, withSound);
+    }
+
+    /// <summary>
+    /// Updates the animation, updating the time spent and possibly moving to a new frame in the animation. This may play a sound effect if the new frame triggers a sound.
+    /// </summary>
     public void Update()
     {
         SplashKit.UpdateAnimation(this);
@@ -29231,6 +29399,17 @@ public class AnimationScript : PointerWrapper
     }
 
     /// <summary>
+    /// Creates an animation from an `animation_script`. This may play a sound effect if the animation is set to play a sound effect on its first frame.
+    /// </summary>
+    /// <param name="idx"> The index of the `animation` to create.</param>
+    /// <param name="withSound"> Denotes whether the `animation` should play audio.</param>
+    /// <returns>Returns the newly created `animation_script`.</returns>
+    public Animation CreateAnimation(int idx, bool withSound)
+    {
+        return SplashKit.CreateAnimation(this, idx, withSound);
+    }
+
+    /// <summary>
     /// Creates an animation from an `animation_script`.
     /// </summary>
     /// <param name="name"> The name for the new `animation`</param>
@@ -29257,6 +29436,16 @@ public class AnimationScript : PointerWrapper
     public void Free()
     {
         SplashKit.FreeAnimationScript(this);
+    }
+
+    /// <summary>
+    /// Returns whether an `animation_script` has been loaded with the given name.
+    /// </summary>
+    /// <param name="name"> The name of the `animation_script` to look for.</param>
+    /// <returns>Returns a `bool` that denotes whether the `animation_script` has been loaded.</returns>
+    public bool HasAnimationNamed(string name)
+    {
+        return SplashKit.HasAnimationNamed(this, name);
     }
 
     /// <summary>
@@ -30795,6 +30984,24 @@ public class HttpResponse : PointerWrapper
     public void Free()
     {
         SplashKit.FreeResponse(this);
+    }
+
+    /// <summary>
+    /// Read the HTTP response and convert it to text
+    /// </summary>
+    /// <returns>The data from the response as text</returns>
+    public string ToString()
+    {
+        return SplashKit.HttpResponseToString(this);
+    }
+
+    /// <summary>
+    /// Save the HTTP response downloaded into a file.
+    /// </summary>
+    /// <param name="path"> The path to the file where the response should be saved</param>
+    public void SaveToFile(string path)
+    {
+        SplashKit.SaveResponseToFile(this, path);
     }
 
 }

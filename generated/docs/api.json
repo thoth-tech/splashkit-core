@@ -1397,9 +1397,9 @@
       {
         "signature": "animation create_animation(animation_script script,int idx,bool with_sound);",
         "name": "create_animation",
-        "method_name": null,
+        "method_name": "create_animation",
         "unique_global_name": "create_animation_from_index_with_sound",
-        "unique_method_name": null,
+        "unique_method_name": "animation_script.create_animation_from_index_with_sound",
         "suffix_name": null,
         "description": "Creates an animation from an `animation_script`. This may play a\nsound effect if the animation is set to play a sound effect on its\nfirst frame.",
         "brief": null,
@@ -1453,6 +1453,9 @@
           }
         },
         "attributes": {
+          "class": "animation_script",
+          "method": "create_animation",
+          "self": "script",
           "suffix": "from_index_with_sound",
           "group": "animations",
           "static": "animation"
@@ -1465,6 +1468,7 @@
             "animation create_animation(animation_script script, int idx, bool with_sound)"
           ],
           "csharp": [
+            "public Animation AnimationScript.CreateAnimation(int idx, bool withSound);",
             "public static Animation SplashKit.CreateAnimation(AnimationScript script, int idx, bool withSound);"
           ],
           "pascal": [
@@ -1972,9 +1976,9 @@
       {
         "signature": "bool has_animation_named(animation_script script,const string &name);",
         "name": "has_animation_named",
-        "method_name": null,
+        "method_name": "has_animation_named",
         "unique_global_name": "has_animation_named",
-        "unique_method_name": null,
+        "unique_method_name": "animation_script.has_animation_named",
         "suffix_name": null,
         "description": "Returns whether an `animation_script` has been loaded with the\ngiven name.",
         "brief": null,
@@ -2016,6 +2020,7 @@
         },
         "attributes": {
           "class": "animation_script",
+          "method": "has_animation_named",
           "self": "script",
           "group": "animations",
           "static": "animation"
@@ -2028,6 +2033,7 @@
             "bool has_animation_named(animation_script script, const string &name)"
           ],
           "csharp": [
+            "public bool AnimationScript.HasAnimationNamed(string name);",
             "public static bool SplashKit.HasAnimationNamed(AnimationScript script, string name);"
           ],
           "pascal": [
@@ -2280,9 +2286,9 @@
       {
         "signature": "void update_animation(animation anim,float pct,bool with_sound);",
         "name": "update_animation",
-        "method_name": null,
+        "method_name": "update",
         "unique_global_name": "update_animation_percent_with_sound",
-        "unique_method_name": null,
+        "unique_method_name": "animation.update_percent_with_sound",
         "suffix_name": null,
         "description": "Updates the animation, updating the time spent and possibly moving to\na new frame in the animation. This may play a sound effect if the new\nframe triggers a sound.",
         "brief": null,
@@ -2336,6 +2342,9 @@
           }
         },
         "attributes": {
+          "class": "animation",
+          "method": "update",
+          "self": "anim",
           "suffix": "percent_with_sound",
           "group": "animations",
           "static": "animation"
@@ -2348,6 +2357,7 @@
             "void update_animation(animation anim, float pct, bool with_sound)"
           ],
           "csharp": [
+            "public void Animation.Update(float pct, bool withSound);",
             "public static void SplashKit.UpdateAnimation(Animation anim, float pct, bool withSound);"
           ],
           "pascal": [
@@ -3377,9 +3387,9 @@
       {
         "signature": "bool music_valid(music m);",
         "name": "music_valid",
-        "method_name": null,
+        "method_name": "is_valid",
         "unique_global_name": "music_valid",
-        "unique_method_name": null,
+        "unique_method_name": "music.is_valid",
         "suffix_name": null,
         "description": "Lets you test if music value is valid. This will return true when it is a valid music.",
         "brief": null,
@@ -3407,6 +3417,9 @@
           }
         },
         "attributes": {
+          "class": "music",
+          "method": "is_valid",
+          "self": "m",
           "group": "audio",
           "static": "audio"
         },
@@ -3418,6 +3431,7 @@
             "bool music_valid(music m)"
           ],
           "csharp": [
+            "public bool Music.IsValid();",
             "public static bool SplashKit.MusicValid(Music m);"
           ],
           "pascal": [
@@ -5098,9 +5112,9 @@
       {
         "signature": "bool sound_effect_valid(sound_effect effect);",
         "name": "sound_effect_valid",
-        "method_name": null,
+        "method_name": "is_valid",
         "unique_global_name": "sound_effect_valid",
-        "unique_method_name": null,
+        "unique_method_name": "sound_effect.is_valid",
         "suffix_name": null,
         "description": "Lets you test if a sound effect is valid. This will return true when it is a valid sound effect.",
         "brief": null,
@@ -5128,6 +5142,9 @@
           }
         },
         "attributes": {
+          "class": "sound_effect",
+          "method": "is_valid",
+          "self": "effect",
           "group": "audio",
           "static": "audio"
         },
@@ -5139,6 +5156,7 @@
             "bool sound_effect_valid(sound_effect effect)"
           ],
           "csharp": [
+            "public bool SoundEffect.IsValid();",
             "public static bool SplashKit.SoundEffectValid(SoundEffect effect);"
           ],
           "pascal": [
@@ -21499,6 +21517,173 @@
         }
       },
       {
+        "signature": "void draw_circle(color clr,const point_2d &pt,double radius);",
+        "name": "draw_circle",
+        "method_name": null,
+        "unique_global_name": "draw_circle_at_point",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Draw a circle at a point, with a specified radius, onto the current window.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "clr": {
+            "type": "color",
+            "description": "The color of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pt": {
+            "type": "point_2d",
+            "description": "The location of the center of the circle",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "radius": {
+            "type": "double",
+            "description": "The radius of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "at_point",
+          "group": "graphics"
+        },
+        "signatures": {
+          "python": [
+            "def draw_circle_at_point(clr, pt, radius):"
+          ],
+          "cpp": [
+            "void draw_circle(color clr, const point_2d &pt, double radius)"
+          ],
+          "csharp": [
+            "public static void SplashKit.DrawCircle(Color clr, Point2D pt, double radius);"
+          ],
+          "pascal": [
+            "procedure DrawCircle(clr: Color; const pt: Point2D; radius: Double)"
+          ]
+        }
+      },
+      {
+        "signature": "void draw_circle(color clr,const point_2d &pt,double radius,drawing_options opts);",
+        "name": "draw_circle",
+        "method_name": null,
+        "unique_global_name": "draw_circle_at_point_with_options",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Draw a circle at a point, with a specified radius, using the supplied drawing options. This will use `drawing_options` to determine\nthe destination.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "clr": {
+            "type": "color",
+            "description": "The color of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pt": {
+            "type": "point_2d",
+            "description": "The location of the center of the circle",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "radius": {
+            "type": "double",
+            "description": "The radius of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "opts": {
+            "type": "drawing_options",
+            "description": "Drawing options to configure the drawing operation",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "at_point_with_options",
+          "group": "graphics"
+        },
+        "signatures": {
+          "python": [
+            "def draw_circle_at_point_with_options(clr, pt, radius, opts):"
+          ],
+          "cpp": [
+            "void draw_circle(color clr, const point_2d &pt, double radius, drawing_options opts)"
+          ],
+          "csharp": [
+            "public static void SplashKit.DrawCircle(Color clr, Point2D pt, double radius, DrawingOptions opts);"
+          ],
+          "pascal": [
+            "procedure DrawCircle(clr: Color; const pt: Point2D; radius: Double; opts: DrawingOptions)"
+          ]
+        }
+      },
+      {
         "signature": "void draw_circle(color clr,double x,double y,double radius);",
         "name": "draw_circle",
         "method_name": null,
@@ -22288,6 +22473,173 @@
           ],
           "pascal": [
             "procedure FillCircle(clr: Color; const c: Circle; opts: DrawingOptions)"
+          ]
+        }
+      },
+      {
+        "signature": "void fill_circle(color clr,const point_2d &pt,double radius);",
+        "name": "fill_circle",
+        "method_name": null,
+        "unique_global_name": "fill_circle_at_point",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Fill a circle at a point, with a specified radius, onto the current window.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "clr": {
+            "type": "color",
+            "description": "The color of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pt": {
+            "type": "point_2d",
+            "description": "The location of the center of the circle",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "radius": {
+            "type": "double",
+            "description": "The radius of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "at_point",
+          "group": "graphics"
+        },
+        "signatures": {
+          "python": [
+            "def fill_circle_at_point(clr, pt, radius):"
+          ],
+          "cpp": [
+            "void fill_circle(color clr, const point_2d &pt, double radius)"
+          ],
+          "csharp": [
+            "public static void SplashKit.FillCircle(Color clr, Point2D pt, double radius);"
+          ],
+          "pascal": [
+            "procedure FillCircle(clr: Color; const pt: Point2D; radius: Double)"
+          ]
+        }
+      },
+      {
+        "signature": "void fill_circle(color clr,const point_2d &pt,double radius,drawing_options opts);",
+        "name": "fill_circle",
+        "method_name": null,
+        "unique_global_name": "fill_circle_at_point_with_options",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Fill a circle at a point, with a specified radius, using the supplied drawing options. This will use `drawing_options` to determine\nthe destination.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "clr": {
+            "type": "color",
+            "description": "The color of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pt": {
+            "type": "point_2d",
+            "description": "The location of the center of the circle",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "radius": {
+            "type": "double",
+            "description": "The radius of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "opts": {
+            "type": "drawing_options",
+            "description": "Drawing options to configure the drawing operation",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "at_point_with_options",
+          "group": "graphics"
+        },
+        "signatures": {
+          "python": [
+            "def fill_circle_at_point_with_options(clr, pt, radius, opts):"
+          ],
+          "cpp": [
+            "void fill_circle(color clr, const point_2d &pt, double radius, drawing_options opts)"
+          ],
+          "csharp": [
+            "public static void SplashKit.FillCircle(Color clr, Point2D pt, double radius, DrawingOptions opts);"
+          ],
+          "pascal": [
+            "procedure FillCircle(clr: Color; const pt: Point2D; radius: Double; opts: DrawingOptions)"
           ]
         }
       },
@@ -57041,6 +57393,9 @@
           }
         },
         "attributes": {
+          "class": "message",
+          "getter": "connection",
+          "self": "msg",
           "group": "networking",
           "static": "networking"
         },
@@ -57052,6 +57407,7 @@
             "connection message_connection(message msg)"
           ],
           "csharp": [
+            "public Connection Message.Connection { get }",
             "public static Connection SplashKit.MessageConnection(Message msg);"
           ],
           "pascal": [
@@ -59504,9 +59860,9 @@
       {
         "signature": "string http_response_to_string(http_response response);",
         "name": "http_response_to_string",
-        "method_name": null,
+        "method_name": "to_string",
         "unique_global_name": "http_response_to_string",
-        "unique_method_name": null,
+        "unique_method_name": "http_response.to_string",
         "suffix_name": null,
         "description": "Read the HTTP response and convert it to text",
         "brief": null,
@@ -59534,6 +59890,9 @@
           }
         },
         "attributes": {
+          "class": "http_response",
+          "method": "to_string",
+          "self": "response",
           "group": "networking"
         },
         "signatures": {
@@ -59544,6 +59903,7 @@
             "string http_response_to_string(http_response response)"
           ],
           "csharp": [
+            "public string HttpResponse.ToString();",
             "public static string SplashKit.HttpResponseToString(HttpResponse response);"
           ],
           "pascal": [
@@ -59554,9 +59914,9 @@
       {
         "signature": "void save_response_to_file(http_response response,string path);",
         "name": "save_response_to_file",
-        "method_name": null,
+        "method_name": "save_to_file",
         "unique_global_name": "save_response_to_file",
-        "unique_method_name": null,
+        "unique_method_name": "http_response.save_to_file",
         "suffix_name": null,
         "description": "Save the HTTP response downloaded into a file.",
         "brief": null,
@@ -59597,6 +59957,9 @@
           }
         },
         "attributes": {
+          "class": "http_response",
+          "method": "save_to_file",
+          "self": "response",
           "group": "networking"
         },
         "signatures": {
@@ -59607,6 +59970,7 @@
             "void save_response_to_file(http_response response, string path)"
           ],
           "csharp": [
+            "public void HttpResponse.SaveToFile(string path);",
             "public static void SplashKit.SaveResponseToFile(HttpResponse response, string path);"
           ],
           "pascal": [
@@ -73394,6 +73758,57 @@
         }
       },
       {
+        "signature": "int raspi_get_servo_pulsewidth(gpio_pin pin);",
+        "name": "raspi_get_servo_pulsewidth",
+        "method_name": null,
+        "unique_global_name": "raspi_get_servo_pulsewidth",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function retrieves the pulse width for the specified pin.",
+        "brief": "Gets the pulse width for the specified pin.",
+        "return": {
+          "type": "int",
+          "description": "The pulse width of the pin.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to get the pulse width for.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def raspi_get_servo_pulsewidth(pin):"
+          ],
+          "cpp": [
+            "int raspi_get_servo_pulsewidth(gpio_pin pin)"
+          ],
+          "csharp": [
+            "public static int SplashKit.RaspiGetServoPulsewidth(GpioPin pin);"
+          ],
+          "pascal": [
+            "function RaspiGetServoPulsewidth(pin: GpioPin): Integer"
+          ]
+        }
+      },
+      {
         "signature": "void raspi_init();",
         "name": "raspi_init",
         "method_name": null,
@@ -73799,6 +74214,70 @@
           ],
           "pascal": [
             "procedure RaspiSetPwmRange(pin: GpioPin; range: Integer)"
+          ]
+        }
+      },
+      {
+        "signature": "void raspi_set_servo_pulsewidth(gpio_pin pin,int pulsewidth);",
+        "name": "raspi_set_servo_pulsewidth",
+        "method_name": null,
+        "unique_global_name": "raspi_set_servo_pulsewidth",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function sets the pulse width for the specified pin.",
+        "brief": "Sets the pulse width for the specified pin.",
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to set the pulse width for.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pulsewidth": {
+            "type": "int",
+            "description": "The pulse width to set for the pin.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def raspi_set_servo_pulsewidth(pin, pulsewidth):"
+          ],
+          "cpp": [
+            "void raspi_set_servo_pulsewidth(gpio_pin pin, int pulsewidth)"
+          ],
+          "csharp": [
+            "public static void SplashKit.RaspiSetServoPulsewidth(GpioPin pin, int pulsewidth);"
+          ],
+          "pascal": [
+            "procedure RaspiSetServoPulsewidth(pin: GpioPin; pulsewidth: Integer)"
           ]
         }
       },
@@ -94370,6 +94849,50 @@
           "cpp": "class interface_style {FLAT_DARK_STYLE = 0, SHADED_DARK_STYLE = 1, FLAT_LIGHT_STYLE = 2, SHADED_LIGHT_STYLE = 3, BUBBLE = 4, BUBBLE_MULTICOLORED = 5};",
           "csharp": "public enum {InterfaceStyle.FlatDarkStyle = 0, InterfaceStyle.ShadedDarkStyle = 1, InterfaceStyle.FlatLightStyle = 2, InterfaceStyle.ShadedLightStyle = 3, InterfaceStyle.Bubble = 4, InterfaceStyle.BubbleMulticolored = 5}",
           "pascal": "public enum {InterfaceStyle.FlatDarkStyle = 0, InterfaceStyle.ShadedDarkStyle = 1, InterfaceStyle.FlatLightStyle = 2, InterfaceStyle.ShadedLightStyle = 3, InterfaceStyle.Bubble = 4, InterfaceStyle.BubbleMulticolored = 5}"
+        }
+      },
+      {
+        "signature": "enum motor_direction {MOTOR_FORWARD,MOTOR_BACKWARD};",
+        "name": "motor_direction",
+        "description": "Motor Movement Directions:",
+        "brief": null,
+        "constants": {
+          "MOTOR_FORWARD": {
+            "description": "Motor moves forward."
+          },
+          "MOTOR_BACKWARD": {
+            "description": "Motor moves backward."
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "python": "public enum {MotorDirection.motor_forward = 0, MotorDirection.motor_backward = 0}",
+          "cpp": "class motor_direction {MOTOR_FORWARD = 0, MOTOR_BACKWARD = 0};",
+          "csharp": "public enum {MotorDirection.MotorForward = 0, MotorDirection.MotorBackward = 0}",
+          "pascal": "public enum {MotorDirection.MotorForward = 0, MotorDirection.MotorBackward = 0}"
+        }
+      },
+      {
+        "signature": "enum motor_driver_type {L298N = 0,// L293D = 1,// TB6612FNG = 2,// DRV8835 = 3,// DRV8834 = 4,// DRV8825 = 5,// A4988 = 6,};",
+        "name": "motor_driver_type",
+        "description": "Motor Driver Types:",
+        "brief": null,
+        "constants": {
+          "L298N": {
+            "description": "Dual H-Bridge Motor Driver",
+            "number": 0
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "python": "public enum {MotorDriverType.l298n = 0}",
+          "cpp": "class motor_driver_type {L298N = 0};",
+          "csharp": "public enum {MotorDriverType.L298n = 0}",
+          "pascal": "public enum {MotorDriverType.L298n = 0}"
         }
       },
       {
