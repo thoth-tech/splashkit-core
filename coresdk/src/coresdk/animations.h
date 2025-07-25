@@ -523,9 +523,8 @@ namespace splashkit_lib
      *
      * @attribute class     animation
      * @attribute method    update
-     * @attribute self      anim
-     *
      * @attribute suffix    percent
+     * @attribute self      anim
      */
     void update_animation(animation anim, float pct);
 
@@ -538,7 +537,10 @@ namespace splashkit_lib
      * @param pct           The amount that the frame time will be incremented
      * @param with_sound    Denotes whether the `animation` should play audio.
      *
+     * @attribute class     animation
+     * @attribute method    update
      * @attribute suffix    percent_with_sound
+     * @attribute self      anim
      */
     void update_animation(animation anim, float pct, bool with_sound);
 }
