@@ -155,7 +155,10 @@ namespace splashkit_lib
      * @param  bmp The bitmap to get the clipping rectangle from
      * @return     The current clipping rectangle for the bitmap
      *
+     * @attribute class     bitmap
+     * @attribute method    current_clip
      * @attribute suffix    for_bitmap
+     * @attribute self      bmp
      */
     rectangle current_clip(bitmap bmp);
 
