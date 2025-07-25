@@ -797,6 +797,10 @@ namespace splashkit_lib
      *
      * @param  msg The message
      * @return     The connection that sent the message
+     * 
+     * @attribute class   message
+     * @attribute getter  connection
+     * @attribute self    msg
      */
     connection message_connection(message msg);
 
