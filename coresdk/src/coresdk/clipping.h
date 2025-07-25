@@ -83,7 +83,10 @@ namespace splashkit_lib
      *
      * @param bmp The bitmap to clear the clipping rectangle
      *
+     * @attribute class     bitmap
+     * @attribute method    reset_clip
      * @attribute suffix    for_bitmap
+     * @attribute self      bmp
      */
     void reset_clip(bitmap bmp);
 
