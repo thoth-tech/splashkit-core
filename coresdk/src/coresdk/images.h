@@ -39,6 +39,10 @@ namespace splashkit_lib
      * 
      * @param bmp the bitmap to test
      * @returns true when the bitmap is valid.
+     * 
+     * @attribute class   bitmap
+     * @attribute method  is_valid
+     * @attribute self    bmp
      */
     bool bitmap_valid(bitmap bmp);
 
