@@ -541,6 +541,19 @@ void __sklib__draw_circle__color__circle_ref__drawing_options(__sklib_color clr,
     drawing_options __skparam__opts = __sklib__to_drawing_options(opts);
     draw_circle(__skparam__clr, __skparam__c, __skparam__opts);
 }
+void __sklib__draw_circle__color__point_2d_ref__double(__sklib_color clr, const __sklib_point_2d pt, double radius) {
+    color __skparam__clr = __sklib__to_color(clr);
+    point_2d __skparam__pt = __sklib__to_point_2d(pt);
+    double __skparam__radius = __sklib__to_double(radius);
+    draw_circle(__skparam__clr, __skparam__pt, __skparam__radius);
+}
+void __sklib__draw_circle__color__point_2d_ref__double__drawing_options(__sklib_color clr, const __sklib_point_2d pt, double radius, __sklib_drawing_options opts) {
+    color __skparam__clr = __sklib__to_color(clr);
+    point_2d __skparam__pt = __sklib__to_point_2d(pt);
+    double __skparam__radius = __sklib__to_double(radius);
+    drawing_options __skparam__opts = __sklib__to_drawing_options(opts);
+    draw_circle(__skparam__clr, __skparam__pt, __skparam__radius, __skparam__opts);
+}
 void __sklib__draw_circle__color__double__double__double(__sklib_color clr, double x, double y, double radius) {
     color __skparam__clr = __sklib__to_color(clr);
     double __skparam__x = __sklib__to_double(x);
@@ -600,6 +613,19 @@ void __sklib__fill_circle__color__circle_ref__drawing_options(__sklib_color clr,
     circle __skparam__c = __sklib__to_circle(c);
     drawing_options __skparam__opts = __sklib__to_drawing_options(opts);
     fill_circle(__skparam__clr, __skparam__c, __skparam__opts);
+}
+void __sklib__fill_circle__color__point_2d_ref__double(__sklib_color clr, const __sklib_point_2d pt, double radius) {
+    color __skparam__clr = __sklib__to_color(clr);
+    point_2d __skparam__pt = __sklib__to_point_2d(pt);
+    double __skparam__radius = __sklib__to_double(radius);
+    fill_circle(__skparam__clr, __skparam__pt, __skparam__radius);
+}
+void __sklib__fill_circle__color__point_2d_ref__double__drawing_options(__sklib_color clr, const __sklib_point_2d pt, double radius, __sklib_drawing_options opts) {
+    color __skparam__clr = __sklib__to_color(clr);
+    point_2d __skparam__pt = __sklib__to_point_2d(pt);
+    double __skparam__radius = __sklib__to_double(radius);
+    drawing_options __skparam__opts = __sklib__to_drawing_options(opts);
+    fill_circle(__skparam__clr, __skparam__pt, __skparam__radius, __skparam__opts);
 }
 void __sklib__fill_circle__color__double__double__double(__sklib_color clr, double x, double y, double radius) {
     color __skparam__clr = __sklib__to_color(clr);
@@ -4883,6 +4909,11 @@ int __sklib__raspi_get_mode__gpio_pin(int pin) {
     gpio_pin_mode __skreturn = raspi_get_mode(__skparam__pin);
     return __sklib__to_int(__skreturn);
 }
+int __sklib__raspi_get_servo_pulsewidth__gpio_pin(int pin) {
+    gpio_pin __skparam__pin = __sklib__to_gpio_pin(pin);
+    int __skreturn = raspi_get_servo_pulsewidth(__skparam__pin);
+    return __sklib__to_int(__skreturn);
+}
 void __sklib__raspi_init() {
     raspi_init();
 }
@@ -4915,6 +4946,11 @@ void __sklib__raspi_set_pwm_range__gpio_pin__int(int pin, int range) {
     gpio_pin __skparam__pin = __sklib__to_gpio_pin(pin);
     int __skparam__range = __sklib__to_int(range);
     raspi_set_pwm_range(__skparam__pin, __skparam__range);
+}
+void __sklib__raspi_set_servo_pulsewidth__gpio_pin__int(int pin, int pulsewidth) {
+    gpio_pin __skparam__pin = __sklib__to_gpio_pin(pin);
+    int __skparam__pulsewidth = __sklib__to_int(pulsewidth);
+    raspi_set_servo_pulsewidth(__skparam__pin, __skparam__pulsewidth);
 }
 int __sklib__raspi_spi_close__int(int handle) {
     int __skparam__handle = __sklib__to_int(handle);
@@ -5001,6 +5037,11 @@ void __sklib__remote_raspi_write__connection__gpio_pin__gpio_pin_value(__sklib_c
     gpio_pin __skparam__pin = __sklib__to_gpio_pin(pin);
     gpio_pin_value __skparam__value = __sklib__to_gpio_pin_value(value);
     remote_raspi_write(__skparam__pi, __skparam__pin, __skparam__value);
+}
+int __sklib__to_int__gpio_pin_value(int value) {
+    gpio_pin_value __skparam__value = __sklib__to_gpio_pin_value(value);
+    int __skreturn = to_int(__skparam__value);
+    return __sklib__to_int(__skreturn);
 }
 void __sklib__draw_quad__color__quad_ref(__sklib_color clr, const __sklib_quad q) {
     color __skparam__clr = __sklib__to_color(clr);
