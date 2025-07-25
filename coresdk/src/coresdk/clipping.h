@@ -98,7 +98,10 @@ namespace splashkit_lib
      * @param bmp The bitmap to change
      * @param r   The new clipping rectangle
      *
+     * @attribute class     bitmap
+     * @attribute method    set_clip
      * @attribute suffix    for_bitmap
+     * @attribute self      bmp
      */
     void set_clip(bitmap bmp, const rectangle &r);
 
