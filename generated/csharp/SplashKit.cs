@@ -149,6 +149,16 @@ namespace SplashKitSDK
     private static InterfaceStyle __skadapter__to_interface_style(int v) { return (InterfaceStyle)v; }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static int __skadapter__to_sklib_motor_direction(MotorDirection v) { return (int)v; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static MotorDirection __skadapter__to_motor_direction(int v) { return (MotorDirection)v; }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static int __skadapter__to_sklib_motor_driver_type(MotorDriverType v) { return (int)v; }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static MotorDriverType __skadapter__to_motor_driver_type(int v) { return (MotorDriverType)v; }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static int __skadapter__to_sklib_pull_up_down(PullUpDown v) { return (int)v; }
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static PullUpDown __skadapter__to_pull_up_down(int v) { return (PullUpDown)v; }
@@ -1362,6 +1372,12 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__draw_circle__color__circle_ref__drawing_options", CharSet=CharSet.Ansi)]
     private static extern void __sklib__draw_circle__color__circle_ref__drawing_options(__sklib_color clr, __sklib_circle c, __sklib_drawing_options opts);
 
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__draw_circle__color__point_2d_ref__double", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__draw_circle__color__point_2d_ref__double(__sklib_color clr, __sklib_point_2d pt, double radius);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__draw_circle__color__point_2d_ref__double__drawing_options", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__draw_circle__color__point_2d_ref__double__drawing_options(__sklib_color clr, __sklib_point_2d pt, double radius, __sklib_drawing_options opts);
+
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__draw_circle__color__double__double__double", CharSet=CharSet.Ansi)]
     private static extern void __sklib__draw_circle__color__double__double__double(__sklib_color clr, double x, double y, double radius);
 
@@ -1385,6 +1401,12 @@ namespace SplashKitSDK
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__fill_circle__color__circle_ref__drawing_options", CharSet=CharSet.Ansi)]
     private static extern void __sklib__fill_circle__color__circle_ref__drawing_options(__sklib_color clr, __sklib_circle c, __sklib_drawing_options opts);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__fill_circle__color__point_2d_ref__double", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__fill_circle__color__point_2d_ref__double(__sklib_color clr, __sklib_point_2d pt, double radius);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__fill_circle__color__point_2d_ref__double__drawing_options", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__fill_circle__color__point_2d_ref__double__drawing_options(__sklib_color clr, __sklib_point_2d pt, double radius, __sklib_drawing_options opts);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__fill_circle__color__double__double__double", CharSet=CharSet.Ansi)]
     private static extern void __sklib__fill_circle__color__double__double__double(__sklib_color clr, double x, double y, double radius);
@@ -3729,6 +3751,9 @@ namespace SplashKitSDK
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_get_mode__gpio_pin", CharSet=CharSet.Ansi)]
     private static extern int __sklib__raspi_get_mode__gpio_pin(int pin);
 
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_get_servo_pulsewidth__gpio_pin", CharSet=CharSet.Ansi)]
+    private static extern int __sklib__raspi_get_servo_pulsewidth__gpio_pin(int pin);
+
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_init", CharSet=CharSet.Ansi)]
     private static extern void __sklib__raspi_init();
 
@@ -3749,6 +3774,9 @@ namespace SplashKitSDK
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_set_pwm_range__gpio_pin__int", CharSet=CharSet.Ansi)]
     private static extern void __sklib__raspi_set_pwm_range__gpio_pin__int(int pin, int range);
+
+    [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_set_servo_pulsewidth__gpio_pin__int", CharSet=CharSet.Ansi)]
+    private static extern void __sklib__raspi_set_servo_pulsewidth__gpio_pin__int(int pin, int pulsewidth);
 
     [DllImport("SplashKit", CallingConvention=CallingConvention.Cdecl, EntryPoint="__sklib__raspi_spi_close__int", CharSet=CharSet.Ansi)]
     private static extern int __sklib__raspi_spi_close__int(int handle);
@@ -6636,6 +6664,41 @@ namespace SplashKitSDK
       __sklib__draw_circle__color__circle_ref__drawing_options(__skparam__clr, __skparam__c, __skparam__opts);
     }
     /// <summary>
+    /// Draw a circle at a point, with a specified radius, onto the current window.
+    /// </summary>
+    /// <param name="clr"> The color of the circle</param>
+    /// <param name="pt"> The location of the center of the circle</param>
+    /// <param name="radius"> The radius of the circle</param>
+    public static void DrawCircle(Color clr, Point2D pt, double radius)
+    {
+      __sklib_color __skparam__clr;
+      __sklib_point_2d __skparam__pt;
+      double __skparam__radius;
+      __skparam__clr = __skadapter__to_sklib_color(clr);
+      __skparam__pt = __skadapter__to_sklib_point_2d(pt);
+      __skparam__radius = __skadapter__to_sklib_double(radius);
+      __sklib__draw_circle__color__point_2d_ref__double(__skparam__clr, __skparam__pt, __skparam__radius);
+    }
+    /// <summary>
+    /// Draw a circle at a point, with a specified radius, using the supplied drawing options. This will use `drawing_options` to determine the destination.
+    /// </summary>
+    /// <param name="clr"> The color of the circle</param>
+    /// <param name="pt"> The location of the center of the circle</param>
+    /// <param name="radius"> The radius of the circle</param>
+    /// <param name="opts"> Drawing options to configure the drawing operation</param>
+    public static void DrawCircle(Color clr, Point2D pt, double radius, DrawingOptions opts)
+    {
+      __sklib_color __skparam__clr;
+      __sklib_point_2d __skparam__pt;
+      double __skparam__radius;
+      __sklib_drawing_options __skparam__opts;
+      __skparam__clr = __skadapter__to_sklib_color(clr);
+      __skparam__pt = __skadapter__to_sklib_point_2d(pt);
+      __skparam__radius = __skadapter__to_sklib_double(radius);
+      __skparam__opts = __skadapter__to_sklib_drawing_options(opts);
+      __sklib__draw_circle__color__point_2d_ref__double__drawing_options(__skparam__clr, __skparam__pt, __skparam__radius, __skparam__opts);
+    }
+    /// <summary>
     /// Draw a circle onto the current window. The circle is centred on its x, y coordinates, and has the provided radius.
     /// </summary>
     /// <param name="clr"> The color of the circle</param>
@@ -6798,6 +6861,41 @@ namespace SplashKitSDK
       __skparam__c = __skadapter__to_sklib_circle(c);
       __skparam__opts = __skadapter__to_sklib_drawing_options(opts);
       __sklib__fill_circle__color__circle_ref__drawing_options(__skparam__clr, __skparam__c, __skparam__opts);
+    }
+    /// <summary>
+    /// Fill a circle at a point, with a specified radius, onto the current window.
+    /// </summary>
+    /// <param name="clr"> The color of the circle</param>
+    /// <param name="pt"> The location of the center of the circle</param>
+    /// <param name="radius"> The radius of the circle</param>
+    public static void FillCircle(Color clr, Point2D pt, double radius)
+    {
+      __sklib_color __skparam__clr;
+      __sklib_point_2d __skparam__pt;
+      double __skparam__radius;
+      __skparam__clr = __skadapter__to_sklib_color(clr);
+      __skparam__pt = __skadapter__to_sklib_point_2d(pt);
+      __skparam__radius = __skadapter__to_sklib_double(radius);
+      __sklib__fill_circle__color__point_2d_ref__double(__skparam__clr, __skparam__pt, __skparam__radius);
+    }
+    /// <summary>
+    /// Fill a circle at a point, with a specified radius, using the supplied drawing options. This will use `drawing_options` to determine the destination.
+    /// </summary>
+    /// <param name="clr"> The color of the circle</param>
+    /// <param name="pt"> The location of the center of the circle</param>
+    /// <param name="radius"> The radius of the circle</param>
+    /// <param name="opts"> Drawing options to configure the drawing operation</param>
+    public static void FillCircle(Color clr, Point2D pt, double radius, DrawingOptions opts)
+    {
+      __sklib_color __skparam__clr;
+      __sklib_point_2d __skparam__pt;
+      double __skparam__radius;
+      __sklib_drawing_options __skparam__opts;
+      __skparam__clr = __skadapter__to_sklib_color(clr);
+      __skparam__pt = __skadapter__to_sklib_point_2d(pt);
+      __skparam__radius = __skadapter__to_sklib_double(radius);
+      __skparam__opts = __skadapter__to_sklib_drawing_options(opts);
+      __sklib__fill_circle__color__point_2d_ref__double__drawing_options(__skparam__clr, __skparam__pt, __skparam__radius, __skparam__opts);
     }
     /// <summary>
     /// Fill a circle onto the current window. The circle is centred on its x, y coordinates, and has the provided radius.
@@ -18149,6 +18247,19 @@ namespace SplashKitSDK
       return __skadapter__to_gpio_pin_mode(__skreturn);
     }
     /// <summary>
+    /// This function retrieves the pulse width for the specified pin.
+    /// </summary>
+    /// <param name="pin"> The pin to get the pulse width for.</param>
+    /// <returns>The pulse width of the pin.</returns>
+    public static int RaspiGetServoPulsewidth(GpioPin pin)
+    {
+      int __skparam__pin;
+      int __skreturn;
+      __skparam__pin = __skadapter__to_sklib_gpio_pin(pin);
+      __skreturn = __sklib__raspi_get_servo_pulsewidth__gpio_pin(__skparam__pin);
+      return __skadapter__to_int(__skreturn);
+    }
+    /// <summary>
     /// This function initializes the GPIO library for use. It should be called before any other GPIO functions.
     /// </summary>
     public static void RaspiInit()
@@ -18232,6 +18343,19 @@ namespace SplashKitSDK
       __skparam__pin = __skadapter__to_sklib_gpio_pin(pin);
       __skparam__range = __skadapter__to_sklib_int(range);
       __sklib__raspi_set_pwm_range__gpio_pin__int(__skparam__pin, __skparam__range);
+    }
+    /// <summary>
+    /// This function sets the pulse width for the specified pin.
+    /// </summary>
+    /// <param name="pin"> The pin to set the pulse width for.</param>
+    /// <param name="pulsewidth"> The pulse width to set for the pin.</param>
+    public static void RaspiSetServoPulsewidth(GpioPin pin, int pulsewidth)
+    {
+      int __skparam__pin;
+      int __skparam__pulsewidth;
+      __skparam__pin = __skadapter__to_sklib_gpio_pin(pin);
+      __skparam__pulsewidth = __skadapter__to_sklib_int(pulsewidth);
+      __sklib__raspi_set_servo_pulsewidth__gpio_pin__int(__skparam__pin, __skparam__pulsewidth);
     }
     /// <summary>
     /// This function closes SPI communication on a particular channel.
@@ -25891,6 +26015,15 @@ namespace SplashKitSDK
     Bubble = 4,
     BubbleMulticolored = 5
   }
+  public enum MotorDirection
+  {
+    MotorForward,
+    MotorBackward
+  }
+  public enum MotorDriverType
+  {
+    L298n = 0
+  }
   public enum PullUpDown
   {
     PudOff = 0,
@@ -29361,6 +29494,49 @@ public class Bitmap : PointerWrapper
     }
 
     /// <summary>
+    /// Returns the rectangle of the current clip area for a bitmap
+    /// </summary>
+    /// <returns>The current clipping rectangle for the bitmap</returns>
+    public Rectangle CurrentClip()
+    {
+        return SplashKit.CurrentClip(this);
+    }
+
+    /// <summary>
+    /// Remove the last clipping rectangle pushed to the bitmap. This will then apply the previously pushed clipping rectangle.
+    /// </summary>
+    public void PopClip()
+    {
+        SplashKit.PopClip(this);
+    }
+
+    /// <summary>
+    /// Add the clipping rectangle of a bitmap and uses the intersect between the new rectangle and previous clip.  When a clipping rectangle is provided, drawing operations will only affect the area specified in the current clipping rectangle.
+    /// </summary>
+    /// <param name="r"> The new clipping rectangle</param>
+    public void PushClip(Rectangle r)
+    {
+        SplashKit.PushClip(this, r);
+    }
+
+    /// <summary>
+    /// Reset the clipping rectangle on a bitmap. This will clear all of the clipping rectangles pushed to the bitmap.
+    /// </summary>
+    public void ResetClip()
+    {
+        SplashKit.ResetClip(this);
+    }
+
+    /// <summary>
+    /// Set the clip rectangle of the bitmap. This will clear any existing clipping rectangles pushed to the bitmap, and use the supplied rectangle for clipping.
+    /// </summary>
+    /// <param name="r"> The new clipping rectangle</param>
+    public void SetClip(Rectangle r)
+    {
+        SplashKit.SetClip(this, r);
+    }
+
+    /// <summary>
     /// Tests if a bitmap drawn at `pt` would intersect with a circle.
     /// </summary>
     /// <param name="pt"> The location where the bitmap is drawn</param>
@@ -29809,6 +29985,25 @@ public class Bitmap : PointerWrapper
     }
 
     /// <summary>
+    /// Use this option to draw to a Bitmap. Pass dest the Bitmap you want to draw on.
+    /// </summary>
+    /// <returns>Drawing options that will draw onto a bitmap.</returns>
+    public DrawingOptions OptionDrawTo()
+    {
+        return SplashKit.OptionDrawTo(this);
+    }
+
+    /// <summary>
+    /// Use this option to draw to a Bitmap. Pass dest the Bitmap you want to draw on. Pass opts the other options you want use.
+    /// </summary>
+    /// <param name="opts"> Values for the other options.</param>
+    /// <returns>Drawing options that will draw onto a bitmap.</returns>
+    public DrawingOptions OptionDrawTo(DrawingOptions opts)
+    {
+        return SplashKit.OptionDrawTo(this, opts);
+    }
+
+    /// <summary>
     /// Draws an ellipse on the given bitmap, using the provided location, and size.
     /// </summary>
     /// <param name="clr"> The color of the ellipse</param>
@@ -29902,6 +30097,15 @@ public class Bitmap : PointerWrapper
     public void FillEllipse(Color clr, double x, double y, double width, double height, DrawingOptions opts)
     {
         SplashKit.FillEllipseOnBitmap(this, clr, x, y, width, height, opts);
+    }
+
+    /// <summary>
+    /// Save the bitmap to the user's desktop.
+    /// </summary>
+    /// <param name="basename"> The base of the filename. If there is a file of this name already, then the name will be changed to generate a unique filename.</param>
+    public void Save(string basename)
+    {
+        SplashKit.SaveBitmap(this, basename);
     }
 
     /// <summary>
@@ -30019,6 +30223,15 @@ public class Bitmap : PointerWrapper
     }
 
     /// <summary>
+    /// Lets you test if bitmap value is valid. This will return true when it is a valid bitmap.
+    /// </summary>
+    /// <returns>true when the bitmap is valid.</returns>
+    public bool IsValid()
+    {
+        return SplashKit.BitmapValid(this);
+    }
+
+    /// <summary>
     /// Clear the bitmap to the indicated color. This will ensure the entire surface of the bitmap is set to that color.
     /// </summary>
     /// <param name="clr"> The new color for the surface of the bitmap</param>
@@ -30129,6 +30342,46 @@ public class Bitmap : PointerWrapper
     public void SetupCollisionMask()
     {
         SplashKit.SetupCollisionMask(this);
+    }
+
+    /// <summary>
+    /// Creates a button with a bitmap in it, and no label. Returns whether the button was clicked.
+    /// </summary>
+    /// <returns>Whether the button was clicked</returns>
+    public bool Button()
+    {
+        return SplashKit.BitmapButton(this);
+    }
+
+    /// <summary>
+    /// Creates a button with a bitmap in it at a specific position on screen. Returns whether the button was clicked.
+    /// </summary>
+    /// <param name="rect"> The rectangle to display the button in</param>
+    /// <returns>Whether the button was clicked</returns>
+    public bool Button(Rectangle rect)
+    {
+        return SplashKit.BitmapButton(this, rect);
+    }
+
+    /// <summary>
+    /// Creates a button with a bitmap in it at a specific position on screen. Returns whether the button was clicked.
+    /// </summary>
+    /// <param name="rect"> The rectangle to display the button in</param>
+    /// <param name="opts"> The drawing options</param>
+    /// <returns>Whether the button was clicked</returns>
+    public bool Button(Rectangle rect, DrawingOptions opts)
+    {
+        return SplashKit.BitmapButton(this, rect, opts);
+    }
+
+    /// <summary>
+    /// Creates a button with a bitmap in it, and no label. Returns whether the button was clicked.
+    /// </summary>
+    /// <param name="opts"> The drawing options</param>
+    /// <returns>Whether the button was clicked</returns>
+    public bool Button(DrawingOptions opts)
+    {
+        return SplashKit.BitmapButton(this, opts);
     }
 
     /// <summary>
@@ -30244,6 +30497,36 @@ public class Bitmap : PointerWrapper
     public void DrawPixel(Color clr, double x, double y, DrawingOptions opts)
     {
         SplashKit.DrawPixelOnBitmap(this, clr, x, y, opts);
+    }
+
+    /// <summary>
+    /// Returns the color of the pixel at the location on the supplied bitmap.
+    /// </summary>
+    /// <param name="pt"> The position of the pixel</param>
+    /// <returns>The color of the pixel at the supplied location</returns>
+    public Color GetPixel(Point2D pt)
+    {
+        return SplashKit.GetPixel(this, pt);
+    }
+
+    /// <summary>
+    /// Returns the color of the pixel at the x,y location on the supplied bitmap.
+    /// </summary>
+    /// <param name="x"> The distance from the left edge of the bitmap to the pixel to read</param>
+    /// <param name="y"> The distance from the top of the bitmap to the pixel to read</param>
+    /// <returns>The color of the pixel at the supplied location</returns>
+    public Color GetPixel(double x, double y)
+    {
+        return SplashKit.GetPixel(this, x, y);
+    }
+
+    /// <summary>
+    /// Returns a random point within the bounds of the bitmap.
+    /// </summary>
+    /// <returns>A point within the bounds of the bitmap</returns>
+    public Point2D RandomPoint()
+    {
+        return SplashKit.RandomBitmapPoint(this);
     }
 
     /// <summary>

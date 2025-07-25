@@ -306,6 +306,11 @@ class InterfaceStyle(Enum):
     shaded_light_style = 3
     bubble = 4
     bubble_multicolored = 5
+class MotorDirection(Enum):
+    motor_forward = 0
+    motor_backward = 1
+class MotorDriverType(Enum):
+    l298n = 0
 class PullUpDown(Enum):
     pud_off = 0
     pud_down = 1
@@ -929,6 +934,22 @@ def __skadapter__to_interface_style(v):
     return InterfaceStyle(v)
 
 def __skadapter__to_sklib_interface_style(v):
+    return c_int(v.value)
+
+def __skadapter__to_motor_direction(v):
+    if isinstance(v, MotorDirection):
+        return v
+    return MotorDirection(v)
+
+def __skadapter__to_sklib_motor_direction(v):
+    return c_int(v.value)
+
+def __skadapter__to_motor_driver_type(v):
+    if isinstance(v, MotorDriverType):
+        return v
+    return MotorDriverType(v)
+
+def __skadapter__to_sklib_motor_driver_type(v):
     return c_int(v.value)
 
 def __skadapter__to_pull_up_down(v):
@@ -1797,6 +1818,10 @@ sklib.__sklib__draw_circle__color__circle_ref.argtypes = [ _sklib_color, _sklib_
 sklib.__sklib__draw_circle__color__circle_ref.restype = None
 sklib.__sklib__draw_circle__color__circle_ref__drawing_options.argtypes = [ _sklib_color, _sklib_circle, _sklib_drawing_options ]
 sklib.__sklib__draw_circle__color__circle_ref__drawing_options.restype = None
+sklib.__sklib__draw_circle__color__point_2d_ref__double.argtypes = [ _sklib_color, _sklib_point_2d, c_double ]
+sklib.__sklib__draw_circle__color__point_2d_ref__double.restype = None
+sklib.__sklib__draw_circle__color__point_2d_ref__double__drawing_options.argtypes = [ _sklib_color, _sklib_point_2d, c_double, _sklib_drawing_options ]
+sklib.__sklib__draw_circle__color__point_2d_ref__double__drawing_options.restype = None
 sklib.__sklib__draw_circle__color__double__double__double.argtypes = [ _sklib_color, c_double, c_double, c_double ]
 sklib.__sklib__draw_circle__color__double__double__double.restype = None
 sklib.__sklib__draw_circle__color__double__double__double__drawing_options.argtypes = [ _sklib_color, c_double, c_double, c_double, _sklib_drawing_options ]
@@ -1813,6 +1838,10 @@ sklib.__sklib__fill_circle__color__circle_ref.argtypes = [ _sklib_color, _sklib_
 sklib.__sklib__fill_circle__color__circle_ref.restype = None
 sklib.__sklib__fill_circle__color__circle_ref__drawing_options.argtypes = [ _sklib_color, _sklib_circle, _sklib_drawing_options ]
 sklib.__sklib__fill_circle__color__circle_ref__drawing_options.restype = None
+sklib.__sklib__fill_circle__color__point_2d_ref__double.argtypes = [ _sklib_color, _sklib_point_2d, c_double ]
+sklib.__sklib__fill_circle__color__point_2d_ref__double.restype = None
+sklib.__sklib__fill_circle__color__point_2d_ref__double__drawing_options.argtypes = [ _sklib_color, _sklib_point_2d, c_double, _sklib_drawing_options ]
+sklib.__sklib__fill_circle__color__point_2d_ref__double__drawing_options.restype = None
 sklib.__sklib__fill_circle__color__double__double__double.argtypes = [ _sklib_color, c_double, c_double, c_double ]
 sklib.__sklib__fill_circle__color__double__double__double.restype = None
 sklib.__sklib__fill_circle__color__double__double__double__drawing_options.argtypes = [ _sklib_color, c_double, c_double, c_double, _sklib_drawing_options ]
@@ -3375,6 +3404,8 @@ sklib.__sklib__raspi_cleanup.argtypes = [  ]
 sklib.__sklib__raspi_cleanup.restype = None
 sklib.__sklib__raspi_get_mode__gpio_pin.argtypes = [ c_int ]
 sklib.__sklib__raspi_get_mode__gpio_pin.restype = c_int
+sklib.__sklib__raspi_get_servo_pulsewidth__gpio_pin.argtypes = [ c_int ]
+sklib.__sklib__raspi_get_servo_pulsewidth__gpio_pin.restype = c_int
 sklib.__sklib__raspi_init.argtypes = [  ]
 sklib.__sklib__raspi_init.restype = None
 sklib.__sklib__raspi_read__gpio_pin.argtypes = [ c_int ]
@@ -3389,6 +3420,8 @@ sklib.__sklib__raspi_set_pwm_frequency__gpio_pin__int.argtypes = [ c_int, c_int 
 sklib.__sklib__raspi_set_pwm_frequency__gpio_pin__int.restype = None
 sklib.__sklib__raspi_set_pwm_range__gpio_pin__int.argtypes = [ c_int, c_int ]
 sklib.__sklib__raspi_set_pwm_range__gpio_pin__int.restype = None
+sklib.__sklib__raspi_set_servo_pulsewidth__gpio_pin__int.argtypes = [ c_int, c_int ]
+sklib.__sklib__raspi_set_servo_pulsewidth__gpio_pin__int.restype = None
 sklib.__sklib__raspi_spi_close__int.argtypes = [ c_int ]
 sklib.__sklib__raspi_spi_close__int.restype = c_int
 sklib.__sklib__raspi_spi_open__int__int__int.argtypes = [ c_int, c_int, c_int ]
@@ -4776,6 +4809,17 @@ def draw_circle_record_with_options ( clr, c, opts ):
     __skparam__c = __skadapter__to_sklib_circle(c)
     __skparam__opts = __skadapter__to_sklib_drawing_options(opts)
     sklib.__sklib__draw_circle__color__circle_ref__drawing_options(__skparam__clr, __skparam__c, __skparam__opts)
+def draw_circle_at_point ( clr, pt, radius ):
+    __skparam__clr = __skadapter__to_sklib_color(clr)
+    __skparam__pt = __skadapter__to_sklib_point_2d(pt)
+    __skparam__radius = __skadapter__to_sklib_double(radius)
+    sklib.__sklib__draw_circle__color__point_2d_ref__double(__skparam__clr, __skparam__pt, __skparam__radius)
+def draw_circle_at_point_with_options ( clr, pt, radius, opts ):
+    __skparam__clr = __skadapter__to_sklib_color(clr)
+    __skparam__pt = __skadapter__to_sklib_point_2d(pt)
+    __skparam__radius = __skadapter__to_sklib_double(radius)
+    __skparam__opts = __skadapter__to_sklib_drawing_options(opts)
+    sklib.__sklib__draw_circle__color__point_2d_ref__double__drawing_options(__skparam__clr, __skparam__pt, __skparam__radius, __skparam__opts)
 def draw_circle ( clr, x, y, radius ):
     __skparam__clr = __skadapter__to_sklib_color(clr)
     __skparam__x = __skadapter__to_sklib_double(x)
@@ -4828,6 +4872,17 @@ def fill_circle_record_with_options ( clr, c, opts ):
     __skparam__c = __skadapter__to_sklib_circle(c)
     __skparam__opts = __skadapter__to_sklib_drawing_options(opts)
     sklib.__sklib__fill_circle__color__circle_ref__drawing_options(__skparam__clr, __skparam__c, __skparam__opts)
+def fill_circle_at_point ( clr, pt, radius ):
+    __skparam__clr = __skadapter__to_sklib_color(clr)
+    __skparam__pt = __skadapter__to_sklib_point_2d(pt)
+    __skparam__radius = __skadapter__to_sklib_double(radius)
+    sklib.__sklib__fill_circle__color__point_2d_ref__double(__skparam__clr, __skparam__pt, __skparam__radius)
+def fill_circle_at_point_with_options ( clr, pt, radius, opts ):
+    __skparam__clr = __skadapter__to_sklib_color(clr)
+    __skparam__pt = __skadapter__to_sklib_point_2d(pt)
+    __skparam__radius = __skadapter__to_sklib_double(radius)
+    __skparam__opts = __skadapter__to_sklib_drawing_options(opts)
+    sklib.__sklib__fill_circle__color__point_2d_ref__double__drawing_options(__skparam__clr, __skparam__pt, __skparam__radius, __skparam__opts)
 def fill_circle ( clr, x, y, radius ):
     __skparam__clr = __skadapter__to_sklib_color(clr)
     __skparam__x = __skadapter__to_sklib_double(x)
@@ -8329,6 +8384,10 @@ def raspi_get_mode ( pin ):
     __skparam__pin = __skadapter__to_sklib_gpio_pin(pin)
     __skreturn = sklib.__sklib__raspi_get_mode__gpio_pin(__skparam__pin)
     return __skadapter__to_gpio_pin_mode(__skreturn)
+def raspi_get_servo_pulsewidth ( pin ):
+    __skparam__pin = __skadapter__to_sklib_gpio_pin(pin)
+    __skreturn = sklib.__sklib__raspi_get_servo_pulsewidth__gpio_pin(__skparam__pin)
+    return __skadapter__to_int(__skreturn)
 def raspi_init (  ):
     sklib.__sklib__raspi_init()
 def raspi_read ( pin ):
@@ -8355,6 +8414,10 @@ def raspi_set_pwm_range ( pin, range ):
     __skparam__pin = __skadapter__to_sklib_gpio_pin(pin)
     __skparam__range = __skadapter__to_sklib_int(range)
     sklib.__sklib__raspi_set_pwm_range__gpio_pin__int(__skparam__pin, __skparam__range)
+def raspi_set_servo_pulsewidth ( pin, pulsewidth ):
+    __skparam__pin = __skadapter__to_sklib_gpio_pin(pin)
+    __skparam__pulsewidth = __skadapter__to_sklib_int(pulsewidth)
+    sklib.__sklib__raspi_set_servo_pulsewidth__gpio_pin__int(__skparam__pin, __skparam__pulsewidth)
 def raspi_spi_close ( handle ):
     __skparam__handle = __skadapter__to_sklib_int(handle)
     __skreturn = sklib.__sklib__raspi_spi_close__int(__skparam__handle)
