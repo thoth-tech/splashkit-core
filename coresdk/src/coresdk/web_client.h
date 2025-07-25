@@ -108,6 +108,10 @@ namespace splashkit_lib
      *
      * @param  response The response from the server
      * @return          The data from the response as text
+     * 
+     * @attribute class   http_response
+     * @attribute method  to_string
+     * @attribute self    response
      */
     string http_response_to_string(http_response response);
 
