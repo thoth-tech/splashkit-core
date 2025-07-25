@@ -116,8 +116,9 @@ namespace splashkit_lib
      * @param name          The name of the `animation_script` to look for.
      * @returns Returns a `bool` that denotes whether the `animation_script` has been loaded.
      *
-     * @attribute class  animation_script
-     * @attribute self   script
+     * @attribute class   animation_script
+     * @attribute method  has_animation_named
+     * @attribute self    script
      */
     bool has_animation_named(animation_script script, const string &name);
 
