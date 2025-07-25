@@ -132,7 +132,10 @@ namespace splashkit_lib
      *
      * @param bmp The bitmap to change
      *
+     * @attribute class     bitmap
+     * @attribute method    pop_clip
      * @attribute suffix    for_bitmap
+     * @attribute self      bmp
      */
     void pop_clip(bitmap bmp);
 
