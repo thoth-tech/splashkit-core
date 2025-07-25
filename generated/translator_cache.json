@@ -3,7 +3,7 @@
     "group": "animations",
     "brief": "Animations in SplashKit can be used to move between cells in\nbitmaps and sprites. Each animation generates a number sequence\nthat can then be used when drawing bitmaps.",
     "description": null,
-    "parsed_at": 1753420917,
+    "parsed_at": 1745561942,
     "path": "coresdk/src/coresdk/animations.h",
     "functions": [
       {
@@ -1425,9 +1425,9 @@
       {
         "signature": "void free_animation(animation ani);",
         "name": "free_animation",
-        "method_name": "free",
+        "method_name": null,
         "unique_global_name": "free_animation",
-        "unique_method_name": "animation.free",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Disposes of the resources used in the animation.",
         "brief": null,
@@ -1457,7 +1457,6 @@
         "attributes": {
           "class": "animation",
           "destructor": true,
-          "method": "free",
           "self": "ani",
           "group": "animations",
           "static": "animation"
@@ -1466,9 +1465,9 @@
       {
         "signature": "void free_animation_script(animation_script script_to_free);",
         "name": "free_animation_script",
-        "method_name": "free",
+        "method_name": null,
         "unique_global_name": "free_animation_script",
-        "unique_method_name": "animation_script.free",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Frees loaded animation frames data. Use this when you will no\nlonger be using the animation for any purpose, including within\nsprite.",
         "brief": null,
@@ -1498,7 +1497,6 @@
         "attributes": {
           "class": "animation_script",
           "destructor": true,
-          "method": "free",
           "self": "script_to_free",
           "group": "animations",
           "static": "animation"
@@ -2047,7 +2045,7 @@
     "group": "utilities",
     "brief": "SplashKit provides some basic data manipulation functions to\nhelp make it easy to get some basic tasks performed.",
     "description": null,
-    "parsed_at": 1753420918,
+    "parsed_at": 1745561943,
     "path": "coresdk/src/coresdk/basics.h",
     "functions": [
       {
@@ -2444,7 +2442,7 @@
         "brief": "Calculates the greatest common divisor of two numbers",
         "return": {
           "type": "int",
-          "description": "Greatest common divisor of the two numbers, or 0 if both numbers are 0",
+          "description": "Greatest common divisor of the two numbers, or 0 if either of the numbers is not a valid integer above 0",
           "is_pointer": false,
           "is_reference": false,
           "is_vector": false,
@@ -2914,7 +2912,7 @@
         "brief": "Calculates the least common multiple of two numbers",
         "return": {
           "type": "int",
-          "description": "Least common multiple of the two numbers, or 0 if either of the numbers are 0",
+          "description": "Least common multiple of the two numbers, or 0 if either of the numbers is not a valid integer above 0",
           "is_pointer": false,
           "is_reference": false,
           "is_vector": false,
@@ -4592,7 +4590,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1753420919,
+    "parsed_at": 1745561944,
     "path": "coresdk/src/coresdk/circle_drawing.h",
     "functions": [
       {
@@ -4711,145 +4709,6 @@
           "method": "draw",
           "self": "c",
           "suffix": "record_with_options",
-          "group": "graphics"
-        }
-      },
-      {
-        "signature": "void draw_circle(color clr,const point_2d &pt,double radius);",
-        "name": "draw_circle",
-        "method_name": null,
-        "unique_global_name": "draw_circle_at_point",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "Draw a circle at a point, with a specified radius, onto the current window.",
-        "brief": null,
-        "return": {
-          "type": "void",
-          "description": null,
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
-          "clr": {
-            "type": "color",
-            "description": "The color of the circle",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "pt": {
-            "type": "point_2d",
-            "description": "The location of the center of the circle",
-            "is_pointer": false,
-            "is_const": true,
-            "is_reference": true,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "radius": {
-            "type": "double",
-            "description": "The radius of the circle",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          }
-        },
-        "attributes": {
-          "suffix": "at_point",
-          "group": "graphics"
-        }
-      },
-      {
-        "signature": "void draw_circle(color clr,const point_2d &pt,double radius,drawing_options opts);",
-        "name": "draw_circle",
-        "method_name": null,
-        "unique_global_name": "draw_circle_at_point_with_options",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "Draw a circle at a point, with a specified radius, using the supplied drawing options. This will use `drawing_options` to determine\nthe destination.",
-        "brief": null,
-        "return": {
-          "type": "void",
-          "description": null,
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
-          "clr": {
-            "type": "color",
-            "description": "The color of the circle",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "pt": {
-            "type": "point_2d",
-            "description": "The location of the center of the circle",
-            "is_pointer": false,
-            "is_const": true,
-            "is_reference": true,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "radius": {
-            "type": "double",
-            "description": "The radius of the circle",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "opts": {
-            "type": "drawing_options",
-            "description": "Drawing options to configure the drawing operation",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          }
-        },
-        "attributes": {
-          "suffix": "at_point_with_options",
           "group": "graphics"
         }
       },
@@ -5525,145 +5384,6 @@
           "method": "fill",
           "self": "c",
           "suffix": "record_with_options",
-          "group": "graphics"
-        }
-      },
-      {
-        "signature": "void fill_circle(color clr,const point_2d &pt,double radius);",
-        "name": "fill_circle",
-        "method_name": null,
-        "unique_global_name": "fill_circle_at_point",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "Fill a circle at a point, with a specified radius, onto the current window.",
-        "brief": null,
-        "return": {
-          "type": "void",
-          "description": null,
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
-          "clr": {
-            "type": "color",
-            "description": "The color of the circle",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "pt": {
-            "type": "point_2d",
-            "description": "The location of the center of the circle",
-            "is_pointer": false,
-            "is_const": true,
-            "is_reference": true,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "radius": {
-            "type": "double",
-            "description": "The radius of the circle",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          }
-        },
-        "attributes": {
-          "suffix": "at_point",
-          "group": "graphics"
-        }
-      },
-      {
-        "signature": "void fill_circle(color clr,const point_2d &pt,double radius,drawing_options opts);",
-        "name": "fill_circle",
-        "method_name": null,
-        "unique_global_name": "fill_circle_at_point_with_options",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "Fill a circle at a point, with a specified radius, using the supplied drawing options. This will use `drawing_options` to determine\nthe destination.",
-        "brief": null,
-        "return": {
-          "type": "void",
-          "description": null,
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
-          "clr": {
-            "type": "color",
-            "description": "The color of the circle",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "pt": {
-            "type": "point_2d",
-            "description": "The location of the center of the circle",
-            "is_pointer": false,
-            "is_const": true,
-            "is_reference": true,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "radius": {
-            "type": "double",
-            "description": "The radius of the circle",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "opts": {
-            "type": "drawing_options",
-            "description": "Drawing options to configure the drawing operation",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          }
-        },
-        "attributes": {
-          "suffix": "at_point_with_options",
           "group": "graphics"
         }
       },
@@ -7535,7 +7255,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1753420920,
+    "parsed_at": 1745561945,
     "path": "coresdk/src/coresdk/clipping.h",
     "functions": [
       {
@@ -7564,9 +7284,9 @@
       {
         "signature": "rectangle current_clip(bitmap bmp);",
         "name": "current_clip",
-        "method_name": "current_clip",
+        "method_name": null,
         "unique_global_name": "current_clip_for_bitmap",
-        "unique_method_name": "bitmap.current_clip_for_bitmap",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns the rectangle of the current clip area for a bitmap",
         "brief": null,
@@ -7594,9 +7314,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "current_clip",
-          "self": "bmp",
           "suffix": "for_bitmap",
           "group": "graphics"
         }
@@ -7604,9 +7321,9 @@
       {
         "signature": "rectangle current_clip(window wnd);",
         "name": "current_clip",
-        "method_name": "current_clip",
+        "method_name": null,
         "unique_global_name": "current_clip_for_window",
-        "unique_method_name": "window.current_clip_for_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns the rectangle of the current clip area for a window",
         "brief": null,
@@ -7634,9 +7351,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "current_clip",
-          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -7644,9 +7358,9 @@
       {
         "signature": "void pop_clip(window wnd);",
         "name": "pop_clip",
-        "method_name": "pop_clip",
+        "method_name": null,
         "unique_global_name": "pop_clip_for_window",
-        "unique_method_name": "window.pop_clip_for_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Remove the last clipping rectangle pushed to the window. This\nwill then apply the previously pushed clipping rectangle.",
         "brief": null,
@@ -7674,9 +7388,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "pop_clip",
-          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -7707,9 +7418,9 @@
       {
         "signature": "void pop_clip(bitmap bmp);",
         "name": "pop_clip",
-        "method_name": "pop_clip",
+        "method_name": null,
         "unique_global_name": "pop_clip_for_bitmap",
-        "unique_method_name": "bitmap.pop_clip_for_bitmap",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Remove the last clipping rectangle pushed to the bitmap. This\nwill then apply the previously pushed clipping rectangle.",
         "brief": null,
@@ -7737,9 +7448,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "pop_clip",
-          "self": "bmp",
           "suffix": "for_bitmap",
           "group": "graphics"
         }
@@ -7747,9 +7455,9 @@
       {
         "signature": "void push_clip(window wnd,const rectangle &r);",
         "name": "push_clip",
-        "method_name": "push_clip",
+        "method_name": null,
         "unique_global_name": "push_clip_for_window",
-        "unique_method_name": "window.push_clip_for_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Add the clipping rectangle of a window and uses the intersect between\nthe new rectangle and previous clip.\n\nWhen a clipping rectangle is provided, drawing operations will only\naffect the area specified in the current clipping rectangle.",
         "brief": null,
@@ -7790,9 +7498,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "push_clip",
-          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -7800,9 +7505,9 @@
       {
         "signature": "void push_clip(bitmap bmp,const rectangle &r);",
         "name": "push_clip",
-        "method_name": "push_clip",
+        "method_name": null,
         "unique_global_name": "push_clip_for_bitmap",
-        "unique_method_name": "bitmap.push_clip_for_bitmap",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Add the clipping rectangle of a bitmap and uses the intersect between\nthe new rectangle and previous clip.\n\nWhen a clipping rectangle is provided, drawing operations will only\naffect the area specified in the current clipping rectangle.",
         "brief": null,
@@ -7843,9 +7548,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "push_clip",
-          "self": "bmp",
           "suffix": "for_bitmap",
           "group": "graphics"
         }
@@ -7889,9 +7591,9 @@
       {
         "signature": "void reset_clip(bitmap bmp);",
         "name": "reset_clip",
-        "method_name": "reset_clip",
+        "method_name": null,
         "unique_global_name": "reset_clip_for_bitmap",
-        "unique_method_name": "bitmap.reset_clip_for_bitmap",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Reset the clipping rectangle on a bitmap. This will clear all\nof the clipping rectangles pushed to the bitmap.",
         "brief": null,
@@ -7919,9 +7621,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "reset_clip",
-          "self": "bmp",
           "suffix": "for_bitmap",
           "group": "graphics"
         }
@@ -7952,9 +7651,9 @@
       {
         "signature": "void reset_clip(window wnd);",
         "name": "reset_clip",
-        "method_name": "reset_clip",
+        "method_name": null,
         "unique_global_name": "reset_clip_for_window",
-        "unique_method_name": "window.reset_clip_for_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Reset the clipping rectangle on a window. This will clear all\nof the clipping rectangles pushed to the window.",
         "brief": null,
@@ -7982,9 +7681,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "reset_clip",
-          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -8028,9 +7724,9 @@
       {
         "signature": "void set_clip(bitmap bmp,const rectangle &r);",
         "name": "set_clip",
-        "method_name": "set_clip",
+        "method_name": null,
         "unique_global_name": "set_clip_for_bitmap",
-        "unique_method_name": "bitmap.set_clip_for_bitmap",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Set the clip rectangle of the bitmap. This will clear any existing\nclipping rectangles pushed to the bitmap, and use the supplied rectangle\nfor clipping.",
         "brief": null,
@@ -8071,9 +7767,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "set_clip",
-          "self": "bmp",
           "suffix": "for_bitmap",
           "group": "graphics"
         }
@@ -8081,9 +7774,9 @@
       {
         "signature": "void set_clip(window wnd,const rectangle &r);",
         "name": "set_clip",
-        "method_name": "set_clip",
+        "method_name": null,
         "unique_global_name": "set_clip_for_window",
-        "unique_method_name": "window.set_clip_for_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Set the clip rectangle of the window. This will clear any existing\nclipping rectangles pushed to the window, and use the supplied rectangle\nfor clipping.",
         "brief": null,
@@ -8124,9 +7817,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "set_clip",
-          "self": "wnd",
           "suffix": "for_window",
           "group": "graphics"
         }
@@ -20012,7 +19702,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1753420921,
+    "parsed_at": 1745561950,
     "path": "coresdk/src/coresdk/drawing_options.h",
     "functions": [
       {
@@ -20041,9 +19731,9 @@
       {
         "signature": "drawing_options option_draw_to(bitmap dest);",
         "name": "option_draw_to",
-        "method_name": "option_draw_to",
+        "method_name": null,
         "unique_global_name": "option_draw_to_bitmap",
-        "unique_method_name": "bitmap.option_draw_to_bitmap",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Use this option to draw to a Bitmap. Pass dest the Bitmap you want to draw on.",
         "brief": null,
@@ -20071,9 +19761,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "option_draw_to",
-          "self": "dest",
           "suffix": "bitmap",
           "group": "graphics"
         }
@@ -20081,9 +19768,9 @@
       {
         "signature": "drawing_options option_draw_to(bitmap dest,drawing_options opts);",
         "name": "option_draw_to",
-        "method_name": "option_draw_to",
+        "method_name": null,
         "unique_global_name": "option_draw_to_bitmap_with_options",
-        "unique_method_name": "bitmap.option_draw_to_bitmap_with_options",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Use this option to draw to a Bitmap. Pass dest the Bitmap you want to draw on.\nPass opts the other options you want use.",
         "brief": null,
@@ -20124,9 +19811,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "option_draw_to",
-          "self": "dest",
           "suffix": "bitmap_with_options",
           "group": "graphics"
         }
@@ -20134,9 +19818,9 @@
       {
         "signature": "drawing_options option_draw_to(window dest);",
         "name": "option_draw_to",
-        "method_name": "option_draw_to",
+        "method_name": null,
         "unique_global_name": "option_draw_to_window",
-        "unique_method_name": "window.option_draw_to_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Use this option to draw to a specified Window. Pass dest the Window you want to draw on.",
         "brief": null,
@@ -20164,9 +19848,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "option_draw_to",
-          "self": "dest",
           "suffix": "window",
           "group": "graphics"
         }
@@ -20174,9 +19855,9 @@
       {
         "signature": "drawing_options option_draw_to(window dest,drawing_options opts);",
         "name": "option_draw_to",
-        "method_name": "option_draw_to",
+        "method_name": null,
         "unique_global_name": "option_draw_to_window_with_options",
-        "unique_method_name": "window.option_draw_to_window_with_options",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Use this option to draw to a Bitmap. Pass dest the Bitmap you want to draw on to.\nPass opts the other options you want use.",
         "brief": null,
@@ -20217,9 +19898,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "option_draw_to",
-          "self": "dest",
           "suffix": "window_with_options",
           "group": "graphics"
         }
@@ -23615,7 +23293,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1753420921,
+    "parsed_at": 1745561952,
     "path": "coresdk/src/coresdk/graphics.h",
     "functions": [
       {
@@ -23995,9 +23673,9 @@
       {
         "signature": "void save_bitmap(bitmap bmp,const string &basename);",
         "name": "save_bitmap",
-        "method_name": "save",
+        "method_name": null,
         "unique_global_name": "save_bitmap",
-        "unique_method_name": "bitmap.save",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Save the bitmap to the user's desktop.",
         "brief": null,
@@ -24038,9 +23716,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "save",
-          "self": "bmp",
           "group": "graphics"
         }
       },
@@ -24129,9 +23804,9 @@
       {
         "signature": "void take_screenshot(window wind,const string &basename);",
         "name": "take_screenshot",
-        "method_name": "take_screenshot",
+        "method_name": null,
         "unique_global_name": "take_screenshot_of_window",
-        "unique_method_name": "window.take_screenshot_of_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Saves a screenshot of the current window to a bitmap file. The file will\nbe saved onto the user's desktop.",
         "brief": null,
@@ -24172,9 +23847,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "take_screenshot",
-          "self": "wind",
           "suffix": "of_window",
           "group": "graphics"
         }
@@ -24197,7 +23869,7 @@
     "group": "graphics",
     "brief": "SplashKit Images allow drawing of bitmaps and sprites to graphic windows.",
     "description": null,
-    "parsed_at": 1753420923,
+    "parsed_at": 1745561952,
     "path": "coresdk/src/coresdk/images.h",
     "functions": [
       {
@@ -25330,9 +25002,9 @@
       {
         "signature": "bool bitmap_valid(bitmap bmp);",
         "name": "bitmap_valid",
-        "method_name": "is_valid",
+        "method_name": null,
         "unique_global_name": "bitmap_valid",
-        "unique_method_name": "bitmap.is_valid",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Lets you test if bitmap value is valid. This will return true when it is a valid bitmap.",
         "brief": null,
@@ -25360,9 +25032,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "is_valid",
-          "self": "bmp",
           "group": "graphics",
           "static": "images"
         }
@@ -26818,7 +26487,7 @@
     "group": "interface",
     "brief": "SplashKit Interface provides functions to create user interfaces, with elements such as draggable panels, buttons and text boxes.",
     "description": "SplashKit`s interface library provides various functions for creating\npanels, and drawing interface elements such as buttons, text boxes, and more",
-    "parsed_at": 1753420925,
+    "parsed_at": 1747026729,
     "path": "coresdk/src/coresdk/interface.h",
     "functions": [
       {
@@ -26898,9 +26567,9 @@
       {
         "signature": "bool bitmap_button(bitmap bmp);",
         "name": "bitmap_button",
-        "method_name": "button",
+        "method_name": null,
         "unique_global_name": "bitmap_button",
-        "unique_method_name": "bitmap.button",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Creates a button with a bitmap in it, and no label.\nReturns whether the button was clicked.",
         "brief": null,
@@ -26928,9 +26597,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "button",
-          "self": "bmp",
           "group": "interface",
           "static": "interface"
         }
@@ -26938,9 +26604,9 @@
       {
         "signature": "bool bitmap_button(bitmap bmp,const rectangle& rect);",
         "name": "bitmap_button",
-        "method_name": "button",
+        "method_name": null,
         "unique_global_name": "bitmap_button_at_position",
-        "unique_method_name": "bitmap.button_at_position",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Creates a button with a bitmap in it at a specific position on screen.\nReturns whether the button was clicked.",
         "brief": null,
@@ -26981,9 +26647,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "button",
-          "self": "bmp",
           "suffix": "at_position",
           "group": "interface",
           "static": "interface"
@@ -26992,9 +26655,9 @@
       {
         "signature": "bool bitmap_button(bitmap bmp,const rectangle& rect,drawing_options opts);",
         "name": "bitmap_button",
-        "method_name": "button",
+        "method_name": null,
         "unique_global_name": "bitmap_button_at_position_with_options",
-        "unique_method_name": "bitmap.button_at_position_with_options",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Creates a button with a bitmap in it at a specific position on screen.\nReturns whether the button was clicked.",
         "brief": null,
@@ -27048,9 +26711,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "button",
-          "self": "bmp",
           "suffix": "at_position_with_options",
           "group": "interface",
           "static": "interface"
@@ -27059,9 +26719,9 @@
       {
         "signature": "bool bitmap_button(bitmap bmp,drawing_options opts);",
         "name": "bitmap_button",
-        "method_name": "button",
+        "method_name": null,
         "unique_global_name": "bitmap_button_with_options",
-        "unique_method_name": "bitmap.button_with_options",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Creates a button with a bitmap in it, and no label.\nReturns whether the button was clicked.",
         "brief": null,
@@ -27102,9 +26762,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "button",
-          "self": "bmp",
           "suffix": "with_options",
           "group": "interface",
           "static": "interface"
@@ -30311,7 +29968,7 @@
     "group": "json",
     "brief": "SplashKit Json allows you to create and read JSON objects.",
     "description": "Splashkit's JSON library allows you to easily create or read JSON objects and\nmanipulate them to/from a JSON string or from a file containing a JSON\nstring. Create a new JSON object with a call to `create_json()` and\nread or write data to it by calling methods like\n`json_add_string(json j, string key, string value)` and\n`json_read_string(json j, string key)`.",
-    "parsed_at": 1753420926,
+    "parsed_at": 1745561954,
     "path": "coresdk/src/coresdk/json.h",
     "functions": [
       {
@@ -30408,9 +30065,9 @@
       {
         "signature": "void free_json(json j);",
         "name": "free_json",
-        "method_name": "free",
+        "method_name": null,
         "unique_global_name": "free_json",
-        "unique_method_name": "json.free",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Frees the SplashKit resources associated with the `json` object.",
         "brief": null,
@@ -30440,7 +30097,6 @@
         "attributes": {
           "class": "json",
           "destructor": true,
-          "method": "free",
           "self": "j",
           "group": "json",
           "static": "json"
@@ -36949,7 +36605,7 @@
     "group": "audio",
     "brief": null,
     "description": null,
-    "parsed_at": 1753420927,
+    "parsed_at": 1745561957,
     "path": "coresdk/src/coresdk/music.h",
     "functions": [
       {
@@ -37253,9 +36909,9 @@
       {
         "signature": "void free_music(music effect);",
         "name": "free_music",
-        "method_name": "free",
+        "method_name": null,
         "unique_global_name": "free_music",
-        "unique_method_name": "music.free",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Releases the SplashKit resources associated with music.",
         "brief": null,
@@ -37285,7 +36941,6 @@
         "attributes": {
           "class": "music",
           "destructor": true,
-          "method": "free",
           "self": "effect",
           "group": "audio",
           "static": "audio"
@@ -37980,7 +37635,7 @@
     "group": "networking",
     "brief": "SplashKit's network-related functions allow you to communicate data\nacross networks.",
     "description": null,
-    "parsed_at": 1753420930,
+    "parsed_at": 1745561959,
     "path": "coresdk/src/coresdk/networking.h",
     "functions": [
       {
@@ -41294,7 +40949,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1753420931,
+    "parsed_at": 1745561959,
     "path": "coresdk/src/coresdk/point_drawing.h",
     "functions": [
       {
@@ -41866,9 +41521,9 @@
       {
         "signature": "void draw_pixel_on_window(window destination,color clr,const point_2d &pt);",
         "name": "draw_pixel_on_window",
-        "method_name": "draw_pixel",
+        "method_name": null,
         "unique_global_name": "draw_pixel_on_window_at_point",
-        "unique_method_name": "window.draw_pixel_at_point",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Draws an individual pixel to the given window.",
         "brief": null,
@@ -41923,18 +41578,16 @@
         },
         "attributes": {
           "class": "window",
-          "method": "draw_pixel",
           "suffix": "at_point",
-          "group": "graphics",
-          "self": "destination"
+          "group": "graphics"
         }
       },
       {
         "signature": "void draw_pixel_on_window(window destination,color clr,const point_2d &pt,drawing_options opts);",
         "name": "draw_pixel_on_window",
-        "method_name": "draw_pixel",
+        "method_name": null,
         "unique_global_name": "draw_pixel_on_window_at_point_with_options",
-        "unique_method_name": "window.draw_pixel_at_point_with_options",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Draws an individual pixel to the given window with the given drawing options.",
         "brief": null,
@@ -42002,18 +41655,16 @@
         },
         "attributes": {
           "class": "window",
-          "method": "draw_pixel",
           "suffix": "at_point_with_options",
-          "group": "graphics",
-          "self": "destination"
+          "group": "graphics"
         }
       },
       {
         "signature": "void draw_pixel_on_window(window destination,color clr,double x,double y);",
         "name": "draw_pixel_on_window",
-        "method_name": "draw_pixel",
+        "method_name": null,
         "unique_global_name": "draw_pixel_on_window",
-        "unique_method_name": "window.draw_pixel",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Draws an individual pixel to the given window.",
         "brief": null,
@@ -42081,17 +41732,15 @@
         },
         "attributes": {
           "class": "window",
-          "method": "draw_pixel",
-          "group": "graphics",
-          "self": "destination"
+          "group": "graphics"
         }
       },
       {
         "signature": "void draw_pixel_on_window(window destination,color clr,double x,double y,drawing_options opts);",
         "name": "draw_pixel_on_window",
-        "method_name": "draw_pixel",
+        "method_name": null,
         "unique_global_name": "draw_pixel_on_window_with_options",
-        "unique_method_name": "window.draw_pixel_with_options",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Draws an individual pixel to the given window with the given drawing options.",
         "brief": null,
@@ -42172,18 +41821,16 @@
         },
         "attributes": {
           "class": "window",
-          "method": "draw_pixel",
           "suffix": "with_options",
-          "group": "graphics",
-          "self": "destination"
+          "group": "graphics"
         }
       },
       {
         "signature": "color get_pixel(bitmap bmp,const point_2d &pt);",
         "name": "get_pixel",
-        "method_name": "get_pixel",
+        "method_name": null,
         "unique_global_name": "get_pixel_from_bitmap_at_point",
-        "unique_method_name": "bitmap.get_pixel_from_bitmap_at_point",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns the color of the pixel at the location on the supplied\nbitmap.",
         "brief": null,
@@ -42224,9 +41871,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "get_pixel",
-          "self": "bmp",
           "suffix": "from_bitmap_at_point",
           "group": "graphics"
         }
@@ -42234,9 +41878,9 @@
       {
         "signature": "color get_pixel(bitmap bmp,double x,double y);",
         "name": "get_pixel",
-        "method_name": "get_pixel",
+        "method_name": null,
         "unique_global_name": "get_pixel_from_bitmap",
-        "unique_method_name": "bitmap.get_pixel_from_bitmap",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns the color of the pixel at the x,y location on the supplied\nbitmap.",
         "brief": null,
@@ -42290,9 +41934,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "get_pixel",
-          "self": "bmp",
           "suffix": "from_bitmap",
           "group": "graphics"
         }
@@ -42495,6 +42136,120 @@
           "suffix": "from_window",
           "group": "graphics"
         }
+      },
+      {
+        "signature": "color get_pixel_from_window(window destination,const point_2d &pt);",
+        "name": "get_pixel_from_window",
+        "method_name": null,
+        "unique_global_name": "get_pixel_from_window_at_point_from_window",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Returns the color of the pixel at the x,y location on the given\nwindow.",
+        "brief": null,
+        "return": {
+          "type": "color",
+          "description": "The color of the pixel at the supplied location",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "destination": {
+            "type": "window",
+            "description": "The window to draw the pixel on",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pt": {
+            "type": "point_2d",
+            "description": "The position of the pixel",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "at_point_from_window",
+          "group": "graphics"
+        }
+      },
+      {
+        "signature": "color get_pixel_from_window(window destination,double x,double y);",
+        "name": "get_pixel_from_window",
+        "method_name": null,
+        "unique_global_name": "get_pixel_from_window_from_window",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Returns the color of the pixel at the x,y location on the given\nwindow.",
+        "brief": null,
+        "return": {
+          "type": "color",
+          "description": "The color of the pixel at the supplied location",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "destination": {
+            "type": "window",
+            "description": "The window to draw the pixel on",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "x": {
+            "type": "double",
+            "description": "The distance from the left edge of the window to the pixel\nto read",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "y": {
+            "type": "double",
+            "description": "The distance from the top of the window to the pixel to read",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "window",
+          "suffix": "from_window",
+          "group": "graphics"
+        }
       }
     ],
     "typedefs": [
@@ -42514,7 +42269,7 @@
     "group": "geometry",
     "brief": null,
     "description": null,
-    "parsed_at": 1753420932,
+    "parsed_at": 1745561960,
     "path": "coresdk/src/coresdk/point_geometry.h",
     "functions": [
       {
@@ -43375,9 +43130,9 @@
       {
         "signature": "point_2d random_bitmap_point(bitmap bmp);",
         "name": "random_bitmap_point",
-        "method_name": "random_point",
+        "method_name": null,
         "unique_global_name": "random_bitmap_point",
-        "unique_method_name": "bitmap.random_point",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns a random point within the bounds of the bitmap.",
         "brief": null,
@@ -43405,9 +43160,6 @@
           }
         },
         "attributes": {
-          "class": "bitmap",
-          "method": "random_point",
-          "self": "bmp",
           "group": "geometry",
           "static": "geometry"
         }
@@ -43439,9 +43191,9 @@
       {
         "signature": "point_2d random_window_point(window wind);",
         "name": "random_window_point",
-        "method_name": "random_point",
+        "method_name": null,
         "unique_global_name": "random_window_point",
-        "unique_method_name": "window.random_point",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns a random point on the provided window.",
         "brief": null,
@@ -43469,11 +43221,8 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "random_point",
           "group": "geometry",
-          "static": "geometry",
-          "self": "wind"
+          "static": "geometry"
         }
       },
       {
@@ -44360,7 +44109,7 @@
     "group": "raspberry",
     "brief": "Provides support for using an ADC device with the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1753420932,
+    "parsed_at": 1747026729,
     "path": "coresdk/src/coresdk/raspi_adc.h",
     "functions": [
       {
@@ -44403,9 +44152,9 @@
       {
         "signature": "void close_adc(adc_device adc);",
         "name": "close_adc",
-        "method_name": "close",
+        "method_name": null,
         "unique_global_name": "close_adc",
-        "unique_method_name": "adc_device.close",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Closes an ADC device given its pointer.",
         "brief": null,
@@ -44435,7 +44184,6 @@
         "attributes": {
           "class": "adc_device",
           "destructor": true,
-          "method": "close",
           "self": "adc",
           "group": "raspberry",
           "static": "raspberry"
@@ -44808,7 +44556,7 @@
     "group": "raspberry",
     "brief": "Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1753420933,
+    "parsed_at": 1745561961,
     "path": "coresdk/src/coresdk/raspi_gpio.h",
     "functions": [
       {
@@ -44880,43 +44628,6 @@
           "pin": {
             "type": "gpio_pin",
             "description": "The pin to get the mode for.",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          }
-        },
-        "attributes": {
-          "group": "raspberry",
-          "static": "raspberry"
-        }
-      },
-      {
-        "signature": "int raspi_get_servo_pulsewidth(gpio_pin pin);",
-        "name": "raspi_get_servo_pulsewidth",
-        "method_name": null,
-        "unique_global_name": "raspi_get_servo_pulsewidth",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "This function retrieves the pulse width for the specified pin.",
-        "brief": "Gets the pulse width for the specified pin.",
-        "return": {
-          "type": "int",
-          "description": "The pulse width of the pin.",
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
-          "pin": {
-            "type": "gpio_pin",
-            "description": "The pin to get the pulse width for.",
             "is_pointer": false,
             "is_const": false,
             "is_reference": false,
@@ -45228,56 +44939,6 @@
           "range": {
             "type": "int",
             "description": "The PWM range to set for the pin.",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          }
-        },
-        "attributes": {
-          "group": "raspberry",
-          "static": "raspberry"
-        }
-      },
-      {
-        "signature": "void raspi_set_servo_pulsewidth(gpio_pin pin,int pulsewidth);",
-        "name": "raspi_set_servo_pulsewidth",
-        "method_name": null,
-        "unique_global_name": "raspi_set_servo_pulsewidth",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "This function sets the pulse width for the specified pin.",
-        "brief": "Sets the pulse width for the specified pin.",
-        "return": {
-          "type": "void",
-          "description": null,
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
-          "pin": {
-            "type": "gpio_pin",
-            "description": "The pin to set the pulse width for.",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "pulsewidth": {
-            "type": "int",
-            "description": "The pulse width to set for the pin.",
             "is_pointer": false,
             "is_const": false,
             "is_reference": false,
@@ -46116,7 +45777,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1753420936,
+    "parsed_at": 1745561962,
     "path": "coresdk/src/coresdk/rectangle_drawing.h",
     "functions": [
       {
@@ -47880,9 +47541,9 @@
       {
         "signature": "void fill_quad_on_window(window destination,color clr,const quad &q,const drawing_options &opts);",
         "name": "fill_quad_on_window",
-        "method_name": "fill_quad",
+        "method_name": null,
         "unique_global_name": "fill_quad_on_window_with_options",
-        "unique_method_name": "window.fill_quad_with_options",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Fill a quad on the supplied window using the supplied drawing options.",
         "brief": null,
@@ -47950,10 +47611,8 @@
         },
         "attributes": {
           "class": "window",
-          "method": "fill_quad",
           "suffix": "with_options",
-          "group": "graphics",
-          "self": "destination"
+          "group": "graphics"
         }
       },
       {
@@ -50318,7 +49977,7 @@
     "group": "audio",
     "brief": null,
     "description": null,
-    "parsed_at": 1753420936,
+    "parsed_at": 1745561963,
     "path": "coresdk/src/coresdk/sound.h",
     "functions": [
       {
@@ -61550,7 +61209,7 @@
     "group": "input",
     "brief": null,
     "description": null,
-    "parsed_at": 1753420937,
+    "parsed_at": 1745561966,
     "path": "coresdk/src/coresdk/text_input.h",
     "functions": [
       {
@@ -61654,9 +61313,9 @@
       {
         "signature": "void end_reading_text(window wind);",
         "name": "end_reading_text",
-        "method_name": "end_reading_text",
+        "method_name": null,
         "unique_global_name": "end_reading_text_in_window",
-        "unique_method_name": "window.end_reading_text_in_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Ends reading text for the passed in window.",
         "brief": null,
@@ -61684,9 +61343,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "end_reading_text",
-          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         }
@@ -61717,9 +61373,9 @@
       {
         "signature": "bool reading_text(window wind);",
         "name": "reading_text",
-        "method_name": "reading_text",
+        "method_name": null,
         "unique_global_name": "reading_text_in_window",
-        "unique_method_name": "window.reading_text_in_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns true when the window is reading text.",
         "brief": null,
@@ -61747,9 +61403,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "reading_text",
-          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         }
@@ -61843,9 +61496,9 @@
       {
         "signature": "void start_reading_text(window wind,rectangle rect);",
         "name": "start_reading_text",
-        "method_name": "start_reading_text",
+        "method_name": null,
         "unique_global_name": "start_reading_text_in_window",
-        "unique_method_name": "window.start_reading_text_in_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Start reading text in the window within the bounds of the\nsupplied rectangle.",
         "brief": null,
@@ -61886,9 +61539,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "start_reading_text",
-          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         }
@@ -61896,9 +61546,9 @@
       {
         "signature": "void start_reading_text(window wind,rectangle rect,string initial_text);",
         "name": "start_reading_text",
-        "method_name": "start_reading_text",
+        "method_name": null,
         "unique_global_name": "start_reading_text_in_window_with_initial_text",
-        "unique_method_name": "window.start_reading_text_in_window_with_initial_text",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Start reading text in the window within the bounds of the\nsupplied rectangle. The text will start with an initial value.",
         "brief": null,
@@ -61952,9 +61602,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "start_reading_text",
-          "self": "wind",
           "suffix": "in_window_with_initial_text",
           "group": "input"
         }
@@ -61985,9 +61632,9 @@
       {
         "signature": "bool text_entry_cancelled(window wind);",
         "name": "text_entry_cancelled",
-        "method_name": "text_entry_cancelled",
+        "method_name": null,
         "unique_global_name": "text_entry_cancelled_in_window",
-        "unique_method_name": "window.text_entry_cancelled_in_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Did the user press escape and cancel the enterring of text?",
         "brief": null,
@@ -62015,9 +61662,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "text_entry_cancelled",
-          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         }
@@ -62048,9 +61692,9 @@
       {
         "signature": "string text_input(window wind);",
         "name": "text_input",
-        "method_name": "text_input",
+        "method_name": null,
         "unique_global_name": "text_input_in_window",
-        "unique_method_name": "window.text_input_in_window",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "The text the user has currently enterred on the current window.",
         "brief": null,
@@ -62078,9 +61722,6 @@
           }
         },
         "attributes": {
-          "class": "window",
-          "method": "text_input",
-          "self": "wind",
           "suffix": "in_window",
           "group": "input"
         }
@@ -62103,7 +61744,7 @@
     "group": "timers",
     "brief": "Timers in SplashKit can be used to track the passing of time.",
     "description": null,
-    "parsed_at": 1753420938,
+    "parsed_at": 1745561967,
     "path": "coresdk/src/coresdk/timers.h",
     "functions": [
       {
@@ -62172,9 +61813,9 @@
       {
         "signature": "void free_timer(timer to_free);",
         "name": "free_timer",
-        "method_name": "free",
+        "method_name": null,
         "unique_global_name": "free_timer",
-        "unique_method_name": "timer.free",
+        "unique_method_name": null,
         "suffix_name": null,
         "description": "Free the memory used to store this timer.",
         "brief": null,
@@ -62204,10 +61845,9 @@
         "attributes": {
           "class": "timer",
           "destructor": true,
-          "method": "free",
-          "self": "to_free",
           "group": "timers",
-          "static": "timers"
+          "static": "timers",
+          "self": "to_free"
         }
       },
       {
@@ -65913,7 +65553,7 @@
     "group": "types",
     "brief": "SplashKit Types simplifies data type creation and management for streamlined programming.",
     "description": null,
-    "parsed_at": 1753420939,
+    "parsed_at": 1747026730,
     "path": "coresdk/src/coresdk/types.h",
     "functions": [
 
@@ -66964,38 +66604,6 @@
           "BUBBLE_MULTICOLORED": {
             "description": "A light-mode interface with a semi-transparent bubbly look - gives a multi-coloured result when provided a color.",
             "number": 5
-          }
-        },
-        "attributes": {
-          "group": "types"
-        }
-      },
-      {
-        "signature": "enum motor_direction {MOTOR_FORWARD,MOTOR_BACKWARD};",
-        "name": "motor_direction",
-        "description": "Motor Movement Directions:",
-        "brief": null,
-        "constants": {
-          "MOTOR_FORWARD": {
-            "description": "Motor moves forward."
-          },
-          "MOTOR_BACKWARD": {
-            "description": "Motor moves backward."
-          }
-        },
-        "attributes": {
-          "group": "types"
-        }
-      },
-      {
-        "signature": "enum motor_driver_type {L298N = 0,// L293D = 1,// TB6612FNG = 2,// DRV8835 = 3,// DRV8834 = 4,// DRV8825 = 5,// A4988 = 6,};",
-        "name": "motor_driver_type",
-        "description": "Motor Driver Types:",
-        "brief": null,
-        "constants": {
-          "L298N": {
-            "description": "Dual H-Bridge Motor Driver",
-            "number": 0
           }
         },
         "attributes": {
@@ -68675,7 +68283,7 @@
     "group": "networking",
     "brief": null,
     "description": null,
-    "parsed_at": 1753420940,
+    "parsed_at": 1745561969,
     "path": "coresdk/src/coresdk/web_client.h",
     "functions": [
       {
