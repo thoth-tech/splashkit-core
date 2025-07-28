@@ -108,6 +108,10 @@ namespace splashkit_lib
      *
      * @param  response The response from the server
      * @return          The data from the response as text
+     * 
+     * @attribute class   http_response
+     * @attribute method  to_string
+     * @attribute self    response
      */
     string http_response_to_string(http_response response);
 
@@ -116,6 +120,10 @@ namespace splashkit_lib
      *
      * @param response The response from the server
      * @param path     The path to the file where the response should be saved
+     * 
+     * @attribute class   http_response
+     * @attribute method  save_to_file
+     * @attribute self    response
      */
     void save_response_to_file(http_response response, string path);
 

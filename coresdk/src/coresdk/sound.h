@@ -118,6 +118,10 @@ namespace splashkit_lib
      * 
      * @param effect the effect to test
      * @returns true when the sound effect is valid.
+     * 
+     * @attribute class   sound_effect
+     * @attribute method  is_valid
+     * @attribute self    effect
      */
     bool sound_effect_valid(sound_effect effect);
 

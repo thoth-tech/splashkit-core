@@ -63,6 +63,10 @@ namespace splashkit_lib
      * 
      * @param m the music source to test
      * @returns true when the music is valid.
+     * 
+     * @attribute class   music
+     * @attribute method  is_valid
+     * @attribute self    m
      */
     bool music_valid(music m);
 
