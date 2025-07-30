@@ -9,14 +9,23 @@
 using namespace splashkit_lib;
 using Catch::Matchers::WithinRel;
 
-TEST_CASE("Camera position correct after moving", "[camera][unit]")
+class CameraTest {
+    public:
+        CameraTest()
+        {
+            set_camera_position(point_at(0.0, 0.0));
+        }
+};
+
+
+TEST_CASE_METHOD(CameraTest, "Camera position correct after moving", "[camera][unit]")
 {
     set_camera_position(point_at(42.0, 100.0));
     REQUIRE_THAT(camera_x(), WithinRel(42.0));
     REQUIRE_THAT(camera_y(), WithinRel(100.0));
 }
 
-TEST_CASE("Get screen center in world space", "[camera][graphics][window][integration]")
+TEST_CASE_METHOD(CameraTest, "Get screen center in world space", "[camera][graphics][window][integration]")
 {
     open_window("Get screen center in world space", 100, 100);
     point_2d center = screen_center();
@@ -25,7 +34,7 @@ TEST_CASE("Get screen center in world space", "[camera][graphics][window][integr
     close_current_window();
 }
 
-TEST_CASE("Convert world space to screen space", "[camera][unit]")
+TEST_CASE_METHOD(CameraTest, "Convert world space to screen space", "[camera][unit]")
 {
     set_camera_position(point_at(150.0, 150.0));
     
@@ -51,7 +60,7 @@ TEST_CASE("Convert world space to screen space", "[camera][unit]")
     }
 }
 
-TEST_CASE("Convert screen space to world space", "[camera][unit]")
+TEST_CASE_METHOD(CameraTest, "Convert screen space to world space", "[camera][unit]")
 {
     set_camera_position(point_at(150.0, 150.0));
 
@@ -71,7 +80,7 @@ TEST_CASE("Convert screen space to world space", "[camera][unit]")
     }
 }
 
-TEST_CASE("Check if rectangle is on screen", "[camera][rectangle_geometry][graphics][window][integration]")
+TEST_CASE_METHOD(CameraTest, "Check if rectangle is on screen", "[camera][rectangle_geometry][graphics][window][integration]")
 {
     window wind = open_window("Check if rectangle is on screen", 100, 100);
 
@@ -104,7 +113,7 @@ TEST_CASE("Check if rectangle is on screen", "[camera][rectangle_geometry][graph
     close_window(wind);
 }
 
-TEST_CASE("Check if point is on screen", "[camera][point_geometry][graphics][window][integration]")
+TEST_CASE_METHOD(CameraTest, "Check if point is on screen", "[camera][point_geometry][graphics][window][integration]")
 {
     window wind = open_window("Check if point is on screen", 100, 100);
 
@@ -137,32 +146,35 @@ TEST_CASE("Check if point is on screen", "[camera][point_geometry][graphics][win
     close_window(wind);
 }
 
-TEST_CASE("Can move camera by offset", "[camera][unit]")
+TEST_CASE_METHOD(CameraTest, "Can move camera by offset", "[camera][unit]")
 {
     move_camera_by(42.0, 100.0);
     REQUIRE_THAT(camera_x(), WithinRel(42.0));
     REQUIRE_THAT(camera_y(), WithinRel(100.0));
 }
 
-TEST_CASE("Can center camera on sprite", "[camera][images][sprites][integration]")
+TEST_CASE_METHOD(CameraTest, "Can center camera on sprite", "[camera][window][graphics][images][sprites][integration]")
 {
+    open_window("Can center camera on sprite", 100, 100);
+
     // Create 20x20 square sprite at 50,50 
     bitmap square_bmp = create_bitmap("square", 20, 20);
     sprite square_sprt = create_sprite(square_bmp);
-    move_sprite_to(square_sprt, 50.0, 50.0);
+    move_sprite_to(square_sprt, 90.0, 90.0);
 
     SECTION("Camera moves to sprite with no offset")
     {
         vector_2d offset = vector_to(0.0, 0.0);
         center_camera_on(square_sprt, offset);
-        REQUIRE_THAT(camera_x(), WithinRel(50.0));
-        REQUIRE_THAT(camera_y(), WithinRel(50.0));
+        REQUIRE_THAT(camera_x(), WithinRel(40.0));
+        REQUIRE_THAT(camera_y(), WithinRel(40.0));
     }
     SECTION("Camera moves to sprite with offset")
     {
         vector_2d offset = vector_to(0.5, 0.5);
         center_camera_on(square_sprt, offset);
-        REQUIRE_THAT(camera_x(), WithinRel(50.5));
-        REQUIRE_THAT(camera_y(), WithinRel(50.5));
+        REQUIRE_THAT(camera_x(), WithinRel(40.5));
+        REQUIRE_THAT(camera_y(), WithinRel(40.5));
     }
+    close_current_window();
 }
