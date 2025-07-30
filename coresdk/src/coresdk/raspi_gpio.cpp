@@ -19,7 +19,7 @@ namespace splashkit_lib
 {
     // Each index points to PIN_1, PIN_2, PIN_3, etc.
     int BCMpinData[] = {
-        -1, -1, 2, -1, 3, -2, 4, 14, -2, 15, 17, 18, 27, -2, 22, 23, -1, 24, 10, -2, 9, 25, 11, 8, -2, 7, 0, 1, 5, -2, -6, 12, 13, -2, 19, 16, 26, 20, -2, 21};
+        -1, -1, 2, -1, 3, -2, 4, 14, -2, 15, 17, 18, 27, -2, 22, 23, -1, 24, 10, -2, 9, 25, 11, 8, -2, 7, 0, 1, 5, -2, 6, 12, 13, -2, 19, 16, 26, 20, -2, 21};
 
     int boardToBCM(gpio_pin pin)
     {
@@ -378,5 +378,10 @@ namespace splashkit_lib
     bool remote_raspi_cleanup(connection pi)
     {
         return sk_remote_gpio_cleanup(pi);
+    }
+
+    int to_int(gpio_pin_value value)
+    {
+        return static_cast<int>(value);
     }
 }

@@ -21499,6 +21499,173 @@
         }
       },
       {
+        "signature": "void draw_circle(color clr,const point_2d &pt,double radius);",
+        "name": "draw_circle",
+        "method_name": null,
+        "unique_global_name": "draw_circle_at_point",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Draw a circle at a point, with a specified radius, onto the current window.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "clr": {
+            "type": "color",
+            "description": "The color of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pt": {
+            "type": "point_2d",
+            "description": "The location of the center of the circle",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "radius": {
+            "type": "double",
+            "description": "The radius of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "at_point",
+          "group": "graphics"
+        },
+        "signatures": {
+          "python": [
+            "def draw_circle_at_point(clr, pt, radius):"
+          ],
+          "cpp": [
+            "void draw_circle(color clr, const point_2d &pt, double radius)"
+          ],
+          "csharp": [
+            "public static void SplashKit.DrawCircle(Color clr, Point2D pt, double radius);"
+          ],
+          "pascal": [
+            "procedure DrawCircle(clr: Color; const pt: Point2D; radius: Double)"
+          ]
+        }
+      },
+      {
+        "signature": "void draw_circle(color clr,const point_2d &pt,double radius,drawing_options opts);",
+        "name": "draw_circle",
+        "method_name": null,
+        "unique_global_name": "draw_circle_at_point_with_options",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Draw a circle at a point, with a specified radius, using the supplied drawing options. This will use `drawing_options` to determine\nthe destination.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "clr": {
+            "type": "color",
+            "description": "The color of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pt": {
+            "type": "point_2d",
+            "description": "The location of the center of the circle",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "radius": {
+            "type": "double",
+            "description": "The radius of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "opts": {
+            "type": "drawing_options",
+            "description": "Drawing options to configure the drawing operation",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "at_point_with_options",
+          "group": "graphics"
+        },
+        "signatures": {
+          "python": [
+            "def draw_circle_at_point_with_options(clr, pt, radius, opts):"
+          ],
+          "cpp": [
+            "void draw_circle(color clr, const point_2d &pt, double radius, drawing_options opts)"
+          ],
+          "csharp": [
+            "public static void SplashKit.DrawCircle(Color clr, Point2D pt, double radius, DrawingOptions opts);"
+          ],
+          "pascal": [
+            "procedure DrawCircle(clr: Color; const pt: Point2D; radius: Double; opts: DrawingOptions)"
+          ]
+        }
+      },
+      {
         "signature": "void draw_circle(color clr,double x,double y,double radius);",
         "name": "draw_circle",
         "method_name": null,
@@ -22288,6 +22455,173 @@
           ],
           "pascal": [
             "procedure FillCircle(clr: Color; const c: Circle; opts: DrawingOptions)"
+          ]
+        }
+      },
+      {
+        "signature": "void fill_circle(color clr,const point_2d &pt,double radius);",
+        "name": "fill_circle",
+        "method_name": null,
+        "unique_global_name": "fill_circle_at_point",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Fill a circle at a point, with a specified radius, onto the current window.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "clr": {
+            "type": "color",
+            "description": "The color of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pt": {
+            "type": "point_2d",
+            "description": "The location of the center of the circle",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "radius": {
+            "type": "double",
+            "description": "The radius of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "at_point",
+          "group": "graphics"
+        },
+        "signatures": {
+          "python": [
+            "def fill_circle_at_point(clr, pt, radius):"
+          ],
+          "cpp": [
+            "void fill_circle(color clr, const point_2d &pt, double radius)"
+          ],
+          "csharp": [
+            "public static void SplashKit.FillCircle(Color clr, Point2D pt, double radius);"
+          ],
+          "pascal": [
+            "procedure FillCircle(clr: Color; const pt: Point2D; radius: Double)"
+          ]
+        }
+      },
+      {
+        "signature": "void fill_circle(color clr,const point_2d &pt,double radius,drawing_options opts);",
+        "name": "fill_circle",
+        "method_name": null,
+        "unique_global_name": "fill_circle_at_point_with_options",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Fill a circle at a point, with a specified radius, using the supplied drawing options. This will use `drawing_options` to determine\nthe destination.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "clr": {
+            "type": "color",
+            "description": "The color of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pt": {
+            "type": "point_2d",
+            "description": "The location of the center of the circle",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "radius": {
+            "type": "double",
+            "description": "The radius of the circle",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "opts": {
+            "type": "drawing_options",
+            "description": "Drawing options to configure the drawing operation",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "at_point_with_options",
+          "group": "graphics"
+        },
+        "signatures": {
+          "python": [
+            "def fill_circle_at_point_with_options(clr, pt, radius, opts):"
+          ],
+          "cpp": [
+            "void fill_circle(color clr, const point_2d &pt, double radius, drawing_options opts)"
+          ],
+          "csharp": [
+            "public static void SplashKit.FillCircle(Color clr, Point2D pt, double radius, DrawingOptions opts);"
+          ],
+          "pascal": [
+            "procedure FillCircle(clr: Color; const pt: Point2D; radius: Double; opts: DrawingOptions)"
           ]
         }
       },
@@ -73394,6 +73728,57 @@
         }
       },
       {
+        "signature": "int raspi_get_servo_pulsewidth(gpio_pin pin);",
+        "name": "raspi_get_servo_pulsewidth",
+        "method_name": null,
+        "unique_global_name": "raspi_get_servo_pulsewidth",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function retrieves the pulse width for the specified pin.",
+        "brief": "Gets the pulse width for the specified pin.",
+        "return": {
+          "type": "int",
+          "description": "The pulse width of the pin.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to get the pulse width for.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def raspi_get_servo_pulsewidth(pin):"
+          ],
+          "cpp": [
+            "int raspi_get_servo_pulsewidth(gpio_pin pin)"
+          ],
+          "csharp": [
+            "public static int SplashKit.RaspiGetServoPulsewidth(GpioPin pin);"
+          ],
+          "pascal": [
+            "function RaspiGetServoPulsewidth(pin: GpioPin): Integer"
+          ]
+        }
+      },
+      {
         "signature": "void raspi_init();",
         "name": "raspi_init",
         "method_name": null,
@@ -73799,6 +74184,70 @@
           ],
           "pascal": [
             "procedure RaspiSetPwmRange(pin: GpioPin; range: Integer)"
+          ]
+        }
+      },
+      {
+        "signature": "void raspi_set_servo_pulsewidth(gpio_pin pin,int pulsewidth);",
+        "name": "raspi_set_servo_pulsewidth",
+        "method_name": null,
+        "unique_global_name": "raspi_set_servo_pulsewidth",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "This function sets the pulse width for the specified pin.",
+        "brief": "Sets the pulse width for the specified pin.",
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "pin": {
+            "type": "gpio_pin",
+            "description": "The pin to set the pulse width for.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "pulsewidth": {
+            "type": "int",
+            "description": "The pulse width to set for the pin.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def raspi_set_servo_pulsewidth(pin, pulsewidth):"
+          ],
+          "cpp": [
+            "void raspi_set_servo_pulsewidth(gpio_pin pin, int pulsewidth)"
+          ],
+          "csharp": [
+            "public static void SplashKit.RaspiSetServoPulsewidth(GpioPin pin, int pulsewidth);"
+          ],
+          "pascal": [
+            "procedure RaspiSetServoPulsewidth(pin: GpioPin; pulsewidth: Integer)"
           ]
         }
       },
@@ -74801,13 +75250,64 @@
             "procedure RemoteRaspiWrite(pi: Connection; pin: GpioPin; value: GpioPinValue)"
           ]
         }
+      },
+      {
+        "signature": "int to_int(gpio_pin_value value);",
+        "name": "to_int",
+        "method_name": null,
+        "unique_global_name": "to_int",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the specified pin value to an integer, to use in calculations.",
+        "brief": "Converts a GPIO Pin Value to an integer.",
+        "return": {
+          "type": "int",
+          "description": "The pin value as an integer.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "value": {
+            "type": "gpio_pin_value",
+            "description": "The pin to read the value from.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def to_int(value):"
+          ],
+          "cpp": [
+            "int to_int(gpio_pin_value value)"
+          ],
+          "csharp": [
+            "public static int SplashKit.ToInt(GpioPinValue value);"
+          ],
+          "pascal": [
+            "function ToInt(value: GpioPinValue): Integer"
+          ]
+        }
       }
     ],
     "typedefs": [
       {
         "signature": "typedef struct _adc_data *adc_device;",
         "name": "adc_device",
-        "description": "The `adc_device` type is used to refer to ADC (Analog-to-Digital Converter)\ndevices that can be managed by the SplashKit ADC code. ADC devices are:\n\n- loaded with `load_adc_device`,\n\n- accessed using `adc_device_named` or checked with `has_adc_device`,\n\n- read using `read_adc_channel` to retrieve analog values from specific channels,\n\n- and must be released using `free_adc_device` (to release a specific\nADC device) or `free_all_adc_devices` (to release all loaded ADC devices).\n\nADC devices allow you to interface with external analog sensors or inputs,\nconverting their signals into digital values for processing in your application.\n\nYou can check if an ADC device is loaded using `has_adc_device`.\n\nUse `free_adc_device` to release resources associated with a specific ADC device,\nor `free_all_adc_devices` to clean up all ADC devices.",
+        "description": "The `adc_device` type is used to refer to ADC (Analog-to-Digital Converter)\ndevices that can be managed by the SplashKit ADC code, such as ADS7830.\nADC devices are:\n\n- loaded with `open_adc`,\n- accessed using `adc_device_named` or checked with `has_adc_device`,\n- read using `read_adc` to retrieve analog values from specific channels,\n- and must be closed using `close_adc` (to release a specific\nADC device) or `close_all_adc` (to release all loaded ADC devices).\n\nADC devices allow you to interface with external analog sensors or inputs,\nconverting their signals into digital values for processing in your application.",
         "brief": null,
         "attributes": {
           "class": "adc_device",
@@ -94006,7 +94506,7 @@
             "number": 2
           },
           "PIN_3": {
-            "description": "GPIO2 / SDA (I2C)",
+            "description": "GPIO 2 / SDA (I2C)",
             "number": 3
           },
           "PIN_4": {
@@ -94014,7 +94514,7 @@
             "number": 4
           },
           "PIN_5": {
-            "description": "GPIO3 / SCL (I2C)",
+            "description": "GPIO 3 / SCL (I2C)",
             "number": 5
           },
           "PIN_6": {
@@ -94022,11 +94522,11 @@
             "number": 6
           },
           "PIN_7": {
-            "description": "GPIO4",
+            "description": "GPIO 4 / GPCLK0",
             "number": 7
           },
           "PIN_8": {
-            "description": "GPIO14 / TXD (UART)",
+            "description": "GPIO 14 / TXD (UART)",
             "number": 8
           },
           "PIN_9": {
@@ -94034,19 +94534,19 @@
             "number": 9
           },
           "PIN_10": {
-            "description": "GPIO15 / RXD (UART)",
+            "description": "GPIO 15 / RXD (UART)",
             "number": 10
           },
           "PIN_11": {
-            "description": "GPIO17",
+            "description": "GPIO 17",
             "number": 11
           },
           "PIN_12": {
-            "description": "GPIO18 / PCM_CLK",
+            "description": "GPIO 18 / PCM_CLK",
             "number": 12
           },
           "PIN_13": {
-            "description": "GPIO27",
+            "description": "GPIO 27",
             "number": 13
           },
           "PIN_14": {
@@ -94054,11 +94554,11 @@
             "number": 14
           },
           "PIN_15": {
-            "description": "GPIO22",
+            "description": "GPIO 22",
             "number": 15
           },
           "PIN_16": {
-            "description": "GPIO23",
+            "description": "GPIO 23",
             "number": 16
           },
           "PIN_17": {
@@ -94066,11 +94566,11 @@
             "number": 17
           },
           "PIN_18": {
-            "description": "GPIO24",
+            "description": "GPIO 24",
             "number": 18
           },
           "PIN_19": {
-            "description": "GPIO10 / MOSI (SPI)",
+            "description": "GPIO 10 / MOSI (SPI)",
             "number": 19
           },
           "PIN_20": {
@@ -94078,19 +94578,19 @@
             "number": 20
           },
           "PIN_21": {
-            "description": "GPIO9 / MISO (SPI)",
+            "description": "GPIO 9 / MISO (SPI)",
             "number": 21
           },
           "PIN_22": {
-            "description": "GPIO25",
+            "description": "GPIO 25",
             "number": 22
           },
           "PIN_23": {
-            "description": "GPIO11 / SCLK (SPI)",
+            "description": "GPIO 11 / SCLK (SPI)",
             "number": 23
           },
           "PIN_24": {
-            "description": "GPIO8 / CE0 (SPI)",
+            "description": "GPIO 8 / CE0 (SPI)",
             "number": 24
           },
           "PIN_25": {
@@ -94098,7 +94598,7 @@
             "number": 25
           },
           "PIN_26": {
-            "description": "GPIO7 / CE1 (SPI)",
+            "description": "GPIO 7 / CE1 (SPI)",
             "number": 26
           },
           "PIN_27": {
@@ -94110,7 +94610,7 @@
             "number": 28
           },
           "PIN_29": {
-            "description": "GPIO5",
+            "description": "GPIO 5",
             "number": 29
           },
           "PIN_30": {
@@ -94118,15 +94618,15 @@
             "number": 30
           },
           "PIN_31": {
-            "description": "GPIO6",
+            "description": "GPIO 6",
             "number": 31
           },
           "PIN_32": {
-            "description": "GPIO12",
+            "description": "GPIO 12 / PWM0",
             "number": 32
           },
           "PIN_33": {
-            "description": "GPIO13",
+            "description": "GPIO 13",
             "number": 33
           },
           "PIN_34": {
@@ -94134,19 +94634,19 @@
             "number": 34
           },
           "PIN_35": {
-            "description": "GPIO19 / MISO (PCM)",
+            "description": "GPIO 19 / MISO (PCM)",
             "number": 35
           },
           "PIN_36": {
-            "description": "GPIO16 / CE0 (PCM)",
+            "description": "GPIO 16 / CE0 (PCM_FS)",
             "number": 36
           },
           "PIN_37": {
-            "description": "GPIO26",
+            "description": "GPIO 26",
             "number": 37
           },
           "PIN_38": {
-            "description": "GPIO20 / MOSI (PCM)",
+            "description": "GPIO 20 / MOSI (PCM_DIN)",
             "number": 38
           },
           "PIN_39": {
@@ -94154,7 +94654,7 @@
             "number": 39
           },
           "PIN_40": {
-            "description": "GPIO21 / SCLK (PCM)",
+            "description": "GPIO 21 / SCLK (PCM_DOUT)",
             "number": 40
           }
         },
@@ -94370,6 +94870,50 @@
           "cpp": "class interface_style {FLAT_DARK_STYLE = 0, SHADED_DARK_STYLE = 1, FLAT_LIGHT_STYLE = 2, SHADED_LIGHT_STYLE = 3, BUBBLE = 4, BUBBLE_MULTICOLORED = 5};",
           "csharp": "public enum {InterfaceStyle.FlatDarkStyle = 0, InterfaceStyle.ShadedDarkStyle = 1, InterfaceStyle.FlatLightStyle = 2, InterfaceStyle.ShadedLightStyle = 3, InterfaceStyle.Bubble = 4, InterfaceStyle.BubbleMulticolored = 5}",
           "pascal": "public enum {InterfaceStyle.FlatDarkStyle = 0, InterfaceStyle.ShadedDarkStyle = 1, InterfaceStyle.FlatLightStyle = 2, InterfaceStyle.ShadedLightStyle = 3, InterfaceStyle.Bubble = 4, InterfaceStyle.BubbleMulticolored = 5}"
+        }
+      },
+      {
+        "signature": "enum motor_direction {MOTOR_FORWARD,MOTOR_BACKWARD};",
+        "name": "motor_direction",
+        "description": "Motor Movement Directions:",
+        "brief": null,
+        "constants": {
+          "MOTOR_FORWARD": {
+            "description": "Motor moves forward."
+          },
+          "MOTOR_BACKWARD": {
+            "description": "Motor moves backward."
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "python": "public enum {MotorDirection.motor_forward = 0, MotorDirection.motor_backward = 0}",
+          "cpp": "class motor_direction {MOTOR_FORWARD = 0, MOTOR_BACKWARD = 0};",
+          "csharp": "public enum {MotorDirection.MotorForward = 0, MotorDirection.MotorBackward = 0}",
+          "pascal": "public enum {MotorDirection.MotorForward = 0, MotorDirection.MotorBackward = 0}"
+        }
+      },
+      {
+        "signature": "enum motor_driver_type {L298N = 0,// L293D = 1,// TB6612FNG = 2,// DRV8835 = 3,// DRV8834 = 4,// DRV8825 = 5,// A4988 = 6,};",
+        "name": "motor_driver_type",
+        "description": "Motor Driver Types:",
+        "brief": null,
+        "constants": {
+          "L298N": {
+            "description": "Dual H-Bridge Motor Driver",
+            "number": 0
+          }
+        },
+        "attributes": {
+          "group": "types"
+        },
+        "signatures": {
+          "python": "public enum {MotorDriverType.l298n = 0}",
+          "cpp": "class motor_driver_type {L298N = 0};",
+          "csharp": "public enum {MotorDriverType.L298n = 0}",
+          "pascal": "public enum {MotorDriverType.L298n = 0}"
         }
       },
       {
