@@ -144,7 +144,7 @@ TEST_CASE("Can move camera by offset", "[camera][unit]")
     REQUIRE_THAT(camera_y(), WithinRel(100.0));
 }
 
-TEST_CASE("Can center camera on sprite", "[camera][bitmap][sprite][integration]")
+TEST_CASE("Can center camera on sprite", "[camera][images][sprites][integration]")
 {
     // Create 20x20 square sprite at 50,50 
     bitmap square_bmp = create_bitmap("square", 20, 20);
