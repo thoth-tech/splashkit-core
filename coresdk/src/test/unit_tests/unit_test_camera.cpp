@@ -51,26 +51,6 @@ TEST_CASE("Convert world space to screen space", "[camera][unit]")
     }
 }
 
-// Superfluous - tested with rect_on_screen integration
-// TEST_CASE("Convert rectangle to screen space", "[camera][rectangle_geometry][graphics][window][integration]")
-// {
-//     // TODO
-// }
-
-// TEST_CASE("Return window as rectangle", "[camera][rectangle_geometry][graphics][window][integration]")
-// {
-//     SECTION("Rectangle from screen")
-//     {
-//         // TODO
-
-//     }
-//     SECTION("Rectangle from window")
-//     {
-//         // TODO
-
-//     }
-// }
-
 TEST_CASE("Convert screen space to world space", "[camera][unit]")
 {
     set_camera_position(point_at(150.0, 150.0));
@@ -156,12 +136,6 @@ TEST_CASE("Check if point is on screen", "[camera][point_geometry][graphics][win
     }
     close_window(wind);
 }
-
-// Redundant
-// TEST_CASE("Can move camera to coordinates", "[camera][unit]")
-// {
-//     // TODO
-// }
 
 TEST_CASE("Can move camera by offset", "[camera][unit]")
 {
