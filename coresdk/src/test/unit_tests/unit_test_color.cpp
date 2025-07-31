@@ -69,3 +69,70 @@ TEST_CASE("can convert a color to a hex string", "[color_to_string][color_green]
         REQUIRE(alpha_of(result) == 200);
     }
 }
+
+TEST_CASE("hsb_color converts HSB to RGB correctly", "[hsb_color]")
+{
+    SECTION("black when brightness is 0")
+    {
+        color black = hsb_color(0.5, 1.0, 0.0);
+        REQUIRE(red_of(black) == 0);
+        REQUIRE(green_of(black) == 0);
+        REQUIRE(blue_of(black) == 0);
+    }
+
+    SECTION("gray when saturation is 0")
+    {
+        color gray = hsb_color(0.3, 0.0, 0.5);
+        REQUIRE(red_of(gray) == 127);
+        REQUIRE(green_of(gray) == 127);
+        REQUIRE(blue_of(gray) == 127);
+    }
+
+    SECTION("pure red from HSB")
+    {   
+        color red = hsb_color(0.0, 1.0, 1.0);
+        REQUIRE(red_of(red) == 255);
+        REQUIRE(green_of(red) == 0);
+        REQUIRE(blue_of(red) == 0);
+    }
+
+    SECTION("pure green from HSB")
+    {
+        color green = hsb_color(1.0 / 3.0, 1.0, 1.0);
+        REQUIRE(red_of(green) == 0);
+        REQUIRE(green_of(green) == 255);
+        REQUIRE(blue_of(green) == 0);
+    }
+
+    SECTION("pure blue from HSB")
+    {
+        color blue = hsb_color(2.0 / 3.0, 1.0, 1.0);
+        REQUIRE(red_of(blue) == 0);
+        REQUIRE(green_of(blue) == 0);
+        REQUIRE(blue_of(blue) == 255);
+    }
+
+    SECTION("pure yellow from HSB")
+    {
+        color yellow = hsb_color(1.0 / 6.0, 1.0, 1.0);
+        REQUIRE(red_of(yellow) == 255);
+        REQUIRE(green_of(yellow) == 255);
+        REQUIRE(blue_of(yellow) == 0);
+    }
+
+    SECTION("pure cyan from HSB")
+    {
+        color cyan = hsb_color(0.5, 1.0, 1.0);
+        REQUIRE(red_of(cyan) == 0);
+        REQUIRE(green_of(cyan) == 255);
+        REQUIRE(blue_of(cyan) == 255);
+    }
+
+    SECTION("pure magenta from HSB")
+    {
+        color magenta = hsb_color(5.0 / 6.0, 1.0, 1.0);
+        REQUIRE(red_of(magenta) == 255);
+        REQUIRE(green_of(magenta) == 0);
+        REQUIRE(blue_of(magenta) == 255);
+    }
+}
