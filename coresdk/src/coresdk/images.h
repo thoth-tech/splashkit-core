@@ -179,7 +179,6 @@ namespace splashkit_lib
      * @attribute class   bitmap
      * @attribute method  draw_bitmap
      * @attribute self    bmp
-     * @attribute suffix  on_bitmap
      */
     void draw_bitmap_on_bitmap(bitmap destination, bitmap bmp, double x, double y);
 
@@ -199,7 +198,7 @@ namespace splashkit_lib
      * @attribute class   bitmap
      * @attribute method  draw_bitmap
      * @attribute self    bmp
-     * @attribute suffix  on_bitmap_with_options
+     * @attribute suffix  with_options
      */
     void draw_bitmap_on_bitmap(bitmap destination, bitmap bmp, double x, double y, drawing_options opts);
 
