@@ -6753,13 +6753,13 @@ def draw_bitmap_named_with_options ( name, x, y, opts ):
     __skparam__y = __skadapter__to_sklib_double(y)
     __skparam__opts = __skadapter__to_sklib_drawing_options(opts)
     sklib.__sklib__draw_bitmap__string__double__double__drawing_options(__skparam__name, __skparam__x, __skparam__y, __skparam__opts)
-def draw_bitmap_on_bitmap ( destination, bmp, x, y ):
+def draw_bitmap_on_bitmap_on_bitmap ( destination, bmp, x, y ):
     __skparam__destination = __skadapter__to_sklib_bitmap(destination)
     __skparam__bmp = __skadapter__to_sklib_bitmap(bmp)
     __skparam__x = __skadapter__to_sklib_double(x)
     __skparam__y = __skadapter__to_sklib_double(y)
     sklib.__sklib__draw_bitmap_on_bitmap__bitmap__bitmap__double__double(__skparam__destination, __skparam__bmp, __skparam__x, __skparam__y)
-def draw_bitmap_on_bitmap_with_options ( destination, bmp, x, y, opts ):
+def draw_bitmap_on_bitmap_on_bitmap_with_options ( destination, bmp, x, y, opts ):
     __skparam__destination = __skadapter__to_sklib_bitmap(destination)
     __skparam__bmp = __skadapter__to_sklib_bitmap(bmp)
     __skparam__x = __skadapter__to_sklib_double(x)
@@ -7023,7 +7023,7 @@ def set_interface_element_shadows ( radius, clr, offset ):
     __skparam__clr = __skadapter__to_sklib_color(clr)
     __skparam__offset = __skadapter__to_sklib_point_2d(offset)
     sklib.__sklib__set_interface_element_shadows__int__color__point_2d(__skparam__radius, __skparam__clr, __skparam__offset)
-def set_interface_font_with_string ( fnt ):
+def set_interface_font_font_as_string ( fnt ):
     __skparam__fnt = __skadapter__to_sklib_string(fnt)
     sklib.__sklib__set_interface_font__string_ref(__skparam__fnt)
 def set_interface_font ( fnt ):
@@ -8263,7 +8263,7 @@ def same_point ( pt1, pt2 ):
     __skparam__pt2 = __skadapter__to_sklib_point_2d(pt2)
     __skreturn = sklib.__sklib__same_point__point_2d_ref__point_2d_ref(__skparam__pt1, __skparam__pt2)
     return __skadapter__to_bool(__skreturn)
-def quad_from_line ( line_origin, line_end, width ):
+def quad_from_from_line ( line_origin, line_end, width ):
     __skparam__line_origin = __skadapter__to_sklib_point_2d(line_origin)
     __skparam__line_end = __skadapter__to_sklib_point_2d(line_end)
     __skparam__width = __skadapter__to_sklib_double(width)
@@ -9486,7 +9486,7 @@ def update_sprite_animation_percent_with_sound ( s, pct, with_sound ):
     __skparam__pct = __skadapter__to_sklib_float(pct)
     __skparam__with_sound = __skadapter__to_sklib_bool(with_sound)
     sklib.__sklib__update_sprite_animation__sprite__float__bool(__skparam__s, __skparam__pct, __skparam__with_sound)
-def vector_from_center_sprite_to_point ( s, pt ):
+def vector_from_center_sprite_to_point_point ( s, pt ):
     __skparam__s = __skadapter__to_sklib_sprite(s)
     __skparam__pt = __skadapter__to_sklib_point_2d(pt)
     __skreturn = sklib.__sklib__vector_from_center_sprite_to_point__sprite__point_2d_ref(__skparam__s, __skparam__pt)

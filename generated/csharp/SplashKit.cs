@@ -28802,7 +28802,7 @@ public class Sprite : PointerWrapper
     /// </summary>
     /// <param name="pt"> The point that is at the end of the vector.</param>
     /// <returns>A vector pointing from the sprite to the point.</returns>
-    public Vector2D VectorFromCenterToPoint(Point2D pt)
+    public Vector2D VectorTo(Point2D pt)
     {
         return SplashKit.VectorFromCenterSpriteToPoint(this, pt);
     }
@@ -30255,7 +30255,7 @@ public class Bitmap : PointerWrapper
     /// <param name="cell"> The bitmap cell to check.</param>
     /// <param name="pt"> The point within the bitmap to check.</param>
     /// <returns>True if the pixel at that point in the bitmap's cell is drawn.</returns>
-    public bool PixelDrawnAtPoint(int cell, Point2D pt)
+    public bool PixelDrawnAtPointInCell(int cell, Point2D pt)
     {
         return SplashKit.PixelDrawnAtPoint(this, cell, pt);
     }
