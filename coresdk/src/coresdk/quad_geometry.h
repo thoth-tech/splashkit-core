@@ -83,7 +83,7 @@ namespace splashkit_lib
      * @param width          The width of the quad
      * @return               A quad that represents the line with the given width
      * 
-     * @attribute suffix  from_line
+     * @attribute suffix  line
      */
     quad quad_from(const point_2d& line_origin, const point_2d& line_end, double width);
 
