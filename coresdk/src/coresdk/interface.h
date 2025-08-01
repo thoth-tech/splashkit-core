@@ -394,6 +394,9 @@ namespace splashkit_lib
      * @param bmp               The bitmap to show inside the button
      * @return                  Whether the button was clicked
      *
+     * @attribute class   bitmap
+     * @attribute method  button
+     * @attribute self    bmp
      */
     bool bitmap_button(bitmap bmp);
 
@@ -405,7 +408,10 @@ namespace splashkit_lib
      * @param opts              The drawing options
      * @return                  Whether the button was clicked
      *
+     * @attribute class         bitmap
+     * @attribute method        button
      * @attribute suffix        with_options
+     * @attribute self          bmp
      */
     bool bitmap_button(bitmap bmp, drawing_options opts);
 
@@ -417,7 +423,10 @@ namespace splashkit_lib
      * @param rect              The rectangle to display the button in
      * @return                  Whether the button was clicked
      *
+     * @attribute class         bitmap
+     * @attribute method        button
      * @attribute suffix        at_position
+     * @attribute self          bmp
      */
     bool bitmap_button(bitmap bmp, const rectangle& rect);
 
@@ -430,7 +439,10 @@ namespace splashkit_lib
      * @param opts              The drawing options
      * @return                  Whether the button was clicked
      *
+     * @attribute class         bitmap
+     * @attribute method        button
      * @attribute suffix        at_position_with_options
+     * @attribute self          bmp
      */
     bool bitmap_button(bitmap bmp, const rectangle& rect, drawing_options opts);
 
