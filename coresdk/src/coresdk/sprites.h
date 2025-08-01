@@ -953,9 +953,9 @@ namespace splashkit_lib
      * @param pt  The point that is at the end of the vector.
      * @returns   A vector pointing from the sprite to the point.
      *
-     * @attribute class sprite
-     * @attribute method vector_to
-     * @attribute suffix point
+     * @attribute class   sprite
+     * @attribute method  vector_from_center_to_point
+     * @attribute self    s
      */
     vector_2d vector_from_center_sprite_to_point(sprite s, const point_2d &pt);
 
