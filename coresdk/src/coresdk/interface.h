@@ -39,7 +39,7 @@ namespace splashkit_lib
      *
      * @param fnt               The name of the font to be used
      *
-     * @attribute suffix        font_as_string
+     * @attribute suffix        with_string
      */
     void set_interface_font(const string& fnt);
 
