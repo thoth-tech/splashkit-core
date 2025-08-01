@@ -583,8 +583,10 @@ namespace splashkit_lib
      * @param y     The y coordinate within the bitmap to check
      * @returns     True if the pixel at that point in the bitmap is drawn.
      *
-     * @attribute class bitmap
-     * @attribute method pixel_drawn_at_point
+     * 
+     * @attribute class   bitmap
+     * @attribute method  pixel_drawn_at_point
+     * @attribute self    bmp
      */
     bool pixel_drawn_at_point(bitmap bmp, double x, double y);
 
@@ -598,10 +600,11 @@ namespace splashkit_lib
      * @returns     True if the pixel at that point in the bitmap's cell is
      *              drawn.
      *
+     * 
+     * @attribute class   bitmap
+     * @attribute method  pixel_drawn_at_point
      * @attribute suffix  in_cell
-     *
-     * @attribute class bitmap
-     * @attribute method pixel_drawn_at_point
+     * @attribute self    bmp
      */
     bool pixel_drawn_at_point(bitmap bmp, int cell, double x, double y);
 
@@ -612,10 +615,11 @@ namespace splashkit_lib
      * @param pt    The point within the bitmap to check.
      * @returns     True if the pixel at that point in the bitmap is drawn.
      *
+     * 
+     * @attribute class   bitmap
+     * @attribute method  pixel_drawn_at_point
      * @attribute suffix  pt
-     *
-     * @attribute class bitmap
-     * @attribute method pixel_drawn_at_point
+     * @attribute self    bmp
      */
     bool pixel_drawn_at_point(bitmap bmp, const point_2d &pt);
 
@@ -628,10 +632,11 @@ namespace splashkit_lib
      * @returns     True if the pixel at that point in the bitmap's cell is
      *              drawn.
      *
-     * @attribute suffix  in_cell_pt
      *
-     * @attribute class bitmap
-     * @attribute method pixel_drawn_at_point_in_cell
+     * @attribute class   bitmap
+     * @attribute method  pixel_drawn_at_point
+     * @attribute suffix  in_cell_pt
+     * @attribute self    bmp
      */
     bool pixel_drawn_at_point(bitmap bmp, int cell, const point_2d &pt);
 }
