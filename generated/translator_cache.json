@@ -3,7 +3,7 @@
     "group": "animations",
     "brief": "Animations in SplashKit can be used to move between cells in\nbitmaps and sprites. Each animation generates a number sequence\nthat can then be used when drawing bitmaps.",
     "description": null,
-    "parsed_at": 1753421298,
+    "parsed_at": 1754029915,
     "path": "coresdk/src/coresdk/animations.h",
     "functions": [
       {
@@ -7535,7 +7535,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1753421301,
+    "parsed_at": 1754029916,
     "path": "coresdk/src/coresdk/clipping.h",
     "functions": [
       {
@@ -19997,7 +19997,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1753421308,
+    "parsed_at": 1754029917,
     "path": "coresdk/src/coresdk/drawing_options.h",
     "functions": [
       {
@@ -23594,7 +23594,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1753421309,
+    "parsed_at": 1754029918,
     "path": "coresdk/src/coresdk/graphics.h",
     "functions": [
       {
@@ -24173,7 +24173,7 @@
     "group": "graphics",
     "brief": "SplashKit Images allow drawing of bitmaps and sprites to graphic windows.",
     "description": null,
-    "parsed_at": 1753421310,
+    "parsed_at": 1754029920,
     "path": "coresdk/src/coresdk/images.h",
     "functions": [
       {
@@ -25878,8 +25878,8 @@
         "signature": "void draw_bitmap_on_bitmap(bitmap destination,bitmap bmp,double x,double y);",
         "name": "draw_bitmap_on_bitmap",
         "method_name": "draw_bitmap",
-        "unique_global_name": "draw_bitmap_on_bitmap_on_bitmap",
-        "unique_method_name": "bitmap.draw_bitmap_on_bitmap",
+        "unique_global_name": "draw_bitmap_on_bitmap",
+        "unique_method_name": "bitmap.draw_bitmap",
         "suffix_name": null,
         "description": "Draws the bitmap supplied into `bmp` to the given bitmap.\nat `x` and `y`.",
         "brief": null,
@@ -25949,7 +25949,6 @@
           "class": "bitmap",
           "method": "draw_bitmap",
           "self": "bmp",
-          "suffix": "on_bitmap",
           "group": "graphics",
           "static": "images"
         }
@@ -25958,8 +25957,8 @@
         "signature": "void draw_bitmap_on_bitmap(bitmap destination,bitmap bmp,double x,double y,drawing_options opts);",
         "name": "draw_bitmap_on_bitmap",
         "method_name": "draw_bitmap",
-        "unique_global_name": "draw_bitmap_on_bitmap_on_bitmap_with_options",
-        "unique_method_name": "bitmap.draw_bitmap_on_bitmap_with_options",
+        "unique_global_name": "draw_bitmap_on_bitmap_with_options",
+        "unique_method_name": "bitmap.draw_bitmap_with_options",
         "suffix_name": null,
         "description": "Draws the bitmap supplied into `bmp` to the given bitmap.\nwith extra drawing options supplied in `opts` at `x` and `y`.",
         "brief": null,
@@ -26042,7 +26041,7 @@
           "class": "bitmap",
           "method": "draw_bitmap",
           "self": "bmp",
-          "suffix": "on_bitmap_with_options",
+          "suffix": "with_options",
           "group": "graphics",
           "static": "images"
         }
@@ -26421,10 +26420,10 @@
         "attributes": {
           "class": "bitmap",
           "method": "pixel_drawn_at_point",
+          "self": "bmp",
           "suffix": "pt",
           "group": "graphics",
-          "static": "images",
-          "self": "bmp"
+          "static": "images"
         }
       },
       {
@@ -26488,17 +26487,17 @@
         "attributes": {
           "class": "bitmap",
           "method": "pixel_drawn_at_point",
+          "self": "bmp",
           "group": "graphics",
-          "static": "images",
-          "self": "bmp"
+          "static": "images"
         }
       },
       {
         "signature": "bool pixel_drawn_at_point(bitmap bmp,int cell,const point_2d &pt);",
         "name": "pixel_drawn_at_point",
-        "method_name": "pixel_drawn_at_point_in_cell",
+        "method_name": "pixel_drawn_at_point",
         "unique_global_name": "pixel_drawn_at_point_in_cell_pt",
-        "unique_method_name": "bitmap.pixel_drawn_at_point_in_cell_in_cell_pt",
+        "unique_method_name": "bitmap.pixel_drawn_at_point_in_cell_pt",
         "suffix_name": null,
         "description": "Check if the bitmap has a pixel drawn at the indicated point in the cell.",
         "brief": null,
@@ -26553,11 +26552,11 @@
         },
         "attributes": {
           "class": "bitmap",
-          "method": "pixel_drawn_at_point_in_cell",
+          "method": "pixel_drawn_at_point",
+          "self": "bmp",
           "suffix": "in_cell_pt",
           "group": "graphics",
-          "static": "images",
-          "self": "bmp"
+          "static": "images"
         }
       },
       {
@@ -26634,10 +26633,10 @@
         "attributes": {
           "class": "bitmap",
           "method": "pixel_drawn_at_point",
+          "self": "bmp",
           "suffix": "in_cell",
           "group": "graphics",
-          "static": "images",
-          "self": "bmp"
+          "static": "images"
         }
       },
       {
@@ -26791,7 +26790,7 @@
     "group": "interface",
     "brief": "SplashKit Interface provides functions to create user interfaces, with elements such as draggable panels, buttons and text boxes.",
     "description": "SplashKit`s interface library provides various functions for creating\npanels, and drawing interface elements such as buttons, text boxes, and more",
-    "parsed_at": 1753421311,
+    "parsed_at": 1754029922,
     "path": "coresdk/src/coresdk/interface.h",
     "functions": [
       {
@@ -28927,7 +28926,7 @@
         "signature": "void set_interface_font(const string& fnt);",
         "name": "set_interface_font",
         "method_name": null,
-        "unique_global_name": "set_interface_font_font_as_string",
+        "unique_global_name": "set_interface_font_with_string",
         "unique_method_name": null,
         "suffix_name": null,
         "description": "Sets the interface's font.",
@@ -28956,7 +28955,7 @@
           }
         },
         "attributes": {
-          "suffix": "font_as_string",
+          "suffix": "with_string",
           "group": "interface",
           "static": "interface"
         }
@@ -36910,7 +36909,7 @@
     "group": "audio",
     "brief": null,
     "description": null,
-    "parsed_at": 1753421315,
+    "parsed_at": 1754029923,
     "path": "coresdk/src/coresdk/music.h",
     "functions": [
       {
@@ -37941,7 +37940,7 @@
     "group": "networking",
     "brief": "SplashKit's network-related functions allow you to communicate data\nacross networks.",
     "description": null,
-    "parsed_at": 1753421317,
+    "parsed_at": 1754029925,
     "path": "coresdk/src/coresdk/networking.h",
     "functions": [
       {
@@ -41255,7 +41254,7 @@
     "group": "graphics",
     "brief": null,
     "description": null,
-    "parsed_at": 1753421317,
+    "parsed_at": 1754029926,
     "path": "coresdk/src/coresdk/point_drawing.h",
     "functions": [
       {
@@ -42469,7 +42468,7 @@
     "group": "geometry",
     "brief": null,
     "description": null,
-    "parsed_at": 1753421318,
+    "parsed_at": 1754029927,
     "path": "coresdk/src/coresdk/point_geometry.h",
     "functions": [
       {
@@ -43496,14 +43495,14 @@
     "group": "geometry",
     "brief": null,
     "description": null,
-    "parsed_at": 1753421318,
+    "parsed_at": 1754029928,
     "path": "coresdk/src/coresdk/quad_geometry.h",
     "functions": [
       {
         "signature": "quad quad_from(const point_2d& line_origin,const point_2d& line_end,double width);",
         "name": "quad_from",
         "method_name": null,
-        "unique_global_name": "quad_from_from_line",
+        "unique_global_name": "quad_from_line",
         "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns a quad from the passed in line and width.\nThe quad will be a rectangle with the line as the diagonal,\nand the width as the width of the rectangle.",
@@ -43558,7 +43557,7 @@
           }
         },
         "attributes": {
-          "suffix": "from_line",
+          "suffix": "line",
           "group": "geometry",
           "static": "geometry"
         }
@@ -44312,7 +44311,7 @@
     "group": "raspberry",
     "brief": "Provides support for using an ADC device with the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1753421318,
+    "parsed_at": 1754029928,
     "path": "coresdk/src/coresdk/raspi_adc.h",
     "functions": [
       {
@@ -44760,7 +44759,7 @@
     "group": "raspberry",
     "brief": "Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.",
     "description": null,
-    "parsed_at": 1753421319,
+    "parsed_at": 1754029929,
     "path": "coresdk/src/coresdk/raspi_gpio.h",
     "functions": [
       {
@@ -50307,7 +50306,7 @@
     "group": "audio",
     "brief": null,
     "description": null,
-    "parsed_at": 1753421321,
+    "parsed_at": 1754029930,
     "path": "coresdk/src/coresdk/sound.h",
     "functions": [
       {
@@ -51316,7 +51315,7 @@
     "group": "sprites",
     "brief": "SplashKit Sprites allows you to create images you can easily\nmove and animate.",
     "description": "SplashKit sprites are game elements that can be moved, and animated. Sprites\nare located at a position in the game, have a velocity, and an animation.\nThe sprite can also have arbitary data associated with it for game specific\npurposes.",
-    "parsed_at": 1753421324,
+    "parsed_at": 1754029934,
     "path": "coresdk/src/coresdk/sprites.h",
     "functions": [
       {
@@ -57886,9 +57885,9 @@
       {
         "signature": "vector_2d vector_from_center_sprite_to_point(sprite s,const point_2d &pt);",
         "name": "vector_from_center_sprite_to_point",
-        "method_name": "vector_to",
-        "unique_global_name": "vector_from_center_sprite_to_point_point",
-        "unique_method_name": "sprite.vector_to_point",
+        "method_name": "vector_from_center_to_point",
+        "unique_global_name": "vector_from_center_sprite_to_point",
+        "unique_method_name": "sprite.vector_from_center_to_point",
         "suffix_name": null,
         "description": "Returns a `vector_2d` that is the difference in location from the center of\nthe sprite `s` to the point `pt`.",
         "brief": null,
@@ -57930,11 +57929,10 @@
         },
         "attributes": {
           "class": "sprite",
-          "method": "vector_to",
-          "suffix": "point",
+          "method": "vector_from_center_to_point",
+          "self": "s",
           "group": "sprites",
-          "static": "sprite",
-          "self": "s"
+          "static": "sprite"
         }
       },
       {
@@ -65902,7 +65900,7 @@
     "group": "types",
     "brief": "SplashKit Types simplifies data type creation and management for streamlined programming.",
     "description": null,
-    "parsed_at": 1753421328,
+    "parsed_at": 1754029936,
     "path": "coresdk/src/coresdk/types.h",
     "functions": [
 
@@ -68664,7 +68662,7 @@
     "group": "networking",
     "brief": null,
     "description": null,
-    "parsed_at": 1753421329,
+    "parsed_at": 1754029936,
     "path": "coresdk/src/coresdk/web_client.h",
     "functions": [
       {

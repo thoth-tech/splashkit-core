@@ -18617,7 +18617,7 @@
         "signature": "quad quad_from(const point_2d& line_origin,const point_2d& line_end,double width);",
         "name": "quad_from",
         "method_name": null,
-        "unique_global_name": "quad_from_from_line",
+        "unique_global_name": "quad_from_line",
         "unique_method_name": null,
         "suffix_name": null,
         "description": "Returns a quad from the passed in line and width.\nThe quad will be a rectangle with the line as the diagonal,\nand the width as the width of the rectangle.",
@@ -18672,13 +18672,13 @@
           }
         },
         "attributes": {
-          "suffix": "from_line",
+          "suffix": "line",
           "group": "geometry",
           "static": "geometry"
         },
         "signatures": {
           "python": [
-            "def quad_from_from_line(line_origin, line_end, width):"
+            "def quad_from_line(line_origin, line_end, width):"
           ],
           "cpp": [
             "quad quad_from(const point_2d &line_origin, const point_2d &line_end, double width)"
@@ -31251,8 +31251,8 @@
         "signature": "void draw_bitmap_on_bitmap(bitmap destination,bitmap bmp,double x,double y);",
         "name": "draw_bitmap_on_bitmap",
         "method_name": "draw_bitmap",
-        "unique_global_name": "draw_bitmap_on_bitmap_on_bitmap",
-        "unique_method_name": "bitmap.draw_bitmap_on_bitmap",
+        "unique_global_name": "draw_bitmap_on_bitmap",
+        "unique_method_name": "bitmap.draw_bitmap",
         "suffix_name": null,
         "description": "Draws the bitmap supplied into `bmp` to the given bitmap.\nat `x` and `y`.",
         "brief": null,
@@ -31322,13 +31322,12 @@
           "class": "bitmap",
           "method": "draw_bitmap",
           "self": "bmp",
-          "suffix": "on_bitmap",
           "group": "graphics",
           "static": "images"
         },
         "signatures": {
           "python": [
-            "def draw_bitmap_on_bitmap_on_bitmap(destination, bmp, x, y):"
+            "def draw_bitmap_on_bitmap(destination, bmp, x, y):"
           ],
           "cpp": [
             "void draw_bitmap_on_bitmap(bitmap destination, bitmap bmp, double x, double y)"
@@ -31346,8 +31345,8 @@
         "signature": "void draw_bitmap_on_bitmap(bitmap destination,bitmap bmp,double x,double y,drawing_options opts);",
         "name": "draw_bitmap_on_bitmap",
         "method_name": "draw_bitmap",
-        "unique_global_name": "draw_bitmap_on_bitmap_on_bitmap_with_options",
-        "unique_method_name": "bitmap.draw_bitmap_on_bitmap_with_options",
+        "unique_global_name": "draw_bitmap_on_bitmap_with_options",
+        "unique_method_name": "bitmap.draw_bitmap_with_options",
         "suffix_name": null,
         "description": "Draws the bitmap supplied into `bmp` to the given bitmap.\nwith extra drawing options supplied in `opts` at `x` and `y`.",
         "brief": null,
@@ -31430,13 +31429,13 @@
           "class": "bitmap",
           "method": "draw_bitmap",
           "self": "bmp",
-          "suffix": "on_bitmap_with_options",
+          "suffix": "with_options",
           "group": "graphics",
           "static": "images"
         },
         "signatures": {
           "python": [
-            "def draw_bitmap_on_bitmap_on_bitmap_with_options(destination, bmp, x, y, opts):"
+            "def draw_bitmap_on_bitmap_with_options(destination, bmp, x, y, opts):"
           ],
           "cpp": [
             "void draw_bitmap_on_bitmap(bitmap destination, bitmap bmp, double x, double y, drawing_options opts)"
@@ -31912,10 +31911,10 @@
         "attributes": {
           "class": "bitmap",
           "method": "pixel_drawn_at_point",
+          "self": "bmp",
           "suffix": "pt",
           "group": "graphics",
-          "static": "images",
-          "self": "bmp"
+          "static": "images"
         },
         "signatures": {
           "python": [
@@ -31994,9 +31993,9 @@
         "attributes": {
           "class": "bitmap",
           "method": "pixel_drawn_at_point",
+          "self": "bmp",
           "group": "graphics",
-          "static": "images",
-          "self": "bmp"
+          "static": "images"
         },
         "signatures": {
           "python": [
@@ -32017,9 +32016,9 @@
       {
         "signature": "bool pixel_drawn_at_point(bitmap bmp,int cell,const point_2d &pt);",
         "name": "pixel_drawn_at_point",
-        "method_name": "pixel_drawn_at_point_in_cell",
+        "method_name": "pixel_drawn_at_point",
         "unique_global_name": "pixel_drawn_at_point_in_cell_pt",
-        "unique_method_name": "bitmap.pixel_drawn_at_point_in_cell_in_cell_pt",
+        "unique_method_name": "bitmap.pixel_drawn_at_point_in_cell_pt",
         "suffix_name": null,
         "description": "Check if the bitmap has a pixel drawn at the indicated point in the cell.",
         "brief": null,
@@ -32074,11 +32073,11 @@
         },
         "attributes": {
           "class": "bitmap",
-          "method": "pixel_drawn_at_point_in_cell",
+          "method": "pixel_drawn_at_point",
+          "self": "bmp",
           "suffix": "in_cell_pt",
           "group": "graphics",
-          "static": "images",
-          "self": "bmp"
+          "static": "images"
         },
         "signatures": {
           "python": [
@@ -32088,7 +32087,7 @@
             "bool pixel_drawn_at_point(bitmap bmp, int cell, const point_2d &pt)"
           ],
           "csharp": [
-            "public bool Bitmap.PixelDrawnAtPointInCell(int cell, Point2D pt);",
+            "public bool Bitmap.PixelDrawnAtPoint(int cell, Point2D pt);",
             "public static bool SplashKit.PixelDrawnAtPoint(Bitmap bmp, int cell, Point2D pt);"
           ],
           "pascal": [
@@ -32170,10 +32169,10 @@
         "attributes": {
           "class": "bitmap",
           "method": "pixel_drawn_at_point",
+          "self": "bmp",
           "suffix": "in_cell",
           "group": "graphics",
-          "static": "images",
-          "self": "bmp"
+          "static": "images"
         },
         "signatures": {
           "python": [
@@ -50591,7 +50590,7 @@
         "signature": "void set_interface_font(const string& fnt);",
         "name": "set_interface_font",
         "method_name": null,
-        "unique_global_name": "set_interface_font_font_as_string",
+        "unique_global_name": "set_interface_font_with_string",
         "unique_method_name": null,
         "suffix_name": null,
         "description": "Sets the interface's font.",
@@ -50620,13 +50619,13 @@
           }
         },
         "attributes": {
-          "suffix": "font_as_string",
+          "suffix": "with_string",
           "group": "interface",
           "static": "interface"
         },
         "signatures": {
           "python": [
-            "def set_interface_font_font_as_string(fnt):"
+            "def set_interface_font_with_string(fnt):"
           ],
           "cpp": [
             "void set_interface_font(const string &fnt)"
@@ -84497,9 +84496,9 @@
       {
         "signature": "vector_2d vector_from_center_sprite_to_point(sprite s,const point_2d &pt);",
         "name": "vector_from_center_sprite_to_point",
-        "method_name": "vector_to",
-        "unique_global_name": "vector_from_center_sprite_to_point_point",
-        "unique_method_name": "sprite.vector_to_point",
+        "method_name": "vector_from_center_to_point",
+        "unique_global_name": "vector_from_center_sprite_to_point",
+        "unique_method_name": "sprite.vector_from_center_to_point",
         "suffix_name": null,
         "description": "Returns a `vector_2d` that is the difference in location from the center of\nthe sprite `s` to the point `pt`.",
         "brief": null,
@@ -84541,21 +84540,20 @@
         },
         "attributes": {
           "class": "sprite",
-          "method": "vector_to",
-          "suffix": "point",
+          "method": "vector_from_center_to_point",
+          "self": "s",
           "group": "sprites",
-          "static": "sprite",
-          "self": "s"
+          "static": "sprite"
         },
         "signatures": {
           "python": [
-            "def vector_from_center_sprite_to_point_point(s, pt):"
+            "def vector_from_center_sprite_to_point(s, pt):"
           ],
           "cpp": [
             "vector_2d vector_from_center_sprite_to_point(sprite s, const point_2d &pt)"
           ],
           "csharp": [
-            "public Vector2D Sprite.VectorTo(Point2D pt);",
+            "public Vector2D Sprite.VectorFromCenterToPoint(Point2D pt);",
             "public static Vector2D SplashKit.VectorFromCenterSpriteToPoint(Sprite s, Point2D pt);"
           ],
           "pascal": [
