@@ -9,23 +9,24 @@
 using namespace splashkit_lib;
 using Catch::Matchers::WithinRel;
 
-class CameraTest {
+// Fixture to reset camera position for tests
+class CameraTestFixture {
     public:
-        CameraTest()
+        CameraTestFixture()
         {
             set_camera_position(point_at(0.0, 0.0));
         }
 };
 
 
-TEST_CASE_METHOD(CameraTest, "camera position correct after moving", "[set_camera_position]")
+TEST_CASE_METHOD(CameraTestFixture, "camera position correct after moving", "[set_camera_position]")
 {
     set_camera_position(point_at(42.0, 100.0));
     REQUIRE_THAT(camera_x(), WithinRel(42.0));
     REQUIRE_THAT(camera_y(), WithinRel(100.0));
 }
 
-TEST_CASE_METHOD(CameraTest, "get screen center in world space", "[screen_center]")
+TEST_CASE_METHOD(CameraTestFixture, "get screen center in world space", "[screen_center]")
 {
     open_window("get screen center in world space", 100, 100);
     point_2d center = screen_center();
@@ -34,7 +35,7 @@ TEST_CASE_METHOD(CameraTest, "get screen center in world space", "[screen_center
     close_current_window();
 }
 
-TEST_CASE_METHOD(CameraTest, "convert world space to screen space", "[to_screen_x][to_screen_y][to_screen][vector_world_to_screen]")
+TEST_CASE_METHOD(CameraTestFixture, "convert world space to screen space", "[to_screen_x][to_screen_y][to_screen][vector_world_to_screen]")
 {
     set_camera_position(point_at(150.0, 150.0));
     
@@ -60,7 +61,7 @@ TEST_CASE_METHOD(CameraTest, "convert world space to screen space", "[to_screen_
     }
 }
 
-TEST_CASE_METHOD(CameraTest, "convert screen space to world space", "[to_world_x][to_world_y][to_world]")
+TEST_CASE_METHOD(CameraTestFixture, "convert screen space to world space", "[to_world_x][to_world_y][to_world]")
 {
     set_camera_position(point_at(150.0, 150.0));
 
@@ -80,7 +81,7 @@ TEST_CASE_METHOD(CameraTest, "convert screen space to world space", "[to_world_x
     }
 }
 
-TEST_CASE_METHOD(CameraTest, "check if rectangle is on screen", "[rect_on_screen][rect_in_window]")
+TEST_CASE_METHOD(CameraTestFixture, "check if rectangle is on screen", "[rect_on_screen][rect_in_window]")
 {
     window wind = open_window("check if rectangle is on screen", 100, 100);
 
@@ -113,7 +114,7 @@ TEST_CASE_METHOD(CameraTest, "check if rectangle is on screen", "[rect_on_screen
     close_window(wind);
 }
 
-TEST_CASE_METHOD(CameraTest, "check if point is on screen", "[point_on_screen][point_in_window]")
+TEST_CASE_METHOD(CameraTestFixture, "check if point is on screen", "[point_on_screen][point_in_window]")
 {
     window wind = open_window("check if point is on screen", 100, 100);
 
@@ -146,14 +147,14 @@ TEST_CASE_METHOD(CameraTest, "check if point is on screen", "[point_on_screen][p
     close_window(wind);
 }
 
-TEST_CASE_METHOD(CameraTest, "can move camera by offset", "[move_camera_by]")
+TEST_CASE_METHOD(CameraTestFixture, "can move camera by offset", "[move_camera_by]")
 {
     move_camera_by(42.0, 100.0);
     REQUIRE_THAT(camera_x(), WithinRel(42.0));
     REQUIRE_THAT(camera_y(), WithinRel(100.0));
 }
 
-TEST_CASE_METHOD(CameraTest, "can center camera on sprite", "[center_camera_on]")
+TEST_CASE_METHOD(CameraTestFixture, "can center camera on sprite", "[center_camera_on]")
 {
     open_window("can center camera on sprite", 100, 100);
 
