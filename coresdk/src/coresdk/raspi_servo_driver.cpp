@@ -45,7 +45,7 @@ namespace splashkit_lib
     raspi_init();
 
     auto dev = new _servo_data();
-    dev->id = SERVO_DRIVER_PTR; // you'll need to #define this in backend_types.h
+    dev->id = SERVO_DRIVER_PTR; // defined SERVO_DRIVER_PTR in backend_types.h
     dev->name = name;
     dev->pin = control_pin;
 
