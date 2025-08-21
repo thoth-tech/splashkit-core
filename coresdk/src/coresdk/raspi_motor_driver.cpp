@@ -93,8 +93,9 @@ namespace splashkit_lib
         if (!dev || dev->id != MOTOR_DRIVER_PTR)
             return;
         // input speed goes from 0 to 1
-        // output speed goes from 0 to 255
-        int pwm_speed = static_cast<int>(speed * 255); // TODO: Scale to current PWM range
+        // scale to EN pin's PWM range
+        int pwm_range = raspi_get_pwm_range(dev->en);
+        int pwm_speed = static_cast<int>(speed * pwm_range);
         if (speed < 0)
         {
             speed = 0;
