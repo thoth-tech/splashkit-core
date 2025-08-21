@@ -90,6 +90,12 @@ namespace splashkit_lib {
      * Stops the motor immediately (brake).
      * @param dev       The motor device handle.
      */
+    void brake_motor(motor_device dev);
+
+    /**
+     * Stops the motor and allows it to coast to a stop.
+     * @param dev       The motor device handle.
+     */
     void stop_motor(motor_device dev);
 
     /**

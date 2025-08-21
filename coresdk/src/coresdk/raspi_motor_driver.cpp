@@ -94,7 +94,7 @@ namespace splashkit_lib
             return;
         // input speed goes from 0 to 1
         // output speed goes from 0 to 255
-        int pwm_speed = static_cast<int>(speed * 255);
+        int pwm_speed = static_cast<int>(speed * 255); // TODO: Scale to current PWM range
         if (speed < 0)
         {
             speed = 0;
@@ -114,14 +114,25 @@ namespace splashkit_lib
 #endif
     }
 
+    void brake_motor(motor_device dev)
+    {
+#ifdef RAPSBERRY_PI
+        if (!dev || dev->id != MOTOR_DRIVER_PTR)
+            return;
+        // L298N goes into brake mode when the two inputs are equal
+        raspi_write(dev->in1, GPIO_HIGH);
+        raspi_write(dev->in2, GPIO_HIGH);
+#else
+        LOG(ERROR) << "motor driver not supported on this platform";
+#endif
+    }
+
     void stop_motor(motor_device dev)
     {
 #ifdef RASPBERRY_PI
         if (!dev || dev->id != MOTOR_DRIVER_PTR)
             return;
-        // Brake: both inputs high
-        raspi_write(dev->in1, GPIO_HIGH);
-        raspi_write(dev->in2, GPIO_HIGH);
+
         raspi_set_pwm_dutycycle(dev->en, GPIO_LOW);
 #else
         LOG(ERROR) << "Motor driver not supported on this platform";
@@ -135,7 +146,7 @@ namespace splashkit_lib
             return;
         raspi_write(dev->in1, GPIO_LOW);
         raspi_write(dev->in2, GPIO_LOW);
-        raspi_set_pwm_dutycycle(dev->en, GPIO_LOW);
+        raspi_set_pwm_dutycycle(dev->en, GPIO_LOW) // TODO: Set PWM low before inputs
         _motor_devices.erase(dev->name);
         delete dev;
 #else
@@ -166,7 +177,7 @@ namespace splashkit_lib
             motor_device dev = kv.second;
             raspi_write(dev->in1, GPIO_LOW);
             raspi_write(dev->in2, GPIO_LOW);
-            raspi_set_pwm_dutycycle(dev->en, GPIO_LOW);
+            raspi_set_pwm_dutycycle(dev->en, GPIO_LOW); // TODO: Set PWM low before inputs
             delete dev;
         }
         _motor_devices.clear();
