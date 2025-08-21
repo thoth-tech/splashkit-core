@@ -82,6 +82,16 @@ namespace splashkit_lib
     void raspi_set_pwm_range(gpio_pin pin, int range);
 
     /**
+     * @brief Gets the PWM range for the specified pin.
+     *
+     * This function gets the PWM range for the specified pin.
+     *
+     * @param pin   The pin to get the PWM range for.
+     * @returns     The PWM range of the pin.
+     */
+    int raspi_get_pwm_range(gpio_pin pin);
+
+    /**
      * @brief Sets the PWM frequency for the specified pin.
      *
      * This function sets the PWM frequency for the specified pin.

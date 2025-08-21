@@ -173,6 +173,21 @@ namespace splashkit_lib
 #endif
     }
 
+    int raspi_get_pwm_range(gpio_pin pin)
+    {
+#ifdef RASPBERRY_PI
+        int bcmPin = boardToBCM(pin);
+        if (bcmPin >= 2)
+        {
+            return sk_get_pwm_range(bcmPin);
+        }
+        return -1;
+#else
+        LOG(ERROR) << "Unable to get PWM range - GPIO not supported on this platform";
+        return -1;
+#endif
+    }
+
     void raspi_set_pwm_frequency(gpio_pin pin, int frequency)
     {
 #ifdef RASPBERRY_PI
