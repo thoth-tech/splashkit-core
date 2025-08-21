@@ -132,7 +132,7 @@ namespace splashkit_lib
 #ifdef RASPBERRY_PI
         if (!dev || dev->id != MOTOR_DRIVER_PTR)
             return;
-
+        // L298N goes into coast mode when EN = LOW
         raspi_set_pwm_dutycycle(dev->en, GPIO_LOW);
 #else
         LOG(ERROR) << "Motor driver not supported on this platform";
@@ -146,7 +146,7 @@ namespace splashkit_lib
             return;
         raspi_write(dev->in1, GPIO_LOW);
         raspi_write(dev->in2, GPIO_LOW);
-        raspi_set_pwm_dutycycle(dev->en, GPIO_LOW) // TODO: Set PWM low before inputs
+        raspi_set_pwm_dutycycle(dev->en, GPIO_LOW)
         _motor_devices.erase(dev->name);
         delete dev;
 #else
@@ -177,7 +177,7 @@ namespace splashkit_lib
             motor_device dev = kv.second;
             raspi_write(dev->in1, GPIO_LOW);
             raspi_write(dev->in2, GPIO_LOW);
-            raspi_set_pwm_dutycycle(dev->en, GPIO_LOW); // TODO: Set PWM low before inputs
+            raspi_set_pwm_dutycycle(dev->en, GPIO_LOW);
             delete dev;
         }
         _motor_devices.clear();
