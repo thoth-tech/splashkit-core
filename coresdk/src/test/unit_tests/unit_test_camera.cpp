@@ -5,6 +5,7 @@
 #include "catch.hpp"
 
 #include "camera.h"
+#include <limits.h>
 
 using namespace splashkit_lib;
 using Catch::Matchers::WithinRel;
@@ -21,9 +22,25 @@ class CameraTestFixture {
 
 TEST_CASE_METHOD(CameraTestFixture, "camera position correct after moving", "[set_camera_position]")
 {
-    set_camera_position(point_at(42.0, 100.0));
-    REQUIRE_THAT(camera_x(), WithinRel(42.0));
-    REQUIRE_THAT(camera_y(), WithinRel(100.0));
+    SECTION("to positive coordinates")
+    {
+        set_camera_position(point_at(42.0, 100.0));
+        REQUIRE_THAT(camera_x(), WithinRel(42.0));
+        REQUIRE_THAT(camera_y(), WithinRel(100.0));
+    }
+    SECTION("to negative coordinates")
+    {
+        set_camera_position(point_at(-42.0, -100.0));
+        REQUIRE_THAT(camera_x(), WithinRel(-42.0));
+        REQUIRE_THAT(camera_y(), WithinRel(-100.0));
+    }
+    SECTION("consecutive movements")
+    {
+        set_camera_position(point_at(-42.0, -100.0));
+        set_camera_position(point_at(100.0, 300.0));
+        REQUIRE_THAT(camera_x(), WithinRel(100.0));
+        REQUIRE_THAT(camera_y(), WithinRel(300.0));
+    }
 }
 
 TEST_CASE_METHOD(CameraTestFixture, "get screen center in world space", "[screen_center]")
@@ -85,29 +102,49 @@ TEST_CASE_METHOD(CameraTestFixture, "check if rectangle is on screen", "[rect_on
 {
     window wind = open_window("check if rectangle is on screen", 100, 100);
 
-    SECTION("50x50 rectangle at 0,0")
+    SECTION("check if on screen")
     {
-        rectangle rect = rectangle_from(0.0, 0.0, 50.0, 50.0);
-
-        SECTION("rectangle is on screen")
+        SECTION("rectangle on screen")
         {
+            rectangle rect = rectangle_from(0.0, 0.0, 50.0, 50.0);
             REQUIRE(rect_on_screen(rect));
         }
-        SECTION("rectangle is in given window")
+        SECTION("rectangle partially on screen")
         {
-            REQUIRE(rect_in_window(wind, rect));
+            rectangle rect = rectangle_from(75.0, 75.0, 50.0, 50.0);
+            REQUIRE(rect_on_screen(rect));
         }
-    }
-    SECTION("50x50 rectangle at 100.1,100.1")
-    {
-        rectangle rect = rectangle_from(100.1, 100.1, 50.0, 50.0);
-
-        SECTION("rectangle is off screen")
+        SECTION("rectangle touches border of screen, counts as on screen")
         {
+            rectangle rect = rectangle_from(100.0, 100.0, 50.0, 50.0);
+            REQUIRE(rect_on_screen(rect));
+        }
+        SECTION("rectangle off screen")
+        {
+            rectangle rect = rectangle_from(100.1, 100.1, 50.0, 50.0);
             REQUIRE_FALSE(rect_on_screen(rect));
         }
-        SECTION("rectangle is out of given window")
+    }
+    SECTION("check if in window")
+    {
+        SECTION("rectangle in window")
         {
+            rectangle rect = rectangle_from(0.0, 0.0, 50.0, 50.0);
+            REQUIRE(rect_in_window(wind, rect));
+        }
+        SECTION("rectangle partially in window")
+        {
+            rectangle rect = rectangle_from(75.0, 75.0, 50.0, 50.0);
+            REQUIRE(rect_in_window(wind, rect));
+        }
+        SECTION("rectangle touches border of screen, counts as in window")
+        {
+            rectangle rect = rectangle_from(100.0, 100.0, 50.0, 50.0);
+            REQUIRE(rect_in_window(wind, rect));
+        }
+        SECTION("rectangle out of window")
+        {
+            rectangle rect = rectangle_from(100.1, 100.1, 50.0, 50.0);
             REQUIRE_FALSE(rect_in_window(wind, rect));
         }
     }
