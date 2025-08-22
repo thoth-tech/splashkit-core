@@ -98,55 +98,55 @@ TEST_CASE_METHOD(CameraTestFixture, "convert screen space to world space", "[to_
     }
 }
 
-TEST_CASE_METHOD(CameraTestFixture, "check if rectangle is on screen", "[rect_on_screen][rect_in_window]")
+TEST_CASE_METHOD(CameraTestFixture, "check if rectangle is on screen", "[rect_on_screen]")
 {
     window wind = open_window("check if rectangle is on screen", 100, 100);
 
-    SECTION("check if on screen")
+    SECTION("rectangle on screen")
     {
-        SECTION("rectangle on screen")
-        {
-            rectangle rect = rectangle_from(0.0, 0.0, 50.0, 50.0);
-            REQUIRE(rect_on_screen(rect));
-        }
-        SECTION("rectangle partially on screen")
-        {
-            rectangle rect = rectangle_from(75.0, 75.0, 50.0, 50.0);
-            REQUIRE(rect_on_screen(rect));
-        }
-        SECTION("rectangle touches border of screen, counts as on screen")
-        {
-            rectangle rect = rectangle_from(100.0, 100.0, 50.0, 50.0);
-            REQUIRE(rect_on_screen(rect));
-        }
-        SECTION("rectangle off screen")
-        {
-            rectangle rect = rectangle_from(100.1, 100.1, 50.0, 50.0);
-            REQUIRE_FALSE(rect_on_screen(rect));
-        }
+        rectangle rect = rectangle_from(0.0, 0.0, 50.0, 50.0);
+        REQUIRE(rect_on_screen(rect));
     }
-    SECTION("check if in window")
+    SECTION("rectangle partially on screen")
     {
-        SECTION("rectangle in window")
-        {
-            rectangle rect = rectangle_from(0.0, 0.0, 50.0, 50.0);
-            REQUIRE(rect_in_window(wind, rect));
-        }
-        SECTION("rectangle partially in window")
-        {
-            rectangle rect = rectangle_from(75.0, 75.0, 50.0, 50.0);
-            REQUIRE(rect_in_window(wind, rect));
-        }
-        SECTION("rectangle touches border of screen, counts as in window")
-        {
-            rectangle rect = rectangle_from(100.0, 100.0, 50.0, 50.0);
-            REQUIRE(rect_in_window(wind, rect));
-        }
-        SECTION("rectangle out of window")
-        {
-            rectangle rect = rectangle_from(100.1, 100.1, 50.0, 50.0);
-            REQUIRE_FALSE(rect_in_window(wind, rect));
-        }
+        rectangle rect = rectangle_from(75.0, 75.0, 50.0, 50.0);
+        REQUIRE(rect_on_screen(rect));
+    }
+    SECTION("rectangle touches border of screen, counts as off screen")
+    {
+        rectangle rect = rectangle_from(100.0, 100.0, 50.0, 50.0);
+        REQUIRE_FALSE(rect_on_screen(rect));
+    }
+    SECTION("rectangle off screen")
+    {
+        rectangle rect = rectangle_from(100.1, 100.1, 50.0, 50.0);
+        REQUIRE_FALSE(rect_on_screen(rect));
+    }
+}
+
+TEST_CASE_METHOD(CameraTestFixture, "check if rectangle is in window", "[rect_in_window]")
+{
+    window wind = open_window("check if rectangle is in window", 100, 100);
+
+    SECTION("rectangle in window")
+    {
+        rectangle rect = rectangle_from(0.0, 0.0, 50.0, 50.0);
+        REQUIRE(rect_in_window(wind, rect));
+    }
+    SECTION("rectangle partially in window")
+    {
+        rectangle rect = rectangle_from(75.0, 75.0, 50.0, 50.0);
+        REQUIRE(rect_in_window(wind, rect));
+    }
+    SECTION("rectangle touches border of screen, counts as out of window")
+    {
+        rectangle rect = rectangle_from(100.0, 100.0, 50.0, 50.0);
+        REQUIRE_FALSE(rect_in_window(wind, rect));
+    }
+    SECTION("rectangle out of window")
+    {
+        rectangle rect = rectangle_from(100.1, 100.1, 50.0, 50.0);
+        REQUIRE_FALSE(rect_in_window(wind, rect));
     }
     close_window(wind);
 }
