@@ -151,35 +151,46 @@ TEST_CASE_METHOD(CameraTestFixture, "check if rectangle is in window", "[rect_in
     close_window(wind);
 }
 
-TEST_CASE_METHOD(CameraTestFixture, "check if point is on screen", "[point_on_screen][point_in_window]")
+TEST_CASE_METHOD(CameraTestFixture, "check if point is on screen", "[point_on_screen]")
 {
     window wind = open_window("check if point is on screen", 100, 100);
 
-    SECTION("point at 50,50")
+    SECTION("point is on screen")
     {
         point_2d pt = point_at(50.0, 50.0);
-
-        SECTION("point is on screen")
-        {
-            REQUIRE(point_on_screen(pt));
-        }
-        SECTION("point is in given window")
-        {
-            REQUIRE(point_in_window(wind, pt));
-        }
+        REQUIRE(point_on_screen(pt));
     }
-    SECTION("point at 100.1,100.1")
+    SECTION("point is on edge of screen, counts as on screen")
+    {
+        point_2d pt = point_at(100.0, 100.0);
+        REQUIRE(point_on_screen(pt));
+    }
+    SECTION("point is off screen")
     {
         point_2d pt = point_at(100.1, 100.1);
+        REQUIRE_FALSE(point_on_screen(pt));
+    }
+    close_window(wind);
+}
 
-        SECTION("point is off screen")
-        {
-            REQUIRE_FALSE(point_on_screen(pt));
-        }
-        SECTION("point is out of given window")
-        {
-            REQUIRE_FALSE(point_in_window(wind, pt));
-        }
+TEST_CASE_METHOD(CameraTestFixture, "check if point is in window", "[point_in_window]")
+{
+    window wind = open_window("check if point is in window", 100, 100);
+
+    SECTION("point is in window")
+    {
+        point_2d pt = point_at(50.0, 50.0);
+        REQUIRE(point_in_window(wind, pt));
+    }
+    SECTION("point is on edge of screen, counts as in window")
+    {
+        point_2d pt = point_at(100.0, 100.0);
+        REQUIRE(point_in_window(wind, pt));
+    }
+    SECTION("point is out of window")
+    {
+        point_2d pt = point_at(100.1, 100.1);
+        REQUIRE_FALSE(point_in_window(wind, pt));
     }
     close_window(wind);
 }
