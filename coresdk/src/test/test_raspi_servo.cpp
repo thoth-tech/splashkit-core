@@ -25,7 +25,7 @@ void run_servo_driver_tests()
 
     // Pause until user is ready
     write_line("Press ENTER to begin...\n");
-    read_line(); // splashkit’s line-reader :contentReference[oaicite:0]{index=0}
+    read_line(); // splashkit’s line-reader
 
     // Open the servo on board pin 12
     servo_device srv = open_servo("TestServo", PIN_12);
@@ -44,7 +44,7 @@ void run_servo_driver_tests()
     for (int deg = 0; deg <= 180; deg += STEP_DEG)
     {
         set_servo_angle(srv, deg);
-        delay(DELAY_MS); // splashkit’s millisecond delay :contentReference[oaicite:1]{index=1}
+        delay(DELAY_MS); // splashkit’s millisecond delay
     }
 
     // Hold at 180° for a second

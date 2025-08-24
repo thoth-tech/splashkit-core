@@ -11,7 +11,7 @@
 
 #include <string>
 #include <map>
-#include "backend_types.h"   // for pointer_identifier
+#include "backend_types.h" // for pointer_identifier
 #include "easylogging++.h"
 #include "types.h"
 
@@ -42,13 +42,10 @@
  * @attribute class motor_device
  */
 namespace splashkit_lib {
-
     /**
      * @brief Opaque handle for an L298N motor driver instance.
      */
     typedef struct _motor_data *motor_device;
-
-
 
     /**
      * Checks if a motor device with the given name is already opened.
@@ -93,6 +90,12 @@ namespace splashkit_lib {
      * Stops the motor immediately (brake).
      * @param dev       The motor device handle.
      */
+    void brake_motor(motor_device dev);
+
+    /**
+     * Stops the motor and allows it to coast to a stop.
+     * @param dev       The motor device handle.
+     */
     void stop_motor(motor_device dev);
 
     /**
@@ -111,7 +114,6 @@ namespace splashkit_lib {
      * Closes all opened motor devices.
      */
     void close_all_motors();
-
 }
 
 #endif // RASPI_MOTOR_DRIVER_H

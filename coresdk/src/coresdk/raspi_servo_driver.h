@@ -67,10 +67,20 @@ namespace splashkit_lib
    * Open (and initialize) a servo on the given board pin.
    * @param name         Your identifier for this servo.
    * @param control_pin  Board‐numbered GPIO pin for the servo signal line.
+   * @param min_angle    The minimum angle of this servo in degrees, defaults to 0.
+   * @param max_angle    The maximum angle of this servo in degrees, defaults to 180.
    * @returns            A valid servo_device, or nullptr on failure.
    */
-  servo_device open_servo(const std::string &name, gpio_pin control_pin);
+  servo_device open_servo(const std::string &name, gpio_pin control_pin, double min_angle = 0, double max_angle = 180);
 
+  /**
+   * Maps 0..1 to the pulse width range of a servo.
+   * Useful if someone doesn't know the min and max angle of a servo device.
+   * @param dev   The servo device to control.
+   * @param value The value, from 0 (min) to 1 (max) to set the servo to.
+   */
+  void set_servo_value(servo_device dev, double value);
+  
   /**
    * Convenience: map an angle (0…180°) into the 500…2500 µs range.
    * This is a linear mapping, so it may not be accurate for all servos.

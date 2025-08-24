@@ -191,6 +191,7 @@ namespace splashkit_lib
     void sk_gpio_set_pull_up_down(int pin, int pud);
     void sk_gpio_write(int pin, int value);
     void sk_set_pwm_range(int pin, int range);
+    void sk_get_pwm_range(int pin);
     void sk_set_pwm_frequency(int pin, int frequency);
     void sk_set_pwm_dutycycle(int pin, int dutycycle);
     void sk_gpio_clear_bank_1();

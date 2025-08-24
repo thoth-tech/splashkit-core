@@ -128,6 +128,20 @@ namespace splashkit_lib
             }
         }
     }
+
+    int sk_get_pwm_range(int pin)
+    {
+        if (check_pi())
+        {
+            int result = get_PWM_range(pi, pin);
+            if (result < 0)
+            {
+                LOG(ERROR) << sk_gpio_error_message(result);
+            }
+            return result;
+        }
+    }
+    
     void sk_set_pwm_frequency(int pin, int frequency)
     {
         if (check_pi())
