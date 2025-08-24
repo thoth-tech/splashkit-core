@@ -37,7 +37,7 @@ namespace splashkit_lib
     return (it != _servo_devices.end()) ? it->second : nullptr;
   }
 
-  servo_device open_servo(const std::string &name, gpio_pin control_pin, double min_angle = 0, double max_angle = 180)
+  servo_device open_servo(const std::string &name, gpio_pin control_pin, double min_angle, double max_angle)
   {
 #ifdef RASPBERRY_PI
     if (has_servo_device(name))
