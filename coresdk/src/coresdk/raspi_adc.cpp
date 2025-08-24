@@ -39,19 +39,19 @@ namespace splashkit_lib
         case ADC_PIN_0:
             return 0x84; // CH0
         case ADC_PIN_1:
-            return 0x85; // CH1
+            return 0xC4; // CH1
         case ADC_PIN_2:
-            return 0x86; // CH2
+            return 0x94; // CH2
         case ADC_PIN_3:
-            return 0x87; // CH3
+            return 0xD4; // CH3
         case ADC_PIN_4:
-            return 0x88; // CH4
+            return 0xA4; // CH4
         case ADC_PIN_5:
-            return 0x89; // CH5
+            return 0xE4; // CH5
         case ADC_PIN_6:
-            return 0x8A; // CH6
+            return 0xB4; // CH6
         case ADC_PIN_7:
-            return 0x8B; // CH7
+            return 0xF4; // CH7
         default:
             return -1; // Invalid pin
         }
