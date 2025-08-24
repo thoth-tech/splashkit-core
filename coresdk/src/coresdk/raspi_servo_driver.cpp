@@ -18,11 +18,13 @@ namespace splashkit_lib
     pointer_identifier id;
     std::string name;
     gpio_pin pin;
+    double min_angle, max_angle;
   };
 
   static std::map<std::string, servo_device> _servo_devices;
-  static const unsigned MIN_PW = 500;  // µs at 0°
-  static const unsigned MAX_PW = 2500; // µs at 180°
+  // Pulse widths for the min and max values of servo range
+  static const unsigned MIN_PW = 500;
+  static const unsigned MAX_PW = 2500;
 
   bool has_servo_device(const std::string &name)
   {
@@ -35,7 +37,7 @@ namespace splashkit_lib
     return (it != _servo_devices.end()) ? it->second : nullptr;
   }
 
-  servo_device open_servo(const std::string &name, gpio_pin control_pin)
+  servo_device open_servo(const std::string &name, gpio_pin control_pin, double min_angle = 0, double max_angle = 180)
   {
 #ifdef RASPBERRY_PI
     if (has_servo_device(name))
@@ -48,6 +50,8 @@ namespace splashkit_lib
     dev->id = SERVO_DRIVER_PTR; // defined SERVO_DRIVER_PTR in backend_types.h
     dev->name = name;
     dev->pin = control_pin;
+    dev->min_angle = min_angle;
+    dev->max_angle = max_angle;
 
     // configure as output
     raspi_set_mode(control_pin, GPIO_OUTPUT);
@@ -65,17 +69,34 @@ namespace splashkit_lib
 #endif
   }
 
+  void set_servo_value(servo_device dev, double value)
+  {
+#ifdef RASPBERRY_PI
+    if (!dev || dev->id != SERVO_DRIVER_PTR)
+      return;
+
+    // input value is 0..1
+    // scale to servo pulse width range
+    unsigned pw = static_cast<unsigned>(value * (MAX_PW - MIN_PW) + MIN_PW);
+    raspi_set_servo_pulsewidth(dev->pin, pw);
+#else
+    LOG(ERROR) << "Servo driver not supported on this platform";
+#endif
+  }
+
   void set_servo_angle(servo_device dev, double angle)
   {
 #ifdef RASPBERRY_PI
     if (!dev || dev->id != SERVO_DRIVER_PTR)
       return;
 
-    // clamp to [0,180]
-    angle = std::clamp(angle, 0.0, 180.0);
-    unsigned pw = static_cast<unsigned>(
-        MIN_PW + (angle / 180.0) * (MAX_PW - MIN_PW));
-    // raspi_set_pwm_dutycycle(dev->pin, pw);
+    double min = dev->min_angle;
+    double max = dev->max_angle;
+    
+    // clamp input to servo range
+    angle = std::clamp(angle, min, max);
+    // scale angle to pulse width range
+    unsigned pw = static_cast<unsigned>((angle - min / max - min) * (MAX_PW - MIN_PW) + MIN_PW);
     raspi_set_servo_pulsewidth(dev->pin, pw);
 #else
     LOG(ERROR) << "Servo driver not supported on this platform";
