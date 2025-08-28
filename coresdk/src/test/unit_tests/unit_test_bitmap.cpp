@@ -128,3 +128,62 @@ TEST_CASE("bitmap bounding details can be retrieved", "[bitmap]")
     }
     free_bitmap(bmp);
 }
+
+TEST_CASE("name can be retrieved from bitmap", "[bitmap][bitmap_name]")
+{   
+    SECTION("can get bitmap name")
+    {
+        bitmap bmp = load_bitmap("rocket", "rocket_sprt.png");
+        REQUIRE(bitmap_valid(bmp));
+        
+        string name = bitmap_name(bmp);
+        REQUIRE(name == "rocket");
+    }
+
+    SECTION("empty string returned for bitmap name when passing nullptr")
+    {
+        string name = bitmap_name(nullptr);
+        REQUIRE(name == "");
+    }
+
+    SECTION("empty string returned for bitmap when passing freed bitmap")
+    {
+        bitmap bmp = load_bitmap("frog", "frog.png");
+        REQUIRE(bitmap_valid(bmp));
+        
+        free_bitmap(bmp);
+
+        string name = bitmap_name(bmp);
+        REQUIRE_FALSE(name == "frog");
+        REQUIRE(name == "");
+    }
+
+    SECTION("can get unique names from bitmaps when names are reused")
+    {
+        bitmap bmp_1 = create_bitmap("blank", 300, 200);
+        bitmap bmp_2 = create_bitmap("blank", 800, 600);
+
+        string name_1 = bitmap_name(bmp_1);
+        string name_2 = bitmap_name(bmp_2);
+
+        REQUIRE(name_1 == "blank");
+        REQUIRE(name_2 == "blank0");
+    }
+
+    SECTION("can get name of bitmap when name is empty string")
+    {
+        bitmap bmp = create_bitmap("", 64, 64);
+        string name = bitmap_name(bmp);
+
+        REQUIRE(name == "");
+    }
+
+    SECTION("can get name of bitmap when name includes special characters")
+    {
+        string silly_name = "AbCdEf 2+3=5 !@#$% \n";
+        bitmap bmp = create_bitmap(silly_name, 128, 128);
+
+        string returned_name = bitmap_name(bmp);
+        REQUIRE(returned_name == silly_name);
+    }
+}
