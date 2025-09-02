@@ -133,9 +133,7 @@ TEST_CASE("name can be retrieved from bitmap", "[bitmap][bitmap_name]")
 {   
     SECTION("can get bitmap name")
     {
-        bitmap bmp = load_bitmap("rocket", "rocket_sprt.png");
-        REQUIRE(bitmap_valid(bmp));
-        
+        bitmap bmp = create_bitmap("rocket", 128, 512);
         string name = bitmap_name(bmp);
         REQUIRE(name == "rocket");
     }
@@ -148,13 +146,12 @@ TEST_CASE("name can be retrieved from bitmap", "[bitmap][bitmap_name]")
 
     SECTION("empty string returned for bitmap when passing freed bitmap")
     {
-        bitmap bmp = load_bitmap("frog", "frog.png");
-        REQUIRE(bitmap_valid(bmp));
-        
+        bitmap bmp = create_bitmap("treasure", 256, 256);
         free_bitmap(bmp);
-
         string name = bitmap_name(bmp);
-        REQUIRE_FALSE(name == "frog");
+        
+        REQUIRE_FALSE(bitmap_valid(bmp));
+        REQUIRE_FALSE(name == "treasure");
         REQUIRE(name == "");
     }
 
