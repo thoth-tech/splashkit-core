@@ -125,5 +125,71 @@ namespace splashkit_lib
      * Closes all ADC devices that have been opened.
      */
     void close_all_adc();
+    /**
+     * @brief Initialises a remote connection to a Raspberry Pi.
+     *
+     * This function initialises a connection to a remote Raspberry Pi using the specified name, host, and port.
+     *
+     * @param name   The name of the connection.
+     * @param host   The host address of the Raspberry Pi.
+     * @param port   The port to use for the connection.
+     * @returns      The connection object used to communicate with the remote Raspberry Pi.
+     */
+    connection remote_raspi_init(const string &name, const string &host, unsigned short int port);
+	
+	/**
+     * @brief Sets the mode of the specified pin on a remote Raspberry Pi.
+     *
+     * This function sets the mode of a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi     The connection object to the remote Raspberry Pi.
+     * @param pin    The pin to set the mode for.
+     * @param mode   The mode to set for the pin.
+     */
+    void remote_raspi_set_mode(connection pi, gpio_pin pin, gpio_pin_mode mode);
+	
+	/**
+     * @brief Gets the mode of the specified pin on a remote Raspberry Pi.
+     *
+     * This function retrieves the mode of a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi     The connection object to the remote Raspberry Pi.
+     * @param pin    The pin to get the mode for.
+     * @returns      The mode of the pin.
+     */
+    gpio_pin_mode remote_raspi_get_mode(connection pi, gpio_pin pin);
+	
+	/**
+     * @brief Sets the pull up/down mode for the specified pin on a remote Raspberry Pi.
+     *
+     * This function sets the pull-up/down mode of a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi     The connection object to the remote Raspberry Pi.
+     * @param pin    The pin to set the pull up/down mode for.
+     * @param pud    The pull up/down mode to set for the pin.
+     */
+    void remote_raspi_set_pull_up_down(connection pi, gpio_pin pin, pull_up_down pud);
+	
+	/**
+     * @brief Writes a value to the specified pin on a remote Raspberry Pi.
+     *
+     * This function writes a specified value to a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi     The connection object to the remote Raspberry Pi.
+     * @param pin    The pin to write the value to.
+     * @param value  The value to write to the pin.
+     */
+    void remote_raspi_write(connection pi, gpio_pin pin, gpio_pin_value value);
+	
+	/**
+     * @brief Reads the value from the specified pin on a remote Raspberry Pi.
+     *
+     * This function reads the value from a specific pin on a remote Raspberry Pi.
+     *
+     * @param pi     The connection object to the remote Raspberry Pi.
+     * @param pin    The pin to read the value from.
+     * @returns      The value read from the pin.
+     */
+    gpio_pin_value remote_raspi_read(connection pi, gpio_pin pin);
 }
 #endif /* raspi_adc_hpp */

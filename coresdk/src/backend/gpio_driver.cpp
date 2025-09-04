@@ -448,6 +448,80 @@ namespace splashkit_lib
         sk_gpio_send_cmd(pi, set_dutycycle_cmd);
     }
 
+    int sk_remote_i2c_open(connection pi, int bus, int address, int flags)
+    {
+        sk_pigpio_cmd_t i2c_open_cmd;
+        i2c_open_cmd.cmd_code = GPIO_I2C_CMD_OPEN;
+        i2c_open_cmd.param1 = bus;
+        i2c_open_cmd.param2 = address;
+        i2c_open_cmd.param3 = flags;
+
+        return sk_gpio_send_cmd(pi, i2c_open_cmd);
+    }
+
+    int sk_remote_i2c_close(connection pi, int handle) {
+        sk_pigpio_cmd_t set_cmd;
+        set_cmd.cmd_code = GPIO_I2C_CMD_CLOSE;
+        set_cmd.param1 = handle;
+
+        return sk_gpio_send_cmd(pi, set_cmd);
+    }
+
+    int sk_remote_i2c_read_byte(connection pi, int handle) {
+        sk_pigpio_cmd_t set_cmd;
+        set_cmd.cmd_code = GPIO_I2C_CMD_SLAVE_READ;
+        set_cmd.param1 = handle;
+
+        return sk_gpio_send_cmd(pi, set_cmd);
+    }
+
+    int sk_remote_i2c_write_byte(connection pi, int handle, int data) {
+        sk_pigpio_cmd_t set_cmd;
+        set_cmd.cmd_code = GPIO_I2C_CMD_SLAVE_WRITE;
+        set_cmd.param1 = handle;
+        set_cmd.param2 = data;
+
+        return sk_gpio_send_cmd(pi, set_cmd);
+    }
+
+    int sk_remote_i2c_read_byte_data(connection pi, int handle, int reg) {
+        sk_pigpio_cmd_t set_cmd;
+        set_cmd.cmd_code = GPIO_I2C_CMD_READ_BYTE_DATA;
+        set_cmd.param1 = handle;
+        set_cmd.param2 = reg;
+
+        return sk_gpio_send_cmd(pi, set_cmd);
+    }
+
+    void sk_remote_i2c_write_byte_data(connection pi, int handle, int reg, int data) {
+        sk_pigpio_cmd_t set_cmd;
+        set_cmd.cmd_code = GPIO_I2C_CMD_WRITE_BYTE_DATA;
+        set_cmd.param1 = handle;
+        set_cmd.param2 = reg;
+        set_cmd.param3 = data;
+
+        sk_gpio_send_cmd(pi, set_cmd);
+    }
+
+    int sk_remote_i2c_read_word_data(connection pi, int handle, int reg) {
+        sk_pigpio_cmd_t set_cmd;
+        set_cmd.cmd_code = GPIO_I2C_CMD_READ_WORD_DATA;
+        set_cmd.param1 = handle;
+        set_cmd.param2 = reg;
+
+        return sk_gpio_send_cmd(pi, set_cmd);
+    }
+
+    void sk_remote_i2c_write_word_data(connection pi, int handle, int reg, int data) {
+        sk_pigpio_cmd_t set_cmd;
+        set_cmd.cmd_code = GPIO_I2C_CMD_WRITE_WORD_DATA;
+        set_cmd.param1 = handle;
+        set_cmd.param2 = reg;
+        set_cmd.param3 = data;
+
+        sk_gpio_send_cmd(pi, set_cmd);
+    }
+
     void sk_remote_clear_bank_1(connection pi)
     {
         sk_pigpio_cmd_t clear_bank_cmd;
