@@ -11,27 +11,16 @@
 #define raspi_adc_hpp
 
 #include "types.h"
+#include "networking.h"
 #include <string>
 
 namespace splashkit_lib
 {
-    /**
-     * The `adc_device` type is used to refer to ADC (Analog-to-Digital Converter)
-     * devices that can be managed by the SplashKit ADC code, such as ADS7830.
-     * ADC devices are:
-     *
-     *   - loaded with `open_adc`,
-     *   - accessed using `adc_device_named` or checked with `has_adc_device`,
-     *   - read using `read_adc` to retrieve analog values from specific channels,
-     *   - and must be closed using `close_adc` (to release a specific
-     *     ADC device) or `close_all_adc` (to release all loaded ADC devices).
-     *
-     * ADC devices allow you to interface with external analog sensors or inputs,
-     * converting their signals into digital values for processing in your application.
-     *
-     * @attribute class adc_device
-     */
-    typedef struct _adc_data *adc_device;
+    // Forward declare adc_device as a pointer to internal struct _adc_data
+    typedef struct _adc_data* adc_device;
+
+    typedef struct _remote_adc_data* remote_adc_device;
+
 
     /**
      * Checks if an ADC device with the given name has been loaded.
@@ -126,70 +115,61 @@ namespace splashkit_lib
      */
     void close_all_adc();
     /**
-     * @brief Initialises a remote connection to a Raspberry Pi.
+     * Loads an ADC device on the specified I2C bus at a given address remotely.
      *
-     * This function initialises a connection to a remote Raspberry Pi using the specified name, host, and port.
-     *
-     * @param name   The name of the connection.
-     * @param host   The host address of the Raspberry Pi.
-     * @param port   The port to use for the connection.
-     * @returns      The connection object used to communicate with the remote Raspberry Pi.
+     * @param name The name to assign this ADC device.
+     * @param bus The I2C bus number.
+     * @param address The I2C address of the ADC device.
+     * @param type The type of ADC device (e.g., ADS7830, PCF8591).
+     * @returns A valid adc_device on success, or nullptr on failure.
      */
-    connection remote_raspi_init(const string &name, const string &host, unsigned short int port);
-	
-	/**
-     * @brief Sets the mode of the specified pin on a remote Raspberry Pi.
+    remote_adc_device remote_open_adc(connection pi, string name, int bus, int address, adc_type type);
+
+    /**
+     * Opens an ADC device with the specified name and type using remote gpio.
+     * Defaults to bus 1 and address 0x48.
      *
-     * This function sets the mode of a specific pin on a remote Raspberry Pi.
-     *
-     * @param pi     The connection object to the remote Raspberry Pi.
-     * @param pin    The pin to set the mode for.
-     * @param mode   The mode to set for the pin.
+     * @param name The name of the ADC device to open.
+     * @param type The type of ADC device (e.g., ADS7830, PCF8591).
+     * @returns A valid adc_device on success, or nullptr on failure.
      */
-    void remote_raspi_set_mode(connection pi, gpio_pin pin, gpio_pin_mode mode);
-	
-	/**
-     * @brief Gets the mode of the specified pin on a remote Raspberry Pi.
+    remote_adc_device remote_open_adc(connection pi, string name, adc_type type);
+
+    /**
+     * Reads an 8-bit value from the specified ADC channel on the device on remote gpio.
      *
-     * This function retrieves the mode of a specific pin on a remote Raspberry Pi.
-     *
-     * @param pi     The connection object to the remote Raspberry Pi.
-     * @param pin    The pin to get the mode for.
-     * @returns      The mode of the pin.
+     * @param adc The ADC device to read from.
+     * @param channel The channel number to read (range depends on ADC type).
+     * @returns The ADC conversion value (0–255), or -1 on error.
      */
-    gpio_pin_mode remote_raspi_get_mode(connection pi, gpio_pin pin);
-	
-	/**
-     * @brief Sets the pull up/down mode for the specified pin on a remote Raspberry Pi.
+    int remote_read_adc(remote_adc_device adc, adc_pin channel);
+
+    /**
+     * Reads an 8-bit value from the specified ADC channel on the device using its name.
      *
-     * This function sets the pull-up/down mode of a specific pin on a remote Raspberry Pi.
-     *
-     * @param pi     The connection object to the remote Raspberry Pi.
-     * @param pin    The pin to set the pull up/down mode for.
-     * @param pud    The pull up/down mode to set for the pin.
+     * @param name The ADC device name.
+     * @param channel The channel number to read (range depends on ADC type).
+     * @returns The ADC conversion value (0–255), or -1 on error.
      */
-    void remote_raspi_set_pull_up_down(connection pi, gpio_pin pin, pull_up_down pud);
-	
-	/**
-     * @brief Writes a value to the specified pin on a remote Raspberry Pi.
+    int remote_read_adc(const std::string &name, adc_pin channel);
+
+    /**
+     * Closes an ADC device given its pointer.
      *
-     * This function writes a specified value to a specific pin on a remote Raspberry Pi.
-     *
-     * @param pi     The connection object to the remote Raspberry Pi.
-     * @param pin    The pin to write the value to.
-     * @param value  The value to write to the pin.
+     * @param adc The ADC device to close.
      */
-    void remote_raspi_write(connection pi, gpio_pin pin, gpio_pin_value value);
-	
-	/**
-     * @brief Reads the value from the specified pin on a remote Raspberry Pi.
+    void remote_close_adc(remote_adc_device adc);
+
+    /**
+     * Closes an ADC device given its name.
      *
-     * This function reads the value from a specific pin on a remote Raspberry Pi.
-     *
-     * @param pi     The connection object to the remote Raspberry Pi.
-     * @param pin    The pin to read the value from.
-     * @returns      The value read from the pin.
+     * @param name The name of the ADC device to close.
      */
-    gpio_pin_value remote_raspi_read(connection pi, gpio_pin pin);
+    void remote_close_adc(const std::string &name);
+
+    /**
+     * Closes a specific ADC device that have been opened.
+     */
+    void remote_close_adc_device(remote_adc_device dev);
 }
 #endif /* raspi_adc_hpp */

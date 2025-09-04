@@ -14,6 +14,15 @@
 using std::map;
 using std::string;
 
+using connection = int;
+using adc_type = int;
+using adc_pin = int;
+constexpr adc_type ADS7830 = 0;
+constexpr adc_pin ADC_PIN_0 = 0;
+constexpr adc_pin ADC_PIN_7 = 7;
+constexpr int ADC_PTR = 123;
+constexpr int NONE_PTR = 0;
+
 namespace splashkit_lib
 {
     // Internal structure for the ADC device.
@@ -331,6 +340,10 @@ namespace splashkit_lib
 #else
         LOG(ERROR) << "ADC not supported on this platform";
 #endif
+    }
+
+    bool remote_has_adc_device(const std::string& name) {
+    return remote_adc_devices.count(name) > 0;
     }
 
     // Start of remote functions
