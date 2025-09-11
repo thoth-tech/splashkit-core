@@ -141,7 +141,7 @@ namespace splashkit_lib
                     break;
                 case IMAGE_RESOURCE:
                     rb_load_bitmap(line_name, line_path);
-                    if ( ! has_resource_bundle(line_name) ) return;
+                    if ( ! has_bitmap(line_name) ) return;
                     break;
                 case FONT_RESOURCE:
                     load_font(line_name, line_path);
