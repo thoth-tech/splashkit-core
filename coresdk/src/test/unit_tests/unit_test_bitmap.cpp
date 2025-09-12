@@ -15,6 +15,7 @@ constexpr int ROCKET_WIDTH = 36, ROCKET_HEIGHT = 72,
               FROG_WIDTH = 294, FROG_HEIGHT = 422;
 
 
+
 // Load Bitmap & Free Bitmap
 TEST_CASE("bitmaps can be loaded and freed", "[load_bitmap][free_bitmap]")
 {
@@ -49,6 +50,23 @@ TEST_CASE("bitmaps can be loaded and freed", "[load_bitmap][free_bitmap]")
 
         free_bitmap(background_bmp);
         REQUIRE_FALSE(has_bitmap("background"));
+    }
+
+    SECTION("can load and free multiple bitmaps at a time")
+    {
+        bitmap rocket_bmp = load_bitmap("rocket_sprt", "rocket_sprt.png");
+        bitmap frog_bmp = load_bitmap("frog", "frog.png");
+        bitmap background_bmp = load_bitmap("background", "background.png");
+        
+        REQUIRE(bitmap_valid(rocket_bmp));
+        REQUIRE(bitmap_valid(frog_bmp));
+        REQUIRE(bitmap_valid(background_bmp));
+
+        free_all_bitmaps();
+
+        REQUIRE_FALSE(bitmap_valid(rocket_bmp));
+        REQUIRE_FALSE(bitmap_valid(frog_bmp));
+        REQUIRE_FALSE(bitmap_valid(background_bmp));
     }
 }
 
@@ -133,24 +151,6 @@ TEST_CASE("can detect non-existent bitmap")
     bitmap no_bmp = load_bitmap("non_existent", "non_existent.jpg");
     REQUIRE(no_bmp == nullptr);
     REQUIRE(has_bitmap("non_existent") == false);
-}
-
-// TODO: Merge with the test 'bitmaps can be loaded & freed'
-TEST_CASE("can load and free multiple bitmaps")
-{
-    bitmap rocket_bmp, frog_bmp, background_bmp;
-    rocket_bmp = load_bitmap("rocket_sprt", "rocket_sprt.png");
-    frog_bmp = load_bitmap("frog", "frog.png");
-    background_bmp = load_bitmap("background", "background.png");
-    REQUIRE(bitmap_valid(rocket_bmp));
-    REQUIRE(bitmap_valid(frog_bmp));
-    REQUIRE(bitmap_valid(background_bmp));
-
-    free_all_bitmaps();
-
-    REQUIRE_FALSE(bitmap_valid(rocket_bmp));
-    REQUIRE_FALSE(bitmap_valid(frog_bmp));
-    REQUIRE_FALSE(bitmap_valid(background_bmp));
 }
 
 // TODO: Refactor
