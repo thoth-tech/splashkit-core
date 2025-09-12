@@ -14,35 +14,119 @@ constexpr int ROCKET_WIDTH = 36, ROCKET_HEIGHT = 72,
               BACKGROUND_WIDTH = 864, BACKGROUND_HEIGHT = 769,
               FROG_WIDTH = 294, FROG_HEIGHT = 422;
 
-TEST_CASE("bitmaps can be created and freed", "[load_bitmap][bitmap_width][bitmap_height][free_bitmap]")
-{
-    // Creating bitmaps
-    bitmap rocket_bmp, frog_bmp, background_bmp;
-    rocket_bmp = load_bitmap("rocket_sprt", "rocket_sprt.png");
-    REQUIRE(bitmap_valid(rocket_bmp));
-    REQUIRE(rocket_bmp != nullptr);
-    REQUIRE(bitmap_width(rocket_bmp) == ROCKET_WIDTH);
-    REQUIRE(bitmap_height(rocket_bmp) == ROCKET_HEIGHT);
-    frog_bmp = load_bitmap("frog", "frog.png");
-    REQUIRE(bitmap_valid(frog_bmp));
-    REQUIRE(frog_bmp != nullptr);
-    REQUIRE(bitmap_width(frog_bmp) == FROG_WIDTH);
-    REQUIRE(bitmap_height(frog_bmp) == FROG_HEIGHT);
-    background_bmp = load_bitmap("background", "background.png");
-    REQUIRE(bitmap_valid(background_bmp));
-    REQUIRE(background_bmp != nullptr);
-    REQUIRE(bitmap_width(background_bmp) == BACKGROUND_WIDTH);
-    REQUIRE(bitmap_height(background_bmp) == BACKGROUND_HEIGHT);
 
-    // Freeing bitmaps
-    free_bitmap(rocket_bmp);
-    REQUIRE_FALSE(has_bitmap("rocket_sprt"));
-    free_bitmap(frog_bmp);
-    REQUIRE_FALSE(has_bitmap("frog"));
-    free_bitmap(background_bmp);
-    REQUIRE_FALSE(has_bitmap("background"));
+// Load Bitmap & Free Bitmap
+TEST_CASE("bitmaps can be loaded and freed", "[load_bitmap][free_bitmap]")
+{
+    SECTION("can load and free rocket bitmap")
+    {
+        bitmap rocket_bmp = load_bitmap("rocket_sprt", "rocket_sprt.png");
+        
+        REQUIRE_FALSE(rocket_bmp == nullptr);
+        REQUIRE(bitmap_valid(rocket_bmp));
+
+        free_bitmap(rocket_bmp);
+        REQUIRE_FALSE(has_bitmap("rocket_sprt"));
+    }
+
+    SECTION("can load and free frog bitmap")
+    {
+        bitmap frog_bmp = load_bitmap("frog", "frog.png");
+
+        REQUIRE_FALSE(frog_bmp == nullptr);
+        REQUIRE(bitmap_valid(frog_bmp));
+
+        free_bitmap(frog_bmp);
+        REQUIRE_FALSE(has_bitmap("frog"));
+    }
+
+    SECTION("can load and free background bitmap")
+    {
+        bitmap background_bmp = load_bitmap("background", "background.png");
+
+        REQUIRE_FALSE(background_bmp == nullptr);
+        REQUIRE(bitmap_valid(background_bmp));
+
+        free_bitmap(background_bmp);
+        REQUIRE_FALSE(has_bitmap("background"));
+    }
 }
 
+// Bitmap Width & Bitmap Height
+TEST_CASE("width and height can be retrieved from bitmap", "[bitmap_width][bitmap_height]")
+{
+    SECTION("can get width and height from bitmap")
+    {
+        int width = 256;
+        int height = 128;
+        bitmap bmp = create_bitmap("blank", width, height);
+
+        REQUIRE(bitmap_width(bmp) == width);
+        REQUIRE(bitmap_height(bmp) == height);
+
+        REQUIRE(bitmap_width("blank") == width);
+        REQUIRE(bitmap_height("blank") == height);
+
+        free_bitmap(bmp);
+    }
+
+    SECTION("can get width and height from bitmap when zero")
+    {
+        bitmap bmp = create_bitmap("blank", 0, 0);
+
+        REQUIRE(bitmap_width(bmp) == 0);
+        REQUIRE(bitmap_height(bmp) == 0);
+
+        REQUIRE(bitmap_width("blank") == 0);
+        REQUIRE(bitmap_height("blank") == 0);
+
+        free_bitmap(bmp);
+    }
+
+    SECTION("can get width and height from bitmap when negative")
+    {
+        int width = -1024;
+        int height = -512;
+        bitmap bmp = create_bitmap("blank", width, height);
+
+        REQUIRE(bitmap_width(bmp) == width);
+        REQUIRE(bitmap_height(bmp) == height);
+
+        REQUIRE(bitmap_width("blank") == width);
+        REQUIRE(bitmap_height("blank") == height);
+
+        free_bitmap(bmp);
+    }
+
+    SECTION("zero returned for width and height when passing empty bitmap")
+    {
+        bitmap bmp;
+        REQUIRE(bitmap_width(bmp) == 0);
+        REQUIRE(bitmap_height(bmp) == 0);
+    }
+
+    SECTION("zero returned for width and height when passing freed bitmap")
+    {
+        int width = 256;
+        int height = 64;
+        bitmap bmp = create_bitmap("blank", width, height);
+        free_bitmap(bmp);
+        
+        REQUIRE_FALSE(bitmap_width(bmp) == width);
+        REQUIRE_FALSE(bitmap_height(bmp) == height);
+
+        REQUIRE(bitmap_width(bmp) == 0);
+        REQUIRE(bitmap_height(bmp) == 0);
+    }
+
+    SECTION("zero returned for width and height when passing nullptr as bitmap")
+    {
+        REQUIRE(bitmap_width(nullptr) == 0);
+        REQUIRE(bitmap_height(nullptr) == 0);
+    }
+}
+
+// TODO: Refactor
 TEST_CASE("can detect non-existent bitmap")
 {
     REQUIRE(has_bitmap("non_existent") == false);
@@ -51,6 +135,7 @@ TEST_CASE("can detect non-existent bitmap")
     REQUIRE(has_bitmap("non_existent") == false);
 }
 
+// TODO: Merge with the test 'bitmaps can be loaded & freed'
 TEST_CASE("can load and free multiple bitmaps")
 {
     bitmap rocket_bmp, frog_bmp, background_bmp;
@@ -61,7 +146,6 @@ TEST_CASE("can load and free multiple bitmaps")
     REQUIRE(bitmap_valid(frog_bmp));
     REQUIRE(bitmap_valid(background_bmp));
 
-    // Freeing all bitmaps
     free_all_bitmaps();
 
     REQUIRE_FALSE(bitmap_valid(rocket_bmp));
@@ -69,6 +153,7 @@ TEST_CASE("can load and free multiple bitmaps")
     REQUIRE_FALSE(bitmap_valid(background_bmp));
 }
 
+// TODO: Refactor
 TEST_CASE("bitmap bounding details can be retrieved", "[bitmap]")
 {
     bitmap bmp = load_bitmap("rocket", "rocket_sprt.png");
