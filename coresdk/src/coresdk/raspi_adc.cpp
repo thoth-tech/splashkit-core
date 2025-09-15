@@ -50,33 +50,21 @@ namespace splashkit_lib
 
     // Static map to manage loaded ADC devices (keyed by name)
     static map<string, adc_device> _adc_devices;
-    static map<string, remote_adc_device> remote_adc_devices;
+    std::map<std::string, std::unique_ptr<remote_adc_device>> remote_adc_devices;
     // a function to return address based on pin number of ads7830
-    int _get_ads7830_pin_address(adc_pin pin)
-    {
-        switch (pin)
-        {
-        case ADC_PIN_0:
-            return 0x84; // CH0
-        case ADC_PIN_1:
-            return 0xC4; // CH1
-        case ADC_PIN_2:
-            return 0x94; // CH2
-        case ADC_PIN_3:
-            return 0xD4; // CH3
-        case ADC_PIN_4:
-            return 0xA4; // CH4
-        case ADC_PIN_5:
-            return 0xE4; // CH5
-        case ADC_PIN_6:
-            return 0xB4; // CH6
-        case ADC_PIN_7:
-            return 0xF4; // CH7
-        default:
-            return -1; // Invalid pin
+    int _get_ads7830_pin_address(adc_pin pin) {
+        switch (pin) {
+            case ADC_PIN_0: return 0x84; // Channel 0
+            case ADC_PIN_1: return 0xC4; // Channel 1
+            case ADC_PIN_2: return 0x94; // Channel 2
+            case ADC_PIN_3: return 0xD4; // Channel 3
+            case ADC_PIN_4: return 0xA4; // Channel 4
+            case ADC_PIN_5: return 0xE4; // Channel 5
+            case ADC_PIN_6: return 0xB4; // Channel 6
+            case ADC_PIN_7: return 0xF4; // Channel 7
+            default: return -1; // Or handle as an error
         }
     }
-    // const int CMD_CH0 = 0x84;
 
     bool has_adc_device(const string &name)
     {
@@ -380,13 +368,13 @@ namespace splashkit_lib
 
         int test_result = sk_remote_i2c_write_byte(result->pi, result->i2c_handle, 0x84);
         if (test_result < 0) {
-            LOG(WARNING) << "Failed to communicate with ADC device " << name << " (write test byte failed)\n";
+            LOG(WARNING) << "Failed to communicate with ADC device " << name << " (write test byte failed)";
             sk_remote_i2c_close(result->pi, result->i2c_handle);
             delete result;
             return nullptr;
         }
 
-        LOG(INFO) << "ADC device " << name << " loaded on bus " << bus << " at address " << address << "\n";
+        LOG(INFO) << "ADC device " << name << " loaded on bus " << bus << " at address " << address;
 
         // Transfer ownership to the map
         remote_adc_devices[name] = result;
@@ -476,12 +464,12 @@ namespace splashkit_lib
     int remote_read_adc(const std::string& name, adc_pin channel) {
         _remote_adc_data* dev = remote_adc_device_named(name);
         if (dev == nullptr) {
-            LOG(ERROR) << "ADC device " << name << " not found.\n";
+            LOG(ERROR) << "ADC device " << name << " not found.";
             return -1;
         }
         int channel_num = _get_ads7830_pin_address(channel);
         if (channel_num == -1) {
-            LOG(ERROR) << "Invalid ADC pin: " << channel << "\n";
+            LOG(ERROR) << "Invalid ADC pin: " << channel <<;
             return -1;
         }
         return remote_read_adc_channel(remote_adc_devices.at(name), channel_num);
@@ -492,28 +480,24 @@ namespace splashkit_lib
         remote_close_adc_device(adc);
     }
 
-    void remote_close_adc(const string &name)
-    {
-        // Find the device in the local map of remotely opened devices
-        auto it = remote_adc_devices.find(name);
-        if (it != remote_adc_devices.end()) {
-            remote_adc_device dev = it->second;
-            // Call the remote closing function
-            remote_close_adc_device(dev);
-        } else {
-            LOG(WARNING) << "Attempted to close unknown ADC device: " << name;
-        }
+    void remote_close_adc(const std::string &name) {
+    auto it = remote_adc_devices.find(name);
+    if (it != remote_adc_devices.end()) {
+        remote_adc_devices.erase(it);
+    } else {
+        LOG(WARNING) << "Attempted to close unknown ADC device: " << name;
     }
+}
 
     void remote_close_adc_device(remote_adc_device dev)
     {
         auto it = remote_adc_devices.find(dev->name);
         if (it != remote_adc_devices.end()) {
             sk_remote_i2c_close(it->second->pi, it->second->i2c_handle);
-            LOG(INFO) << "Closed ADC device: " << dev->name << "\n";
+            LOG(INFO) << "Closed ADC device: " << dev->name;
             remote_adc_devices.erase(it);
         } else {
-            LOG(WARNING) << "Attempted to close unknown ADC device: " << dev->name << "\n";
+            LOG(WARNING) << "Attempted to close unknown ADC device: " << dev->name;
         }
     }
 }
