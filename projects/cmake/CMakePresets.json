@@ -3,7 +3,7 @@
     "configurePresets": [
         {
             "name": "Linux",
-            "displayName": "Linux without coverage",
+            "displayName": "Linux/WSL",
             "description": "Linux gcc g++",
             "binaryDir": "${sourceDir}/build",
             "cacheVariables": {
