@@ -185,8 +185,8 @@ TEST_CASE("can get bitmap center coordinates", "[bitmap_center]")
         bitmap bmp = create_bitmap("sample", width, height);
         
         point_2d center = bitmap_center(bmp);
-        REQUIRE(center.x == width / 2.0);
-        REQUIRE(center.y == height / 2.0);
+        REQUIRE(center.x == width / 2.0f);
+        REQUIRE(center.y == height / 2.0f);
 
         free_bitmap(bmp);
     }
@@ -199,8 +199,8 @@ TEST_CASE("can get bitmap center coordinates", "[bitmap_center]")
         bitmap bmp = create_bitmap("sample", width, height);
         
         point_2d center = bitmap_center(bmp);
-        REQUIRE(center.x == width / 2.0);
-        REQUIRE(center.y == height / 2.0);
+        REQUIRE(center.x == width / 2.0f);
+        REQUIRE(center.y == height / 2.0f);
 
         free_bitmap(bmp);
     }
@@ -210,8 +210,8 @@ TEST_CASE("can get bitmap center coordinates", "[bitmap_center]")
         bitmap bmp = create_bitmap("sample", 1, 1);
         
         point_2d center = bitmap_center(bmp);
-        REQUIRE(center.x == 0);
-        REQUIRE(center.y == 0);
+        REQUIRE(center.x == 0.5f);
+        REQUIRE(center.y == 0.5f);
 
         free_bitmap(bmp);
     }
@@ -221,8 +221,8 @@ TEST_CASE("can get bitmap center coordinates", "[bitmap_center]")
         bitmap bmp = create_bitmap("sample", 0, 0);
         
         point_2d center = bitmap_center(bmp);
-        REQUIRE(center.x == 0);
-        REQUIRE(center.y == 0);
+        REQUIRE(center.x == 0.0f);
+        REQUIRE(center.y == 0.0f);
 
         free_bitmap(bmp);
     }
