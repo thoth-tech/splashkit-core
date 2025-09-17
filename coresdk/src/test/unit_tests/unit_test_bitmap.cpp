@@ -146,6 +146,8 @@ TEST_CASE("can determine whether a bitmap exists from a name", "[has_bitmap]")
         REQUIRE_FALSE(has_bitmap("existent"));
         bitmap bmp = create_bitmap("existent", 32, 32);
         REQUIRE(has_bitmap("existent"));
+
+        free_bitmap(bmp);
     }
 
     SECTION("bitmap detected when the name is an empty string")
@@ -153,6 +155,8 @@ TEST_CASE("can determine whether a bitmap exists from a name", "[has_bitmap]")
         REQUIRE_FALSE(has_bitmap(""));
         bitmap bmp = create_bitmap("", 32, 32);
         REQUIRE(has_bitmap(""));
+
+        free_bitmap(bmp);
     }
     
     SECTION("no bitmap detected when supplying a non-existent bitmap name")
@@ -165,6 +169,8 @@ TEST_CASE("can determine whether a bitmap exists from a name", "[has_bitmap]")
         REQUIRE_FALSE(bitmap_valid(bmp));
         
         REQUIRE_FALSE(has_bitmap("non_existent"));
+
+        free_all_bitmaps();
     }
 }
 
