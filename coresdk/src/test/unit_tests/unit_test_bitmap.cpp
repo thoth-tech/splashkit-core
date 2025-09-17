@@ -15,7 +15,6 @@ constexpr int ROCKET_WIDTH = 36, ROCKET_HEIGHT = 72,
               FROG_WIDTH = 294, FROG_HEIGHT = 422;
 
 
-
 // Load Bitmap & Free Bitmap
 TEST_CASE("bitmaps can be loaded and freed", "[load_bitmap][free_bitmap]")
 {
@@ -144,13 +143,34 @@ TEST_CASE("width and height can be retrieved from bitmap", "[bitmap_width][bitma
     }
 }
 
-// TODO: Refactor
-TEST_CASE("can detect non-existent bitmap")
+// Has Bitmap
+TEST_CASE("can determine whether a bitmap exists from a name", "[has_bitmap]")
 {
-    REQUIRE(has_bitmap("non_existent") == false);
-    bitmap no_bmp = load_bitmap("non_existent", "non_existent.jpg");
-    REQUIRE(no_bmp == nullptr);
-    REQUIRE(has_bitmap("non_existent") == false);
+    SECTION("bitmap detected when supplying a valid bitmap name")
+    {
+        REQUIRE_FALSE(has_bitmap("existent"));
+        bitmap bmp = create_bitmap("existent", 32, 32);
+        REQUIRE(has_bitmap("existent"));
+    }
+
+    SECTION("bitmap detected when the name is an empty string")
+    {
+        REQUIRE_FALSE(has_bitmap(""));
+        bitmap bmp = create_bitmap("", 32, 32);
+        REQUIRE(has_bitmap(""));
+    }
+    
+    SECTION("no bitmap detected when supplying a non-existent bitmap name")
+    {
+        REQUIRE_FALSE(has_bitmap("non_existent"));
+        
+        bitmap bmp = load_bitmap("non_existent", "non_existent.png");
+        
+        REQUIRE(bmp == nullptr);
+        REQUIRE_FALSE(bitmap_valid(bmp));
+        
+        REQUIRE_FALSE(has_bitmap("non_existent"));
+    }
 }
 
 // TODO: Refactor
