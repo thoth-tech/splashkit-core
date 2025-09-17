@@ -14,7 +14,7 @@
         },
         {
             "name": "Windows",
-            "displayName": "Windows",
+            "displayName": "Windows (MSYS)",
             "description": "Windows mingw64 gcc",
             "generator": "MinGW Makefiles",
             "binaryDir": "${sourceDir}/build",
