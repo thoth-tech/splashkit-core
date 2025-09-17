@@ -10,11 +10,6 @@
 
 using namespace splashkit_lib;
 
-constexpr int ROCKET_WIDTH = 36, ROCKET_HEIGHT = 72,
-              BACKGROUND_WIDTH = 864, BACKGROUND_HEIGHT = 769,
-              FROG_WIDTH = 294, FROG_HEIGHT = 422;
-
-
 // Load Bitmap & Free Bitmap
 TEST_CASE("bitmaps can be loaded and freed", "[load_bitmap][free_bitmap]")
 {
@@ -173,63 +168,158 @@ TEST_CASE("can determine whether a bitmap exists from a name", "[has_bitmap]")
     }
 }
 
-// TODO: Refactor
-TEST_CASE("bitmap bounding details can be retrieved", "[bitmap]")
+// Bitmap Center
+TEST_CASE("can get bitmap center coordinates", "[bitmap_center]")
 {
-    bitmap bmp = load_bitmap("rocket", "rocket_sprt.png");
-    REQUIRE(bmp != nullptr);
-    REQUIRE(bitmap_valid(bmp));
-    SECTION("can get bitmap width")
+    SECTION("can get bitmap center when width and height are even")
     {
-        REQUIRE(bitmap_width(bmp) == ROCKET_WIDTH);
-    }
-    SECTION("can get bitmap height")
-    {
-        REQUIRE(bitmap_height(bmp) == ROCKET_HEIGHT);
-    }
-    SECTION("can get bitmap center")
-    {
+        const int width = 128;
+        const int height = 64;
+        
+        bitmap bmp = create_bitmap("sample", width, height);
+        
         point_2d center = bitmap_center(bmp);
-        REQUIRE(center.x == ROCKET_WIDTH / 2.0);
-        REQUIRE(center.y == ROCKET_HEIGHT / 2.0);
+        REQUIRE(center.x == width / 2.0);
+        REQUIRE(center.y == height / 2.0);
+
+        free_bitmap(bmp);
     }
-    SECTION("can get bitmap bounding rectangle")
+
+    SECTION("can get bitmap center when width and height are odd")
     {
+        const int width = 129;
+        const int height = 65;
+        
+        bitmap bmp = create_bitmap("sample", width, height);
+        
+        point_2d center = bitmap_center(bmp);
+        REQUIRE(center.x == width / 2.0);
+        REQUIRE(center.y == height / 2.0);
+
+        free_bitmap(bmp);
+    }
+
+    SECTION("can get bitmap center when width and height are 1")
+    {
+        bitmap bmp = create_bitmap("sample", 1, 1);
+        
+        point_2d center = bitmap_center(bmp);
+        REQUIRE(center.x == 0);
+        REQUIRE(center.y == 0);
+
+        free_bitmap(bmp);
+    }
+
+    SECTION("can get bitmap center when width and height are 0")
+    {
+        bitmap bmp = create_bitmap("sample", 0, 0);
+        
+        point_2d center = bitmap_center(bmp);
+        REQUIRE(center.x == 0);
+        REQUIRE(center.y == 0);
+
+        free_bitmap(bmp);
+    }
+}
+
+// Bitmap Bounding Rectangle
+TEST_CASE("can get bitmap bounding rectangle", "[bitmap_bounding_rectangle]")
+{
+    SECTION("can get bitmap bounding rectangle when width and height are non-zero")
+    {
+        const int width = 43;
+        const int height = 28;
+        bitmap bmp = create_bitmap("blank", width, height);
+        
         rectangle rect = bitmap_bounding_rectangle(bmp);
         REQUIRE(rect.x == 0.0);
         REQUIRE(rect.y == 0.0);
-        REQUIRE(rect.width == ROCKET_WIDTH);
-        REQUIRE(rect.height == ROCKET_HEIGHT);
-    }
-    double center_corner_dist = sqrt(pow(ROCKET_WIDTH / 2.0, 2.0) + pow(ROCKET_HEIGHT / 2.0, 2.0));
+        REQUIRE(rect.width == width);
+        REQUIRE(rect.height == height);
 
-    SECTION("can get bitmap bounding circle")
-    {
-        circle circ = bitmap_bounding_circle(bmp, point_at(100.0, 100.0));
-        REQUIRE(circ.center.x == 100.0);
-        REQUIRE(circ.center.y == 100.0);
-        REQUIRE(circ.radius == center_corner_dist);
+        free_bitmap(bmp);
     }
-    SECTION("can get bitmap cell circle")
+
+    SECTION("can get bitmap bounding rectangle when width and height are 1")
     {
-        point_2d pt = point_at(100.0, 100.0);
+        bitmap bmp = create_bitmap("blank", 1, 1);
+        
+        rectangle rect = bitmap_bounding_rectangle(bmp);
+        REQUIRE(rect.x == 0.0);
+        REQUIRE(rect.y == 0.0);
+        REQUIRE(rect.width == 1);
+        REQUIRE(rect.height == 1);
+
+        free_bitmap(bmp);
+    }
+
+    SECTION("can get bitmap bounding rectangle when width and height are 0")
+    {
+        bitmap bmp = create_bitmap("blank", 0, 0);
+        
+        rectangle rect = bitmap_bounding_rectangle(bmp);
+        REQUIRE(rect.x == 0.0);
+        REQUIRE(rect.y == 0.0);
+        REQUIRE(rect.width == 0);
+        REQUIRE(rect.height == 0);
+
+        free_bitmap(bmp);
+    }
+}
+
+// Bitmap Bounding Circle
+TEST_CASE("can get bitmap bounding circle", "[bitmap_bounding_circle]")
+{
+    const int width = 127;
+    const int height = 30;
+    
+    bitmap bmp = create_bitmap("sample", width, height);
+    
+    double center_corner_dist = sqrt(pow(width / 2.0, 2.0) + pow(height / 2.0, 2.0));
+    
+    circle circ = bitmap_bounding_circle(bmp, point_at(100.0, 200.0));
+    REQUIRE(circ.center.x == 100.0);
+    REQUIRE(circ.center.y == 200.0);
+    REQUIRE(circ.radius == center_corner_dist);
+
+    free_bitmap(bmp);
+}
+
+// Bitmap Cell Circle
+TEST_CASE("can get bitmap cell circle", "[bitmap_cell_circle]")
+{
+    bitmap bmp = create_bitmap("blank", 256, 256);
+    
+    bitmap_set_cell_details(bmp, 128, 128, 2, 2, 4);
+    
+    const double center_corner_dist = sqrt(pow(128 / 2.0, 2.0) + pow(128 / 2.0, 2.0));
+    
+    point_2d pt = point_at(100.0, 200.0);
+
+    SECTION("can get bitmap cell circle without scale")
+    {
         circle circ = bitmap_cell_circle(bmp, pt);
+        circle circ2 = bitmap_cell_circle(bmp, pt.x, pt.y);
+
         REQUIRE(circ.center.x == pt.x);
         REQUIRE(circ.center.y == pt.y);
         REQUIRE(circ.radius == center_corner_dist);
-        circle circ2 = bitmap_cell_circle(bmp, pt.x, pt.y);
+
         REQUIRE(circ2.center.x == pt.x);
         REQUIRE(circ2.center.y == pt.y);
         REQUIRE(circ2.radius == center_corner_dist);
-
-        SECTION("can get bitmap cell circle with scale")
-        {
-            double scale = 2.0;
-            circle circ2 = bitmap_cell_circle(bmp, pt, scale);
-            REQUIRE(circ2.center.x == pt.x);
-            REQUIRE(circ2.center.y == pt.y);
-            REQUIRE(circ2.radius == center_corner_dist * scale);
-        }
     }
+
+    SECTION("can get bitmap cell circle with scale")
+    {
+        const double scale = 2.0;
+        
+        circle circ = bitmap_cell_circle(bmp, pt, scale);
+
+        REQUIRE(circ.center.x == pt.x);
+        REQUIRE(circ.center.y == pt.y);
+        REQUIRE(circ.radius == center_corner_dist * scale);
+    }
+
     free_bitmap(bmp);
 }
