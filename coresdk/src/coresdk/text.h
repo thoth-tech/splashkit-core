@@ -129,25 +129,6 @@ namespace splashkit_lib
      * @attribute method    load_size
      * @attribute self      fnt
      */
-    void font_load_size(font fnt, int font_size);
-
-    /**
-     * @brief Loads a new size for an already loaded `font`.
-     *
-     * @param name          The name of the `font` to load the size for.
-     * @param font_size     The desired size of the `font`.
-     *
-     * @attribute suffix    name_as_string
-     */
-    void font_load_size(const string &name, int font_size);
-
-    /**
-     * @brief Checks if the supplied `font` has been loaded.
-     *
-     * @param fnt           The `font` to check if loaded.
-     *
-     * @returns Returns true if the specified `font` is loaded.
-     */
     bool has_font(font fnt);
 
     /**
@@ -172,27 +153,6 @@ namespace splashkit_lib
      * @attribute self                fnt
      *
      * @returns Returns true if the supplied `font` has the supplied size.
-     */
-    bool font_has_size(font fnt, int font_size);
-
-    /**
-     * @brief Checks if the supplied `font` has the supplied size.
-     *
-     * @param name          The name of the `font` to be checked.
-     * @param font_size     The size to check.
-     *
-     * @attribute suffix    name_as_string
-     *
-     * @returns Returns true if there is a font with the supplied name that has the supplied size.
-     */
-    bool font_has_size(const string &name, int font_size);
-
-    /**
-     * @brief Finds a loaded font that has the supplied name and returns it.
-     *
-     * @param name          The name of the font to find.
-     *
-     * @returns Returns the font that has the supplied name.
      */
     font font_named(string name);
 

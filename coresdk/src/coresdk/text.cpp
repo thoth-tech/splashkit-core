@@ -32,42 +32,6 @@ namespace splashkit_lib
         return has_font(_fonts.find(name)->second);
     }
 
-    bool font_has_size(font fnt, int font_size)
-    {
-        if (has_font(fnt))
-        {
-            return fnt->_data.count(font_size) > 0;
-        }
-        else
-        {
-            LOG(WARNING) << "Asking if font has size on invalid font.";
-        }
-
-        return false;
-    }
-
-    bool font_has_size(const string &name, int font_size)
-    {
-        return font_has_size(font_named(name), font_size);
-    }
-
-    void font_load_size(font fnt, int font_size)
-    {
-        if (has_font(fnt))
-        {
-            sk_add_font_size(fnt, font_size);
-        }
-        else
-        {
-            LOG(WARNING) << "font_load_size failed: font does not exist.";
-        }
-    }
-
-    void font_load_size(const string &name, int font_size)
-    {
-        return font_load_size(font_named(name), font_size);
-    }
-
     font font_named(string name)
     {
         if (has_font(name))
