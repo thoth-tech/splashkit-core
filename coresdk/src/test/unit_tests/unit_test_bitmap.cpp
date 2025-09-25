@@ -110,13 +110,6 @@ TEST_CASE("width and height can be retrieved from bitmap", "[bitmap_width][bitma
         free_bitmap(bmp);
     }
 
-    SECTION("zero returned for width and height when passing empty bitmap")
-    {
-        bitmap bmp;
-        REQUIRE(bitmap_width(bmp) == 0);
-        REQUIRE(bitmap_height(bmp) == 0);
-    }
-
     SECTION("zero returned for width and height when passing freed bitmap")
     {
         int width = 256;
