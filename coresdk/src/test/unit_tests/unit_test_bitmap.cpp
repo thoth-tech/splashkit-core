@@ -7,6 +7,7 @@
 #include "types.h"
 #include "graphics.h"
 #include "resources.h"
+#include <cmath>
 
 using namespace splashkit_lib;
 
@@ -85,16 +86,16 @@ TEST_CASE("bitmap bounding details can be retrieved", "[bitmap]")
     SECTION("can get bitmap center")
     {
         point_2d center = bitmap_center(bmp);
-        REQUIRE(center.x == ROCKET_WIDTH / 2.0);
-        REQUIRE(center.y == ROCKET_HEIGHT / 2.0);
+        REQUIRE(center.x == Approx(ROCKET_WIDTH / 2.0));
+        REQUIRE(center.y == Approx(ROCKET_HEIGHT / 2.0));
     }
     SECTION("can get bitmap bounding rectangle")
     {
         rectangle rect = bitmap_bounding_rectangle(bmp);
         REQUIRE(rect.x == 0.0);
         REQUIRE(rect.y == 0.0);
-        REQUIRE(rect.width == ROCKET_WIDTH);
-        REQUIRE(rect.height == ROCKET_HEIGHT);
+        REQUIRE(rect.width == Approx(ROCKET_WIDTH));
+        REQUIRE(rect.height == Approx(ROCKET_HEIGHT));
     }
     double center_corner_dist = sqrt(pow(ROCKET_WIDTH / 2.0, 2.0) + pow(ROCKET_HEIGHT / 2.0, 2.0));
 
@@ -103,7 +104,7 @@ TEST_CASE("bitmap bounding details can be retrieved", "[bitmap]")
         circle circ = bitmap_bounding_circle(bmp, point_at(100.0, 100.0));
         REQUIRE(circ.center.x == 100.0);
         REQUIRE(circ.center.y == 100.0);
-        REQUIRE(circ.radius == center_corner_dist);
+        REQUIRE(circ.radius == Approx(center_corner_dist));
     }
     SECTION("can get bitmap cell circle")
     {
@@ -111,11 +112,11 @@ TEST_CASE("bitmap bounding details can be retrieved", "[bitmap]")
         circle circ = bitmap_cell_circle(bmp, pt);
         REQUIRE(circ.center.x == pt.x);
         REQUIRE(circ.center.y == pt.y);
-        REQUIRE(circ.radius == center_corner_dist);
+        REQUIRE(circ.radius == Approx(center_corner_dist));
         circle circ2 = bitmap_cell_circle(bmp, pt.x, pt.y);
         REQUIRE(circ2.center.x == pt.x);
         REQUIRE(circ2.center.y == pt.y);
-        REQUIRE(circ2.radius == center_corner_dist);
+        REQUIRE(circ2.radius == Approx(center_corner_dist));
 
         SECTION("can get bitmap cell circle with scale")
         {
@@ -123,7 +124,7 @@ TEST_CASE("bitmap bounding details can be retrieved", "[bitmap]")
             circle circ2 = bitmap_cell_circle(bmp, pt, scale);
             REQUIRE(circ2.center.x == pt.x);
             REQUIRE(circ2.center.y == pt.y);
-            REQUIRE(circ2.radius == center_corner_dist * scale);
+            REQUIRE(circ2.radius == Approx(center_corner_dist * scale));
         }
     }
     free_bitmap(bmp);
