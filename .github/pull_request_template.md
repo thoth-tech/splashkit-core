@@ -1,35 +1,44 @@
-# Description
+# Pull Request checklist — SplashKit Core
 
-_Please include a summary of the change and which issue is fixed. Please also include relevant
-motivation and context. List any dependencies that are required for this change._
-
-Fixes # (issue)
+Briefly describe what changed and the motivation/context.
 
 ## Type of change
 
-_Please delete options that are not relevant._
+- [ ] Bug fix (non-breaking change)
+- [ ] New feature (non-breaking change)
+- [ ] Breaking change (API or behaviour change)
+- [ ] Documentation / examples only
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as
-      expected)
-- [ ] Documentation (update or new)
+## Testing
+Describe how the change was tested and how reviewers can reproduce it.
 
-## How Has This Been Tested?
+- Unit tests added/updated (location: `coresdk/src/test/`) — add tests for new behaviour where applicable
+- Run tests locally:
+  ```bash
+  cd projects/cmake
+  mkdir -p build && cd build
+  cmake ..
+  cmake --build . --parallel
+  ctest --output-on-failure
+  ```
 
-_Please describe the tests that you ran to verify your changes. Provide instructions so we can
-reproduce. Please also list any relevant details for your test configuration_
+  On Windows use an MSYS2 MinGW shell when following the Windows instructions in `CONTRIBUTING.md`.
 
-## Testing Checklist
+## Required checklist (before requesting review)
 
-- [ ] Tested with sktest
-- [ ] Tested with skunit_tests
+- [ ] I added/updated unit tests where applicable
+- [ ] All existing tests pass locally via CTest
+- [ ] I did not edit files under `generated/`; if API shapes changed I updated headers *and* included translator steps / updated `api.json` or documented how to regenerate bindings
+- [ ] Public API changes are documented in headers and `generated/docs/api.json` when applicable
+- [ ] I added or updated example resources under `coresdk/src/test/Resources/` if needed
 
-## Checklist
+## Cross-platform notes
 
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my own code
-- [ ] I have commented my code in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have requested a review from ... on the Pull Request
+- Confirmed build/test on Linux and macOS where applicable (CI will run these)
+- On Windows: tested in MSYS2 MinGW if available, otherwise note the limitation in this PR
+
+## Files changed / reviewer notes
+
+Briefly list important files, test vectors or follow-up tasks reviewers should check.
+
+If this PR requires special reviewer attention (bindings, translator changes, performance impacts, or cross-platform risks) add explicit reproduction steps and commands above.
