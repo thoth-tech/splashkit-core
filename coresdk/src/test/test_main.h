@@ -41,5 +41,6 @@ void run_gpio_spi_tests();
 void run_terminal_test();
 void run_logging_test();
 void run_ui_test();
+void run_sprite_bitmap_cell_collision_test();
 
 #endif /* test_main_h */

@@ -558,16 +558,26 @@ namespace splashkit_lib
     bool bitmap_quad_collision(bitmap bmp, const point_2d &pt, const quad &q);
 
     /**
-     * Tests if a sprite will collide with a bitmap drawn at the indicated
-     * location.
+     * Tests if a sprite will collide with a specific cell of a bitmap drawn at
+     * the indicated location. This is useful when the bitmap contains multiple
+     * animation frames or states organised as cells.
      *
      * @param  s    The sprite to test
      * @param  bmp  The bitmap to test
-     * @param  cell The cell of the bitmap to check
+     * @param  cell The index of the specific cell/frame within the bitmap to check for collision.
+     *              Bitmaps can be divided into a grid of cells using `bitmap_set_cell_details`,
+     *              which is useful for sprite sheets containing animation frames or tile sets.
+     *              Use this parameter to test collision against a specific frame rather than
+     *              the entire bitmap. For example, checking if a player collides with frame 3
+     *              of an enemy animation (attack frame) vs frame 0 (idle frame).
      * @param  x    The x location where the bitmap is drawn
      * @param  y    The y location where the bitmap is drawn
      * @return      True if the sprite collides with the bitmap cell when drawn
      *              at the indicated location.
+     *
+     * @see bitmap_set_cell_details
+     * @see bitmap_cell_count
+     * @see sprite_bitmap_collision (without cell parameter for collision with entire bitmap)
      *
      * @attribute suffix    with_cell
      *
@@ -577,15 +587,25 @@ namespace splashkit_lib
     bool sprite_bitmap_collision(sprite s, bitmap bmp, int cell, double x, double y);
 
     /**
-     * Tests if a sprite will collide with a bitmap drawn at the indicated
-     * location.
+     * Tests if a sprite will collide with a specific cell of a bitmap drawn at
+     * the indicated point. This is useful when the bitmap contains multiple
+     * animation frames or states organised as cells.
      *
      * @param  s    The sprite to test
      * @param  bmp  The bitmap to test
-     * @param  cell The cell of the bitmap to check
+     * @param  cell The index of the specific cell/frame within the bitmap to check for collision.
+     *              Bitmaps can be divided into a grid of cells using `bitmap_set_cell_details`,
+     *              which is useful for sprite sheets containing animation frames or tile sets.
+     *              Use this parameter to test collision against a specific frame rather than
+     *              the entire bitmap. For example, checking if a player collides with frame 3
+     *              of an enemy animation (attack frame) vs frame 0 (idle frame).
      * @param  pt   The point where the bitmap is drawn
      * @return      True if the sprite collides with the bitmap cell when drawn
      *              at the indicated location.
+     *
+     * @see bitmap_set_cell_details
+     * @see bitmap_cell_count
+     * @see sprite_bitmap_collision (without cell parameter for collision with entire bitmap)
      *
      * @attribute suffix    with_cell_at_point
      *

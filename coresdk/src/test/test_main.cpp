@@ -65,6 +65,7 @@ void setup_tests()
     add_test("Remote GPIO Tests", run_remote_gpio_tests);
     add_test("GPIO Tests - SPI", run_gpio_spi_tests);
     add_test("UI Tests", run_ui_test);
+    add_test("Sprite Bitmap Cell Collision", run_sprite_bitmap_cell_collision_test);
    
 }
 
