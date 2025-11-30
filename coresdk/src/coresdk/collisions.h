@@ -568,16 +568,12 @@ namespace splashkit_lib
      *              Bitmaps can be divided into a grid of cells using `bitmap_set_cell_details`,
      *              which is useful for sprite sheets containing animation frames or tile sets.
      *              Use this parameter to test collision against a specific frame rather than
-     *              the entire bitmap. For example, checking if a player collides with frame 3
-     *              of an enemy animation (attack frame) vs frame 0 (idle frame).
+     *              the entire bitmap. For example, checking if a player collides with frame 2
+     *              of a spike trap animation (spikes extended) vs frame 0 (spikes retracted).
      * @param  x    The x location where the bitmap is drawn
      * @param  y    The y location where the bitmap is drawn
      * @return      True if the sprite collides with the bitmap cell when drawn
      *              at the indicated location.
-     *
-     * @see bitmap_set_cell_details
-     * @see bitmap_cell_count
-     * @see sprite_bitmap_collision (without cell parameter for collision with entire bitmap)
      *
      * @attribute suffix    with_cell
      *
@@ -597,15 +593,11 @@ namespace splashkit_lib
      *              Bitmaps can be divided into a grid of cells using `bitmap_set_cell_details`,
      *              which is useful for sprite sheets containing animation frames or tile sets.
      *              Use this parameter to test collision against a specific frame rather than
-     *              the entire bitmap. For example, checking if a player collides with frame 3
-     *              of an enemy animation (attack frame) vs frame 0 (idle frame).
+     *              the entire bitmap. For example, checking if a player collides with frame 2
+     *              of a spike trap animation (spikes extended) vs frame 0 (spikes retracted).
      * @param  pt   The point where the bitmap is drawn
      * @return      True if the sprite collides with the bitmap cell when drawn
      *              at the indicated location.
-     *
-     * @see bitmap_set_cell_details
-     * @see bitmap_cell_count
-     * @see sprite_bitmap_collision (without cell parameter for collision with entire bitmap)
      *
      * @attribute suffix    with_cell_at_point
      *
