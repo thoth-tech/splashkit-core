@@ -56,7 +56,24 @@ namespace splashkit_lib
             return -1; // Invalid pin
         }
     }
-    // const int CMD_CH0 = 0x84;
+
+    // a function to return address based on pin number of pcf8591
+    int _get_pcf8591_pin_address(adc_pin pin)
+    {
+        switch (pin)
+        {
+        case ADC_PIN_0:
+            return 0x48; // CH0
+        case ADC_PIN_1:
+            return 0x49; // CH1
+        case ADC_PIN_2:
+            return 0x4A; // CH2
+        case ADC_PIN_3:
+            return 0x4B; // CH3
+        default:
+            return -1; // Invalid pin
+        }
+    }
 
     bool has_adc_device(const string &name)
     {
@@ -89,7 +106,7 @@ namespace splashkit_lib
 
         // Open the I2C channel to the ADC device.
         // (For both ADS7830 and PCF8591, we assume the initialization is similar.)
-        result->i2c_handle = sk_i2c_open(bus, address, 0);
+        result->i2c_handle = sk_i2c_open(bus, address);
         if (result->i2c_handle < 0)
         {
             LOG(WARNING) << "Error opening ADC device " << name
@@ -99,8 +116,24 @@ namespace splashkit_lib
         }
         // Try to write a test byte to the device to check if it's responding.
         // This is a simple way to check if the device is connected.
-        // For ADS7830, we can use a command like 0x84 (CH0) to test.
-        int test = sk_i2c_write_byte(result->i2c_handle, 0x84);
+        int test;
+        switch (result->type)
+        {
+        case ADS7830:
+        {
+            // For ADS7830, we can use a command like 0x84 (CH0) to test.
+            test = sk_i2c_write_byte(result->i2c_handle, 0x84);
+            break;
+        }
+        case PCF8591:
+        {
+            // For PCF8591, we can use a command like 0x48 (CH0) to test.
+            test = sk_i2c_write_byte(result->i2c_handle, 0x48);
+            break;
+        }
+        default:
+            test = -1;
+        }
         if (test < 0)
         {
             // ask the user to check the device connection
@@ -119,12 +152,9 @@ namespace splashkit_lib
 #endif
     }
 
-    adc_device open_adc(const string &name, int bus, int address, adc_type type)
+    adc_device open_adc(const string &name, int bus, int address, adc_type type_of_adc)
     {
 #ifdef RASPBERRY_PI
-        if (has_adc_device(name))
-            return adc_device_named(name);
-
         // Check if the device is already loaded
         if (has_adc_device(name))
         {
@@ -133,7 +163,7 @@ namespace splashkit_lib
         }
 
         // Load the ADC device with the specified parameters
-        return _load_adc_device(name, bus, address, type);
+        return _load_adc_device(name, bus, address, type_of_adc);
 #else
         LOG(ERROR) << "ADC not supported on this platform";
         return nullptr;
@@ -142,17 +172,17 @@ namespace splashkit_lib
 
     // Open an ADC device with default parameters (bus 1, address 0x48)
     // ADC functions
-    adc_device open_adc(const string &name, adc_type type)
+    adc_device open_adc(const string &name, adc_type type_of_adc)
     {
 #ifdef RASPBERRY_PI
-        if (type != ADS7830)
+        if (type_of_adc != ADS7830 && type_of_adc != PCF8591)
         {
             LOG(ERROR) << "Unsupported ADC type for " << name;
             return nullptr;
         }
         const int default_bus = 1;
-        const int default_address = 0x48; // Default I2C address for ADS7830
-        return _load_adc_device(name, default_bus, default_address, type);
+        const int default_address = 0x48; // Default I2C address for ADS7830 and PCF8591
+        return _load_adc_device(name, default_bus, default_address, type_of_adc);
 #else
         LOG(ERROR) << "ADC not supported on this platform";
         return nullptr;
@@ -172,33 +202,21 @@ namespace splashkit_lib
         switch (dev->type)
         {
         case ADS7830:
-        {
+        case PCF8591:
             command = channel;
             break;
-        }
-        // Uncomment and complete when implementing other ADC types.
-        /*
-        case PCF8591:
-        {
-            // Assuming PCF8591 supports channels 0-3; adjust validation as needed.
-            if (channel < 0 || channel > 3)
-            {
-                LOG(WARNING) << "Invalid ADC channel: " << channel
-                             << " for device " << dev->name << " (PCF8591 supports 0-3)";
-                return -1;
-            }
-
-            command = channel & 0x03;
-            break;
-        }
-        */
         default:
             LOG(WARNING) << "Unsupported ADC type for device " << dev->name;
             return -1;
         }
 
         // Write the command byte to the device (selecting the channel and settings)
-        sk_i2c_write_byte(dev->i2c_handle, command);
+        if (sk_i2c_write_byte(dev->i2c_handle, command) < 0)
+        {
+            LOG(WARNING) << "Failed to write ADC channel command for channel " << channel
+                         << " on device " << dev->name;
+            return -1;
+        }
         // Wait for the conversion to complete (if needed)
         // delay 10 milliseconds
         delay(10);
@@ -225,7 +243,10 @@ namespace splashkit_lib
             LOG(ERROR) << "ADC device not initialized.";
             return -1;
         }
-        if (channel < ADC_PIN_0 || channel > ADC_PIN_7)
+        int channel_num;
+        switch (adc->type)
+        {
+        case ADS7830:
         {
             // ADS7830 supports channels 0-7
             if (channel < ADC_PIN_0 || channel > ADC_PIN_7)
@@ -234,9 +255,28 @@ namespace splashkit_lib
                              << " for device " << adc->name << " (ADS7830 supports 0-7)";
                 return -1;
             }
+            // Convert the adc_pin enum to the corresponding channel number using _get_ads7830_pin_address
+            channel_num = _get_ads7830_pin_address(channel);
+            break;
         }
-        // Convert the adc_pin enum to the corresponding channel number using _get_ads7830_pin_address
-        int channel_num = _get_ads7830_pin_address(channel);
+        // Uncomment and complete when implementing other ADC types.
+        case PCF8591:
+        {
+            // Assuming PCF8591 supports channels 0-3; adjust validation as needed.
+            if (channel < ADC_PIN_0 || channel > ADC_PIN_3)
+            {
+                LOG(WARNING) << "Invalid ADC channel: " << channel
+                             << " for device " << adc->name << " (PCF8591 supports 0-3)";
+                return -1;
+            }
+            channel_num = _get_pcf8591_pin_address(channel);
+            break;
+        }
+        default:
+            LOG(WARNING) << "Unsupported ADC type for device " << adc->name;
+            return -1;
+        }
+
         if (channel_num == -1)
         {
             LOG(ERROR) << "Invalid ADC pin: " << channel;
@@ -256,16 +296,11 @@ namespace splashkit_lib
         adc_device dev = adc_device_named(name);
         if (dev == nullptr)
         {
-            LOG(ERROR) << "ADC device " << name << " not found.";
+            LOG(ERROR) << "ADC device \"" << name << "\" not found.";
             return -1;
         }
-        int channel_num = _get_ads7830_pin_address(channel);
-        if (channel_num == -1)
-        {
-            LOG(ERROR) << "Invalid ADC pin: " << channel;
-            return -1;
-        }
-        return _read_adc_channel(dev, channel_num);
+        
+        return read_adc(dev, channel);
 #else
         LOG(ERROR) << "ADC not supported on this platform";
         return -1;
@@ -297,7 +332,10 @@ namespace splashkit_lib
     void close_adc(adc_device adc)
     {
 #ifdef RASPBERRY_PI
-        _close_adc_device(adc);
+        if (adc != nullptr)
+            _close_adc_device(adc);
+        else
+            LOG(WARNING) << "Attempted to close unknown ADC device: " << adc->name;
 #else
         LOG(ERROR) << "ADC not supported on this platform";
 #endif
@@ -308,10 +346,7 @@ namespace splashkit_lib
     {
 #ifdef RASPBERRY_PI
         adc_device dev = adc_device_named(name);
-        if (dev != nullptr)
-            _close_adc_device(dev);
-        else
-            LOG(WARNING) << "Attempted to close unknown ADC device: " << name;
+        close_adc(dev);
 #else
         LOG(ERROR) << "ADC not supported on this platform";
 #endif

@@ -2,6 +2,8 @@
 
 #include "networking.h"
 
+#include "logging_handling.h"
+
 using namespace splashkit_lib;
 
 TEST_CASE("can create a server", "[networking]")
@@ -117,12 +119,23 @@ TEST_CASE("can communicate with server", "[networking]")
 
     SECTION("can check for error connecting to server")
     {
+        disable_logging(ERROR); // Disables "ERROR -> SDLNet_TCP_Open: Couldn't connect to remote host" and "ERROR -> Could not establish connection at open_connection after calling _establish_connection"
         connection conn = open_connection("test_connection_3", TEST_IP, PORT, TCP);
+        enable_logging(ERROR);
+
+        disable_logging(WARNING); // Disables "WARNING -> Invalid connection passed to is_connection_open"
         REQUIRE_FALSE(is_connection_open(conn));
+        enable_logging(WARNING);
 
         const string INVALID_IP = "invalid_ip";
+        
+        disable_logging(ERROR); //Disables "ERROR -> Could not establish connection at open_connection after calling _establish_connection"
         connection conn2 = open_connection("test_connection_4", INVALID_IP, PORT, TCP);
+        enable_logging(ERROR);
+
+        disable_logging(WARNING); // Disables "WARNING -> Invalid connection passed to is_connection_open"
         REQUIRE_FALSE(is_connection_open(conn2));
+        enable_logging(WARNING);
     }
 }
 TEST_CASE("can convert network data")

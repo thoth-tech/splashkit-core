@@ -125,7 +125,7 @@ else()
 endif()
 
 # FLAGS
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 
 # SOURCE FILES
 file(GLOB SOURCE_FILES

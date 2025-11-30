@@ -3335,6 +3335,46 @@
         }
       },
       {
+        "signature": "bool music_paused();",
+        "name": "music_paused",
+        "method_name": null,
+        "unique_global_name": "music_paused",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Checks whether music is currently paused.",
+        "brief": null,
+        "return": {
+          "type": "bool",
+          "description": "Returns true or false value representing whether music is currently paused.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+        },
+        "attributes": {
+          "getter": "paused",
+          "static": "audio",
+          "group": "audio"
+        },
+        "signatures": {
+          "python": [
+            "def music_paused():"
+          ],
+          "cpp": [
+            "bool music_paused()"
+          ],
+          "csharp": [
+            "public static bool Audio.Paused { get }",
+            "public static bool SplashKit.MusicPaused();"
+          ],
+          "pascal": [
+            "function MusicPaused(): Boolean"
+          ]
+        }
+      },
+      {
         "signature": "bool music_playing();",
         "name": "music_playing",
         "method_name": null,
@@ -73307,7 +73347,7 @@
         }
       },
       {
-        "signature": "adc_device open_adc(const string &name,adc_type type);",
+        "signature": "adc_device open_adc(const string &name,adc_type type_of_adc);",
         "name": "open_adc",
         "method_name": null,
         "unique_global_name": "open_adc",
@@ -73337,7 +73377,7 @@
             "is_vector": false,
             "type_parameter": null
           },
-          "type": {
+          "type_of_adc": {
             "type": "adc_type",
             "description": "The type of ADC device (e.g., ADS7830, PCF8591).",
             "is_pointer": false,
@@ -73359,22 +73399,22 @@
         },
         "signatures": {
           "python": [
-            "def open_adc(name, type):"
+            "def open_adc(name, type_of_adc):"
           ],
           "cpp": [
-            "adc_device open_adc(const string &name, adc_type type)"
+            "adc_device open_adc(const string &name, adc_type type_of_adc)"
           ],
           "csharp": [
-            "public static AdcDevice SplashKit.OpenAdc(string name, AdcType type);",
-            "public AdcDevice(string name, AdcType type);"
+            "public static AdcDevice SplashKit.OpenAdc(string name, AdcType typeOfAdc);",
+            "public AdcDevice(string name, AdcType typeOfAdc);"
           ],
           "pascal": [
-            "function OpenAdc(const name: String; type: AdcType): AdcDevice"
+            "function OpenAdc(const name: String; typeOfAdc: AdcType): AdcDevice"
           ]
         }
       },
       {
-        "signature": "adc_device open_adc(const string &name,int bus,int address,adc_type type);",
+        "signature": "adc_device open_adc(const string &name,int bus,int address,adc_type type_of_adc);",
         "name": "open_adc",
         "method_name": null,
         "unique_global_name": "open_adc_with_bus",
@@ -73430,7 +73470,7 @@
             "is_vector": false,
             "type_parameter": null
           },
-          "type": {
+          "type_of_adc": {
             "type": "adc_type",
             "description": "The type of ADC device (e.g., ADS7830, PCF8591).",
             "is_pointer": false,
@@ -73453,17 +73493,17 @@
         },
         "signatures": {
           "python": [
-            "def open_adc_with_bus(name, bus, address, type):"
+            "def open_adc_with_bus(name, bus, address, type_of_adc):"
           ],
           "cpp": [
-            "adc_device open_adc(const string &name, int bus, int address, adc_type type)"
+            "adc_device open_adc(const string &name, int bus, int address, adc_type type_of_adc)"
           ],
           "csharp": [
-            "public static AdcDevice SplashKit.OpenAdc(string name, int bus, int address, AdcType type);",
-            "public AdcDevice(string name, int bus, int address, AdcType type);"
+            "public static AdcDevice SplashKit.OpenAdc(string name, int bus, int address, AdcType typeOfAdc);",
+            "public AdcDevice(string name, int bus, int address, AdcType typeOfAdc);"
           ],
           "pascal": [
-            "function OpenAdc(const name: String; bus: Integer; address: Integer; type: AdcType): AdcDevice"
+            "function OpenAdc(const name: String; bus: Integer; address: Integer; typeOfAdc: AdcType): AdcDevice"
           ]
         }
       },
@@ -73597,6 +73637,57 @@
           ],
           "pascal": [
             "function ReadAdc(const name: String; channel: AdcPin): Integer"
+          ]
+        }
+      },
+      {
+        "signature": "int gpio_pin_to_int(gpio_pin_value value);",
+        "name": "gpio_pin_to_int",
+        "method_name": null,
+        "unique_global_name": "gpio_pin_to_int",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Converts the specified pin value to an integer, to use in calculations.",
+        "brief": "Converts a GPIO Pin Value to an integer.",
+        "return": {
+          "type": "int",
+          "description": "The pin value as an integer.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "value": {
+            "type": "gpio_pin_value",
+            "description": "The pin to read the value from.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def gpio_pin_to_int(value):"
+          ],
+          "cpp": [
+            "int gpio_pin_to_int(gpio_pin_value value)"
+          ],
+          "csharp": [
+            "public static int SplashKit.GpioPinToInt(GpioPinValue value);"
+          ],
+          "pascal": [
+            "function GpioPinToInt(value: GpioPinValue): Integer"
           ]
         }
       },
@@ -73775,6 +73866,225 @@
           ],
           "pascal": [
             "function RaspiGetServoPulsewidth(pin: GpioPin): Integer"
+          ]
+        }
+      },
+      {
+        "signature": "int raspi_i2c_open(int bus,int address);",
+        "name": "raspi_i2c_open",
+        "method_name": null,
+        "unique_global_name": "raspi_i2c_open",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Opens I2C communication on selected address. It will return -1 if not using Raspberry Pi.",
+        "brief": null,
+        "return": {
+          "type": "int",
+          "description": "The handle referencing this particular connection.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "bus": {
+            "type": "int",
+            "description": "The bus of the I2C device.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "address": {
+            "type": "int",
+            "description": "The address of the I2C device.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def raspi_i2c_open(bus, address):"
+          ],
+          "cpp": [
+            "int raspi_i2c_open(int bus, int address)"
+          ],
+          "csharp": [
+            "public static int SplashKit.RaspiI2cOpen(int bus, int address);"
+          ],
+          "pascal": [
+            "function RaspiI2cOpen(bus: Integer; address: Integer): Integer"
+          ]
+        }
+      },
+      {
+        "signature": "void raspi_i2c_write(int handle,int data);",
+        "name": "raspi_i2c_write",
+        "method_name": null,
+        "unique_global_name": "raspi_i2c_write",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Writes data to specified I2C connection.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "handle": {
+            "type": "int",
+            "description": "The reference for a specific I2C connection.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "data": {
+            "type": "int",
+            "description": "The data to send.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def raspi_i2c_write(handle, data):"
+          ],
+          "cpp": [
+            "void raspi_i2c_write(int handle, int data)"
+          ],
+          "csharp": [
+            "public static void SplashKit.RaspiI2cWrite(int handle, int data);"
+          ],
+          "pascal": [
+            "procedure RaspiI2cWrite(handle: Integer; data: Integer)"
+          ]
+        }
+      },
+      {
+        "signature": "void raspi_i2c_write(int handle,int reg,int data,int bytes);",
+        "name": "raspi_i2c_write",
+        "method_name": null,
+        "unique_global_name": "raspi_i2c_write_data",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Writes 8-bit (1 byte) or 16-bit (2 bytes) data to specified I2C connection.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "handle": {
+            "type": "int",
+            "description": "The reference for a specific I2C connection.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "reg": {
+            "type": "int",
+            "description": "The register to send the data to",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "data": {
+            "type": "int",
+            "description": "The data to send.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "bytes": {
+            "type": "int",
+            "description": "The number of bytes to be transferred.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "data",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def raspi_i2c_write_data(handle, reg, data, bytes):"
+          ],
+          "cpp": [
+            "void raspi_i2c_write(int handle, int reg, int data, int bytes)"
+          ],
+          "csharp": [
+            "public static void SplashKit.RaspiI2cWrite(int handle, int reg, int data, int bytes);"
+          ],
+          "pascal": [
+            "procedure RaspiI2cWrite(handle: Integer; reg: Integer; data: Integer; bytes: Integer)"
           ]
         }
       },
@@ -75248,57 +75558,6 @@
           ],
           "pascal": [
             "procedure RemoteRaspiWrite(pi: Connection; pin: GpioPin; value: GpioPinValue)"
-          ]
-        }
-      },
-      {
-        "signature": "int to_int(gpio_pin_value value);",
-        "name": "to_int",
-        "method_name": null,
-        "unique_global_name": "to_int",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "Converts the specified pin value to an integer, to use in calculations.",
-        "brief": "Converts a GPIO Pin Value to an integer.",
-        "return": {
-          "type": "int",
-          "description": "The pin value as an integer.",
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
-          "value": {
-            "type": "gpio_pin_value",
-            "description": "The pin to read the value from.",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          }
-        },
-        "attributes": {
-          "group": "raspberry",
-          "static": "raspberry"
-        },
-        "signatures": {
-          "python": [
-            "def to_int(value):"
-          ],
-          "cpp": [
-            "int to_int(gpio_pin_value value)"
-          ],
-          "csharp": [
-            "public static int SplashKit.ToInt(GpioPinValue value);"
-          ],
-          "pascal": [
-            "function ToInt(value: GpioPinValue): Integer"
           ]
         }
       }
@@ -94385,19 +94644,19 @@
             "number": 3
           },
           "ADC_PIN_4": {
-            "description": "Analog Input Channel 4",
+            "description": "Analog Input Channel 4 (only available for ADS7830)",
             "number": 4
           },
           "ADC_PIN_5": {
-            "description": "Analog Input Channel 5",
+            "description": "Analog Input Channel 5 (only available for ADS7830)",
             "number": 5
           },
           "ADC_PIN_6": {
-            "description": "Analog Input Channel 6",
+            "description": "Analog Input Channel 6 (only available for ADS7830)",
             "number": 6
           },
           "ADC_PIN_7": {
-            "description": "Analog Input Channel 7",
+            "description": "Analog Input Channel 7 (only available for ADS7830)",
             "number": 7
           }
         },
@@ -94412,7 +94671,7 @@
         }
       },
       {
-        "signature": "enum adc_type {ADS7830 = 0,// PCF8591 = 1,};",
+        "signature": "enum adc_type {ADS7830 = 0,PCF8591 = 1,};",
         "name": "adc_type",
         "description": "ADC Type:",
         "brief": null,
@@ -94420,16 +94679,20 @@
           "ADS7830": {
             "description": "8-Bit, 8-Channel Sampling A/D Converter with I2C Interface",
             "number": 0
+          },
+          "PCF8591": {
+            "description": "8-Bit, 4-Channel Sampling A/D Converter with I2C Interface",
+            "number": 1
           }
         },
         "attributes": {
           "group": "types"
         },
         "signatures": {
-          "python": "public enum {AdcType.ads7830 = 0}",
-          "cpp": "class adc_type {ADS7830 = 0};",
-          "csharp": "public enum {AdcType.Ads7830 = 0}",
-          "pascal": "public enum {AdcType.Ads7830 = 0}"
+          "python": "public enum {AdcType.ads7830 = 0, AdcType.pcf8591 = 1}",
+          "cpp": "class adc_type {ADS7830 = 0, PCF8591 = 1};",
+          "csharp": "public enum {AdcType.Ads7830 = 0, AdcType.Pcf8591 = 1}",
+          "pascal": "public enum {AdcType.Ads7830 = 0, AdcType.Pcf8591 = 1}"
         }
       },
       {
