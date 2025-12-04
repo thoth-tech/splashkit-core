@@ -380,6 +380,9 @@ namespace splashkit_lib
         {
             // read pixels from the texture
             _sk_set_renderer_target(0, bitmap_be);
+            // Flush any pending render commands before reading pixels
+            // This ensures drawing operations are committed to the texture
+            SDL_RenderPresent(_sk_open_windows[0]->renderer);
             _sk_get_pixels_from_renderer(_sk_open_windows[0]->renderer, 0, 0, w, h, pixels);
             _sk_restore_default_render_target(_sk_open_windows[0], bitmap_be);
         }
