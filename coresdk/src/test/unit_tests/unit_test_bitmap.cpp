@@ -134,3 +134,73 @@ TEST_CASE("bitmap bounding details can be retrieved", "[bitmap]")
     }
     free_bitmap(bmp);
 }
+
+TEST_CASE("name can be retrieved from bitmap", "[bitmap][bitmap_name]")
+{   
+    SECTION("can get bitmap name")
+    {
+        bitmap bmp = create_bitmap("rock", 28, 28);
+        string name = bitmap_name(bmp);
+        REQUIRE(name == "rock");
+
+        free_bitmap(bmp);
+    }
+
+    SECTION("empty string returned for bitmap name when passing nullptr")
+    {
+        string name = bitmap_name(nullptr);
+        REQUIRE(name == "");
+    }
+
+    SECTION("empty string returned for bitmap when passing freed bitmap")
+    {
+        bitmap bmp = create_bitmap("treasure", 32, 24);
+        free_bitmap(bmp);
+        string name = bitmap_name(bmp);
+        
+        REQUIRE_FALSE(bitmap_valid(bmp));
+        REQUIRE_FALSE(name == "treasure");
+        REQUIRE(name == "");
+    }
+
+    SECTION("can get unique names from bitmaps when names are reused")
+    {
+        bitmap bmp_1 = create_bitmap("blank", 100, 200);
+        bitmap bmp_2 = create_bitmap("blank", 300, 400);
+        bitmap bmp_3 = create_bitmap("blank", 500, 600);
+        bitmap bmp_4 = create_bitmap("blank", 700, 800);
+
+        string name_1 = bitmap_name(bmp_1);
+        string name_2 = bitmap_name(bmp_2);
+        string name_3 = bitmap_name(bmp_3);
+        string name_4 = bitmap_name(bmp_4);
+
+        REQUIRE(name_1 == "blank");
+        REQUIRE(name_2 == "blank0");
+        REQUIRE(name_3 == "blank1");
+        REQUIRE(name_4 == "blank2");
+
+        free_all_bitmaps();
+    }
+
+    SECTION("can get name of bitmap when name is empty string")
+    {
+        bitmap bmp = create_bitmap("", 64, 64);
+        string name = bitmap_name(bmp);
+
+        REQUIRE(name == "");
+
+        free_bitmap(bmp);
+    }
+
+    SECTION("can get name of bitmap when name includes special characters")
+    {
+        string silly_name = "AbCdEf 2+3=5 !@#$% \n";
+        bitmap bmp = create_bitmap(silly_name, 128, 128);
+
+        string returned_name = bitmap_name(bmp);
+        REQUIRE(returned_name == silly_name);
+
+        free_bitmap(bmp);
+    }
+}
