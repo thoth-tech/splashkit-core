@@ -1,3 +1,4 @@
+
 # SplashKit Development
 
 ## macOS
@@ -20,10 +21,15 @@
    git clone --recursive -j2 https://github.com/<username>/splashkit-core.git
    ```
 
-3. Build the test project:
+3. Initialise submodules if they weren't included during clone:
 
-   - In a terminal application, go into the cloned directory of your SplashKit
-     fork, and type:
+   ```sh
+   git submodule update --init --recursive
+   ```
+
+4. Build the test project:
+
+   - In a terminal application, go into the cloned directory of your SplashKit fork, and type:
 
      ```sh
      cd projects/cmake
@@ -31,20 +37,63 @@
      make
      ```
 
-4. Run the test program by executing
+   - For Apple Silicon (arm64) Macs, you may need to specify the architecture:
+
+     ```sh
+     cd projects/cmake
+     # Clean any previous build files if you encounter errors
+     ./clean.sh
+     cmake . -DCMAKE_OSX_ARCHITECTURES=arm64
+     make
+     ```
+
+5. Run the test program by executing:
 
    ```sh
    cd ../../bin
    ./sktest
    ```
 
-5. Add features to code in
+6. Generate Code Coverage Report (requires lcov)
+
+   SplashKit includes a CMake preset for generating code coverage reports using lcov. To use it:
+
+   ```sh
+   # Install lcov if you don't have it
+   brew install lcov
+
+   # Navigate to the cmake directory from the repository root
+   cd projects/cmake
+
+   # Configure the project with coverage flags
+   cmake --preset macOSCoverage -S .
+
+   # Build the project
+   cmake --build --preset macOSCoverage
+
+   # Run the tests to generate coverage data
+   cd ../../bin && ./skunit_tests
+
+   # Generate the coverage report
+   cd ..
+   lcov --capture --directory projects/cmake/build/macOSCoverage --output-file coverage.info --ignore-errors inconsistent,unsupported,format,count --include "/coresdk/src/coresdk/" --include "/coresdk/src/backend/"
+
+   # Create an HTML report
+   genhtml coverage.info --output-directory coverage_report --ignore-errors inconsistent,corrupt,unsupported,category
+
+   # Open the report
+   open coverage_report/index.html
+   ```
+
+   The report will show which parts of your code are covered by tests and which parts are not covered. This helps identify areas that need additional testing.
+
+7. Add features to code in:
 
    ```sh
    ./coresdk
    ```
 
-6. Add test code into `coresdk/src/test`. Now you should be good to go.
+8. Add test code into `coresdk/src/test`. Now you should be good to go.
 
 ## Linux
 
