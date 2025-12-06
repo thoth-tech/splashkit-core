@@ -12,6 +12,7 @@
 #include <sstream>
 #include <iostream>
 #include <iomanip>
+#include <algorithm>
 
 #include "utility_functions.h"
 
@@ -38,9 +39,6 @@ namespace splashkit_lib
         return rgba_color(red / 255.0f, green / 255.0f, blue / 255.0f, alpha / 255.0f);
     }
 
-    /// _gets a color given its color components. Each of the components has
-    /// a value between 0 and 1
-    ///
     color rgba_color(double red, double green, double blue, double alpha)
     {
         color result;
@@ -52,31 +50,32 @@ namespace splashkit_lib
         return result;
     }
 
-    /// _gets a color given its _r_g_b components. Each of the components has
-    /// a value between 0 and 1.0f.
-    ///
     color rgb_color(int red, int green, int blue)
     {
         return rgba_color(red / 255.0f, green / 255.0f, blue / 255.0f, 1.0f);
     }
 
-    /// _gets a color given its _r_g_b components. Each of the components has
-    /// a value between 0 and 1.
-    ///
     color rgb_color(double red, double green, double blue)
     {
         return rgba_color(red, green, blue, 1.0f);
     }
 
-    /// _returs a color from a combination of hue, saturation, and brightness.
-    ///
-    /// @param hue, saturation, brightness: _values between 0 and 1
-    /// @returns _the matching color
-    ///
     color hsb_color(double hue, double saturation, double brightness)
     {
         double domain_offset;
         double red, green, blue;
+
+        double original_hue = hue;
+        double original_saturation = saturation;
+        double original_brightness = brightness;
+
+        hue = std::clamp(hue, 0.0, 1.0);
+        saturation = std::clamp(saturation, 0.0, 1.0);
+        brightness = std::clamp(brightness, 0.0, 1.0);
+
+        if (hue != original_hue || saturation != original_saturation || brightness != original_brightness) {
+            LOG(WARNING) << "Attempting to create a color from out-of-bounds HSB components. Values should be between 0 and 1.";
+        }
 
         if (brightness == 0)
             return COLOR_BLACK;
