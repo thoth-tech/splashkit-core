@@ -8,6 +8,8 @@
 #include "audio.h"
 #include "resources.h"
 
+#include "logging_handling.h"
+
 using namespace splashkit_lib;
 
 TEST_CASE("sound effects can be loaded, played and freed", "[sound_effect]")
@@ -20,7 +22,11 @@ TEST_CASE("sound effects can be loaded, played and freed", "[sound_effect]")
     SECTION("can detect non-existent sound effect")
     {
         REQUIRE(has_sound_effect("non_existent") == false);
+
+        disable_logging(WARNING); // Disables "WARNING -> Unable to locate file for non_existent"
         sound_effect no_snd = load_sound_effect("non_existent", "non_existent.mp3");
+        enable_logging(WARNING);
+
         REQUIRE(no_snd == nullptr);
         REQUIRE(has_sound_effect("non_existent") == false);
     }

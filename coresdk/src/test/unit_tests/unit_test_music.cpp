@@ -8,6 +8,8 @@
 #include "audio.h"
 #include "resources.h"
 
+#include "logging_handling.h"
+
 using namespace splashkit_lib;
 
 TEST_CASE("music can be loaded, controlled and freed", "[music]")
@@ -19,7 +21,10 @@ TEST_CASE("music can be loaded, controlled and freed", "[music]")
     }
     SECTION("can detect non-existent music")
     {
+        disable_logging(WARNING); // Disables " WARNING -> Unable to locate file for non_existent"
         music no_mus = load_music("non_existent", "non_existent.mp3");
+        enable_logging(WARNING);
+
         REQUIRE(no_mus == nullptr);
         REQUIRE(has_music("non_existent") == false);
     }
@@ -41,14 +46,19 @@ TEST_CASE("music can be loaded, controlled and freed", "[music]")
         SECTION("can control music")
         {
             REQUIRE(music_playing() == false);
+            REQUIRE(music_paused() == false);
             play_music(mus);
             REQUIRE(music_playing() == true);
+            REQUIRE(music_paused() == false);
             pause_music();
-            REQUIRE(music_playing() == true); // music is paused, not stopped
+            REQUIRE(music_playing() == false);
+            REQUIRE(music_paused() == true);
             resume_music();
             REQUIRE(music_playing() == true);
+            REQUIRE(music_paused() == false);
             stop_music();
             REQUIRE(music_playing() == false);
+            REQUIRE(music_paused() == false);
         }
         SECTION("can set music volume")
         {
