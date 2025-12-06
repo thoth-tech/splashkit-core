@@ -121,3 +121,82 @@ TEST_CASE("json can be created and read", "[json]")
     free_json(person);
     free_all_json();
 }
+
+TEST_CASE("json_set_number can store different number types", "[json_set_number]")
+{   
+    json j = create_json();
+
+    SECTION("with positive float")
+    {
+        float float_test = 3.14f;
+
+        json_set_number(j, "float_value", float_test);
+
+        REQUIRE(json_has_key(j, "float_value"));
+        REQUIRE(json_read_number(j, "float_value") == 3.14f);
+    }
+
+    SECTION("with negative float")
+    {
+        float float_test = -120.38f;
+
+        json_set_number(j, "float_value", float_test);
+
+        REQUIRE(json_has_key(j, "float_value"));
+        REQUIRE(json_read_number(j, "float_value") == -120.38f);
+    }
+
+    SECTION("Can store zero")
+    {
+        float zero_test = 0.0f;
+
+        json_set_number(j, "float_value", zero_test);
+
+        REQUIRE(json_has_key(j, "float_value"));
+        REQUIRE(json_read_number(j, "float_value") == 0.0f);
+    }
+
+    SECTION("with positive double")
+    {
+        double double_test = 2.718281828;
+
+        json_set_number(j, "double_value", double_test);
+
+        REQUIRE(json_has_key(j, "double_value"));
+        REQUIRE(json_read_number(j, "double_value") == Approx(2.718281828));
+    }
+
+    SECTION("with negative double")
+    {
+        double double_test = -7.84352;
+
+        json_set_number(j, "double_value", double_test);
+
+        REQUIRE(json_has_key(j, "double_value"));
+        REQUIRE(json_read_number(j, "double_value") == Approx(-7.84352));
+    }
+
+    SECTION("can overwrite existing key")
+    {
+        json_set_number(j, "float_value", 1.23f);
+        REQUIRE(json_read_number(j, "float_value") == 1.23f);
+
+        json_set_number(j, "float_value", 4.56f);
+        REQUIRE(json_read_number(j, "float_value") == 4.56f);
+    }
+
+    SECTION("can overwrite across int/float/double")
+    {
+        json_set_number(j, "value", 42);
+        REQUIRE(json_read_number(j, "value") == 42);
+
+        json_set_number(j, "value", 3.14f);
+        REQUIRE(json_read_number(j, "value") == Approx(3.14f));
+
+        json_set_number(j, "value", 2.718281828);
+        REQUIRE(json_read_number(j, "value") == Approx(2.718281828));
+    }
+
+    free_json(j);
+    free_all_json();
+}
