@@ -6,6 +6,8 @@
 
 #include "color.h"
 
+#include "logging_handling.h"
+
 using namespace splashkit_lib;
 
 TEST_CASE("can create color with RGB(A) values", "[rgba_color][rgb_color][red_of][blue_of][green_of][alpha_of]")
@@ -42,7 +44,10 @@ TEST_CASE("can convert a string to a color", "[string_to_color][red_of][blue_of]
 
     SECTION("invalid string returns fallback color of white")
     {
+        disable_logging(WARNING); // Disables "WARNING -> Color string needs to start with a # and be 7 or 9 characters long"
         color invalid = string_to_color("not_a_color");
+        enable_logging(WARNING);
+
         REQUIRE(red_of(invalid) == 255);
         REQUIRE(green_of(invalid) == 255);
         REQUIRE(blue_of(invalid) == 255);
