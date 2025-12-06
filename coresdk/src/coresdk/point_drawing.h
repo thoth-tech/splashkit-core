@@ -67,7 +67,10 @@ namespace splashkit_lib
      * @param  y   The distance from the top of the bitmap to the pixel to read
      * @return     The color of the pixel at the supplied location
      *
+     * @attribute class   bitmap
+     * @attribute method  get_pixel
      * @attribute suffix  from_bitmap
+     * @attribute self    bmp
      */
     color get_pixel(bitmap bmp, double x, double y);
 
@@ -79,7 +82,10 @@ namespace splashkit_lib
      * @param  pt  The position of the pixel
      * @return     The color of the pixel at the supplied location
      *
+     * @attribute class   bitmap
+     * @attribute method  get_pixel
      * @attribute suffix  from_bitmap_at_point
+     * @attribute self    bmp
      */
     color get_pixel(bitmap bmp, const point_2d &pt);
 

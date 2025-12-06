@@ -34,7 +34,10 @@ namespace splashkit_lib
      * @param bmp The bitmap to add clipping to
      * @param r   The new clipping rectangle
      *
+     * @attribute class     bitmap
+     * @attribute method    push_clip
      * @attribute suffix    for_bitmap
+     * @attribute self      bmp
      */
     void push_clip(bitmap bmp, const rectangle &r);
 
@@ -80,7 +83,10 @@ namespace splashkit_lib
      *
      * @param bmp The bitmap to clear the clipping rectangle
      *
+     * @attribute class     bitmap
+     * @attribute method    reset_clip
      * @attribute suffix    for_bitmap
+     * @attribute self      bmp
      */
     void reset_clip(bitmap bmp);
 
@@ -92,7 +98,10 @@ namespace splashkit_lib
      * @param bmp The bitmap to change
      * @param r   The new clipping rectangle
      *
+     * @attribute class     bitmap
+     * @attribute method    set_clip
      * @attribute suffix    for_bitmap
+     * @attribute self      bmp
      */
     void set_clip(bitmap bmp, const rectangle &r);
 
@@ -132,7 +141,10 @@ namespace splashkit_lib
      *
      * @param bmp The bitmap to change
      *
+     * @attribute class     bitmap
+     * @attribute method    pop_clip
      * @attribute suffix    for_bitmap
+     * @attribute self      bmp
      */
     void pop_clip(bitmap bmp);
 
@@ -155,7 +167,10 @@ namespace splashkit_lib
      * @param  bmp The bitmap to get the clipping rectangle from
      * @return     The current clipping rectangle for the bitmap
      *
+     * @attribute class     bitmap
+     * @attribute method    current_clip
      * @attribute suffix    for_bitmap
+     * @attribute self      bmp
      */
     rectangle current_clip(bitmap bmp);
 

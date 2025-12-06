@@ -81,6 +81,10 @@ namespace splashkit_lib
      *
      * @param  bmp The bitmap
      * @return     A point within the bounds of the bitmap
+     * 
+     * @attribute class   bitmap
+     * @attribute method  random_point
+     * @attribute self    bmp
      */
     point_2d random_bitmap_point(bitmap bmp);
 

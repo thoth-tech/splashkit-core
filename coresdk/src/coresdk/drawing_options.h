@@ -29,7 +29,10 @@ namespace splashkit_lib
      * @param  dest The bitmap to draw to.
      * @return      Drawing options that will draw onto a bitmap.
      *
+     * @attribute class   bitmap
+     * @attribute method  option_draw_to
      * @attribute suffix  bitmap
+     * @attribute self    dest
      */
     drawing_options option_draw_to(bitmap dest);
 
@@ -41,7 +44,10 @@ namespace splashkit_lib
      * @param  opts Values for the other options.
      * @return      Drawing options that will draw onto a bitmap.
      *
+     * @attribute class   bitmap
+     * @attribute method  option_draw_to
      * @attribute suffix  bitmap_with_options
+     * @attribute self    dest
      */
     drawing_options option_draw_to(bitmap dest, drawing_options opts);
 

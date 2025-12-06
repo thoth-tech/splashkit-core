@@ -115,6 +115,10 @@ namespace splashkit_lib
      * @param basename The base of the filename. If there is a file of this name
      *                 already, then the name will be changed to generate a
      *                 unique filename.
+     * 
+     * @attribute class   bitmap
+     * @attribute method  save
+     * @attribute self    bmp
      */
     void save_bitmap(bitmap bmp, const string &basename);
 
