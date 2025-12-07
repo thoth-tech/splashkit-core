@@ -59,6 +59,7 @@ void setup_tests()
     add_test("UDP Networking Test", run_udp_networking_test);
     add_test("TCP Networking Test", run_tcp_networking_test);
     add_test("UI Tests", run_ui_test);
+    add_test("Sprite Bitmap Cell Collision", run_sprite_bitmap_cell_collision_test);
     add_test("GPIO - Basic Tests", run_gpio_tests);
     add_test("GPIO - Remote GPIO Tests", run_remote_gpio_tests);
     add_test("GPIO - ADC Tests", run_gpio_adc_tests);
