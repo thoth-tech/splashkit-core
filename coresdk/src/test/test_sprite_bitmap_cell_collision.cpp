@@ -33,10 +33,6 @@ void run_sprite_bitmap_cell_collision_test()
     // Set up cell details: 3 frames (100x100 each) in a horizontal strip
     bitmap_set_cell_details(hazard_spritesheet, 100, 100, 3, 1, 3);
     
-    // Draw different spike states in each cell with TRANSPARENT backgrounds
-    // This is crucial - the background must be transparent for proper collision detection
-    clear_bitmap(hazard_spritesheet, COLOR_TRANSPARENT);
-    
     // Frame 0 (Retracted): Small grey square (20x20) at bottom - minimal collision area
     fill_rectangle_on_bitmap(hazard_spritesheet, rgba_color(128, 128, 128, 255), 40, 75, 20, 20);
     
