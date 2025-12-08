@@ -24,6 +24,13 @@
 
 #include "easylogging++.h"
 
+#include <cstring>
+
+#ifdef __APPLE__
+// macOS-specific function to get display names (implemented in core_driver_macos.mm)
+extern "C" const char* sk_macos_get_display_name(int display_index);
+#endif
+
 namespace splashkit_lib
 {
     // Storage for the system data
@@ -94,7 +101,18 @@ namespace splashkit_lib
 
         disp.id = DISPLAY_PTR;
 
+#ifdef __APPLE__
+        // On macOS, SDL_GetDisplayName returns the display index instead of the name
+        // Use native macOS API to get the actual display name
+        const char* macos_name = sk_macos_get_display_name(idx);
+        if (macos_name && strlen(macos_name) > 0) {
+            disp.name = macos_name;
+        } else {
+            disp.name = SDL_GetDisplayName(idx);
+        }
+#else
         disp.name = SDL_GetDisplayName(idx);
+#endif
 
         SDL_GetCurrentDisplayMode(idx, &mode);
         disp.width = mode.w;
