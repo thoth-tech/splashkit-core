@@ -219,6 +219,14 @@ file(GLOB SOURCE_FILES
     "${SK_EXT}/microui/src/*.c"
 )
 
+# Add macOS-specific Objective-C++ files
+if (APPLE)
+    file(GLOB MACOS_SOURCE_FILES
+        "${SK_SRC}/backend/*.mm"
+    )
+    list(APPEND SOURCE_FILES ${MACOS_SOURCE_FILES})
+endif()
+
 # TEST FILE INCLUDES
 file(GLOB TEST_SOURCE_FILES
     "${SK_SRC}/test/*.cpp"
