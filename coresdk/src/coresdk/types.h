@@ -529,6 +529,22 @@ namespace splashkit_lib
     };
 
     /**
+     * I2C Device Types:
+     *
+     * @constant I2C_DEVICE_GENERIC     Generic I2C device with no specific functionality.
+     * @constant I2C_DEVICE_HT16K33_8X8 HT16K33-based 8x8 LED Matrix.
+     * @constant I2C_DEVICE_HT16K33_14SEG HT16K33-based 14-segment display.
+     * @constant I2C_DEVICE_PCF8574     PCF8574 I/O Expander.
+     */
+    enum i2c_device_type
+    {
+        I2C_DEVICE_GENERIC = 0,
+        I2C_DEVICE_HT16K33_8X8 = 1,
+        I2C_DEVICE_HT16K33_14SEG = 2,
+        I2C_DEVICE_PCF8574 = 3,
+    };
+
+    /**
      * Use these interface styles as a way to quickly
      * customize your interface.
      *
