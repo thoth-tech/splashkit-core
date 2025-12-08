@@ -63,7 +63,8 @@ namespace splashkit_lib
         JSON_PTR =                  0x4a534f4e, //'JSON';
         ADC_PTR=                    0x41444350, //'ADCP';
         MOTOR_DRIVER_PTR =           0x4d444950, //'MDIP';
-        SERVO_DRIVER_PTR =           0x53455256, //'SERV'; 
+        SERVO_DRIVER_PTR =           0x53455256, //'SERV';
+        I2C_DEVICE_PTR =             0x49324344, //'I2CD';
         NONE_PTR =                  0x4e4f4e45  //'NONE';
     };
 
