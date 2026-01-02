@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# See comments at end about adding libraries to NuGet package
-
 # Set the GitHub repository URL
 repo_url="https://github.com/splashkit/skm.git"
 
@@ -9,6 +7,7 @@ repo_url="https://github.com/splashkit/skm.git"
 branch="master"
 
 # Set the folders to download
+# Note: SKM does not include pre-compiled libraries for Linux
 folders=("lib/macos" "lib/win64")
 
 # Create the destination directory if it doesn't exist
@@ -27,31 +26,3 @@ do
     # Remove the temporary directory
     rm -rf "${temp_dir}"
 done
-
-# TODO: Add the following comment lines to SplashKitSDK.csproj (with further testing)
-# <PlatformTarget>AnyCPU</PlatformTarget>
-
-# <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-#     <DebugType>portable</DebugType>
-# </PropertyGroup>
-
-# <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-#     <DebugType>portable</DebugType>
-# </PropertyGroup>
-
-# <ItemGroup>
-#     <Content Include=".\Libraries\win64\*.dll">
-#         <Pack>true</Pack>
-#         <PackagePath>lib\$(TargetFramework)</PackagePath>
-#         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-#         <PackageCopyToOutput>true</PackageCopyToOutput>
-#         <Link>%(FileName)%(Extension)</Link>
-#     </Content>
-#     <Content Include=".\Libraries\macos\libSplashKit.dylib">
-#         <Pack>true</Pack>
-#         <PackagePath>lib\$(TargetFramework)</PackagePath>
-#         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-#         <PackageCopyToOutput>true</PackageCopyToOutput>
-#         <Link>%(FileName)%(Extension)</Link>
-#     </Content>
-# </ItemGroup>

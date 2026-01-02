@@ -1,7 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- Project & package configuration -->
   <PropertyGroup>
     <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <RootNamespace>SplashKitSDK</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -21,9 +23,52 @@
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
 
+  <!-- Debug-specific configuration -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <!-- Release-specific configuration -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <!-- Files to include -->
   <ItemGroup>
     <None Include="readme.md" Pack="true" PackagePath="/"/>
     <None Include="icon.png" Pack="true" PackagePath="/"/>
+
+    <!-- C# bindings
+         SplashKit.cs was previously included as a symbolic link in this directory.
+         This was removed due to symlinks causing issues on MSYS2/Windows environments.
+    -->
+    <Compile Include="$(MSBuildThisFileDirectory)../../../generated/csharp/SplashKit.cs" Link="SplashKit.cs" />
+
+    <!-- Windows (x64) Libraries -->
+    <Content Include=".\Libraries\win64\*.dll">
+      <Pack>true</Pack>
+      <PackagePath>runtimes/win-x64/native</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <Link>%(FileName)%(Extension)</Link>
+    </Content>
+
+    <!-- MacOS (Universal) Libraries -->
+    <Content Include=".\Libraries\macos\libSplashKit.dylib">
+      <Pack>true</Pack>
+      <PackagePath>runtimes/osx-x64/native</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <Link>%(FileName)%(Extension)</Link>
+    </Content>
+
+    <Content Include=".\Libraries\macos\libSplashKit.dylib">
+      <Pack>true</Pack>
+      <PackagePath>runtimes/osx-arm64/native</PackagePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <Link>%(FileName)%(Extension)</Link>
+    </Content>
   </ItemGroup>
 
 </Project>

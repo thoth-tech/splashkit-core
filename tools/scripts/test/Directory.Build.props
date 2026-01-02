@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <!-- Target frameworks should match those specified in the NuGet project: /tools/scripts/nuget-pkg/SplashKitSDK.csproj -->
+    <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
+    <!-- Suppress .NET and SplashKit version warnings -->
+    <NoWarn>NETSDK1138;NU1604</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../GlobalSettings.cs" Link="GlobalSettings.cs" />
+  </ItemGroup>
+</Project>
