@@ -116,8 +116,9 @@ namespace splashkit_lib
      * @param name          The name of the `animation_script` to look for.
      * @returns Returns a `bool` that denotes whether the `animation_script` has been loaded.
      *
-     * @attribute class  animation_script
-     * @attribute self   script
+     * @attribute class   animation_script
+     * @attribute method  has_animation_named
+     * @attribute self    script
      */
     bool has_animation_named(animation_script script, const string &name);
 
@@ -146,10 +147,9 @@ namespace splashkit_lib
      * @returns Returns the newly created `animation`.
      *
      * @attribute class     animation_script
-     * @attribute self      script
      * @attribute method    create_animation
-     *
      * @attribute suffix    with_sound
+     * @attribute self      script
      */
     animation create_animation(animation_script script, const string &name, bool with_sound);
 
@@ -203,7 +203,10 @@ namespace splashkit_lib
      * @param with_sound    Denotes whether the `animation` should play audio.
      * @returns Returns the newly created `animation_script`.
      *
+     * @attribute class     animation_script
+     * @attribute method    create_animation
      * @attribute suffix    from_index_with_sound
+     * @attribute self      script
      */
     animation create_animation(animation_script script, int idx, bool with_sound);
 
@@ -523,9 +526,8 @@ namespace splashkit_lib
      *
      * @attribute class     animation
      * @attribute method    update
-     * @attribute self      anim
-     *
      * @attribute suffix    percent
+     * @attribute self      anim
      */
     void update_animation(animation anim, float pct);
 
@@ -538,7 +540,10 @@ namespace splashkit_lib
      * @param pct           The amount that the frame time will be incremented
      * @param with_sound    Denotes whether the `animation` should play audio.
      *
+     * @attribute class     animation
+     * @attribute method    update
      * @attribute suffix    percent_with_sound
+     * @attribute self      anim
      */
     void update_animation(animation anim, float pct, bool with_sound);
 }
