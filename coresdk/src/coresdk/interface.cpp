@@ -303,6 +303,7 @@ namespace splashkit_lib
     void _update_row_layout()
     {
         if (container_stack.size() == 0) return;
+        if (container_stack.back().layout_widths.empty()) return;
 
         sk_interface_set_layout(container_stack.back().layout_widths.size(), &container_stack.back().layout_widths[0], container_stack.back().layout_height);
     }
