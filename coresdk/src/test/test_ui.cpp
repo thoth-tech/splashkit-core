@@ -20,8 +20,7 @@ using namespace splashkit_lib;
 void run_ui_test()
 {
     open_window("Test UI", 600, 600);
-
-    font fontA = load_font("interface font 1", "arial.ttf");
+    font fontA = load_font("interface font 1", "hara.ttf");
     font fontB = load_font("interface font 2", "kochi-gothic-subst.ttf");
     set_interface_font(fontA);
     set_interface_font_size(12);

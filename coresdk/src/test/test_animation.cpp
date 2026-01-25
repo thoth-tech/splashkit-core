@@ -23,11 +23,11 @@ void run_animation_test()
 {
     vector<string> sequence = { "Walkfront", "WalkLeft", "WalkRight", "WALKBACK", "dance" };
     
-    cout << "Script should not be loaded: " << has_animation_script("kermit");
+    cout << "Script should not be loaded: " << has_animation_script("kermit") << endl;
     
     animation_script kermit = load_animation_script("kermit", "kermit.txt");
     
-    cout << "Script should be loaded: " << has_animation_script("kermit");
+    cout << "Script should be loaded: " << has_animation_script("kermit") << endl;
     
     animation anim = create_animation(kermit, "MoonWalkBack");
     
@@ -57,7 +57,7 @@ void run_animation_test()
             it++;
         }
         
-        refresh_screen();
+        refresh_screen(60);
         
         if (quit_requested() ) break;
     }

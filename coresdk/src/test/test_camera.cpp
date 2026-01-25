@@ -26,17 +26,18 @@ void run_camera_test()
     sprite_set_anchor_point(s, bitmap_cell_center(sprite_layer(s, 0)));
 
     bool follow = true;
+    const int speed = 10;
 
     while ( ! window_close_requested(w1) )
     {
         process_events();
 
-        if ( key_down( LEFT_KEY) ) sprite_set_dx(s, -1);
-        else if ( key_down( RIGHT_KEY) ) sprite_set_dx(s, 1);
+        if ( key_down( LEFT_KEY) ) sprite_set_dx(s, -speed);
+        else if ( key_down( RIGHT_KEY) ) sprite_set_dx(s, speed);
         else sprite_set_dx(s, 0);
 
-        if ( key_down( UP_KEY) ) sprite_set_dy(s, -1);
-        else if ( key_down( DOWN_KEY) ) sprite_set_dy(s, 1);
+        if ( key_down( UP_KEY) ) sprite_set_dy(s, -speed);
+        else if ( key_down( DOWN_KEY) ) sprite_set_dy(s, speed);
         else sprite_set_dy(s, 0);
 
         if ( key_typed(F_KEY) )
@@ -66,7 +67,7 @@ void run_camera_test()
         draw_triangle(COLOR_AQUA, screen_width() / 2, 0, 0, screen_height(), screen_width(), screen_height());
 
         draw_sprite(s);
-        refresh_screen();
+        refresh_screen(30);
     }
 
     close_window(w1);

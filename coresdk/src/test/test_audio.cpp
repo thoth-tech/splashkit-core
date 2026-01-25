@@ -42,13 +42,16 @@ void run_audio_tests()
     
     cout << "    Downloading sound effect..." << endl;
     download_sound_effect("text message 2", "http://soundbible.com/grab.php?id=2155&type=wav", 80);
+    cout << "    Playing downloaded sound effect..." << endl;
     play_sound_effect("text message 2", 2, 0.8);
     delay(5000);
     
     cout << "    Downloading music..." << endl;
-    download_music("music", "http://www.royaltyfreemusic.com/music_clips/free/Heartland_1.mp3", 80);
+    download_music("music", "http://assets.mixkit.co/music/493/493.mp3", 80);
+    cout << "    Playing downloaded music..." << endl;
     play_music("music");
     delay(5000);
+    stop_music();
     
     play_sound_effect(s1, 1, 1.0f);
     

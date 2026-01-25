@@ -129,7 +129,7 @@ void run_tcp_networking_test()
     pause_test();
 
     cout << "Client still:  " << lConA << endl;
-    cout << "Test message send (to closed client):  " << send_message_to(string("A", 876), lConB);
+    cout << "Test message send (to closed client):  " << send_message_to(string("A", 876), lConB) << endl;
 
     pause_test();
     cout << "Test message send (expect false):  " << send_message_to(string("A", 876), lConB) << endl;

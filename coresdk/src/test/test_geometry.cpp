@@ -13,6 +13,7 @@ using namespace std;
 #include "window_manager.h"
 #include "graphics.h"
 #include "input.h"
+#include "timers.h"
 
 using namespace splashkit_lib;
 
@@ -470,6 +471,7 @@ void test_bitmap_ray_collision()
     point_2d bmp_3_center = point_offset_by(bmp_3_position, vector_to(bitmap_center(bmp_3)));
     point_2d ray_origin = point_at(100, 100);
     vector_2d ray_heading = vector_to(200, 200);
+    const double RAY_STEP = 5.0;
     
     while ( !window_close_requested(w1) ) {
         process_events();
@@ -477,13 +479,13 @@ void test_bitmap_ray_collision()
         clear_screen(COLOR_WHITE);
 
         if (key_down(UP_KEY))
-            ray_origin.y -= 1.0;
+            ray_origin.y -= RAY_STEP;
         if (key_down(DOWN_KEY))
-            ray_origin.y += 1.0;
+            ray_origin.y += RAY_STEP;
         if (key_down(LEFT_KEY))
-            ray_origin.x -= 1.0;
+            ray_origin.x -= RAY_STEP;
         if (key_down(RIGHT_KEY))
-            ray_origin.x += 1.0;
+            ray_origin.x += RAY_STEP;
         
         bool collision_1 = bitmap_ray_collision(bmp_1, 0, bmp_1_position, ray_origin, ray_heading);
         bool collision_2 = bitmap_ray_collision(bmp_2, 0, bmp_2_position, ray_origin, ray_heading);
@@ -517,7 +519,7 @@ void test_bitmap_ray_collision()
         circle ray_origin_circle = circle_at(ray_origin, 3.0);
         draw_circle(COLOR_BLUE, ray_origin_circle);
 
-        refresh_screen();
+        refresh_screen(30);
     }
     close_window(w1);
 }

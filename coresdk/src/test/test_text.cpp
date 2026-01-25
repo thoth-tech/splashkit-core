@@ -145,7 +145,7 @@ void run_text_test()
     load_font("kochi", "kochi-gothic-subst.ttf");
     draw_text("スプラッシュ・キット", COLOR_BLACK, "kochi", 30, 0, 280);
 
-    download_font("brawler", "https://github.com/google/fonts/raw/master/ofl/brawler/Brawler-Regular.ttf", 443);
+    download_font("brawler", "https://raw.githubusercontent.com/google/fonts/main/ofl/brawler/Brawler-Regular.ttf", 443);
     draw_text("Hello World: Brawler!", COLOR_BLACK, "brawler", 30, 0, 350);
     
     refresh_screen();
