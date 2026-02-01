@@ -5,6 +5,8 @@
 #include "random.h"
 #include <chrono>
 
+#include "logging_handling.h"
+
 using namespace splashkit_lib;
 
 TEST_CASE("substring contained within string is detected", "[contains]")
@@ -695,7 +697,9 @@ TEST_CASE("random number int between min and max is generated", "[rnd(int min, i
     }
     SECTION("min is 1 and max is 0")
     {
+        disable_logging(WARNING); // Disables "WARNING -> Min value is greater than max value when calling rnd."
         int result = rnd(1, 0);
+        enable_logging(WARNING);
         REQUIRE(result >= 0);
         REQUIRE(result <= 1);
     }
@@ -808,7 +812,9 @@ TEST_CASE("convert a binary string to an integer", "[bin_to_dec]")
     }
     SECTION("input is invalid binary")
     {
+        disable_logging(ERROR); // Disables "ERROR -> Invalid binary string "2" passed to bin_to_dec. Returning 0."
         REQUIRE(bin_to_dec("2") == 0);
+        enable_logging(ERROR);
     }
 }
 TEST_CASE("convert a hex string to binary", "[hex_to_bin]")
@@ -819,7 +825,9 @@ TEST_CASE("convert a hex string to binary", "[hex_to_bin]")
     }
     SECTION("input contains invalid symbol G")
     {
+        disable_logging(ERROR); // Disables "ERROR -> Invalid hexadecimal string "G" passed to hex_to_bin. Returning empty string."
         REQUIRE(hex_to_bin("G") == "");
+        enable_logging(ERROR);
     }
 }
 TEST_CASE("convert a binary string to hex", "[bin_to_hex]")
@@ -830,12 +838,15 @@ TEST_CASE("convert a binary string to hex", "[bin_to_hex]")
     }
     SECTION("input is invalid binary")
     {
+        disable_logging(ERROR); // Disables "ERROR -> Invalid binary string "2" passed to bin_to_hex. Returning empty string."
         REQUIRE(bin_to_hex("2") == "");
+        enable_logging(ERROR);
     }
 }
 TEST_CASE("convert an integer to octal", "[dec_to_oct]")
 {
     REQUIRE(dec_to_oct(64) == "100");
+    REQUIRE(dec_to_oct(0) == "0");
 }
 TEST_CASE("convert an octal string to an integer", "[oct_to_dec]")
 {
@@ -845,7 +856,9 @@ TEST_CASE("convert an octal string to an integer", "[oct_to_dec]")
     }
     SECTION("input uses invalid symbol 8")
     {
+        disable_logging(ERROR); // Disables "ERROR -> Invalid octal string "8" passed to oct_to_dec. Returning 0."
         REQUIRE(oct_to_dec("8") == 0);
+        enable_logging(ERROR);
     }
 }
 TEST_CASE("convert an octal string to binary", "[oct_to_bin]")
@@ -856,7 +869,9 @@ TEST_CASE("convert an octal string to binary", "[oct_to_bin]")
     }
     SECTION("input uses invalid symbol 8")
     {
+        disable_logging(ERROR); // Disables "ERROR -> Invalid octal string "8" passed to oct_to_bin. Returning empty string."
         REQUIRE(oct_to_bin("8") == "");
+        enable_logging(ERROR);
     }
 }
 TEST_CASE("convert a binary string to octal", "[bin_to_oct]")
@@ -867,7 +882,9 @@ TEST_CASE("convert a binary string to octal", "[bin_to_oct]")
     }
     SECTION("input is invalid binary")
     {
+        disable_logging(ERROR); // Disables "ERROR -> Invalid binary string "2" passed to bin_to_oct. Returning empty string."
         REQUIRE(bin_to_oct("2") == "");
+        enable_logging(ERROR);
     }
 }
 TEST_CASE("convert a hex string to octal", "[hex_to_oct]")
@@ -878,7 +895,9 @@ TEST_CASE("convert a hex string to octal", "[hex_to_oct]")
     }
     SECTION("input uses the invalid symbol G")
     {
+        disable_logging(ERROR); // Disables "ERROR -> Invalid hexadecimal string "G" passed to hex_to_oct. Returning empty string."
         REQUIRE(hex_to_oct("G") == "");
+        enable_logging(ERROR);
     }
 }
 TEST_CASE("convert a hex string to an integer", "[hex_to_dec]")
@@ -889,7 +908,9 @@ TEST_CASE("convert a hex string to an integer", "[hex_to_dec]")
     }
     SECTION("input uses the invalid symbol G")
     {
+        disable_logging(ERROR); // Disables "ERROR -> Invalid octal string "G" passed to hex_to_dec. Returning 0."
         REQUIRE(hex_to_dec("G") == 0);
+        enable_logging(ERROR);
     }
 }
 TEST_CASE("convert an octal string to hex", "[oct_to_hex]")
@@ -900,7 +921,9 @@ TEST_CASE("convert an octal string to hex", "[oct_to_hex]")
     }
     SECTION("input uses the invalid symbol 8")
     {
+        disable_logging(ERROR); // Disables "ERROR -> Invalid octal string "8" passed to oct_to_hex. Returning empty string."
         REQUIRE(oct_to_hex("8") == "");
+        enable_logging(ERROR);
     }
 }
 TEST_CASE("encode a string in base64 format", "[base64_encode]")

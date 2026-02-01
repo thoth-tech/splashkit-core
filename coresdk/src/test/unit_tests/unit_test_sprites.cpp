@@ -7,6 +7,8 @@
 #include "sprites.h"
 #include "images.h"
 
+#include "logging_handling.h"
+
 using namespace splashkit_lib;
 
 constexpr int ROCKET_WIDTH = 36, ROCKET_HEIGHT = 72,
@@ -22,7 +24,11 @@ TEST_CASE("sprites can be created and freed", "[sprite]")
         bitmap non_bmp = bitmap_named("non_existent");
         REQUIRE(non_bmp == nullptr);
         REQUIRE_FALSE(has_sprite("non_existent"));
+
+        disable_logging(WARNING); // Disables "WARNING -> Attempting to get width of invalid bitmap" and "WARNING -> Attempting to get height of invalid bitmap"
         sprite no_sprite = create_sprite("non-existent", non_bmp);
+        enable_logging(WARNING);
+
         REQUIRE_FALSE(has_sprite("non_existent"));
     }
     SECTION("can create and free sprite")
