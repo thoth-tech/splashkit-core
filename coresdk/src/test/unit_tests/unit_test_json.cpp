@@ -117,7 +117,18 @@ TEST_CASE("json can be created and read", "[json]")
 
         REQUIRE("#00ff00ff" == color_to_string(deserialized_clr));
     }
+TEST_CASE("json can be created and read with different number types", "[json_read_number][json_read_number_as_double]")
+    {
+        json number_types = create_json();
 
+        json_set_number(number_types, "float", 21.2f);
+        json_set_number(number_types, "double", 30.1);
+
+        REQUIRE_THAT(json_read_number(number_types, "float"), WithinRel(21.2f));
+        REQUIRE_THAT(json_read_number_as_double(number_types, "double"), WithinRel(30.1));
+        
+        free_json(number_types);
+    }
     free_json(person);
     free_all_json();
 }
