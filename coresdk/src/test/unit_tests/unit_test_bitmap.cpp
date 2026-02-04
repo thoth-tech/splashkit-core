@@ -7,6 +7,10 @@
 #include "types.h"
 #include "graphics.h"
 #include "resources.h"
+#include "physics.h"
+#include "images.h"
+#include "rectangle_drawing.h"
+#include "color.h"
 
 #include "logging_handling.h"
 
@@ -133,4 +137,106 @@ TEST_CASE("bitmap bounding details can be retrieved", "[bitmap]")
         }
     }
     free_bitmap(bmp);
+}
+
+TEST_CASE("can perform bitmap ray collision detection", "[bitmap][ray_collision][physics]")
+{
+    // Create opaque bitmaps for testing to avoid transparency issues
+    bitmap bmp_1 = create_bitmap("bmp_1", 50, 50);
+    clear_bitmap(bmp_1, COLOR_RED);
+    bitmap bmp_2 = create_bitmap("bmp_2", 50, 50);
+    clear_bitmap(bmp_2, COLOR_BLUE);
+    bitmap bmp_3 = create_bitmap("bmp_3", 50, 50);
+    clear_bitmap(bmp_3, COLOR_GREEN);
+
+    // Collision tests require pixel masks
+    setup_collision_mask(bmp_1);
+    setup_collision_mask(bmp_2);
+    setup_collision_mask(bmp_3);
+    
+    REQUIRE(bitmap_valid(bmp_1));
+    REQUIRE(bitmap_valid(bmp_2));
+    REQUIRE(bitmap_valid(bmp_3));
+    
+    SECTION("can detect ray collision with bitmap")
+    {
+        point_2d bmp_position = point_at(100.0, 100.0);
+        point_2d ray_origin = point_at(50.0, 125.0);
+        vector_2d ray_heading = vector_to(1.0, 0.0);
+        
+        // Ray should collide with bitmap in its path
+        bool collision = bitmap_ray_collision(bmp_1, 0, bmp_position, ray_origin, ray_heading);
+        REQUIRE(collision);
+        
+        // Ray pointing away should not collide
+        ray_heading = vector_to(-1.0, 0.0);
+        collision = bitmap_ray_collision(bmp_1, 0, bmp_position, ray_origin, ray_heading);
+        REQUIRE_FALSE(collision);
+    }
+    
+    SECTION("can detect ray collision with multiple bitmaps at different positions")
+    {
+        point_2d bmp_1_position = point_at(300.0, 300.0);
+        point_2d bmp_2_position = point_at(500.0, 300.0);
+        point_2d bmp_3_position = point_at(700.0, 300.0);
+        point_2d ray_origin = point_at(100.0, 325.0);
+
+        // Single ray that passes through all three bitmaps
+        vector_2d ray_heading = vector_to(1.0, 0.0);
+        bool collision_1 = bitmap_ray_collision(bmp_1, 0, bmp_1_position, ray_origin, ray_heading);
+        bool collision_2 = bitmap_ray_collision(bmp_2, 0, bmp_2_position, ray_origin, ray_heading);
+        bool collision_3 = bitmap_ray_collision(bmp_3, 0, bmp_3_position, ray_origin, ray_heading);
+        
+        // All should be true as we are using opaque bitmaps
+        REQUIRE((collision_1 && collision_2 && collision_3));
+    }
+    
+    SECTION("can detect ray collision with different ray origins")
+    {
+        point_2d bmp_position = point_at(300.0, 300.0);
+        vector_2d ray_heading = vector_to(1.0, 0.0);
+        
+        // Ray from left should collide
+        point_2d ray_origin_left = point_at(200.0, 325.0);
+        bool collision_left = bitmap_ray_collision(bmp_1, 0, bmp_position, ray_origin_left, ray_heading);
+        REQUIRE(collision_left);
+        
+        // Ray from far below should not collide
+        point_2d ray_origin_below = point_at(200.0, 500.0);
+        bool collision_below = bitmap_ray_collision(bmp_1, 0, bmp_position, ray_origin_below, ray_heading);
+        REQUIRE_FALSE(collision_below);
+    }
+    
+    SECTION("can handle ray collision with different bitmap cells")
+    {
+        // Create 2-cell bitmap
+        bitmap cell_bmp = create_bitmap("cell_bmp", 100, 50);
+        bitmap_set_cell_details(cell_bmp, 50, 50, 2, 1, 2); // w, h, cols, rows, count
+        
+        // Clear to transparent
+        clear_bitmap(cell_bmp, COLOR_TRANSPARENT);
+        
+        // Draw rect on first cell (left side)
+        fill_rectangle_on_bitmap(cell_bmp, COLOR_RED, 0, 0, 50, 50);
+
+        setup_collision_mask(cell_bmp);
+        
+        point_2d bmp_position = point_at(300.0, 300.0);
+        point_2d ray_origin = point_at(200.0, 325.0);
+        vector_2d ray_heading = vector_to(1.0, 0.0);
+        
+        // Test with cell 0 (solid)
+        bool collision_cell_0 = bitmap_ray_collision(cell_bmp, 0, bmp_position, ray_origin, ray_heading);
+        REQUIRE(collision_cell_0);
+        
+        // Test with cell 1 (transparent/empty)
+        bool collision_cell_1 = bitmap_ray_collision(cell_bmp, 1, bmp_position, ray_origin, ray_heading);
+        REQUIRE_FALSE(collision_cell_1);
+        
+        free_bitmap(cell_bmp);
+    }
+    
+    free_bitmap(bmp_1);
+    free_bitmap(bmp_2);
+    free_bitmap(bmp_3);
 }

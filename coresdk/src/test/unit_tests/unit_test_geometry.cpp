@@ -6,6 +6,10 @@
 
 #include "types.h"
 #include "point_geometry.h"
+#include "rectangle_geometry.h"
+#include "circle_geometry.h"
+#include "triangle_geometry.h"
+#include "quad_geometry.h"
 
 using namespace splashkit_lib;
 
@@ -984,3 +988,172 @@ TEST_CASE("can perform trigonometric calculations", "[trigonometry]")
         REQUIRE(tangent(360.0f) == Catch::Detail::Approx(0.0f).margin(__FLT_EPSILON__));
     }
 }
+
+TEST_CASE("can perform rectangle ray intersection", "[geometry][ray_intersection]")
+{
+    rectangle r1 = rectangle_from(100.0, 100.0, 100.0, 100.0);
+    
+    SECTION("can detect ray intersection with rectangle")
+    {
+        // Ray from left that intersects
+        REQUIRE(rectangle_ray_intersection(point_at(90.0, 110.0), vector_to(1.0, 0.0), r1));
+        
+        // Ray that misses (goes above the rectangle)
+        REQUIRE_FALSE(rectangle_ray_intersection(point_at(95.0, 95.0), vector_to(1.0, 0.0), r1));
+        
+        // Ray from top that intersects
+        REQUIRE(rectangle_ray_intersection(point_at(150.0, 50.0), vector_to(0.0, 1.0), r1));
+        
+        // Ray pointing away from rectangle
+        REQUIRE_FALSE(rectangle_ray_intersection(point_at(50.0, 150.0), vector_to(-1.0, 0.0), r1));
+    }
+    
+    SECTION("can get hit point and distance for rectangle ray intersection")
+    {
+        point_2d hit_point;
+        double distance;
+        
+        // Ray from left hitting the left edge
+        bool intersects = rectangle_ray_intersection(point_at(50.0, 150.0), vector_to(1.0, 0.0), r1, hit_point, distance);
+        REQUIRE(intersects);
+        REQUIRE(hit_point.x == Catch::Detail::Approx(100.0).margin(EPSILON));
+        REQUIRE(hit_point.y == Catch::Detail::Approx(150.0).margin(EPSILON));
+        REQUIRE(distance == Catch::Detail::Approx(50.0).margin(EPSILON));
+        
+        // Ray from top hitting the top edge
+        intersects = rectangle_ray_intersection(point_at(150.0, 50.0), vector_to(0.0, 1.0), r1, hit_point, distance);
+        REQUIRE(intersects);
+        REQUIRE(hit_point.x == Catch::Detail::Approx(150.0).margin(EPSILON));
+        REQUIRE(hit_point.y == Catch::Detail::Approx(100.0).margin(EPSILON));
+        REQUIRE(distance == Catch::Detail::Approx(50.0).margin(EPSILON));
+        
+        // Ray that doesn't intersect
+        intersects = rectangle_ray_intersection(point_at(50.0, 50.0), vector_to(-1.0, -1.0), r1, hit_point, distance);
+        REQUIRE_FALSE(intersects);
+    }
+}
+
+TEST_CASE("can perform circle ray intersection", "[geometry][ray_intersection]")
+{
+    circle c1 = circle_at(300.0, 200.0, 60.0);
+    
+    SECTION("can detect ray intersection with circle")
+    {
+        // Ray from left that intersects center
+        REQUIRE(circle_ray_intersection(point_at(200.0, 200.0), vector_to(1.0, 0.0), c1));
+        
+        // Ray from top that intersects
+        REQUIRE(circle_ray_intersection(point_at(300.0, 100.0), vector_to(0.0, 1.0), c1));
+        
+        // Ray that misses the circle
+        REQUIRE_FALSE(circle_ray_intersection(point_at(200.0, 100.0), vector_to(0.0, 1.0), c1));
+        
+        // Ray pointing away from circle
+        REQUIRE_FALSE(circle_ray_intersection(point_at(200.0, 200.0), vector_to(-1.0, 0.0), c1));
+    }
+    
+    SECTION("can get hit point and distance for circle ray intersection")
+    {
+        point_2d hit_point;
+        double distance;
+        
+        // Ray from left hitting circle
+        bool intersects = circle_ray_intersection(point_at(200.0, 200.0), vector_to(1.0, 0.0), c1, hit_point, distance);
+        REQUIRE(intersects);
+        REQUIRE(hit_point.x == Catch::Detail::Approx(240.0).margin(EPSILON));
+        REQUIRE(hit_point.y == Catch::Detail::Approx(200.0).margin(EPSILON));
+        REQUIRE(distance == Catch::Detail::Approx(40.0).margin(EPSILON));
+        
+        // Ray from inside the circle
+        intersects = circle_ray_intersection(point_at(300.0, 200.0), vector_to(1.0, 0.0), c1, hit_point, distance);
+        REQUIRE(intersects);
+        REQUIRE(hit_point.x == Catch::Detail::Approx(300.0).margin(EPSILON));
+        REQUIRE(distance == Catch::Detail::Approx(0.0).margin(EPSILON));
+        
+        // Ray that doesn't intersect
+        intersects = circle_ray_intersection(point_at(200.0, 100.0), vector_to(0.0, 1.0), c1, hit_point, distance);
+        REQUIRE_FALSE(intersects);
+    }
+}
+
+TEST_CASE("can perform triangle ray intersection", "[geometry][ray_intersection]")
+{
+    // Axis-aligned right triangle for simpler calculations
+    // (400,400) - bottom-left corner
+    // (500,400) - bottom-right corner
+    // (400,500) - top-left corner
+    triangle t1 = triangle_from(400.0, 400.0, 500.0, 400.0, 400.0, 500.0);
+    
+    SECTION("can detect ray intersection with triangle")
+    {
+        // Ray from left that intersects vertical side (x=400)
+        REQUIRE(triangle_ray_intersection(point_at(350.0, 450.0), vector_to(1.0, 0.0), t1));
+        
+        // Ray from bottom that intersects horizontal side (y=400)
+        REQUIRE(triangle_ray_intersection(point_at(450.0, 350.0), vector_to(0.0, 1.0), t1));
+        
+        // Ray that misses the triangle
+        REQUIRE_FALSE(triangle_ray_intersection(point_at(300.0, 300.0), vector_to(1.0, 1.0), t1));
+        
+        // Ray pointing away from triangle
+        REQUIRE_FALSE(triangle_ray_intersection(point_at(350.0, 450.0), vector_to(-1.0, 0.0), t1));
+    }
+    
+    SECTION("can get hit point and distance for triangle ray intersection")
+    {
+        point_2d hit_point;
+        double distance;
+        
+        // Ray from left hitting vertical edge x=400
+        bool intersects = triangle_ray_intersection(point_at(350.0, 450.0), vector_to(1.0, 0.0), t1, hit_point, distance);
+        REQUIRE(intersects);
+        REQUIRE(hit_point.x == Catch::Detail::Approx(400.0).margin(EPSILON));
+        REQUIRE(hit_point.y == Catch::Detail::Approx(450.0).margin(EPSILON));
+        REQUIRE(distance == Catch::Detail::Approx(50.0).margin(EPSILON));
+        
+        // Ray that doesn't intersect
+        intersects = triangle_ray_intersection(point_at(300.0, 300.0), vector_to(0.0, 1.0), t1, hit_point, distance);
+        REQUIRE_FALSE(intersects);
+    }
+}
+
+TEST_CASE("can perform quad ray intersection", "[geometry][ray_intersection]")
+{
+    // Axis-aligned rectangular quad
+    // (100,300) TL, (200,300) TR, (200,500) BR, (100,500) BL
+    quad q1 = quad_from(100.0, 300.0, 200.0, 300.0, 200.0, 500.0, 100.0, 500.0);
+    
+    SECTION("can detect ray intersection with quad")
+    {
+        // Ray from left that intersects
+        REQUIRE(quad_ray_intersection(point_at(50.0, 400.0), vector_to(1.0, 0.0), q1));
+        
+        // Ray from top that intersects
+        REQUIRE(quad_ray_intersection(point_at(150.0, 200.0), vector_to(0.0, 1.0), q1));
+        
+        // Ray that misses the quad
+        REQUIRE_FALSE(quad_ray_intersection(point_at(50.0, 200.0), vector_to(0.0, 1.0), q1));
+        
+        // Ray pointing away from quad
+        REQUIRE_FALSE(quad_ray_intersection(point_at(50.0, 400.0), vector_to(-1.0, 0.0), q1));
+    }
+    
+    SECTION("can get hit point and distance for quad ray intersection")
+    {
+        point_2d hit_point;
+        double distance;
+        
+        // Ray from left hitting quad vertical side (x=100)
+        bool intersects = quad_ray_intersection(point_at(50.0, 400.0), vector_to(1.0, 0.0), q1, hit_point, distance);
+        REQUIRE(intersects);
+        REQUIRE(hit_point.x == Catch::Detail::Approx(100.0).margin(EPSILON));
+        REQUIRE(hit_point.y == Catch::Detail::Approx(400.0).margin(EPSILON));
+        REQUIRE(distance == Catch::Detail::Approx(50.0).margin(EPSILON));
+        
+        // Ray that doesn't intersect
+        intersects = quad_ray_intersection(point_at(50.0, 200.0), vector_to(0.0, 1.0), q1, hit_point, distance);
+        REQUIRE_FALSE(intersects);
+    }
+}
+
+

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="skunit_tests.exe" errors="0" failures="2" tests="39" hostname="tbd" time="0.000" timestamp="2026-02-04T19:07:18Z">
+    <properties>
+      <property name="filters" value="[ray_intersection]"/>
+    </properties>
+    <testcase classname="skunit_tests.exe.global" name="can perform rectangle ray intersection/can detect ray intersection with rectangle" time="0.000" status="run"/>
+    <testcase classname="skunit_tests.exe.global" name="can perform rectangle ray intersection/can get hit point and distance for rectangle ray intersection" time="0.000" status="run"/>
+    <testcase classname="skunit_tests.exe.global" name="can perform circle ray intersection/can detect ray intersection with circle" time="0.000" status="run"/>
+    <testcase classname="skunit_tests.exe.global" name="can perform circle ray intersection/can get hit point and distance for circle ray intersection" time="0.000" status="run"/>
+    <testcase classname="skunit_tests.exe.global" name="can perform triangle ray intersection/can detect ray intersection with triangle" time="0.000" status="run">
+      <failure message="!(triangle_ray_intersection(point_at(300.0, 300.0), vector_to(1.0, 1.0), t1))" type="REQUIRE_FALSE">
+FAILED:
+  REQUIRE_FALSE( triangle_ray_intersection(point_at(300.0, 300.0), vector_to(1.0, 1.0), t1) )
+with expansion:
+  !true
+at C:/Users/USER/Desktop/Ashen/splashkit-core/coresdk/src/test/unit_tests/unit_test_geometry.cpp:1096
+      </failure>
+    </testcase>
+    <testcase classname="skunit_tests.exe.global" name="can perform triangle ray intersection/can get hit point and distance for triangle ray intersection" time="0.000" status="run"/>
+    <testcase classname="skunit_tests.exe.global" name="can perform quad ray intersection/can detect ray intersection with quad" time="0.000" status="run"/>
+    <testcase classname="skunit_tests.exe.global" name="can perform quad ray intersection/can get hit point and distance for quad ray intersection" time="0.000" status="run">
+      <failure message="hit_point.x == Catch::Detail::Approx(100.0).margin(EPSILON)" type="REQUIRE">
+FAILED:
+  REQUIRE( hit_point.x == Catch::Detail::Approx(100.0).margin(EPSILON) )
+with expansion:
+  150.0 == Approx( 100.0 )
+at C:/Users/USER/Desktop/Ashen/splashkit-core/coresdk/src/test/unit_tests/unit_test_geometry.cpp:1149
+      </failure>
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+</testsuites>
