@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="skunit_tests.exe" errors="0" failures="1" tests="22" hostname="tbd" time="0.536" timestamp="2026-02-04T19:07:11Z">
+    <properties>
+      <property name="filters" value="[ray_collision]"/>
+    </properties>
+    <testcase classname="skunit_tests.exe.global" name="can perform bitmap ray collision detection" time="0.001" status="run"/>
+    <testcase classname="skunit_tests.exe.global" name="can perform bitmap ray collision detection/can detect ray collision with bitmap" time="0.000" status="run"/>
+    <testcase classname="skunit_tests.exe.global" name="can perform bitmap ray collision detection/can detect ray collision with multiple bitmaps at different positions" time="0.000" status="run"/>
+    <testcase classname="skunit_tests.exe.global" name="can perform bitmap ray collision detection/can detect ray collision with different ray origins" time="0.000" status="run"/>
+    <testcase classname="skunit_tests.exe.global" name="can perform bitmap ray collision detection/can handle ray collision with different bitmap cells" time="0.001" status="run">
+      <failure message="!(collision_cell_1)" type="REQUIRE_FALSE">
+FAILED:
+  REQUIRE_FALSE( collision_cell_1 )
+with expansion:
+  !true
+at C:/Users/USER/Desktop/Ashen/splashkit-core/coresdk/src/test/unit_tests/unit_test_bitmap.cpp:234
+      </failure>
+    </testcase>
+    <system-out/>
+    <system-err/>
+  </testsuite>
+</testsuites>
