@@ -4,6 +4,11 @@
 
 #include "logging_handling.h"
 
+#include <iostream>
+
+#define TEST_MAC "00:00:00:00:00:00"
+#define TEST_MAC_HEX "0x000000000000"
+
 using namespace splashkit_lib;
 
 TEST_CASE("can create a server", "[networking]")
@@ -128,8 +133,8 @@ TEST_CASE("can communicate with server", "[networking]")
         enable_logging(WARNING);
 
         const string INVALID_IP = "invalid_ip";
-        
-        disable_logging(ERROR); //Disables "ERROR -> Could not establish connection at open_connection after calling _establish_connection"
+
+        disable_logging(ERROR); // Disables "ERROR -> Could not establish connection at open_connection after calling _establish_connection"
         connection conn2 = open_connection("test_connection_4", INVALID_IP, PORT, TCP);
         enable_logging(ERROR);
 
@@ -234,4 +239,39 @@ TEST_CASE("can convert network data")
         REQUIRE_FALSE(is_valid_ipv4("abc.def.ghi.jkl")); // Letters
         REQUIRE_FALSE(is_valid_ipv4("192,168,1,1"));     // Wrong separator
     }
+}
+TEST_CASE("can convert mac address string to hex string")
+{
+    REQUIRE(mac_to_hex("00:00:00:00:00:00") == "0x000000000000");
+    REQUIRE(mac_to_hex("FF:FF:FF:FF:FF:FF") == "0xFFFFFFFFFFFF");
+    REQUIRE(mac_to_hex("12:34:56:78:9A:BC") == "0x123456789ABC");
+    REQUIRE(mac_to_hex("AB:CD:EF:12:34:56") == "0xABCDEF123456");
+    REQUIRE(mac_to_hex(TEST_MAC) == TEST_MAC_HEX);
+
+    std::string result = mac_to_hex("AB:CD:EF:12:34:56");
+    REQUIRE(result == "0xABCDEF123456");
+
+    // Additional positive tests
+    REQUIRE(mac_to_hex("01:23:45:67:89:AB") == "0x0123456789AB");
+    REQUIRE(mac_to_hex("DE:AD:BE:EF:00:01") == "0xDEADBEEF0001");
+
+    // Negative tests
+    REQUIRE(mac_to_hex("00:00:00:00:00:00") != "0xFFFFFFFFFFFF");
+    REQUIRE(mac_to_hex("FF:FF:FF:FF:FF:FF") != "0x000000000000");
+    REQUIRE(mac_to_hex("12:34:56:78:9A:BC") != "0xABCDEF123456");
+    REQUIRE(mac_to_hex("AB:CD:EF:12:34:56") != "0x123456789ABC");
+
+    // Additional negative tests
+    REQUIRE(mac_to_hex("01:23:45:67:89:AB") != "0xDEADBEEF0001");
+    REQUIRE(mac_to_hex("DE:AD:BE:EF:00:01") != "0x0123456789AB");
+
+    // Tests for invalid types of MAC addresses
+    REQUIRE(mac_to_hex("01:23:45:67:89") != "0x0123456789ABC");
+    REQUIRE(mac_to_hex("01:23:45:AB") != "0x0123456789");
+    REQUIRE(mac_to_hex("01:23:45:67:89:AB:CD") != "0x0123456789AB");
+    REQUIRE(mac_to_hex("01:23:67:89:AB") != "0x0123456789ABCD");
+    REQUIRE(mac_to_hex("0000") == "");
+
+    std::cout << "All MAC to Hexadecimal tests passed!\n"
+              << "AB:CD:EF:12:34:56" << " in hex: " << result << std::endl;
 }
