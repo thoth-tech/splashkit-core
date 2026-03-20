@@ -275,3 +275,37 @@ TEST_CASE("can convert mac address string to hex string")
     std::cout << "All MAC to Hexadecimal tests passed!\n"
               << "AB:CD:EF:12:34:56" << " in hex: " << result << std::endl;
 }
+
+TEST_CASE("can convert hex string to mac address string")
+{
+    REQUIRE(hex_to_mac("0x000000000000") == "00:00:00:00:00:00");
+    REQUIRE(hex_to_mac("0xFFFFFFFFFFFF") == "FF:FF:FF:FF:FF:FF");
+    REQUIRE(hex_to_mac("0x123456789ABC") == "12:34:56:78:9A:BC");
+    REQUIRE(hex_to_mac("0xABCDEF123456") != "AB:CD:GF:12:34:56");
+    REQUIRE(hex_to_mac("0xABCDEF123456") == "AB:CD:EF:12:34:56");
+
+    std::string result = hex_to_mac(TEST_MAC_HEX);
+    REQUIRE(result == TEST_MAC);
+
+    // Additional positive tests
+    REQUIRE(hex_to_mac("0x0123456789AB") == "01:23:45:67:89:AB");
+    REQUIRE(hex_to_mac("0xDEADBEEF0001") == "DE:AD:BE:EF:00:01");
+
+    // Negative tests
+    REQUIRE(hex_to_mac("0x000000000000") != "FF:FF:FF:FF:FF:FF");
+    REQUIRE(hex_to_mac("0xFFFFFFFFFFFF") != "00:00:00:00:00:00");
+    REQUIRE(hex_to_mac("0x123456789ABC") != "AB:CD:EF:12:34:56");
+
+    // Additional negative tests
+    REQUIRE(hex_to_mac("0x0123456789AB") != "DE:AD:BE:EF:00:01");
+    REQUIRE(hex_to_mac("0xDEADBEEF0001") != "01:23:45:67:89:AB");
+
+    // Tests for invalid types of hex values
+    REQUIRE(hex_to_mac("0x123456789AB") != "01:23:45:67:89:AB");
+    REQUIRE(hex_to_mac("0x123456789ABCD") != "01:23:45:67:89:AB");
+    REQUIRE(hex_to_mac("000000000000") != "00:00:00:00:00:00");
+
+    std::cout << "All Hexadecimal to MAC tests passed!\n"
+              << TEST_MAC_HEX << " in MAC format: " << result << std::endl;
+    std::cout << "-------------------------------------" << std::endl;
+}
