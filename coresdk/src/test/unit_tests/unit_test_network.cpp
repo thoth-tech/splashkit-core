@@ -309,3 +309,35 @@ TEST_CASE("can convert hex string to mac address string")
               << TEST_MAC_HEX << " in MAC format: " << result << std::endl;
     std::cout << "-------------------------------------" << std::endl;
 }
+
+TEST_CASE("check the validation of mac address")
+{
+    // Valid MAC addresses
+    REQUIRE(is_valid_mac("00:00:00:00:00:00"));
+    REQUIRE(is_valid_mac("FF:FF:FF:FF:FF:FF"));
+    REQUIRE(is_valid_mac("12:34:56:78:9A:BC"));
+    REQUIRE(is_valid_mac("AB:CD:EF:12:34:56"));
+    REQUIRE(is_valid_mac("01:23:45:67:89:AB"));
+    REQUIRE(is_valid_mac("DE:AD:BE:EF:00:01"));
+
+    // Invalid MAC addresses - wrong length
+    REQUIRE(!is_valid_mac("00:00:00:00:00:0"));
+    REQUIRE(!is_valid_mac("FF:FF:FF:FF:FF:F"));
+    REQUIRE(!is_valid_mac("12:34:56:78:9A:B"));
+    REQUIRE(!is_valid_mac("AB:CD:EF:12:34:5"));
+    REQUIRE(!is_valid_mac("AB:CD:EF:12:34:567"));
+    REQUIRE(!is_valid_mac("AB:CD:EF:12:34"));
+
+    // Invalid MAC addresses - invalid characters
+    REQUIRE(!is_valid_mac("GG:00:00:00:00:00"));
+    REQUIRE(!is_valid_mac("00:00:00:00:00:GG"));
+    REQUIRE(!is_valid_mac("ZZ:ZZ:ZZ:ZZ:ZZ:ZZ"));
+    REQUIRE(!is_valid_mac("12:34:56:78:9A:BG"));
+
+    // Invalid MAC addresses - wrong format
+    REQUIRE(!is_valid_mac("00-00-00-00-00-00"));
+    REQUIRE(!is_valid_mac("0000.0000.0000"));
+    REQUIRE(!is_valid_mac("000000000000"));
+    REQUIRE(!is_valid_mac("00:00:00:00:00"));
+    REQUIRE(!is_valid_mac("00:00:00:00:00:00:00"));
+}
