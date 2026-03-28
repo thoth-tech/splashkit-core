@@ -8,6 +8,8 @@
 #include "graphics.h"
 #include "resources.h"
 
+#include "logging_handling.h"
+
 using namespace splashkit_lib;
 
 constexpr int ROCKET_WIDTH = 36, ROCKET_HEIGHT = 72,
@@ -46,7 +48,11 @@ TEST_CASE("bitmaps can be created and freed", "[load_bitmap][bitmap_width][bitma
 TEST_CASE("can detect non-existent bitmap")
 {
     REQUIRE(has_bitmap("non_existent") == false);
+
+    disable_logging(WARNING); // Disables "WARNING -> Unable to locate file for non_existent"
     bitmap no_bmp = load_bitmap("non_existent", "non_existent.jpg");
+    enable_logging(WARNING);
+    
     REQUIRE(no_bmp == nullptr);
     REQUIRE(has_bitmap("non_existent") == false);
 }
