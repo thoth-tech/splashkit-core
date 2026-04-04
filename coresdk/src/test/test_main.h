@@ -15,7 +15,6 @@ void run_shape_drawing_test();
 void run_animation_test();
 void run_text_test();
 void run_audio_tests();
-void run_resources_tests();
 void run_windows_tests();
 void run_graphics_test();
 
