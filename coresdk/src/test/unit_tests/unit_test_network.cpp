@@ -143,7 +143,7 @@ TEST_CASE("can communicate with server", "[networking]")
         enable_logging(WARNING);
     }
 }
-TEST_CASE("can convert network data")
+TEST_CASE("can convert network data", "[networking]")
 {
     close_all_servers();
     close_all_connections();
@@ -240,7 +240,7 @@ TEST_CASE("can convert network data")
         REQUIRE_FALSE(is_valid_ipv4("192,168,1,1"));     // Wrong separator
     }
 }
-TEST_CASE("can convert mac address string to hex string")
+TEST_CASE("can convert mac address string to hex string", "[networking]")
 {
     REQUIRE(mac_to_hex("00:00:00:00:00:00") == "0x000000000000");
     REQUIRE(mac_to_hex("FF:FF:FF:FF:FF:FF") == "0xFFFFFFFFFFFF");
@@ -276,7 +276,7 @@ TEST_CASE("can convert mac address string to hex string")
               << "AB:CD:EF:12:34:56" << " in hex: " << result << std::endl;
 }
 
-TEST_CASE("can convert hex string to mac address string")
+TEST_CASE("can convert hex string to mac address string", "[networking]")
 {
     REQUIRE(hex_to_mac("0x000000000000") == "00:00:00:00:00:00");
     REQUIRE(hex_to_mac("0xFFFFFFFFFFFF") == "FF:FF:FF:FF:FF:FF");
@@ -310,7 +310,7 @@ TEST_CASE("can convert hex string to mac address string")
     std::cout << "-------------------------------------" << std::endl;
 }
 
-TEST_CASE("check the validation of mac address")
+TEST_CASE("check the validation of mac address", "[networking]")
 {
     // Valid MAC addresses
     REQUIRE(is_valid_mac("00:00:00:00:00:00"));
