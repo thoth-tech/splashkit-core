@@ -1,0 +1,5 @@
+64:can create a server
+65:can communicate with server
+66:can convert network data
+67:tcp messages can flow both ways
+68:udp messages can flow both ways

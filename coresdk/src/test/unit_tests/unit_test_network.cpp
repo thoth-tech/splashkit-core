@@ -1,10 +1,29 @@
 #include "catch.hpp"
 
+#include <functional>
+
 #include "networking.h"
+#include "utils.h"
 
 #include "logging_handling.h"
 
 using namespace splashkit_lib;
+
+namespace
+{
+bool wait_for_network_condition(const std::function<bool()> &condition, int timeout_ms = 1000)
+{
+    unsigned int start = current_ticks();
+    while (current_ticks() - start < static_cast<unsigned int>(timeout_ms))
+    {
+        check_network_activity();
+        if (condition())
+            return true;
+        delay(1);
+    }
+    return condition();
+}
+}
 
 TEST_CASE("can create a server", "[networking]")
 {
@@ -234,4 +253,89 @@ TEST_CASE("can convert network data")
         REQUIRE_FALSE(is_valid_ipv4("abc.def.ghi.jkl")); // Letters
         REQUIRE_FALSE(is_valid_ipv4("192,168,1,1"));     // Wrong separator
     }
+}
+
+TEST_CASE("tcp messages can flow both ways", "[networking][tcp]")
+{
+    close_all_servers();
+    close_all_connections();
+
+    constexpr unsigned short int PORT = 3010;
+    const string SERVER_NAME = "unit_test_tcp_server";
+    const string CLIENT_NAME = "unit_test_tcp_client";
+    const string CLIENT_TO_SERVER_MSG = "To server --> from client";
+    const string SERVER_TO_CLIENT_MSG = "To client --> from server";
+
+    server_socket server = create_server(SERVER_NAME, PORT, TCP);
+    REQUIRE(server != nullptr);
+
+    connection client = open_connection(CLIENT_NAME, "127.0.0.1", PORT, TCP);
+    REQUIRE(client != nullptr);
+    REQUIRE(wait_for_network_condition([&]() { return server_has_new_connection(server); }));
+    REQUIRE(accept_new_connection(server));
+
+    connection server_side_client = last_connection(server);
+    REQUIRE(server_side_client != nullptr);
+    REQUIRE(connection_count(server) == 1);
+
+    REQUIRE(send_message_to(CLIENT_TO_SERVER_MSG, client));
+    REQUIRE(wait_for_network_condition([&]() { return has_messages(server); }));
+
+    message to_server = read_message(server);
+    REQUIRE(to_server != nullptr);
+    REQUIRE(message_data(to_server) == CLIENT_TO_SERVER_MSG);
+    close_message(to_server);
+
+    REQUIRE(send_message_to(SERVER_TO_CLIENT_MSG, server_side_client));
+    REQUIRE(wait_for_network_condition([&]() { return has_messages(client); }));
+
+    message to_client = read_message(client);
+    REQUIRE(to_client != nullptr);
+    REQUIRE(message_data(to_client) == SERVER_TO_CLIENT_MSG);
+    close_message(to_client);
+
+    REQUIRE(close_server(server));
+    close_all_connections();
+    close_all_servers();
+}
+
+
+TEST_CASE("udp messages can flow both ways", "[networking][udp]")
+{
+    close_all_servers();
+    close_all_connections();
+
+    constexpr unsigned short int PORT = 3011;
+    const string SERVER_NAME = "unit_test_udp_server";
+    const string TO_SERVER_NAME = "unit_test_to_server";
+    const string TO_CLIENT_NAME = "unit_test_to_client";
+    const string UDP_TO_SERVER_MSG = "Hello UDP";
+    const string UDP_TO_CLIENT_MSG = "Hello Client";
+
+    server_socket server = create_server(SERVER_NAME, PORT, UDP);
+    REQUIRE(server != nullptr);
+
+    connection to_server = open_connection(TO_SERVER_NAME, "127.0.0.1", PORT, UDP);
+    REQUIRE(to_server != nullptr);
+
+    REQUIRE(send_message_to(UDP_TO_SERVER_MSG, to_server));
+    REQUIRE(wait_for_network_condition([&]() { return has_messages(server); }));
+
+    message msg = read_message(server);
+    REQUIRE(msg != nullptr);
+    REQUIRE(message_data(msg) == UDP_TO_SERVER_MSG);
+
+    connection to_client = open_connection(TO_CLIENT_NAME, message_host(msg), message_port(msg), UDP);
+    REQUIRE(to_client != nullptr);
+    REQUIRE(send_message_to(UDP_TO_CLIENT_MSG, to_client));
+
+    REQUIRE(wait_for_network_condition([&]() { return has_messages(to_server); }));
+    REQUIRE(read_message_data(to_server) == UDP_TO_CLIENT_MSG);
+
+    close_message(msg);
+    REQUIRE(close_connection(to_server));
+    REQUIRE(close_server(server));
+
+    close_all_connections();
+    close_all_servers();
 }

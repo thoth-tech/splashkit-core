@@ -1,0 +1,78 @@
+Start testing: Apr 26 20:08 Sri Lanka Standard Time
+----------------------------------------------------------
+64/85 Testing: can create a server
+64/85 Test: can create a server
+Command: "C:/Users/USER/Documents/Projects/splashkit-core/bin/skunit_tests.exe" "can create a server"
+Directory: C:/Users/USER/Documents/Projects/splashkit-core/projects/cmake/build-ninja
+"can create a server" start time: Apr 26 20:08 Sri Lanka Standard Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Failed.
+"can create a server" end time: Apr 26 20:08 Sri Lanka Standard Time
+"can create a server" time elapsed: 00:00:00
+----------------------------------------------------------
+
+65/85 Testing: can communicate with server
+65/85 Test: can communicate with server
+Command: "C:/Users/USER/Documents/Projects/splashkit-core/bin/skunit_tests.exe" "can communicate with server"
+Directory: C:/Users/USER/Documents/Projects/splashkit-core/projects/cmake/build-ninja
+"can communicate with server" start time: Apr 26 20:08 Sri Lanka Standard Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Failed.
+"can communicate with server" end time: Apr 26 20:08 Sri Lanka Standard Time
+"can communicate with server" time elapsed: 00:00:00
+----------------------------------------------------------
+
+66/85 Testing: can convert network data
+66/85 Test: can convert network data
+Command: "C:/Users/USER/Documents/Projects/splashkit-core/bin/skunit_tests.exe" "can convert network data"
+Directory: C:/Users/USER/Documents/Projects/splashkit-core/projects/cmake/build-ninja
+"can convert network data" start time: Apr 26 20:08 Sri Lanka Standard Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Failed.
+"can convert network data" end time: Apr 26 20:08 Sri Lanka Standard Time
+"can convert network data" time elapsed: 00:00:00
+----------------------------------------------------------
+
+67/85 Testing: tcp messages can flow both ways
+67/85 Test: tcp messages can flow both ways
+Command: "C:/Users/USER/Documents/Projects/splashkit-core/bin/skunit_tests.exe" "tcp messages can flow both ways"
+Directory: C:/Users/USER/Documents/Projects/splashkit-core/projects/cmake/build-ninja
+"tcp messages can flow both ways" start time: Apr 26 20:08 Sri Lanka Standard Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Failed.
+"tcp messages can flow both ways" end time: Apr 26 20:08 Sri Lanka Standard Time
+"tcp messages can flow both ways" time elapsed: 00:00:00
+----------------------------------------------------------
+
+68/85 Testing: udp messages can flow both ways
+68/85 Test: udp messages can flow both ways
+Command: "C:/Users/USER/Documents/Projects/splashkit-core/bin/skunit_tests.exe" "udp messages can flow both ways"
+Directory: C:/Users/USER/Documents/Projects/splashkit-core/projects/cmake/build-ninja
+"udp messages can flow both ways" start time: Apr 26 20:08 Sri Lanka Standard Time
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Failed.
+"udp messages can flow both ways" end time: Apr 26 20:08 Sri Lanka Standard Time
+"udp messages can flow both ways" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Apr 26 20:08 Sri Lanka Standard Time
