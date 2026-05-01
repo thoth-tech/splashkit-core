@@ -6,6 +6,8 @@
 
 #include "sprites.h"
 #include "images.h"
+#include "collisions.h"
+#include "geometry.h"
 
 #include "logging_handling.h"
 
@@ -799,4 +801,204 @@ TEST_CASE("sprite events can be created and handled", "[sprite]")
         free_sprite(sprt);
         free_sprite(sprt2);
     }
+}
+TEST_CASE("collision direction can be calculated between sprites", "[sprite][collision]")
+{
+    bitmap rocket_bmp = load_bitmap("rocket_sprt", "rocket_sprt.png");
+    bitmap background_bmp = load_bitmap("background", "background.png");
+    sprite sprt1 = create_sprite("rocket", rocket_bmp);
+    sprite sprt2 = create_sprite("background", background_bmp);
+    REQUIRE(has_sprite("rocket"));
+    REQUIRE(has_sprite("background"));
+    
+    sprite_set_move_from_anchor_point(sprt1, false);
+    sprite_set_move_from_anchor_point(sprt2, false);
+    sprite_set_collision_kind(sprt1, AABB_COLLISIONS);
+    sprite_set_collision_kind(sprt2, AABB_COLLISIONS);
+    sprite_set_position(sprt1, point_at(100.0, 100.0));
+    sprite_set_position(sprt2, point_at(200.0, 100.0));
+    
+    SECTION("can detect no collision when sprites are not colliding")
+    {
+        vector_2d dir = calculate_collision_direction(sprt1, sprt2);
+        REQUIRE(is_zero_vector(dir));
+    }
+    SECTION("can detect collision direction when sprites collide")
+    {
+        sprite_set_position(sprt2, point_at(120.0, 100.0));
+        vector_2d dir = calculate_collision_direction(sprt1, sprt2);
+        REQUIRE_FALSE(is_zero_vector(dir));
+    }
+    SECTION("can detect collision with sprites at different positions")
+    {
+        sprite_set_position(sprt1, point_at(100.0, 100.0));
+        sprite_set_position(sprt2, point_at(110.0, 105.0));
+        vector_2d dir = calculate_collision_direction(sprt1, sprt2);
+        REQUIRE_FALSE(is_zero_vector(dir));
+    }
+    free_sprite(sprt1);
+    free_sprite(sprt2);
+}
+TEST_CASE("collision direction can be calculated between sprite and rectangle", "[sprite][collision]")
+{
+    bitmap rocket_bmp = load_bitmap("rocket_sprt", "rocket_sprt.png");
+    sprite sprt = create_sprite("rocket", rocket_bmp);
+    REQUIRE(has_sprite("rocket"));
+    
+    sprite_set_move_from_anchor_point(sprt, false);
+    sprite_set_position(sprt, point_at(100.0, 100.0));
+    
+    SECTION("can detect no collision when sprite and rectangle are not colliding")
+    {
+        rectangle rect = rectangle_from(500.0, 500.0, 50.0, 50.0);
+        vector_2d dir = calculate_collision_direction(sprt, rect);
+        REQUIRE(is_zero_vector(dir));
+    }
+    SECTION("can detect collision direction when sprite and rectangle collide")
+    {
+        rectangle rect = rectangle_from(120.0, 100.0, 50.0, 50.0);
+        vector_2d dir = calculate_collision_direction(sprt, rect);
+        REQUIRE_FALSE(is_zero_vector(dir));
+    }
+    free_sprite(sprt);
+}
+TEST_CASE("collision can be resolved between sprites", "[sprite][collision]")
+{
+    bitmap rocket_bmp = load_bitmap("rocket_sprt", "rocket_sprt.png");
+    bitmap background_bmp = load_bitmap("background", "background.png");
+    sprite sprt1 = create_sprite("rocket", rocket_bmp);
+    sprite sprt2 = create_sprite("background", background_bmp);
+    REQUIRE(has_sprite("rocket"));
+    REQUIRE(has_sprite("background"));
+    
+    sprite_set_move_from_anchor_point(sprt1, false);
+    sprite_set_move_from_anchor_point(sprt2, false);
+    sprite_set_position(sprt1, point_at(100.0, 100.0));
+    sprite_set_position(sprt2, point_at(150.0, 100.0));
+    
+    SECTION("can resolve collision when sprites are colliding")
+    {
+        sprite_set_position(sprt1, point_at(100.0, 100.0));
+        sprite_set_position(sprt2, point_at(120.0, 100.0));
+        point_2d original_pos = sprite_position(sprt1);
+        
+        vector_2d dir = calculate_collision_direction(sprt1, sprt2);
+        bool resolved = resolve_collision(sprt1, sprt2, dir);
+        
+        REQUIRE(resolved);
+        point_2d new_pos = sprite_position(sprt1);
+        REQUIRE_FALSE((new_pos.x == original_pos.x && new_pos.y == original_pos.y));
+    }
+    SECTION("does not resolve collision when sprites are not colliding")
+    {
+        sprite_set_position(sprt1, point_at(100.0, 100.0));
+        sprite_set_position(sprt2, point_at(500.0, 500.0));
+        point_2d original_pos = sprite_position(sprt1);
+        
+        vector_2d dir = calculate_collision_direction(sprt1, sprt2);
+        bool resolved = resolve_collision(sprt1, sprt2, dir);
+        
+        REQUIRE_FALSE(resolved);
+        point_2d new_pos = sprite_position(sprt1);
+        REQUIRE(new_pos.x == original_pos.x);
+        REQUIRE(new_pos.y == original_pos.y);
+    }
+    SECTION("does not resolve collision with zero direction vector")
+    {
+        sprite_set_position(sprt1, point_at(100.0, 100.0));
+        sprite_set_position(sprt2, point_at(120.0, 100.0));
+        point_2d original_pos = sprite_position(sprt1);
+        
+        vector_2d zero_dir = vector_to(0.0, 0.0);
+        bool resolved = resolve_collision(sprt1, sprt2, zero_dir);
+        
+        REQUIRE_FALSE(resolved);
+        point_2d new_pos = sprite_position(sprt1);
+        REQUIRE(new_pos.x == original_pos.x);
+        REQUIRE(new_pos.y == original_pos.y);
+    }
+    free_sprite(sprt1);
+    free_sprite(sprt2);
+}
+TEST_CASE("collision can be resolved between sprite and rectangle", "[sprite][collision]")
+{
+    bitmap rocket_bmp = load_bitmap("rocket_sprt", "rocket_sprt.png");
+    sprite sprt = create_sprite("rocket", rocket_bmp);
+    REQUIRE(has_sprite("rocket"));
+    
+    sprite_set_move_from_anchor_point(sprt, false);
+    sprite_set_position(sprt, point_at(100.0, 100.0));
+    
+    rectangle rect = rectangle_from(120.0, 100.0, 50.0, 50.0);
+    
+    SECTION("can resolve collision when sprite and rectangle are colliding")
+    {
+        point_2d original_pos = sprite_position(sprt);
+        
+        vector_2d dir = calculate_collision_direction(sprt, rect);
+        bool resolved = resolve_collision(sprt, rect, dir);
+        
+        REQUIRE(resolved);
+        point_2d new_pos = sprite_position(sprt);
+        REQUIRE_FALSE((new_pos.x == original_pos.x && new_pos.y == original_pos.y));
+    }
+    SECTION("does not resolve collision when sprite and rectangle are not colliding")
+    {
+        rect = rectangle_from(500.0, 500.0, 50.0, 50.0);
+        point_2d original_pos = sprite_position(sprt);
+        
+        vector_2d dir = calculate_collision_direction(sprt, rect);
+        bool resolved = resolve_collision(sprt, rect, dir);
+        
+        REQUIRE_FALSE(resolved);
+        point_2d new_pos = sprite_position(sprt);
+        REQUIRE(new_pos.x == original_pos.x);
+        REQUIRE(new_pos.y == original_pos.y);
+    }
+    free_sprite(sprt);
+}
+TEST_CASE("sprite ray collision can be detected", "[sprite][collision]")
+{
+    bitmap rocket_bmp = load_bitmap("rocket_sprt", "rocket_sprt.png");
+    bitmap background_bmp = load_bitmap("background", "background.png");
+    sprite sprt1 = create_sprite("rocket", rocket_bmp);
+    sprite sprt2 = create_sprite("background", background_bmp);
+    REQUIRE(has_sprite("rocket"));
+    REQUIRE(has_sprite("background"));
+    
+    sprite_set_move_from_anchor_point(sprt1, false);
+    sprite_set_move_from_anchor_point(sprt2, false);
+    
+    point_2d ray_origin = point_at(0.0, 0.0);
+    vector_2d ray_heading = vector_to(500.0, 500.0);
+    
+    SECTION("can detect ray collision when ray intersects sprite")
+    {
+        sprite_set_position(sprt1, point_at(100.0, 100.0));
+        bool collision = sprite_ray_collision(sprt1, ray_origin, ray_heading);
+        REQUIRE(collision);
+    }
+    SECTION("can detect no collision when ray does not intersect sprite")
+    {
+        sprite_set_position(sprt1, point_at(0.0, 500.0));
+        bool collision = sprite_ray_collision(sprt1, ray_origin, ray_heading);
+        REQUIRE_FALSE(collision);
+    }
+    SECTION("can detect collision at sprite position along ray")
+    {
+        sprite_set_position(sprt1, point_at(250.0, 250.0));
+        bool collision = sprite_ray_collision(sprt1, ray_origin, ray_heading);
+        REQUIRE(collision);
+    }
+    SECTION("can detect multiple sprite collisions with same ray")
+    {
+        sprite_set_position(sprt1, point_at(100.0, 100.0));
+        sprite_set_position(sprt2, point_at(300.0, 300.0));
+        bool collision1 = sprite_ray_collision(sprt1, ray_origin, ray_heading);
+        bool collision2 = sprite_ray_collision(sprt2, ray_origin, ray_heading);
+        REQUIRE(collision1);
+        REQUIRE(collision2);
+    }
+    free_sprite(sprt1);
+    free_sprite(sprt2);
 }
