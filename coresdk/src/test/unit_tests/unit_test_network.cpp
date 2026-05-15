@@ -4,6 +4,9 @@
 
 #include "logging_handling.h"
 
+#define TEST_MAC "00:00:00:00:00:00"
+#define TEST_MAC_HEX "0x000000000000"
+
 using namespace splashkit_lib;
 
 TEST_CASE("can create a server", "[networking]")
@@ -128,8 +131,8 @@ TEST_CASE("can communicate with server", "[networking]")
         enable_logging(WARNING);
 
         const string INVALID_IP = "invalid_ip";
-        
-        disable_logging(ERROR); //Disables "ERROR -> Could not establish connection at open_connection after calling _establish_connection"
+
+        disable_logging(ERROR); // Disables "ERROR -> Could not establish connection at open_connection after calling _establish_connection"
         connection conn2 = open_connection("test_connection_4", INVALID_IP, PORT, TCP);
         enable_logging(ERROR);
 
@@ -138,7 +141,7 @@ TEST_CASE("can communicate with server", "[networking]")
         enable_logging(WARNING);
     }
 }
-TEST_CASE("can convert network data")
+TEST_CASE("can convert network data", "[networking]")
 {
     close_all_servers();
     close_all_connections();
@@ -234,4 +237,103 @@ TEST_CASE("can convert network data")
         REQUIRE_FALSE(is_valid_ipv4("abc.def.ghi.jkl")); // Letters
         REQUIRE_FALSE(is_valid_ipv4("192,168,1,1"));     // Wrong separator
     }
+}
+TEST_CASE("can convert mac address string to hex string", "[networking]")
+{
+    REQUIRE(mac_to_hex("00:00:00:00:00:00") == "0x000000000000");
+    REQUIRE(mac_to_hex("FF:FF:FF:FF:FF:FF") == "0xFFFFFFFFFFFF");
+    REQUIRE(mac_to_hex("12:34:56:78:9A:BC") == "0x123456789ABC");
+    REQUIRE(mac_to_hex("AB:CD:EF:12:34:56") == "0xABCDEF123456");
+    REQUIRE(mac_to_hex(TEST_MAC) == TEST_MAC_HEX);
+
+    std::string result = mac_to_hex("AB:CD:EF:12:34:56");
+    REQUIRE(result == "0xABCDEF123456");
+
+    // Additional positive tests
+    REQUIRE(mac_to_hex("01:23:45:67:89:AB") == "0x0123456789AB");
+    REQUIRE(mac_to_hex("DE:AD:BE:EF:00:01") == "0xDEADBEEF0001");
+
+    // Negative tests
+    REQUIRE(mac_to_hex("00:00:00:00:00:00") != "0xFFFFFFFFFFFF");
+    REQUIRE(mac_to_hex("FF:FF:FF:FF:FF:FF") != "0x000000000000");
+    REQUIRE(mac_to_hex("12:34:56:78:9A:BC") != "0xABCDEF123456");
+    REQUIRE(mac_to_hex("AB:CD:EF:12:34:56") != "0x123456789ABC");
+
+    // Additional negative tests
+    REQUIRE(mac_to_hex("01:23:45:67:89:AB") != "0xDEADBEEF0001");
+    REQUIRE(mac_to_hex("DE:AD:BE:EF:00:01") != "0x0123456789AB");
+
+    // Tests for invalid types of MAC addresses
+    REQUIRE(mac_to_hex("01:23:45:67:89") != "0x0123456789ABC");
+    REQUIRE(mac_to_hex("01:23:45:AB") != "0x0123456789");
+    REQUIRE(mac_to_hex("01:23:45:67:89:AB:CD") != "0x0123456789AB");
+    REQUIRE(mac_to_hex("01:23:67:89:AB") != "0x0123456789ABCD");
+    REQUIRE(mac_to_hex("0000") == "");
+}
+
+TEST_CASE("can convert hex string to mac address string", "[networking]")
+{
+    REQUIRE(hex_to_mac("0x000000000000") == "00:00:00:00:00:00");
+    REQUIRE(hex_to_mac("0xFFFFFFFFFFFF") == "FF:FF:FF:FF:FF:FF");
+    REQUIRE(hex_to_mac("0x123456789ABC") == "12:34:56:78:9A:BC");
+    REQUIRE(hex_to_mac("0xABCDEF123456") != "AB:CD:GF:12:34:56");
+    REQUIRE(hex_to_mac("0xABCDEF123456") == "AB:CD:EF:12:34:56");
+
+    std::string result = hex_to_mac(TEST_MAC_HEX);
+    REQUIRE(result == TEST_MAC);
+
+    // Additional positive tests
+    REQUIRE(hex_to_mac("0x0123456789AB") == "01:23:45:67:89:AB");
+    REQUIRE(hex_to_mac("0xDEADBEEF0001") == "DE:AD:BE:EF:00:01");
+
+    // Negative tests
+    REQUIRE(hex_to_mac("0x000000000000") != "FF:FF:FF:FF:FF:FF");
+    REQUIRE(hex_to_mac("0xFFFFFFFFFFFF") != "00:00:00:00:00:00");
+    REQUIRE(hex_to_mac("0x123456789ABC") != "AB:CD:EF:12:34:56");
+
+    // Additional negative tests
+    REQUIRE(hex_to_mac("0x0123456789AB") != "DE:AD:BE:EF:00:01");
+    REQUIRE(hex_to_mac("0xDEADBEEF0001") != "01:23:45:67:89:AB");
+
+    // Tests for invalid types of hex values
+    REQUIRE(hex_to_mac("0x123456789AB") != "01:23:45:67:89:AB");
+    REQUIRE(hex_to_mac("0x123456789ABCD") != "01:23:45:67:89:AB");
+    REQUIRE(hex_to_mac("000000000000") != "00:00:00:00:00:00");
+}
+
+TEST_CASE("check the validation of mac address", "[networking]")
+{
+    // Valid MAC addresses
+    REQUIRE(is_valid_mac("00:00:00:00:00:00"));
+    REQUIRE(is_valid_mac("FF:FF:FF:FF:FF:FF"));
+    REQUIRE(is_valid_mac("12:34:56:78:9A:BC"));
+    REQUIRE(is_valid_mac("AB:CD:EF:12:34:56"));
+    REQUIRE(is_valid_mac("01:23:45:67:89:AB"));
+    REQUIRE(is_valid_mac("DE:AD:BE:EF:00:01"));
+
+    // Valid MAC addresses - case insensitivity
+    REQUIRE(is_valid_mac("00:ab:CD:12:34:56"));
+    REQUIRE(is_valid_mac("aB:cD:eF:12:34:56"));
+    REQUIRE(is_valid_mac("de:ad:be:ef:00:01"));
+
+    // Invalid MAC addresses - wrong length
+    REQUIRE(!is_valid_mac("00:00:00:00:00:0"));
+    REQUIRE(!is_valid_mac("FF:FF:FF:FF:FF:F"));
+    REQUIRE(!is_valid_mac("12:34:56:78:9A:B"));
+    REQUIRE(!is_valid_mac("AB:CD:EF:12:34:5"));
+    REQUIRE(!is_valid_mac("AB:CD:EF:12:34:567"));
+    REQUIRE(!is_valid_mac("AB:CD:EF:12:34"));
+
+    // Invalid MAC addresses - invalid characters
+    REQUIRE(!is_valid_mac("GG:00:00:00:00:00"));
+    REQUIRE(!is_valid_mac("00:00:00:00:00:GG"));
+    REQUIRE(!is_valid_mac("ZZ:ZZ:ZZ:ZZ:ZZ:ZZ"));
+    REQUIRE(!is_valid_mac("12:34:56:78:9A:BG"));
+
+    // Invalid MAC addresses - wrong format
+    REQUIRE(!is_valid_mac("00-00-00-00-00-00"));
+    REQUIRE(!is_valid_mac("0000.0000.0000"));
+    REQUIRE(!is_valid_mac("000000000000"));
+    REQUIRE(!is_valid_mac("00:00:00:00:00"));
+    REQUIRE(!is_valid_mac("00:00:00:00:00:00:00"));
 }
