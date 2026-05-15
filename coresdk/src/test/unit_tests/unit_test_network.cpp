@@ -4,8 +4,6 @@
 
 #include "logging_handling.h"
 
-#include <iostream>
-
 #define TEST_MAC "00:00:00:00:00:00"
 #define TEST_MAC_HEX "0x000000000000"
 
@@ -271,9 +269,6 @@ TEST_CASE("can convert mac address string to hex string", "[networking]")
     REQUIRE(mac_to_hex("01:23:45:67:89:AB:CD") != "0x0123456789AB");
     REQUIRE(mac_to_hex("01:23:67:89:AB") != "0x0123456789ABCD");
     REQUIRE(mac_to_hex("0000") == "");
-
-    std::cout << "All MAC to Hexadecimal tests passed!\n"
-              << "AB:CD:EF:12:34:56" << " in hex: " << result << std::endl;
 }
 
 TEST_CASE("can convert hex string to mac address string", "[networking]")
@@ -304,10 +299,6 @@ TEST_CASE("can convert hex string to mac address string", "[networking]")
     REQUIRE(hex_to_mac("0x123456789AB") != "01:23:45:67:89:AB");
     REQUIRE(hex_to_mac("0x123456789ABCD") != "01:23:45:67:89:AB");
     REQUIRE(hex_to_mac("000000000000") != "00:00:00:00:00:00");
-
-    std::cout << "All Hexadecimal to MAC tests passed!\n"
-              << TEST_MAC_HEX << " in MAC format: " << result << std::endl;
-    std::cout << "-------------------------------------" << std::endl;
 }
 
 TEST_CASE("check the validation of mac address", "[networking]")
@@ -319,6 +310,11 @@ TEST_CASE("check the validation of mac address", "[networking]")
     REQUIRE(is_valid_mac("AB:CD:EF:12:34:56"));
     REQUIRE(is_valid_mac("01:23:45:67:89:AB"));
     REQUIRE(is_valid_mac("DE:AD:BE:EF:00:01"));
+
+    // Valid MAC addresses - case insensitivity
+    REQUIRE(is_valid_mac("00:ab:CD:12:34:56"));
+    REQUIRE(is_valid_mac("aB:cD:eF:12:34:56"));
+    REQUIRE(is_valid_mac("de:ad:be:ef:00:01"));
 
     // Invalid MAC addresses - wrong length
     REQUIRE(!is_valid_mac("00:00:00:00:00:0"));
