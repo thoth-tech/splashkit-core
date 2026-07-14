@@ -206,7 +206,7 @@ namespace splashkit_lib
             return 0;
         }
 
-        return stoi(bin_str, nullptr, 2);
+        return static_cast<unsigned int>(std::stoul(bin_str, nullptr, 2));
     }
 
     string hex_to_bin(const string &hex_str)
@@ -300,7 +300,7 @@ namespace splashkit_lib
             return 0;
         }
 
-        return stoi(octal_string, nullptr, 8);
+        return static_cast<unsigned int>(std::stoul(octal_string, nullptr, 8));
     }
 
     unsigned int hex_to_dec(const string &hex_string)
