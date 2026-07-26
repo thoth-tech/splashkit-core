@@ -341,7 +341,7 @@ namespace splashkit_lib
             return 0;
         }
 
-        return stoi(hex_string, nullptr, 16);
+        return std::stoi(hex_string, nullptr, 16);
     }
 
     string oct_to_bin(const string &octal_str)
