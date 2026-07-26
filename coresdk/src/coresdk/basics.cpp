@@ -317,6 +317,11 @@ namespace splashkit_lib
 	  return std::numeric_limits<unsigned int>::max();
         }
 
+        if(octal_string.length() == 11 && octal_string.front() > '3')
+        {
+	  return std::numeric_limits<unsigned int>::max();
+        }
+
         try
         {
 	  return static_cast<unsigned int>(std::stoul(octal_string, nullptr, 8));

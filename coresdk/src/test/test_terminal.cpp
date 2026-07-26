@@ -349,7 +349,8 @@ void test_oct_to_dec()
     assert(oct_to_dec("a1b2b3i4f02") != 1234);
 
     // Test for over 32-bit limit
-    assert(oct_to_dec("377777777777") == std::numeric_limits<unsigned int>::max());
+    assert(oct_to_dec("47777777777") == std::numeric_limits<unsigned int>::max());
+    assert(oct_to_dec("40000000000") == std::numeric_limits<unsigned int>::max());
 
     // Test over 64-bit limit
     assert(oct_to_dec("3777777777777777777777") == std::numeric_limits<unsigned int>::max());
