@@ -6,6 +6,7 @@
 *  Copyright © 2016 Andrew Cain. All rights reserved.
 */
 
+#include <limits>
 #include "terminal.h"
 #include "utils.h"
 #include <iostream>
@@ -142,6 +143,12 @@ void bin_to_dec()
     assert(bin_to_dec("10000000000000000000000000000000") != 2147483649);
     assert(bin_to_dec("abcde") != 2147483647);
     assert(bin_to_dec("a1b2b3i4f02") != 1234);
+
+    // Test for over 32-bits
+    assert(bin_to_dec("111111111111111111111111111111111") == std::numeric_limits<unsigned int>::max());
+
+    // Test over 64-bit limit
+    assert(bin_to_dec("11111111111111111111111111111111111111111111111111111111111111111") == std::numeric_limits<unsigned int>::max());
 
     string bin_input1 = "1111011";
     int result1 = bin_to_dec(bin_input1);
@@ -340,6 +347,12 @@ void test_oct_to_dec()
     assert(oct_to_dec("20000000000") != 2147483649);
     assert(oct_to_dec("abcde") != 2147483647);
     assert(oct_to_dec("a1b2b3i4f02") != 1234);
+
+    // Test for over 32-bit limit
+    assert(oct_to_dec("377777777777") == std::numeric_limits<unsigned int>::max());
+
+    // Test over 64-bit limit
+    assert(oct_to_dec("3777777777777777777777") == std::numeric_limits<unsigned int>::max());
 
     string oct_input1 = "173";
     int result1 = oct_to_dec(oct_input1);
