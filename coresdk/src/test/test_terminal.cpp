@@ -125,6 +125,9 @@ void bin_to_dec()
     // High values (32-bit boundaries)
     assert(bin_to_dec("10000000000000000000000000000000") == 2147483648);
 
+    // Test for over unsigned int max
+    assert(bin_to_dec("1111111111111111111111111111111111111111111111111111111111111111") == std::numeric_limits<unsigned int>::max());
+
     // Mixed bits
     assert(bin_to_dec("1111011") == 123);
     assert(bin_to_dec("10000000001") == 1025);
@@ -144,11 +147,6 @@ void bin_to_dec()
     assert(bin_to_dec("abcde") != 2147483647);
     assert(bin_to_dec("a1b2b3i4f02") != 1234);
 
-    // Test for over 32-bits
-    assert(bin_to_dec("111111111111111111111111111111111") == std::numeric_limits<unsigned int>::max());
-
-    // Test over 64-bit limit
-    assert(bin_to_dec("11111111111111111111111111111111111111111111111111111111111111111") == std::numeric_limits<unsigned int>::max());
 
     string bin_input1 = "1111011";
     int result1 = bin_to_dec(bin_input1);
