@@ -205,7 +205,7 @@ namespace splashkit_lib
             LOG(ERROR) << "Invalid binary string \"" << bin_str << "\" passed to bin_to_dec. Returning 0.";
             return 0;
         }
-        if(bin_str.length() > 32)
+        if (bin_str.length() > 32)
         {
 	  return std::numeric_limits<unsigned int>::max();
         }
@@ -214,7 +214,7 @@ namespace splashkit_lib
         {
 	  return static_cast<unsigned int>(std::stoul(bin_str, nullptr, 2));
         }
-        catch(const std::exception& error)
+        catch (const std::exception& error)
         {
             LOG(ERROR) << "Invalid binary string \"" << bin_str << "\" passed to bin_to_dec. Returning 0.";
             return 0;
@@ -312,12 +312,12 @@ namespace splashkit_lib
             return 0;
         }
 
-        if(octal_string.length() > 11)
+        if (octal_string.length() > 11)
         {
 	  return std::numeric_limits<unsigned int>::max();
         }
 
-        if(octal_string.length() == 11 && octal_string.front() > '3')
+        if (octal_string.length() == 11 && octal_string.front() > '3')
         {
 	  return std::numeric_limits<unsigned int>::max();
         }
@@ -326,7 +326,7 @@ namespace splashkit_lib
         {
 	  return static_cast<unsigned int>(std::stoul(octal_string, nullptr, 8));
         }
-        catch(const std::exception& error)
+        catch (const std::exception& error)
         {
             LOG(ERROR) << "Invalid octal string \"" << octal_string << "\" passed to oct_to_dec. Returning 0.";
 	  return 0;
