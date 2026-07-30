@@ -19,7 +19,7 @@ using std::vector;
 
 namespace splashkit_lib
 {
-    
+
     /**
      * Return a new string that removes the spaces from the start and end of
      * the input string.
@@ -101,7 +101,7 @@ namespace splashkit_lib
 
     /**
      * Returns true if the string contains the substring.
-     * 
+     *
      * @param text      The text to search
      * @param subtext   The substring to search for
      * @returns         True if the substring is found in the text.
@@ -110,7 +110,7 @@ namespace splashkit_lib
 
     /**
      * Returns the index of the first occurrence of the substring in the text.
-     * 
+     *
      * @param text      The text to search
      * @param subtext   The substring to search for
      * @returns         The index of the first occurrence of the substring in the text, or -1 if the substring is not found.
@@ -119,7 +119,7 @@ namespace splashkit_lib
 
     /**
      * Replace all occurrences of a substring in a string with another string.
-     * 
+     *
      * @param text      The text to search
      * @param substr    The substring to find and replace
      * @param new_text  The string to replace the substring with
@@ -129,7 +129,7 @@ namespace splashkit_lib
 
     /**
      * Split a string into an array of strings based on a delimiter.
-     * 
+     *
      * @param text      The text to split
      * @param delimiter The character to split the text on
      * @returns         An array of strings
@@ -169,7 +169,7 @@ namespace splashkit_lib
      * @returns True if the string is a valid octal string, false otherwise
      */
     bool is_octal(const string &octal_str);
-    
+
     /**
      * @brief Converts a decimal (unsigned integer) to a binary string
      *
@@ -187,6 +187,8 @@ namespace splashkit_lib
      *
      * Converts the provided binary string into an unsigned integer.
      * For example, "1010" will be converted to 10.
+     * Any input that exceedes the max value of unsigned integer will silently truncate and not be treated as an error.
+     * Any out of range error that occurs will result in the value being returned being 0.
      *
      * @param bin Binary string to convert
      *
@@ -235,6 +237,8 @@ namespace splashkit_lib
      *
      * Converts the provided octal string into its decimal representation.
      * For example, "100" will be converted to 64.
+     * Any input that exceedes the max value of unsigned integer will silently truncate and not be treated as an error.
+     * Any out of range error that occurs will result in the value being returned being 0.
      *
      * @param octal_string Octal string to convert
      *
@@ -280,9 +284,9 @@ namespace splashkit_lib
 
     /**
      * @brief Convert a hexadecimal string to its numeric value.
-     * 
+     *
      * @param hex_string the data to convert
-     * 
+     *
      * @return unsigned int the numeric value of the hex string
      */
     unsigned int hex_to_dec(const string &hex_string);
