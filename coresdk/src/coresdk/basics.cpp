@@ -317,19 +317,16 @@ namespace splashkit_lib
             return 0;
         }
 
-        if(octal_string.length() > 11)
-        {
-	  return std::numeric_limits<unsigned int>::max();
-        }
-
-        if(octal_string.length() == 11 && octal_string.front() > '3')
-        {
-	  return std::numeric_limits<unsigned int>::max();
-        }
-
         try
         {
-	  return static_cast<unsigned int>(std::stoul(octal_string, nullptr, 8));
+	  const unsigned long result = std::stoul(octal_string, nullptr, 8);
+
+	  if (result > std::numeric_limits<unsigned int>::max())
+	  {
+	      return std::numeric_limits<unsigned int>::max();
+	  }
+
+	  return static_cast<unsigned int>(result);
         }
         catch(const std::exception& error)
         {
