@@ -284,6 +284,9 @@ namespace splashkit_lib
 
     /**
      * @brief Convert a hexadecimal string to its numeric value.
+     * For example, "A" will be converted to 10.
+     * Any input that exceedes the max value of unsigned integer will silently truncate and not be treated as an error.
+     * Any out of range error that occurs will result in the value being returned being 0.
      *
      * @param hex_string the data to convert
      *
