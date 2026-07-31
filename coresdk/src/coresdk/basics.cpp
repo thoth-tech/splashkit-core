@@ -347,21 +347,21 @@ namespace splashkit_lib
 
         try
         {
-	  const unsigned long result = std::stoul(hex_string, nullptr, 16);
+            const unsigned long result = std::stoul(hex_string, nullptr, 16);
 
-	  if (result > std::numeric_limits<unsigned int>::max())
-	  {
-	      return std::numeric_limits<unsigned int>::max();
-	  }
-	  else
-	  {
-	      return static_cast<unsigned int>(result);
-	  }
+            if (result > std::numeric_limits<unsigned int>::max())
+            {
+              return std::numeric_limits<unsigned int>::max();
+            }
+            else
+            {
+              return static_cast<unsigned int>(result);
+            }
         }
         catch (const std::exception& error)
         {
             LOG(ERROR) << "Invalid hex string \"" << hex_string << "\" passed to hex_to_dec. Returning 0.";
-	  return 0;
+            return 0;
         }
     }
 
