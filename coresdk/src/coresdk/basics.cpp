@@ -208,16 +208,16 @@ namespace splashkit_lib
 
         try
         {
-	  const unsigned long result = std::stoul(bin_str, nullptr, 2);
+            const unsigned long result = std::stoul(bin_str, nullptr, 2);
 
-	  if (result > std::numeric_limits<unsigned int>::max())
-	  {
-	      return std::numeric_limits<unsigned int>::max();
-	  }
-	  else
-	  {
-	      return static_cast<unsigned int>(result);
-	  }
+            if (result > std::numeric_limits<unsigned int>::max())
+            {
+                return std::numeric_limits<unsigned int>::max();
+            }
+            else
+            {
+                return static_cast<unsigned int>(result);
+            }
         }
         catch (const std::exception& error)
         {
@@ -319,21 +319,21 @@ namespace splashkit_lib
 
         try
         {
-	  const unsigned long result = std::stoul(octal_string, nullptr, 8);
+            const unsigned long result = std::stoul(octal_string, nullptr, 8);
 
-	  if (result > std::numeric_limits<unsigned int>::max())
-	  {
-	      return std::numeric_limits<unsigned int>::max();
-	  }
-	  else
-	  {
-	      return static_cast<unsigned int>(result);
-	  }
+            if (result > std::numeric_limits<unsigned int>::max())
+            {
+                return std::numeric_limits<unsigned int>::max();
+            }
+            else
+            {
+                return static_cast<unsigned int>(result);
+            }
         }
         catch (const std::exception& error)
         {
             LOG(ERROR) << "Invalid octal string \"" << octal_string << "\" passed to oct_to_dec. Returning 0.";
-	  return 0;
+            return 0;
         }
     }
 
@@ -351,11 +351,11 @@ namespace splashkit_lib
 
             if (result > std::numeric_limits<unsigned int>::max())
             {
-              return std::numeric_limits<unsigned int>::max();
+                return std::numeric_limits<unsigned int>::max();
             }
             else
             {
-              return static_cast<unsigned int>(result);
+                return static_cast<unsigned int>(result);
             }
         }
         catch (const std::exception& error)
