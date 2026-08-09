@@ -143,27 +143,30 @@ namespace splashkit_lib
         return (*p == 0);
     }
 
-    template<typename output>
-    output clamp_in_range(output number)
+    template<typename T>
+    concept Numeric = std::integral<T> || std::floating_point<T>;
+
+    template<Numeric output, Numeric input = unsigned long>
+    output clamp_in_range(input number)
     {
-        if (result > std::numeric_limits<output>::max())
+        if (number > std::numeric_limits<output>::max())
         {
             return std::numeric_limits<output>::max();
         }
         else
         {
-            return static_cast<output>(result);
+            return static_cast<output>(number);
         }
     }
 
-    template<typename output>
+    template<Numeric output>
     output convert_string(const string &input, int base = 10)
     {
         try
         {
-            if constexpr (std::same_as<double, output>)
+            if constexpr (std::floating_point<output>)
             {
-                return clamp_in_range<output>(std::stod(input))
+                return clamp_in_range<output, double>(std::stod(input));
             }
             else
             {
