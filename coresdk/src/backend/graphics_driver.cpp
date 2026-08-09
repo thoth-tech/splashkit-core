@@ -526,6 +526,7 @@ namespace splashkit_lib
             SDL_DestroyTexture(window_be->backing);
         }
 
+        gfxPrimitivesSetFont(nullptr, 0, 0);
         SDL_DestroyRenderer(window_be->renderer);
         SDL_DestroyWindow(window_be->window);
 
