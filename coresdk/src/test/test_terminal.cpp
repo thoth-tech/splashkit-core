@@ -6,6 +6,7 @@
 *  Copyright © 2016 Andrew Cain. All rights reserved.
 */
 
+#include <limits>
 #include "terminal.h"
 #include "utils.h"
 #include <iostream>
@@ -124,6 +125,9 @@ void bin_to_dec()
     // High values (32-bit boundaries)
     assert(bin_to_dec("10000000000000000000000000000000") == 2147483648);
 
+    // Test for over unsigned int max
+    assert(bin_to_dec("1111111111111111111111111111111111111111111111111111111111111111") == std::numeric_limits<unsigned int>::max());
+
     // Mixed bits
     assert(bin_to_dec("1111011") == 123);
     assert(bin_to_dec("10000000001") == 1025);
@@ -142,6 +146,7 @@ void bin_to_dec()
     assert(bin_to_dec("10000000000000000000000000000000") != 2147483649);
     assert(bin_to_dec("abcde") != 2147483647);
     assert(bin_to_dec("a1b2b3i4f02") != 1234);
+
 
     string bin_input1 = "1111011";
     int result1 = bin_to_dec(bin_input1);
@@ -200,6 +205,59 @@ void hex_to_bin()
     write_line("1234 in binary is " + result2);
 
     write_line("All hexadecimal to binary tests passed!");
+    write_line("-------------------------------------");
+}
+
+void hex_to_dec_tests()
+{
+    write_line("Testing hexadecimal to decimal conversion");
+
+    // Basic cases
+    assert(hex_to_dec("0") == 0);
+    assert(hex_to_dec("1") == 1);
+    assert(hex_to_dec("A") == 10);
+    assert(hex_to_dec("F") == 15);
+    assert(hex_to_dec("10") == 16);
+    assert(hex_to_dec("FF") == 255);
+    assert(hex_to_dec("100") == 256);
+    assert(hex_to_dec("ABC") == 2748);
+    assert(hex_to_dec("1234") == 4660);
+
+    // Larger hexadecimal values
+    assert(hex_to_dec("FFFF") == 65535);
+    assert(hex_to_dec("FFFFFFFF") == 4294967295);
+    assert(hex_to_dec("1FFFFFF") == 33554431);
+    assert(hex_to_dec("ABCDEF") == 11259375);
+
+    // Tests for inequality
+    assert(hex_to_dec("0") != 1);
+    assert(hex_to_dec("1") != 0);
+    assert(hex_to_dec("A") != 11);
+    assert(hex_to_dec("F") != 16);
+    assert(hex_to_dec("10") != 10);
+    assert(hex_to_dec("FF") != 256);
+    assert(hex_to_dec("100") != 255);
+    assert(hex_to_dec("ABC") != 2749);
+    assert(hex_to_dec("1234") != 4670);
+    assert(hex_to_dec("FFFF") != 100);
+    assert(hex_to_dec("FFFFFFFF") != 200);
+    assert(hex_to_dec("1FFFFFF") != 300);
+    assert(hex_to_dec("GGGGGG") != 400);
+
+	// Test over unsigned int
+    assert(hex_to_dec("100000000") == 4294967295);
+	// Test over unsigned long
+    assert(hex_to_dec("10000000000000000") == 0);
+
+    const string hex_input1 = "ABCDEF";
+    const unsigned int result1 = hex_to_dec(hex_input1);
+    write_line("ABCDEF in decimal is " + to_string(result1));
+
+    const string hex_input2 = "1234";
+    const unsigned int result2 = hex_to_dec(hex_input2);
+    write_line("1234 in decimal is " + to_string(result2));
+
+    write_line("All hexadecimal to decimal tests passed!");
     write_line("-------------------------------------");
 }
 
@@ -340,6 +398,9 @@ void test_oct_to_dec()
     assert(oct_to_dec("20000000000") != 2147483649);
     assert(oct_to_dec("abcde") != 2147483647);
     assert(oct_to_dec("a1b2b3i4f02") != 1234);
+
+    // Test over unsigned int max
+    assert(oct_to_dec("1777777777777777777777") == std::numeric_limits<unsigned int>::max());
 
     string oct_input1 = "173";
     int result1 = oct_to_dec(oct_input1);
@@ -885,6 +946,7 @@ void run_terminal_test()
     dec_to_bin();
     bin_to_dec();
     hex_to_bin();
+	hex_to_dec_tests();
     bin_to_hex();
     test_dec_to_oct();
     test_oct_to_dec();

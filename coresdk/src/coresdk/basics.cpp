@@ -9,6 +9,7 @@
 #include "basics.h"
 #include "easylogging++.h"
 
+#include <concepts>
 #include <algorithm>
 #include <cstdlib>
 
@@ -143,6 +144,43 @@ namespace splashkit_lib
         return (*p == 0);
     }
 
+    template<typename T>
+    concept Numeric = std::integral<T> || std::floating_point<T>;
+
+    template<Numeric output, Numeric input = unsigned long>
+    output clamp_in_range(input number)
+    {
+        if (number > std::numeric_limits<output>::max())
+        {
+            return std::numeric_limits<output>::max();
+        }
+        else
+        {
+            return static_cast<output>(number);
+        }
+    }
+
+    template<Numeric output>
+    output convert_string(const string &input, int base = 10)
+    {
+        try
+        {
+            if constexpr (std::floating_point<output>)
+            {
+                return clamp_in_range<output, double>(std::stod(input));
+            }
+            else
+            {
+                return clamp_in_range<output>(std::stoul(input, nullptr, base));
+            }
+        }
+        catch (const std::exception& error)
+        {
+            LOG(ERROR) << "Invalid string \"" << input << "\" passed to conversion function. Returning 0.";
+            return 0;
+        }
+    }
+
     int convert_to_integer(const string &text)
     {
         return std::stoi(text);
@@ -206,7 +244,7 @@ namespace splashkit_lib
             return 0;
         }
 
-        return stoi(bin_str, nullptr, 2);
+        return convert_string<unsigned int>(bin_str, 2);
     }
 
     string hex_to_bin(const string &hex_str)
@@ -300,18 +338,18 @@ namespace splashkit_lib
             return 0;
         }
 
-        return stoi(octal_string, nullptr, 8);
+        return convert_string<unsigned int>(octal_string, 8);
     }
 
     unsigned int hex_to_dec(const string &hex_string)
     {
         if (!is_hex(hex_string))
         {
-            LOG(ERROR) << "Invalid octal string \"" << hex_string << "\" passed to hex_to_dec. Returning 0.";
+            LOG(ERROR) << "Invalid hex string \"" << hex_string << "\" passed to hex_to_dec. Returning 0.";
             return 0;
         }
 
-        return stoi(hex_string, nullptr, 16);
+        return convert_string<unsigned int>(hex_string, 16);
     }
 
     string oct_to_bin(const string &octal_str)
