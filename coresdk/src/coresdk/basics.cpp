@@ -9,6 +9,7 @@
 #include "basics.h"
 #include "easylogging++.h"
 
+#include <concepts>
 #include <algorithm>
 #include <cstdlib>
 
