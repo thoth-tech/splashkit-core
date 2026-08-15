@@ -81,7 +81,10 @@ namespace splashkit_lib
     {
         size_t pos = text.find(subtext);
         if (pos == string::npos)
+        {
             return -1;
+        }
+
         return static_cast<int>(pos);
     }
 
@@ -168,6 +171,7 @@ namespace splashkit_lib
         {
             return false;
         }
+
         return is_valid_input(bin_str, "01");
     }
 
@@ -177,6 +181,7 @@ namespace splashkit_lib
         {
             return false;
         }
+
         return is_valid_input(hex_str, "0123456789aAbBcCdDeEfF");
     }
 
@@ -186,6 +191,7 @@ namespace splashkit_lib
         {
             return false;
         }
+
         return is_valid_input(octal_str, "01234567");
     }
 
@@ -307,20 +313,7 @@ namespace splashkit_lib
             return "";
         }
 
-        string bin_string;
-        for (char oct_char : octal_str)
-        {
-            int oct_val = oct_char - '0';
-
-            // Convert each octal digit to a 3-bit binary representation
-            for (int i = 2; i >= 0; i--)
-            {
-                bin_string += ((oct_val >> i) & 1) ? '1' : '0';
-            }
-        }
-
-        size_t first_one = bin_string.find_first_not_of('0');
-        return (first_one == string::npos) ? "0" : bin_string.substr(first_one);
+        return dec_to_bin(oct_to_dec(octal_str));
     }
 
     string bin_to_oct(const string &bin_str)
@@ -331,27 +324,7 @@ namespace splashkit_lib
             return "";
         }
 
-        string octal_string;
-
-        // Pad binary string with leading zeros to make its length a multiple of 3
-        int padding = (3 - (bin_str.length() % 3)) % 3;
-        string padded_bin_str = string(padding, '0') + bin_str;
-
-        for (size_t i = 0; i < padded_bin_str.length(); i += 3)
-        {
-            int oct_val = 0;
-            for (size_t j = 0; j < 3; j++)
-            {
-                oct_val <<= 1;
-                if (padded_bin_str[i + j] == '1')
-                    oct_val |= 1;
-            }
-
-            octal_string += '0' + oct_val;
-        }
-
-        size_t first_non_zero = octal_string.find_first_not_of('0');
-        return (first_non_zero == string::npos) ? "0" : octal_string.substr(first_non_zero);
+        return dec_to_oct(bin_to_dec(bin_str));
     }
 
     string hex_to_oct(const string &hex_str)
@@ -362,8 +335,7 @@ namespace splashkit_lib
             return "";
         }
 
-        string bin_str = hex_to_bin(hex_str);
-        return bin_to_oct(bin_str);
+        return bin_to_oct(hex_to_bin(hex_str));
     }
 
     string oct_to_hex(const string &octal_str)
@@ -374,8 +346,7 @@ namespace splashkit_lib
             return "";
         }
 
-        string bin_str = oct_to_bin(octal_str);
-        return bin_to_hex(bin_str);
+        return bin_to_hex(oct_to_bin(octal_str));
     }
 
     string base64_encode(const string &input)
