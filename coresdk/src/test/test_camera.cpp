@@ -69,5 +69,8 @@ void run_camera_test()
         refresh_screen();
     }
 
+    set_camera_x(0);
+    set_camera_y(0);
+
     close_window(w1);
 }
