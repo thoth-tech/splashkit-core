@@ -90,9 +90,12 @@ namespace splashkit_lib
     point_2d screen_center();
 
     /**
-     * Set the camera back to the centre position on the screen
+     * Set the camera back to the centre position on the screen.
+     *
+     * This is the equivilent to calling the functions set_camera_x(0) and set_camera_y(0).
      */
     void reset_camera();
+
     //---------------------------------------------------------------------------
     // World-To-Screen Translation
     //---------------------------------------------------------------------------
