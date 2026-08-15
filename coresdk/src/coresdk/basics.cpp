@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include <string_view>
+#include <format>
 
 #include <functional>
 #include <cctype>
@@ -183,17 +184,7 @@ namespace splashkit_lib
 
     string dec_to_bin(unsigned int a_dec)
     {
-        // Without this check, dec to bin will not work if dec is 0
-        if (a_dec == 0)
-            return "0";
-
-        string bin_string;
-        while (a_dec > 0)
-        {
-            bin_string = ((a_dec & 1) ? "1" : "0") + bin_string;
-            a_dec >>= 1;
-        }
-        return bin_string;
+        return std::format("{:b}", a_dec);
     }
 
     unsigned int bin_to_dec(const string &bin_str)
@@ -276,18 +267,7 @@ namespace splashkit_lib
 
     string dec_to_oct(unsigned int decimal_value)
     {
-        if (decimal_value == 0)
-        {
-            return "0";
-        }
-
-        string octal_string;
-        while (decimal_value > 0)
-        {
-            octal_string = std::to_string(decimal_value % 8) + octal_string;
-            decimal_value /= 8;
-        }
-        return octal_string;
+        return std::format("{:o}", decimal_value);
     }
 
     unsigned int oct_to_dec(const string &octal_string)
