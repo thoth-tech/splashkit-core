@@ -13,6 +13,7 @@
 #include <cstdlib>
 #include <string_view>
 #include <format>
+#include <ranges>
 
 #include <functional>
 #include <cctype>
@@ -101,17 +102,23 @@ namespace splashkit_lib
 
     vector<string> split(const string &text, char delimiter)
     {
-        vector<string> result;
-        string::size_type start = 0;
-        string::size_type end = text.find(delimiter);
-        while (end != string::npos)
+        // To check to keep the same functionality required on line 523 of unit_test_utilities.cpp
+        // Will return an empty vector without this check
+        if (text.empty())
         {
-            result.push_back(text.substr(start, end - start));
-            start = end + 1;
-            end = text.find(delimiter, start);
+            return vector<string>{ text };
         }
-        result.push_back(text.substr(start));
+
+        vector<string> result{};
+        for(const auto& strings : std::views::split(text, delimiter))
+        {
+            result.emplace_back(strings.begin(), strings.end());
+        }
+
         return result;
+        // To future maintainers: if the codebase gets upgraded to C++23 or newer,
+        // remove the above code and uncomment the code bellow
+        // return text | std::views::split(delimiter) | std::ranges::to<std::vector<std::string>>();
     }
 
     // integer check see: https://stackoverflow.com/a/37864920
