@@ -11,6 +11,7 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <string_view>
 
 #include <functional>
 #include <cctype>
@@ -112,18 +113,20 @@ namespace splashkit_lib
         return result;
     }
 
-    // integer check see: https://stackoverflow.com/questions/2844817/how-do-i-check-if-a-c-string-is-an-int#2845275
+    // integer check see: https://stackoverflow.com/a/37864920
+    bool is_valid_input(std::string_view input, std::string_view valid_characters)
+    {
+        return input.find_first_not_of(valid_characters) == std::string_view::npos;
+    }
 
     bool is_integer(const string &text)
     {
-        string s = trim(text);
-        if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+')))
+        if (text.empty())
+        {
             return false;
+        }
 
-        char *p;
-        strtol(s.c_str(), &p, 10);
-
-        return (*p == 0);
+        return is_valid_input(text ,"0123456789+-");
     }
 
     bool is_double(const string &text)
@@ -133,14 +136,12 @@ namespace splashkit_lib
 
     bool is_number(const string &text)
     {
-        string s = trim(text);
-        if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+')))
+        if (text.empty() || text.starts_with('.'))
+        {
             return false;
+        }
 
-        char *p;
-        strtod(s.c_str(), &p);
-
-        return (*p == 0);
+        return is_valid_input(text, "0123456789+-.");
     }
 
     int convert_to_integer(const string &text)
@@ -155,32 +156,29 @@ namespace splashkit_lib
 
     bool is_binary(const string &bin_str)
     {
-        for (char c : bin_str)
+        if (bin_str.empty())
         {
-            if (c != '0' && c != '1')
-                return false;
+            return false;
         }
-        return !bin_str.empty();
+        return is_valid_input(bin_str, "01");
     }
 
     bool is_hex(const string &hex_str)
     {
-        for (char c : hex_str)
+        if (hex_str.empty())
         {
-            if (!((c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f')))
-                return false;
+            return false;
         }
-        return !hex_str.empty();
+        return is_valid_input(hex_str, "0123456789aAbBcCdDeEfF");
     }
 
     bool is_octal(const string &octal_str)
     {
-        for (char c : octal_str)
+        if (octal_str.empty())
         {
-            if (c < '0' || c > '7')
-                return false;
+            return false;
         }
-        return !octal_str.empty();
+        return is_valid_input(octal_str, "01234567");
     }
 
     string dec_to_bin(unsigned int a_dec)
