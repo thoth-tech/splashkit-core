@@ -124,20 +124,17 @@ namespace splashkit_lib
         // return text | std::views::split(delimiter) | std::ranges::to<std::vector<std::string>>();
     }
 
-    // integer check see: https://stackoverflow.com/a/37864920
-    bool is_valid_input(std::string_view input, std::string_view valid_characters)
-    {
-        return input.find_first_not_of(valid_characters) == std::string_view::npos;
-    }
-
+    // integer check see: https://stackoverflow.com/questions/2844817/how-do-i-check-if-a-c-string-is-an-int#2845275
     bool is_integer(const string &text)
     {
-        if (text.empty())
-        {
+        string s = trim(text);
+        if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+')))
             return false;
-        }
 
-        return is_valid_input(text ,"0123456789+-");
+        char *p;
+        strtol(s.c_str(), &p, 10);
+
+        return (*p == 0);
     }
 
     bool is_double(const string &text)
@@ -147,12 +144,14 @@ namespace splashkit_lib
 
     bool is_number(const string &text)
     {
-        if (text.empty() || text.starts_with('.'))
-        {
+        string s = trim(text);
+        if (s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+')))
             return false;
-        }
 
-        return is_valid_input(text, "0123456789+-.");
+        char *p;
+        strtod(s.c_str(), &p);
+
+        return (*p == 0);
     }
 
     int convert_to_integer(const string &text)
@@ -163,6 +162,11 @@ namespace splashkit_lib
     double convert_to_double(const string &text)
     {
         return std::stod(text);
+    }
+
+    bool is_valid_input(std::string_view input, std::string_view valid_characters)
+    {
+        return input.find_first_not_of(valid_characters) == std::string_view::npos;
     }
 
     bool is_binary(const string &bin_str)
