@@ -56,7 +56,11 @@ namespace splashkit_lib
         return point_at(_camera_x + screen_width() / 2.0f, _camera_y + screen_height() / 2.0f);
     }
 
-
+    void reset_camera()
+    {
+        _camera_x = 0;
+        _camera_y = 0;
+    }
 
     //---------------------------------------------------------------------------
     // World-To-Screen Translation

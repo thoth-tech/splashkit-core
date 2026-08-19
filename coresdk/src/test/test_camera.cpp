@@ -6,6 +6,7 @@
 //  Copyright © 2016 Andrew Cain. All rights reserved.
 //
 
+#include <cassert>
 #include "window_manager.h"
 #include "sprites.h"
 #include "graphics.h"
@@ -52,8 +53,10 @@ void run_camera_test()
         }
         else
         {
-            set_camera_x(0);
-            set_camera_y(0);
+            reset_camera();
+
+            assert(camera_x() == 0);
+            assert(camera_y() == 0);
         }
 
         clear_screen(COLOR_WHITE);
@@ -68,6 +71,11 @@ void run_camera_test()
         draw_sprite(s);
         refresh_screen();
     }
+
+    reset_camera();
+
+    assert(camera_x() == 0);
+    assert(camera_y() == 0);
 
     close_window(w1);
 }
