@@ -334,6 +334,14 @@ TEST_CASE("verify that string is double", "[is_double]")
 }
 TEST_CASE("verify that string is integer", "[is_integer]")
 {
+    SECTION("Edge Cases")
+    {
+        REQUIRE_FALSE(is_integer("1+2"));
+        REQUIRE_FALSE(is_integer("+-2"));
+        REQUIRE_FALSE(is_integer("--5"));
+        REQUIRE_FALSE(is_integer("5--"));
+        REQUIRE_FALSE(is_integer("5-"));
+    }
     SECTION("string is an integer")
     {
         REQUIRE(is_integer("123"));
@@ -393,6 +401,12 @@ TEST_CASE("verify that string is integer", "[is_integer]")
 }
 TEST_CASE("verify that string is number", "[is_number]")
 {
+    SECTION("Edge Cases")
+    {
+        REQUIRE_FALSE(is_number("1.2.3"));
+        REQUIRE_FALSE(is_number("1.+2"));
+        REQUIRE_FALSE(is_number("1.-2"));
+    }
     SECTION("string is a double")
     {
         REQUIRE(is_number("123.456"));
@@ -717,7 +731,7 @@ TEST_CASE("gets the number of milliseconds that have passed since the program wa
 TEST_CASE("program is put to sleep for a specified number of milliseconds", "[delay]")
 {
     constexpr long long DELAY_THRESHOLD = 80;
-    
+
     SECTION("milliseconds is 0")
     {
         auto start = std::chrono::steady_clock::now();
@@ -747,7 +761,7 @@ TEST_CASE("return a SplashKit resource of resource_kind with name filename as a 
 {
     const resource_kind RESOURCE = resource_kind::BUNDLE_RESOURCE;
     const string RESOURCE_PATH = "blah.txt";
-    
+
     SECTION("filename is a valid file")
     {
         string result = file_as_string(RESOURCE_PATH, RESOURCE);

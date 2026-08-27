@@ -11,6 +11,9 @@
 
 #include <algorithm>
 #include <cstdlib>
+#include <string_view>
+#include <format>
+#include <ranges>
 
 #include <functional>
 #include <cctype>
@@ -78,7 +81,10 @@ namespace splashkit_lib
     {
         size_t pos = text.find(subtext);
         if (pos == string::npos)
+        {
             return -1;
+        }
+
         return static_cast<int>(pos);
     }
 
@@ -99,21 +105,26 @@ namespace splashkit_lib
 
     vector<string> split(const string &text, char delimiter)
     {
-        vector<string> result;
-        string::size_type start = 0;
-        string::size_type end = text.find(delimiter);
-        while (end != string::npos)
+        // To check to keep the same functionality required on line 523 of unit_test_utilities.cpp
+        // Will return an empty vector without this check
+        if (text.empty())
         {
-            result.push_back(text.substr(start, end - start));
-            start = end + 1;
-            end = text.find(delimiter, start);
+            return vector<string>{ text };
         }
-        result.push_back(text.substr(start));
+
+        vector<string> result{};
+        for(const auto& strings : std::views::split(text, delimiter))
+        {
+            result.emplace_back(strings.begin(), strings.end());
+        }
+
         return result;
+        // To future maintainers: if the codebase gets upgraded to C++23 or newer,
+        // remove the above code and uncomment the code bellow
+        // return text | std::views::split(delimiter) | std::ranges::to<std::vector<std::string>>();
     }
 
     // integer check see: https://stackoverflow.com/questions/2844817/how-do-i-check-if-a-c-string-is-an-int#2845275
-
     bool is_integer(const string &text)
     {
         string s = trim(text);
@@ -153,49 +164,44 @@ namespace splashkit_lib
         return std::stod(text);
     }
 
+    bool is_valid_input(std::string_view input, std::string_view valid_characters)
+    {
+        return input.find_first_not_of(valid_characters) == std::string_view::npos;
+    }
+
     bool is_binary(const string &bin_str)
     {
-        for (char c : bin_str)
+        if (bin_str.empty())
         {
-            if (c != '0' && c != '1')
-                return false;
+            return false;
         }
-        return !bin_str.empty();
+
+        return is_valid_input(bin_str, "01");
     }
 
     bool is_hex(const string &hex_str)
     {
-        for (char c : hex_str)
+        if (hex_str.empty())
         {
-            if (!((c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f')))
-                return false;
+            return false;
         }
-        return !hex_str.empty();
+
+        return is_valid_input(hex_str, "0123456789aAbBcCdDeEfF");
     }
 
     bool is_octal(const string &octal_str)
     {
-        for (char c : octal_str)
+        if (octal_str.empty())
         {
-            if (c < '0' || c > '7')
-                return false;
+            return false;
         }
-        return !octal_str.empty();
+
+        return is_valid_input(octal_str, "01234567");
     }
 
     string dec_to_bin(unsigned int a_dec)
     {
-        // Without this check, dec to bin will not work if dec is 0
-        if (a_dec == 0)
-            return "0";
-
-        string bin_string;
-        while (a_dec > 0)
-        {
-            bin_string = ((a_dec & 1) ? "1" : "0") + bin_string;
-            a_dec >>= 1;
-        }
-        return bin_string;
+        return std::format("{:b}", a_dec);
     }
 
     unsigned int bin_to_dec(const string &bin_str)
@@ -278,18 +284,7 @@ namespace splashkit_lib
 
     string dec_to_oct(unsigned int decimal_value)
     {
-        if (decimal_value == 0)
-        {
-            return "0";
-        }
-
-        string octal_string;
-        while (decimal_value > 0)
-        {
-            octal_string = std::to_string(decimal_value % 8) + octal_string;
-            decimal_value /= 8;
-        }
-        return octal_string;
+        return std::format("{:o}", decimal_value);
     }
 
     unsigned int oct_to_dec(const string &octal_string)
@@ -322,20 +317,7 @@ namespace splashkit_lib
             return "";
         }
 
-        string bin_string;
-        for (char oct_char : octal_str)
-        {
-            int oct_val = oct_char - '0';
-
-            // Convert each octal digit to a 3-bit binary representation
-            for (int i = 2; i >= 0; i--)
-            {
-                bin_string += ((oct_val >> i) & 1) ? '1' : '0';
-            }
-        }
-
-        size_t first_one = bin_string.find_first_not_of('0');
-        return (first_one == string::npos) ? "0" : bin_string.substr(first_one);
+        return dec_to_bin(oct_to_dec(octal_str));
     }
 
     string bin_to_oct(const string &bin_str)
@@ -346,27 +328,7 @@ namespace splashkit_lib
             return "";
         }
 
-        string octal_string;
-
-        // Pad binary string with leading zeros to make its length a multiple of 3
-        int padding = (3 - (bin_str.length() % 3)) % 3;
-        string padded_bin_str = string(padding, '0') + bin_str;
-
-        for (size_t i = 0; i < padded_bin_str.length(); i += 3)
-        {
-            int oct_val = 0;
-            for (size_t j = 0; j < 3; j++)
-            {
-                oct_val <<= 1;
-                if (padded_bin_str[i + j] == '1')
-                    oct_val |= 1;
-            }
-
-            octal_string += '0' + oct_val;
-        }
-
-        size_t first_non_zero = octal_string.find_first_not_of('0');
-        return (first_non_zero == string::npos) ? "0" : octal_string.substr(first_non_zero);
+        return dec_to_oct(bin_to_dec(bin_str));
     }
 
     string hex_to_oct(const string &hex_str)
@@ -377,8 +339,7 @@ namespace splashkit_lib
             return "";
         }
 
-        string bin_str = hex_to_bin(hex_str);
-        return bin_to_oct(bin_str);
+        return bin_to_oct(hex_to_bin(hex_str));
     }
 
     string oct_to_hex(const string &octal_str)
@@ -389,8 +350,7 @@ namespace splashkit_lib
             return "";
         }
 
-        string bin_str = oct_to_bin(octal_str);
-        return bin_to_hex(bin_str);
+        return bin_to_hex(oct_to_bin(octal_str));
     }
 
     string base64_encode(const string &input)
