@@ -2,7 +2,7 @@
 #include <clang/AST/RecursiveASTVisitor.h>
 
 #include <iostream>
-#include <llvm-18/llvm/Support/Casting.h>
+#include <llvm/Support/Casting.h>
 #include <memory>
 #include <vector>
 

@@ -44,6 +44,7 @@ set_target_properties(Transpiler PROPERTIES
 
 find_package(LLVM REQUIRED CONFIG)      # Find the LLVM installation and use its CMake config
 find_package(Clang REQUIRED CONFIG)     # Find the clang installation and use its CMake config
+find_package(nlohmann_json REQUIRED)
 
 # Add the header paths from the config to the include dirs (PRIVATE so only this executable uses these paths)
 target_include_directories(Transpiler PRIVATE
@@ -58,4 +59,5 @@ target_link_libraries(Transpiler PRIVATE
     clangTooling
     clangAST
     clangFrontend
+    nlohmann_json::nlohmann_json
 )
