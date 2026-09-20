@@ -11,9 +11,13 @@ namespace fs = std::filesystem;
 
 int main(int argc, char** argv) {
 
+    // Set target language (Default to C#)
+    std::string targetLanguage;
+    if (argc > 1) targetLanguage = argv[1];
+
     // Set scan directory (Default to unit test directory)
     fs::path scanDir = fs::path(SPLASHKIT_TESTS) / "unit_tests";
-    if (argc > 1) scanDir = argv[1];
+    if (argc > 2) scanDir = argv[2];
 
     std::cout << "Scanning directory: " << scanDir << "\n\n";
  
@@ -34,10 +38,20 @@ int main(int argc, char** argv) {
             std::string stem = entry.path().stem().string();                       // Filename without extension
             if (stem == "unit_test_main" || stem == "logging_handling") continue;  // Skip "main" file
             if (
-                stem != "unit_test_color"
-                && stem != "unit_test_test"
-                && stem != "unit_test_music"
-                && stem != "unit_test_json"
+                // stem != "unit_test_color"
+                // && stem != "unit_test_music"
+                // && stem != "unit_test_json"
+                // && stem != "unit_test_triangle"
+                // && stem != "unit_test_graphics"
+                // && stem != "unit_test_raspi_gpio"
+                stem != "unit_test_text"
+                // && stem != "unit_test_web_server"
+                // && stem != "unit_test_bitmap"
+                // && stem != "unit_test_sound_effect"
+                // && stem != "unit_test_sprites"
+                // && stem != "unit_test_utilities"
+                // && stem != "unit_test_network"
+                // && stem != "unit_test_geometry"
             ) continue;
 
             cppFiles.push_back(entry.path());                          // Add file to list
@@ -57,11 +71,24 @@ int main(int argc, char** argv) {
     fs::path debugOutputDir = fs::path(SPLASHKIT_TESTS) / "unit_tests" / "generated" / "json";
     std::vector<CustomAST> *allASTs = parseTestFiles(cppFiles, debugOutputDir);
     
-    // Translate the files to C#
-    CSharpTranslator translator;
+    // Translate the files to the target language
+    std::unique_ptr<Translator> translator;
+
+    // C#
+    if (targetLanguage == "cs" || targetLanguage == "csharp" || targetLanguage == "C#")
+    {
+        translator = std::make_unique<CSharpTranslator>();
+    }
+    // Default to C#
+    else
+    {
+        std::cout << "Target language defaulted to C#" << std::endl;
+        translator = std::make_unique<CSharpTranslator>();
+    }
+
     fs::path outputDir = fs::path(SPLASHKIT_TESTS) / "unit_tests" / "generated" / "csharp";
-    translator.translateASTSet(*allASTs, outputDir);
-    std::cout << "Translated " << cppFiles.size() << " C++ files to C#\n\n";
+    translator->translateASTSet(*allASTs, outputDir);
+    std::cout << "Translated " << cppFiles.size() << " C++ files\n\n";
  
     return 0;
 }

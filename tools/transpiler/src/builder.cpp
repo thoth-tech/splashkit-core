@@ -129,8 +129,26 @@ std::unique_ptr<Expression> ASTBuilder::buildConstructorExpression(const clang::
 // Build a function call 
 std::unique_ptr<Expression> ASTBuilder::buildFunctionCall(const clang::CallExpr &call, const clang::FunctionDecl &function)
 {
+    // Catch2 compiler-generated wrapper
+    if (function.getNameAsString() == "__builtin_constant_p")
+    {
+        if (call.getNumArgs() == 1)
+        {
+            return buildExpression(*call.getArg(0));
+        }
+    }
+
     auto result = std::make_unique<CallExpression>();
     result->functionName = function.getNameAsString();
+
+    // If this is a member function call, store the object.
+    if (auto *memberCall = llvm::dyn_cast<const clang::CXXMemberCallExpr>(&call))
+    {
+        if (const clang::Expr *object = memberCall->getImplicitObjectArgument())
+        {
+            result->parentObject = buildExpression(*object);
+        }
+    }
 
     unsigned numArgs = call.getNumArgs();
 
@@ -173,8 +191,9 @@ std::unique_ptr<Expression> ASTBuilder::buildReference(const clang::DeclRefExpr 
 {
     auto result = std::make_unique<ReferenceExpression>();
     result->name = ref.getDecl()->getNameAsString();
+    result->type = buildType(ref.getType());
 
-    // Check type
+    // Check enum type
     if (auto *eNumConstant = llvm::dyn_cast<clang::EnumConstantDecl>(ref.getDecl()))
     {
         result->refKind = ReferenceKind::EnumConstant;
@@ -182,7 +201,7 @@ std::unique_ptr<Expression> ASTBuilder::buildReference(const clang::DeclRefExpr 
         // Get enum type name
         if (auto *enumDecl = llvm::dyn_cast<clang::EnumDecl>(eNumConstant->getDeclContext()))
         {
-            result->parentType = enumDecl->getNameAsString();
+            result->parentEnumType = enumDecl->getNameAsString();
         }
     }
     else if (llvm::isa<clang::VarDecl>(ref.getDecl()))
@@ -196,6 +215,10 @@ std::unique_ptr<Expression> ASTBuilder::buildReference(const clang::DeclRefExpr 
 // Expression dispatcher
 std::unique_ptr<Expression> ASTBuilder::buildExpression(const clang::Expr &expr)
 {
+    std::cout << "\n===== BUILD EXPRESSION =====\n";
+    std::cout << "Class: " << expr.getStmtClassName() << "\n";
+    std::cout << "Type: " << expr.getType().getAsString() << "\n";
+    expr.dump();
     // cout
     // llvm::outs() << "\nClass: " << expr.getStmtClassName() << "\n";
     // llvm::outs() << "Type: " << expr.getType().getAsString() << "\n";
@@ -230,6 +253,17 @@ std::unique_ptr<Expression> ASTBuilder::buildExpression(const clang::Expr &expr)
     // Overloaded operators (e.g. someString == "testString") - store as binary expression
     else if (auto *opCall = llvm::dyn_cast<const clang::CXXOperatorCallExpr>(&expr))
     {
+        // Indexed expression (like someVar[i])
+        if (opCall->getOperator() == clang::OO_Subscript)
+        {
+            auto indexExpr = std::make_unique<IndexExpression>();
+
+            indexExpr->object = buildExpression(*opCall->getArg(0));
+            indexExpr->index = buildExpression(*opCall->getArg(1));
+
+            return indexExpr;
+        }
+
         // Create a binary expression node and assign the correct operator
         auto binary = std::make_unique<BinaryExpression>();
 
@@ -757,6 +791,49 @@ std::vector<std::shared_ptr<Statement>> ASTBuilder::buildStatements(const clang:
         exprStmt->expression = buildExpression(*expr);
         result.push_back(exprStmt);
     }
+    // For loop
+    else if (auto *clangForStmt = llvm::dyn_cast<clang::ForStmt>(&stmt))
+    {
+        auto forStmt = std::make_shared<ForStatement>();
+
+        // If there is an initialiser (or multiple), add it
+        if (const auto *init = clangForStmt->getInit())
+        {
+            auto initStatements = buildStatements(*init);
+
+            if (!initStatements.empty())
+                forStmt->initialiser = initStatements;
+        }
+
+        // If there's a condition, add it
+        if (const auto *cond = clangForStmt->getCond())
+        {
+            forStmt->condition = buildExpression(*cond);
+        }
+
+        // If there's an increment expression, add it
+        if (const auto *inc = clangForStmt->getInc())
+        {
+            forStmt->increment = buildExpression(*inc);
+        }
+
+        // If there's a body, add it
+        if (const auto *body = llvm::dyn_cast<clang::CompoundStmt>(clangForStmt->getBody()))
+        {
+            for (const auto *stmt : body->body())
+            {
+                auto statements = buildStatements(*stmt);
+
+                forStmt->body.insert(
+                    forStmt->body.end(),
+                    statements.begin(),
+                    statements.end()
+                );
+            }
+        }
+
+        result.push_back(forStmt);
+    }
 
     return result;
 }
@@ -851,6 +928,16 @@ TestCase ASTBuilder::buildTestCase(
     auto *compound = llvm::dyn_cast<clang::CompoundStmt>(body);
     if (!compound) return result;
     result.sections = buildSections({}, *compound, "");
+
+    for (const auto &section : result.sections)
+    {
+        std::cout << "\nSECTION: " << section.name << "\n";
+
+        for (const auto &stmt : section.body)
+        {
+            std::cout << "  " << typeid(stmt).name() << "\n";
+        }
+    }
 
     return result;
 }

@@ -13,11 +13,10 @@ class Translator
 public:
     virtual void translateASTSet(
         const std::vector<CustomAST> &ASTs,
-        const fs::path &outputDir,
-        const std::string &projectName) = 0;
+        const fs::path &outputDir) = 0;
 };
 
-class CSharpTranslator : Translator
+class CSharpTranslator : public Translator
 {
 private:
     // Global declaration management
@@ -41,12 +40,9 @@ private:
     void writeGlobals(const CustomAST &AST, std::ofstream &file);
     void writeTestCase(const TestCase &testCase, std::ofstream &file, std::string category);
     void writeSection(const Section &section, std::ofstream &file);
-    void writeAssertion(const AssertionStatement &assertion, std::ofstream &file);
     void writeStatement(const Statement &statement, std::ofstream &file);
-    void writeReturnStmt(const ReturnStatement &returnStmt, std::ofstream &file);
-    void writeVarDeclStmt(const VariableDeclarationStatement &varDeclStmt, std::ofstream &file);
+    void writeForStmt(const ForStatement &forStmt, std::ofstream &file);
     void writeBody(const std::vector<std::shared_ptr<Statement>> &body, std::ofstream &file);
-    void writeExprStmt(const ExpressionStatement &exprStmt, std::ofstream &file);
     void writeFunctionDecl(const FunctionDeclaration &funcDecl, std::ofstream &file);
 
     // Translation functions (return a string to be written inline)
@@ -59,7 +55,16 @@ private:
     std::string translateRefExpr(const ReferenceExpression &expr);
     std::string translateLiteralExpr(const LiteralExpression &expr);
     std::string translateConstructorExpr(const ConstructorExpression &expr);
+    std::string translateIndexExpr(const IndexExpression &expr);
     std::string translateInitListExpr(const InitListExpression &expr);
+    std::string translateAssertion(const AssertionStatement &assertion);
+    std::string translateStatement(const Statement &statement);
+    std::string translateVarDeclStmt(const VariableDeclarationStatement &varDecl);
+    std::string translateReturnStmt(const ReturnStatement &returnStmt);
+    std::string translateExprStmt(const ExpressionStatement &exprStmt);
+    std::string translateCallArguments(const CallExpression &expr);
+    std::string translateMemberCall(const CallExpression &reference);
+    std::string translateVectorMember(const CallExpression &expr);
     
     // String manipulation
     std::string toLowerCase(const std::string &name);
@@ -70,6 +75,5 @@ private:
 public:
     void translateASTSet(
         const std::vector<CustomAST> &ASTs,
-        const fs::path &outputDir,
-        const std::string &projectName = "SplashKit.CSharp.UnitTests") override;
+        const fs::path &outputDir) override;
 };

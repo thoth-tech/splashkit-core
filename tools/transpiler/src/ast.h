@@ -68,8 +68,9 @@ struct ReferenceExpression : Expression
 {
     std::string name;
     ReferenceKind refKind;
-    std::string parentType;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(ReferenceExpression, name, refKind, parentType)
+    Type type;
+    std::string parentEnumType; // Used for enum constants
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(ReferenceExpression, name, refKind, type, parentEnumType)
     void serialise(json &j) const override { j = *this; j["kind"] = "ReferenceExpression"; }
 };
 
@@ -93,8 +94,17 @@ struct CallExpression : Expression
 {
     std::string functionName;
     std::vector<Argument> arguments;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(CallExpression, functionName, arguments)
+    std::unique_ptr<Expression> parentObject; // nullptr if not a member call
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(CallExpression, functionName, arguments, parentObject)
     void serialise(json &j) const override { j = *this; j["kind"] = "CallExpression"; }
+};
+
+struct IndexExpression : Expression
+{
+    std::unique_ptr<Expression> object;
+    std::unique_ptr<Expression> index;
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(IndexExpression, object, index)
+    void serialise(json &j) const override { j = *this; j["kind"] = "IndexExpression"; }
 };
 
 struct BinaryExpression : Expression
@@ -179,6 +189,16 @@ struct ReturnStatement : Statement
     std::unique_ptr<Expression> value;
     NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(ReturnStatement, value)
     void serialise(json &j) const override { j = *this; j["kind"] = "ReturnStatement"; }
+};
+
+struct ForStatement : Statement
+{
+    std::vector<std::shared_ptr<Statement>> initialiser;
+    std::unique_ptr<Expression> condition;
+    std::unique_ptr<Expression> increment;
+    std::vector<std::shared_ptr<Statement>> body;
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(ForStatement, initialiser, condition, increment, body)
+    void serialise(json &j) const override { j = *this; j["kind"] = "ForStatement"; }
 };
 
 enum class AssertionType

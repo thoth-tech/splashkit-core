@@ -12,11 +12,11 @@ namespace fs = std::filesystem;
 
 void CSharpTranslator::translateASTSet(
     const std::vector<CustomAST> &ASTs,
-    const fs::path &outputDir,
-    const std::string &projectName)
+    const fs::path &outputDir)
 {
     // Ensure output directory exists
     fs::create_directories(outputDir);
+    std::string projectName = "SplashKit.CSharp.UnitTests";
 
     writeProjectFiles(outputDir, projectName);
 
@@ -81,7 +81,7 @@ void CSharpTranslator::writeGlobals(const CustomAST &AST, std::ofstream &file)
     // Global variables
     for (const auto &global : AST.globals)
     {
-        writeVarDeclStmt(global, file);
+        writeStatement(global, file);
         // Add to list of globals for refence when calling
         globals.insert(global.variable.name);
     }
@@ -151,23 +151,45 @@ void CSharpTranslator::writeBody(const std::vector<std::shared_ptr<Statement>> &
     }
 }
 
-void CSharpTranslator::writeStatement(const Statement &statement, std::ofstream &file)
+std::string CSharpTranslator::translateStatement(const Statement &statement)
 {
     if (auto *assertion = dynamic_cast<const AssertionStatement*>(&statement))
     {
-        writeAssertion(*assertion, file);
+        return translateAssertion(*assertion);
     }
     else if (auto *varDeclStmt = dynamic_cast<const VariableDeclarationStatement*>(&statement))
     {
-        writeVarDeclStmt(*varDeclStmt, file);
+        return translateVarDeclStmt(*varDeclStmt);
     }
     else if (auto *exprStmt = dynamic_cast<const ExpressionStatement*>(&statement))
     {
-        writeExprStmt(*exprStmt, file);
+        return translateExprStmt(*exprStmt);
     }
     else if (auto *returnStmt = dynamic_cast<const ReturnStatement*>(&statement))
     {
-        writeReturnStmt(*returnStmt, file);
+        return translateReturnStmt(*returnStmt);
+    }
+
+    throw std::runtime_error(
+        "Unsupported Statement type in Translator: " +
+        std::string(typeid(statement).name()));
+}
+
+void CSharpTranslator::writeStatement(const Statement &statement, std::ofstream &file)
+{
+    // For loop
+    if (auto *forStmt = dynamic_cast<const ForStatement*>(&statement))
+    {
+        writeForStmt(*forStmt, file);
+    }
+    // Regular statement
+    else 
+    {
+        std::string result = translateStatement(statement);
+        
+        if (result.empty()) return;
+    
+        file << indt() << result << ";\n";
     }
 }
 
@@ -189,8 +211,10 @@ void CSharpTranslator::writeSection(const Section &section, std::ofstream &file)
     file << indt() << "}\n\n";
 }
 
-void CSharpTranslator::writeAssertion(const AssertionStatement &assertion, std::ofstream &file)
+std::string CSharpTranslator::translateAssertion(const AssertionStatement &assertion)
 {
+    std::string result;
+
     // Get the expression
     if (auto *expr = dynamic_cast<const Expression*>(assertion.expression.get()))
     {
@@ -234,7 +258,7 @@ void CSharpTranslator::writeAssertion(const AssertionStatement &assertion, std::
                 else
                     assertion = "Equal(" + left + ", " + right + ")";
 
-                file << indt() << "Assert." << assertion + ";\n";
+                result = "Assert." + assertion;
             }
             else if (bin->op == "!=")
             {
@@ -272,45 +296,93 @@ void CSharpTranslator::writeAssertion(const AssertionStatement &assertion, std::
                 else
                     assertion = "NotEqual(" + left + ", " + right + ")";
 
-                file << indt() << "Assert." << assertion + ";\n";
+                result = "Assert." + assertion;
             }
         }
+        // Other
+        else
+        {
+            result = "Assert.True(" + translateExpression(*expr) + ")";
+        }
     }
+
+    return result;
 }
 
-void CSharpTranslator::writeVarDeclStmt(const VariableDeclarationStatement &varDecl, std::ofstream &file)
+std::string CSharpTranslator::translateVarDeclStmt(const VariableDeclarationStatement &varDecl)
 {
+    std::string result;
     std::string csType = translateType(varDecl.variable.type);
     std::string varName = toCamelCase(varDecl.variable.name);
 
     std::string declaration = varDecl.isGlobal ? "public static " : ""; 
     declaration += csType + " " + varName;
 
-    file << indt() << declaration;
+    result = declaration;
 
     // If it's initialised
     if (varDecl.variable.initializer)
     {
-        file << " = " << translateExpression(*varDecl.variable.initializer);
+        result += " = " + translateExpression(*varDecl.variable.initializer);
     }
-    file << ";\n\n";
+
+    return result;
 }
 
-void CSharpTranslator::writeExprStmt(const ExpressionStatement &exprStmt, std::ofstream &file)
+std::string CSharpTranslator::translateExprStmt(const ExpressionStatement &exprStmt)
 {
     std::string expr = translateExpression(*exprStmt.expression);
 
     // If it's a call to the logger, skip it
     if (expr.find("EnableLogging") != std::string::npos ||
         expr.find("DisableLogging") != std::string::npos)
-        return;
+        return "";
 
-    file << indt() << expr + ";\n";
+    return expr;
 }
 
-void CSharpTranslator::writeReturnStmt(const ReturnStatement &returnStmt, std::ofstream &file)
+std::string CSharpTranslator::translateReturnStmt(const ReturnStatement &returnStmt)
 {
-    file << indt() << "return " << translateExpression(*returnStmt.value) + ";\n";
+    return "return " + translateExpression(*returnStmt.value);
+}
+
+void CSharpTranslator::writeForStmt(const ForStatement &forStmt, std::ofstream &file)
+{
+    file << indt() << "for (";
+
+    // Initialiser statement(s)
+    if (!forStmt.initialiser.empty())
+    {
+        // Count statements in initialiser
+        int initCount = forStmt.initialiser.size();
+    
+        // Write initialiser statements
+        for (int i = 0; i < initCount; i++)
+        {
+            file << translateStatement(*forStmt.initialiser[i]);
+    
+            // Add comma depending on statement index
+            if (i < initCount - 1) file << ", ";
+        }
+    }
+
+    file << "; ";
+
+    // Write condition
+    if (forStmt.condition != nullptr)
+        file << translateExpression(*forStmt.condition);
+
+    file << "; ";
+
+    // Write incrementor
+    if (forStmt.increment != nullptr)
+        file << translateExpression(*forStmt.increment);
+
+    file << ")\n" << indt() << "{\n";
+    increaseIndent();
+    writeBody(forStmt.body, file);
+    decreaseIndent();
+    file << indt() << "}\n";
 }
 
 std::string CSharpTranslator::translateExpression(const Expression &expr)
@@ -343,6 +415,10 @@ std::string CSharpTranslator::translateExpression(const Expression &expr)
     {
         return translateInitListExpr(*initList);
     }
+    else if (auto *indexed = dynamic_cast<const IndexExpression*>(&expr))
+    {
+        return translateIndexExpr(*indexed);
+    }
 
     throw std::runtime_error("Unsupported Expression type in Translator: translateExpression()" + std::string(typeid(expr).name()));
 }
@@ -373,7 +449,7 @@ std::string CSharpTranslator::translateRefExpr(const ReferenceExpression &expr)
     // Check if it's an enum
     else if (expr.refKind == ReferenceKind::EnumConstant)
     {
-        result += toPascalCase(expr.parentType) + ".";
+        result += toPascalCase(expr.parentEnumType) + ".";
         result += toPascalCase(toLowerCase(expr.name));
     }
     else
@@ -384,16 +460,59 @@ std::string CSharpTranslator::translateRefExpr(const ReferenceExpression &expr)
     return result;
 }
 
-std::string CSharpTranslator::translateCallExpr(const CallExpression &expr)
+std::string CSharpTranslator::translateIndexExpr(const IndexExpression &expr)
+{
+    std::string result = translateExpression(*expr.object);
+    result += "[" + translateExpression(*expr.index) + "]";
+    return result;
+}
+
+std::string CSharpTranslator::translateVectorMember(const CallExpression &expr)
+{
+    std::string object = translateExpression(*expr.parentObject);
+
+    if (expr.functionName == "size")
+        return object + ".Count";
+
+    if (expr.functionName == "empty")
+        return object + ".Count == 0";
+
+    if (expr.functionName == "push_back")
+        return object + ".Add(" + translateCallArguments(expr) + ")";
+
+    if (expr.functionName == "pop_back")
+        return object + ".RemoveAt(" + object + ".Count - 1)";
+
+    if (expr.functionName == "front")
+        return object + "[0]";
+
+    if (expr.functionName == "back")
+        return object + "[" + object + ".Count - 1]";
+
+    if (expr.functionName == "clear")
+        return object + ".Clear()";
+
+    return object + "." +
+        expr.functionName + "(" + translateCallArguments(expr) + ")";
+}
+
+std::string CSharpTranslator::translateMemberCall(const CallExpression &expr)
+{
+    if (auto *reference = dynamic_cast<const ReferenceExpression*>(expr.parentObject.get()))
+    {
+        // If it's a vector
+        if (reference->type.name == "vector")
+        {
+            return translateVectorMember(expr);
+        }
+    }
+    return "";
+}
+
+std::string CSharpTranslator::translateCallArguments(const CallExpression &expr)
 {
     std::string result;
-    // Check if it's a global function
-    if (globals.find(expr.functionName) != globals.end())
-    {
-        result += globalClassName + ".";
-    }
 
-    result += toPascalCase(expr.functionName) + "(";
     int argCount = expr.arguments.size();
 
     // Add arguments
@@ -408,7 +527,31 @@ std::string CSharpTranslator::translateCallExpr(const CallExpression &expr)
         result += translateExpression(*expr.arguments[i].expression);
     }
 
-    result += ")";
+    return result;
+}
+
+std::string CSharpTranslator::translateCallExpr(const CallExpression &expr)
+{
+    std::string result;
+
+    // Check if it's a global function
+    if (globals.find(expr.functionName) != globals.end())
+    {
+        result += globalClassName + ".";
+        result += toPascalCase(expr.functionName) + "(";
+        result += translateCallArguments(expr) + ")";
+    }
+    // Check if it's a member call
+    else if (expr.parentObject)
+    {
+        result += translateMemberCall(expr); 
+    }
+    else
+    {
+        result += toPascalCase(expr.functionName) + "(";
+        result += translateCallArguments(expr) + ")";
+    }
+
     return result;
 }
 
@@ -530,8 +673,8 @@ void CSharpTranslator::writeProjectFiles(const fs::path &outputDir, const std::s
 
     <!-- Copy shared resources into test output -->
     <ItemGroup>
-        <None Include="../../../../../../bin/sounds/**/*">
-            <Link>sounds/%(RecursiveDir)%(Filename)%(Extension)</Link>
+        <None Include="../../../Resources/**/*">
+            <Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
@@ -587,7 +730,9 @@ std::string CSharpTranslator::toPascalCase(const std::string &name)
         {"tcp", "TCP"},
         {"udp", "UDP"},
         {"uri", "URI"},
-        {"rgba", "RGBA"}
+        {"rgba", "RGBA"},
+        {"2d", "2D"},
+        {"3d", "3D"}
     };
 
     // Split into words and capitalise
