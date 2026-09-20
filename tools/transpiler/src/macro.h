@@ -9,7 +9,8 @@ enum class MacroKind
     Require,
     Check,
     RequireFalse,
-    CheckFalse
+    CheckFalse,
+    RequireThrows
 };
 
 struct MacroInfo
@@ -19,5 +20,4 @@ struct MacroInfo
     clang::SourceRange argumentRange;
     std::string name;
     std::vector<std::string> tags;
-    // clang::MacroArgs *args;
 };

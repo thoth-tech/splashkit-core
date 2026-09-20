@@ -85,4 +85,7 @@ public:
 
     // Build a custom AST
     void buildAST(CustomAST &AST);
+
+    const clang::Expr* findCatchAssertionExpression(const clang::Stmt* stmt);
+    const clang::Expr* findBooleanExpression(const clang::Stmt* stmt);
 };

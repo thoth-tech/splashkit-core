@@ -132,9 +132,9 @@ void CSharpTranslator::writeTestCase(
     increaseIndent();
 
     // Body
-    for (auto &section : testCase.sections)
+    for (int i = 0; i < testCase.sections.size(); i++)
     {
-        writeSection(section, file);
+        writeSection(testCase.sections[i], file, className + std::to_string(i));
     }
 
     // CLOSE TEST
@@ -193,12 +193,16 @@ void CSharpTranslator::writeStatement(const Statement &statement, std::ofstream 
     }
 }
 
-void CSharpTranslator::writeSection(const Section &section, std::ofstream &file)
+void CSharpTranslator::writeSection(const Section &section, std::ofstream &file, std::string defaultName)
 {
+    // Use default name if no section name included
+    // This is useful for when sections aren't utilised at all
+    std::string sectionName = section.name.empty() ? defaultName : section.name;
+
     // Set display name
-    file << indt() << "[Fact(DisplayName = \"" + section.name + "\")]\n";
+    file << indt() << "[Fact(DisplayName = \"" + sectionName + "\")]\n";
     // Set class name
-    file << indt() << "public void " + toPascalCase(section.name) + "()\n";
+    file << indt() << "public void " + toPascalCase(sectionName) + "()\n";
     file << indt() << "{\n";
 
     // Section body
@@ -213,100 +217,108 @@ void CSharpTranslator::writeSection(const Section &section, std::ofstream &file)
 
 std::string CSharpTranslator::translateAssertion(const AssertionStatement &assertion)
 {
-    std::string result;
+    if (!assertion.expression) return "";
 
-    // Get the expression
-    if (auto *expr = dynamic_cast<const Expression*>(assertion.expression.get()))
+    const Expression *expr = assertion.expression.get();
+
+    // Skip if it requires throwing
+    if (assertion.type == AssertionType::RequireThrows)
     {
-        // Get the type
-        if (auto *bin = dynamic_cast<const BinaryExpression*>(expr))
-        {
-            // Binary expression
-            if (bin->op == "==")
-            {
-                std::string left;
-                std::string right;
-
-                // If there's a literal or unary on the right, swap places
-                if (dynamic_cast<const LiteralExpression*>((bin->right).get()) ||
-                    dynamic_cast<const UnaryExpression*>((bin->right).get()))
-                {
-                    right = translateExpression(*(bin->left));
-                    left = translateExpression(*(bin->right));
-                }
-                else
-                {
-                    left = translateExpression(*(bin->left));
-                    right = translateExpression(*(bin->right));
-                }
-
-                // Select correct assertion type based on expression
-                std::string assertion;
-
-                if (left == "null" || left == "nullptr")
-                {
-                    assertion = "Null(" + right + ")";
-                }
-                else if (left == "true")
-                {
-                    assertion = "True(" + right + ")";
-                }
-                else if (left == "false")
-                {
-                    assertion = "False(" + right + ")";
-                }
-                else
-                    assertion = "Equal(" + left + ", " + right + ")";
-
-                result = "Assert." + assertion;
-            }
-            else if (bin->op == "!=")
-            {
-                std::string left;
-                std::string right;
-
-                // If there's a literal or unary on the right, swap places
-                if (dynamic_cast<const LiteralExpression*>((bin->right).get()) ||
-                    dynamic_cast<const UnaryExpression*>((bin->right).get()))
-                {
-                    right = translateExpression(*(bin->left));
-                    left = translateExpression(*(bin->right));
-                }
-                else
-                {
-                    left = translateExpression(*(bin->left));
-                    right = translateExpression(*(bin->right));
-                }
-
-                // Select correct assertion type based on expression
-                std::string assertion;
-
-                if (left == "null" || left == "nullptr")
-                {
-                    assertion = "NotNull(" + right + ")";
-                }
-                else if (left == "true")
-                {
-                    assertion = "False(" + right + ")";
-                }
-                else if (left == "false")
-                {
-                    assertion = "True(" + right + ")";
-                }
-                else
-                    assertion = "NotEqual(" + left + ", " + right + ")";
-
-                result = "Assert." + assertion;
-            }
-        }
-        // Other
-        else
-        {
-            result = "Assert.True(" + translateExpression(*expr) + ")";
-        }
+        return "";
     }
 
-    return result;
+    // Check if it's an inverted assertion (e.g. "False")
+    bool inverted =
+        assertion.type == AssertionType::RequireFalse ||
+        assertion.type == AssertionType::CheckFalse;
+
+    // Get the type
+    if (auto *bin = dynamic_cast<const BinaryExpression*>(expr))
+    {
+        
+        const Expression *leftExpr = bin->left.get();
+        const Expression *rightExpr = bin->right.get();
+        
+        // If there's a literal or unary on the right, swap places
+        if (dynamic_cast<const LiteralExpression*>(rightExpr) ||
+        dynamic_cast<const UnaryExpression*>(rightExpr))
+        {
+            std::swap(leftExpr, rightExpr);
+        }
+
+        // String conversions of each side
+        std::string left = translateExpression(*leftExpr);
+        std::string right = translateExpression(*rightExpr);
+
+        // If there's a literal in this assertion
+        if (auto *literal = dynamic_cast<const LiteralExpression*>(leftExpr))
+        {
+            std::string leftType = translateType(leftExpr->type);
+            std::string rightType = translateType(rightExpr->type);
+            
+            // If the types don't match, cast the literal to match the other
+            if (leftType != rightType &&
+                isNumericType(leftType) &&
+                isNumericType(rightType))
+            {
+                left = "(" + rightType + ")" + left;
+            }
+        }
+
+        // Equality
+        if (bin->op == "==")
+        {
+            // Select correct assertion type based on expression
+            std::string assertion;
+
+            if (left == "null" || left == "nullptr")
+            {
+                assertion = inverted ? "NotNull(" + right + ")" : "Null(" + right + ")";
+            }
+            else if (left == "true")
+            {
+                assertion = inverted ? "False(" + right + ")" : "True(" + right + ")";
+            }
+            else if (left == "false")
+            {
+                assertion = inverted ? "True(" + right + ")" : "False(" + right + ")";
+            }
+            else
+                assertion = inverted ? "NotEqual(" + left + ", " + right + ")" : "Equal(" + left + ", " + right + ")";
+
+            return "Assert." + assertion;
+        }
+        // Inequality
+        else if (bin->op == "!=")
+        {
+            // Select correct assertion type based on expression
+            std::string assertion;
+
+            if (left == "null" || left == "nullptr")
+            {
+                assertion = inverted ? "Null(" + right + ")" : "NotNull(" + right + ")";
+            }
+            else if (left == "true")
+            {
+                assertion = inverted ? "True(" + right + ")" : "False(" + right + ")";
+            }
+            else if (left == "false")
+            {
+                assertion = inverted ? "False(" + right + ")" : "True(" + right + ")";
+            }
+            else
+                assertion = inverted ? "Equal(" + left + ", " + right + ")" :  "NotEqual(" + left + ", " + right + ")";
+
+            return "Assert." + assertion;
+        }
+        // Logical AND
+        else if (bin->op == "&&")
+        {
+            return inverted ? "Assert.False(" + translateExpression(*bin) + ")" :  "Assert.True(" + translateExpression(*bin) + ")";
+        }
+    }
+    // Other
+    return inverted ? "Assert.False(" + translateExpression(*expr) + ")" : "Assert.True(" + translateExpression(*expr) + ")";
 }
 
 std::string CSharpTranslator::translateVarDeclStmt(const VariableDeclarationStatement &varDecl)
@@ -419,6 +431,10 @@ std::string CSharpTranslator::translateExpression(const Expression &expr)
     {
         return translateIndexExpr(*indexed);
     }
+    else if (auto *member = dynamic_cast<const MemberExpression*>(&expr))
+    {
+        return translateMemberExpr(*member);
+    }
 
     throw std::runtime_error("Unsupported Expression type in Translator: translateExpression()" + std::string(typeid(expr).name()));
 }
@@ -435,6 +451,11 @@ std::string CSharpTranslator::translateBinaryExpr(const BinaryExpression &expr)
 std::string CSharpTranslator::translateUnaryExpr(const UnaryExpression &expr)
 {
     return expr.op + translateExpression(*expr.operand);
+}
+
+std::string CSharpTranslator::translateMemberExpr(const MemberExpression &expr)
+{
+    return translateExpression(*expr.parentObject) + "." + toPascalCase(expr.memberName);
 }
 
 std::string CSharpTranslator::translateRefExpr(const ReferenceExpression &expr)
@@ -506,6 +527,14 @@ std::string CSharpTranslator::translateMemberCall(const CallExpression &expr)
             return translateVectorMember(expr);
         }
     }
+    else if (auto *call = dynamic_cast<const CallExpression*>(expr.parentObject.get()))
+    {
+        // If it's a duration count, just return the parent
+        if (call->qualifiedFunctionName == "std::chrono::duration_cast" && expr.functionName == "count")
+        {
+            return "(long)" + translateExpression(*expr.parentObject);
+        }
+    }
     return "";
 }
 
@@ -534,6 +563,20 @@ std::string CSharpTranslator::translateCallExpr(const CallExpression &expr)
 {
     std::string result;
 
+    // Edge cases
+    if (expr.qualifiedFunctionName == "std::chrono::duration_cast")
+    {
+        std::string duration = translateExpression(*expr.arguments[0].expression);
+
+        return "((" + duration + ") * 1000.0 / Stopwatch.Frequency)";
+    }
+
+    // std::chrono::steady_clock::now()
+    if (expr.qualifiedFunctionName == "std::chrono::steady_clock::now")
+    {
+        return "Stopwatch.GetTimestamp()";
+    }
+
     // Check if it's a global function
     if (globals.find(expr.functionName) != globals.end())
     {
@@ -548,6 +591,11 @@ std::string CSharpTranslator::translateCallExpr(const CallExpression &expr)
     }
     else
     {
+        // Convert cmath functions to Math
+        if (expr.functionName == "pow" || expr.functionName == "sqrt")
+        {
+            result += "Math.";
+        }
         result += toPascalCase(expr.functionName) + "(";
         result += translateCallArguments(expr) + ")";
     }
@@ -593,13 +641,35 @@ std::string CSharpTranslator::translateInitListExpr(const InitListExpression &ex
     return result;
 }
 
+// Convert (originally escaped) strings back to escaped values
+std::string CSharpTranslator::escapeCSharpString(const std::string &value)
+{
+    std::string result;
+
+    for (char c : value)
+    {
+        switch (c)
+        {
+            case '\\': result += "\\\\"; break;
+            case '"':  result += "\\\""; break;
+            case '\n': result += "\\n";  break;
+            case '\r': result += "\\r";  break;
+            case '\t': result += "\\t";  break;
+            case '\0': result += "\\0";  break;
+            default:   result += c;      break;
+        }
+    }
+
+    return result;
+}
+
 std::string CSharpTranslator::translateLiteralExpr(const LiteralExpression &expr)
 {
     std::string result = expr.value;
 
     std::string typeStr = translateType(expr.type);
 
-    if (typeStr == "String") result = "\"" + result + "\"";
+    if (typeStr == "String") result = "\"" + escapeCSharpString(result) + "\"";
     return result;
 }
 
@@ -688,6 +758,7 @@ void CSharpTranslator::writeProjectFiles(const fs::path &outputDir, const std::s
 
     usingsFile << R"(// Generated by translator
 global using Xunit;
+global using System.Diagnostics;
 global using SplashKitSDK;
 global using static SplashKitSDK.SplashKit;)";
 
@@ -759,6 +830,14 @@ std::string CSharpTranslator::toPascalCase(const std::string &name)
             } 
             else 
             {
+                // Convert whole word to lowercase
+                for (char &c : word)
+                {
+                    c = static_cast<char>(
+                        std::tolower(static_cast<unsigned char>(c))
+                    );
+                }
+                // Capitalise first letter
                 word[0] = static_cast<char>(std::toupper(word[0]));
             }
 
@@ -770,6 +849,25 @@ std::string CSharpTranslator::toPascalCase(const std::string &name)
     }
 
     return result;
+}
+
+bool CSharpTranslator::isNumericType(const std::string &type)
+{
+    static const std::unordered_set<std::string> numericTypes = {
+        "byte",
+        "sbyte",
+        "short",
+        "ushort",
+        "int",
+        "uint",
+        "long",
+        "ulong",
+        "float",
+        "double",
+        "decimal"
+    };
+
+    return numericTypes.find(type) != numericTypes.end();
 }
 
 std::string CSharpTranslator::translateType(const Type &cppType)
@@ -791,7 +889,10 @@ std::string CSharpTranslator::translateType(const Type &cppType)
         {"unsigned int", "uint"},
         {"unsigned short", "ushort"},
         {"nullptr_t", "null"},
-        {"vector", "List"}
+        {"vector", "List"},
+        {"time_point", "long"},
+        {"long long", "long"},
+        {"rep", "long"}
     };
     
     std::string result;
@@ -810,7 +911,7 @@ std::string CSharpTranslator::translateType(const Type &cppType)
 
     // If there are template arguments, add them
     const auto &args = cppType.templateArguments;
-    if (!args.empty())
+    if (!args.empty() && cppType.name != "time_point")
     {
         result += "<";
         for (unsigned i = 0; i < args.size(); ++i)

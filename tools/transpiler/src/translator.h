@@ -23,6 +23,8 @@ private:
     const std::string globalClassName = "GeneratedGlobals";  
     std::unordered_set<std::string> globals;
 
+    bool isNumericType(const std::string &type);
+
     // Indentation helpers
     int indentLevel = 0;
     std::string indt() {
@@ -39,7 +41,7 @@ private:
     void writeAST(const CustomAST &AST, const std::string &projectName, const fs::path &outputFilepath);
     void writeGlobals(const CustomAST &AST, std::ofstream &file);
     void writeTestCase(const TestCase &testCase, std::ofstream &file, std::string category);
-    void writeSection(const Section &section, std::ofstream &file);
+    void writeSection(const Section &section, std::ofstream &file, std::string defaultName);
     void writeStatement(const Statement &statement, std::ofstream &file);
     void writeForStmt(const ForStatement &forStmt, std::ofstream &file);
     void writeBody(const std::vector<std::shared_ptr<Statement>> &body, std::ofstream &file);
@@ -57,6 +59,7 @@ private:
     std::string translateConstructorExpr(const ConstructorExpression &expr);
     std::string translateIndexExpr(const IndexExpression &expr);
     std::string translateInitListExpr(const InitListExpression &expr);
+    std::string translateMemberExpr(const MemberExpression &expr);
     std::string translateAssertion(const AssertionStatement &assertion);
     std::string translateStatement(const Statement &statement);
     std::string translateVarDeclStmt(const VariableDeclarationStatement &varDecl);
@@ -71,6 +74,7 @@ private:
     std::string toCamelCase(const std::string &name);
     std::string toPascalCase(const std::string &name);
     std::string translateType(const Type &cppType);
+    std::string escapeCSharpString(const std::string &value);
 
 public:
     void translateASTSet(

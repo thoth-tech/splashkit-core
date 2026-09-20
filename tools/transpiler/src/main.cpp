@@ -37,24 +37,7 @@ int main(int argc, char** argv) {
         {
             std::string stem = entry.path().stem().string();                       // Filename without extension
             if (stem == "unit_test_main" || stem == "logging_handling") continue;  // Skip "main" file
-            if (
-                // stem != "unit_test_color"
-                // && stem != "unit_test_music"
-                // && stem != "unit_test_json"
-                // && stem != "unit_test_triangle"
-                // && stem != "unit_test_graphics"
-                // && stem != "unit_test_raspi_gpio"
-                stem != "unit_test_text"
-                // && stem != "unit_test_web_server"
-                // && stem != "unit_test_bitmap"
-                // && stem != "unit_test_sound_effect"
-                // && stem != "unit_test_sprites"
-                // && stem != "unit_test_utilities"
-                // && stem != "unit_test_network"
-                // && stem != "unit_test_geometry"
-            ) continue;
-
-            cppFiles.push_back(entry.path());                          // Add file to list
+            cppFiles.push_back(entry.path());                                   // Add file to list
         }
     }
  

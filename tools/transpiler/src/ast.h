@@ -24,6 +24,8 @@ struct Type
 
 struct Expression
 {
+    Type type;
+
     virtual ~Expression() = default;            // Explicit destructor for safety (pointers in derived classes)
     virtual void serialise(json &j) const = 0;  // Virtual function for base classes to define how they should be serialised
 };
@@ -44,7 +46,6 @@ inline void to_json(json &j, const std::unique_ptr<Expression> &e)
 struct LiteralExpression : Expression
 {
     std::string value;
-    Type type;
     NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(LiteralExpression, value, type)
     // Convert the current object (the derived type) to json, and assign a "kind"
     void serialise(json &j) const override { j = *this; j["kind"] = "LiteralExpression"; }
@@ -68,15 +69,13 @@ struct ReferenceExpression : Expression
 {
     std::string name;
     ReferenceKind refKind;
-    Type type;
     std::string parentEnumType; // Used for enum constants
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(ReferenceExpression, name, refKind, type, parentEnumType)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(ReferenceExpression, type, name, refKind, type, parentEnumType)
     void serialise(json &j) const override { j = *this; j["kind"] = "ReferenceExpression"; }
 };
 
 struct ConstructorExpression : Expression
 {
-    Type type;
     std::vector<std::unique_ptr<Expression>> arguments;
     NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(ConstructorExpression, type, arguments)
     void serialise(json &j) const override { j = *this; j["kind"] = "ConstructorExpression"; }
@@ -84,18 +83,18 @@ struct ConstructorExpression : Expression
 
 struct InitListExpression : Expression
 {
-    Type elementType;
     std::vector<std::unique_ptr<Expression>> elements;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(InitListExpression, elements, elementType)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(InitListExpression, elements, type)
     void serialise(json &j) const override { j = *this; j["kind"] = "InitListExpression"; }
 };
 
 struct CallExpression : Expression
 {
     std::string functionName;
+    std::string qualifiedFunctionName;
     std::vector<Argument> arguments;
     std::unique_ptr<Expression> parentObject; // nullptr if not a member call
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(CallExpression, functionName, arguments, parentObject)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(CallExpression, type, functionName, qualifiedFunctionName, arguments, parentObject)
     void serialise(json &j) const override { j = *this; j["kind"] = "CallExpression"; }
 };
 
@@ -103,7 +102,7 @@ struct IndexExpression : Expression
 {
     std::unique_ptr<Expression> object;
     std::unique_ptr<Expression> index;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(IndexExpression, object, index)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(IndexExpression, type, object, index)
     void serialise(json &j) const override { j = *this; j["kind"] = "IndexExpression"; }
 };
 
@@ -112,7 +111,7 @@ struct BinaryExpression : Expression
     std::string op;
     std::unique_ptr<Expression> left;
     std::unique_ptr<Expression> right;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(BinaryExpression, op, left, right)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(BinaryExpression, type, op, left, right)
     void serialise(json &j) const override { j = *this; j["kind"] = "BinaryExpression"; }
 };
 
@@ -120,16 +119,27 @@ struct UnaryExpression : Expression
 {
     std::string op;
     std::unique_ptr<Expression> operand;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(UnaryExpression, op, operand)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(UnaryExpression, type, op, operand)
     void serialise(json &j) const override { j = *this; j["kind"] = "UnaryExpression"; }
+};
+
+struct MemberExpression : Expression
+{
+    std::unique_ptr<Expression> parentObject;
+    std::string memberName;
+
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(MemberExpression, type, parentObject, memberName)
+
+    void serialise(json &j) const override { j = *this; j["kind"] = "MemberExpression"; }
 };
 
 struct VariableDeclaration
 {
     std::string name;
     Type type;
+    std::string declarationId;
     std::unique_ptr<Expression> initializer;
-    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(VariableDeclaration, name, type, initializer)
+    NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(VariableDeclaration, name, type, declarationId, initializer)
 };
 
 struct Parameter
@@ -205,6 +215,7 @@ enum class AssertionType
 {
     Require,
     RequireFalse,
+    RequireThrows,
     Check,
     CheckFalse
 };

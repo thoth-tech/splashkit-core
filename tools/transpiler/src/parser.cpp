@@ -38,6 +38,17 @@ std::string getMacroArgumentString(
     return result;
 }
 
+void addMacroArgs(MacroInfo &macro, const clang::MacroArgs *args)
+{
+    const clang::Token *tokens = args->getUnexpArgument(0);
+    unsigned numTokens = args->getArgLength(tokens);
+
+    // Get the location of the first and last tokens in the unexpanded arguments
+    clang::SourceLocation begin = tokens[0].getLocation();
+    clang::SourceLocation end = tokens[numTokens - 1].getLocation();
+    macro.argumentRange = clang::SourceRange(begin, end);
+}
+
 // Takes a set of tags in the form "[tag1][tag2][tag3]"
 // Returns each tag as a string in a vector
 std::vector<std::string> parseTags(std::string tagString)
@@ -83,51 +94,46 @@ void TestFinder::MacroExpands(
         // Add tags
         std::string allTagsString = getMacroArgumentString(args, 2, pp);
         macro.tags = parseTags(allTagsString);
-        macros[key] = macro;
         std::cout << "- Test case found at " << macro.location.getRawEncoding() << std::endl;
+        currentTestKey = key;
     }
     else if (name == "SECTION")
     {
         macro.kind = MacroKind::Section;
         macro.name = getMacroArgumentString(args, 0, pp);
-        macros[key] = macro;
         std::cout << "- Section found at " << macro.location.getRawEncoding() << std::endl;
     }
     else if (name == "REQUIRE")
     {
         macro.kind = MacroKind::Require;
-        const clang::Token *tokens = args->getUnexpArgument(0);
-        unsigned numTokens = args->getArgLength(tokens);
-        // unsigned numTokens = args->getArgLength(0);
-        // Get the location of the first and last tokens in the unexpanded arguments
-        clang::SourceLocation begin = tokens[0].getLocation();
-        clang::SourceLocation end = tokens[numTokens - 1].getLocation();
-
-        macro.argumentRange = clang::SourceRange(begin, end);
-        macros[key] = macro;
-        // std::cout << "Inserted require macro" << std::endl;
-        // std::cout << "Require args between: " << macro.argumentRange.getBegin().getRawEncoding() << " and " << macro.argumentRange.getEnd().getRawEncoding() << std::endl;
+        addMacroArgs(macro, args);
     }
     else if (name == "REQUIRE_FALSE")
     {
         macro.kind = MacroKind::RequireFalse;
-        macros[key] = macro;
-        // std::cout << "- Require false found at " << macro.location.getRawEncoding() << std::endl;
+        addMacroArgs(macro, args);
+    }
+    else if (name == "REQUIRE_THROWS")
+    {
+        macro.kind = MacroKind::RequireThrows;
+        addMacroArgs(macro, args);
     }
     else if (name == "CHECK")
     {
         macro.kind = MacroKind::Check;
-        macros[key] = macro;
-        // std::cout << "- Check found at " << macro.location.getRawEncoding() << std::endl;
+        addMacroArgs(macro, args);
     }
     else if (name == "CHECK_FALSE")
     {
         macro.kind = MacroKind::CheckFalse;
-        macros[key] = macro;
-        // std::cout << "- Check false found at " << macro.location.getRawEncoding() << std::endl;
+        addMacroArgs(macro, args);
     }
-    // Track the current test case
-    if (name == "TEST_CASE") currentTestKey = key;
+    else
+    {
+        return;
+    }
+
+    macros[key] = macro;
 }
 
 void TopLevelConsumer::HandleTranslationUnit(clang::ASTContext &context)
