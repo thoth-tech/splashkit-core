@@ -46,9 +46,10 @@ void run_audio_tests()
     delay(5000);
     
     cout << "    Downloading music..." << endl;
-    download_music("music", "http://www.royaltyfreemusic.com/music_clips/free/Heartland_1.mp3", 80);
+    download_music("music", "https://upload.wikimedia.org/wikipedia/commons/d/d9/Greensleaves.ogg", 443);
     play_music("music");
     delay(5000);
+    stop_music();
     
     play_sound_effect(s1, 1, 1.0f);
     
