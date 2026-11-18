@@ -90,6 +90,12 @@ unsigned char __skadapter__to_unsigned_char(unsigned char v) {
 __sklib_ptr __skadapter__to_sklib_ptr(__sklib_ptr v) {
     return v;
 }
+__sklib_ptr __skadapter__to_sklib_conversation(conversation v) {
+    return static_cast<__sklib_ptr>(v);
+}
+conversation __skadapter__to_conversation(__sklib_ptr v) {
+    return static_cast<conversation>(v);
+}
 __sklib_ptr __skadapter__to_sklib_json(json v) {
     return static_cast<__sklib_ptr>(v);
 }
@@ -125,6 +131,18 @@ __sklib_ptr __skadapter__to_sklib_adc_device(adc_device v) {
 }
 adc_device __skadapter__to_adc_device(__sklib_ptr v) {
     return static_cast<adc_device>(v);
+}
+__sklib_ptr __skadapter__to_sklib_motor_device(motor_device v) {
+    return static_cast<__sklib_ptr>(v);
+}
+motor_device __skadapter__to_motor_device(__sklib_ptr v) {
+    return static_cast<motor_device>(v);
+}
+__sklib_ptr __skadapter__to_sklib_servo_device(servo_device v) {
+    return static_cast<__sklib_ptr>(v);
+}
+servo_device __skadapter__to_servo_device(__sklib_ptr v) {
+    return static_cast<servo_device>(v);
 }
 __sklib_ptr __skadapter__to_sklib_sound_effect(sound_effect v) {
     return static_cast<__sklib_ptr>(v);
@@ -197,6 +215,12 @@ __sklib_ptr __skadapter__to_sklib_window(window v) {
 }
 window __skadapter__to_window(__sklib_ptr v) {
     return static_cast<window>(v);
+}
+int __skadapter__to_sklib_language_model(language_model v) {
+    return static_cast<int>(v);
+}
+language_model __skadapter__to_language_model(int v) {
+    return static_cast<language_model>(v);
 }
 int __skadapter__to_sklib_key_code(key_code v) {
     return static_cast<int>(v);

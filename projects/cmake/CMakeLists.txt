@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
 project(splashkit)
 
-set(CMAKE_BUILD_TYPE Debug)
-
 cmake_policy(SET CMP0083 NEW)
 include(CheckPIESupported)
+include(ExternalProject)
 check_pie_supported()
 
 # SK Directories relative to cmake project
@@ -13,6 +12,7 @@ set(SK_EXT "${CMAKE_CURRENT_SOURCE_DIR}/../../coresdk/external")
 set(SK_LIB "${CMAKE_CURRENT_SOURCE_DIR}/../../coresdk/lib")
 set(SK_OUT "${CMAKE_CURRENT_SOURCE_DIR}/../../out")
 set(SK_BIN "${CMAKE_CURRENT_SOURCE_DIR}/../../bin")
+set(SK_CPP "${CMAKE_CURRENT_SOURCE_DIR}/../../languages/cpp")
 
 # FLAGS
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
@@ -44,6 +44,7 @@ if (APPLE)
                    -framework AudioToolbox \
                    -framework CoreAudio \
                    -framework CoreVideo \
+                   -framework Accelerate \
                    -lSDL2 \
                    -lSDL2_mixer \
                    -lSDL2_ttf \
@@ -64,13 +65,13 @@ if (APPLE)
                    -ldl")
 # WINDOWS PROJECT FLAGS
 elseif(MSYS)
-    string(COMPARE EQUAL "MINGW32" "$ENV{MSYSTEM}" MINGW32)
+    string(COMPARE EQUAL "UCRT64" "$ENV{MSYSTEM}" UCRT64)
     string(COMPARE EQUAL "MINGW64" "$ENV{MSYSTEM}" MINGW64)
 
-    if (${MINGW32})
-        message("Using mingw32")
-        set(OS_PATH_SUFFIX "win32")
-        set(MINGW_PATH_PART "mingw32")
+    if (${UCRT64})
+        message("Using ucrt64")
+        set(OS_PATH_SUFFIX "win64")
+        set(MINGW_PATH_PART "ucrt64")
     elseif (${MINGW64})
         message("Using mingw64")
         set(OS_PATH_SUFFIX "win64")
@@ -245,6 +246,9 @@ include_directories("${SK_EXT}/hash-library")
 include_directories("${SK_EXT}/json")
 include_directories("${SK_EXT}/catch")
 include_directories("${SK_EXT}/microui/src")
+include_directories("${SK_EXT}/llama.cpp/include")
+include_directories("${SK_EXT}/llama.cpp/ggml/include")
+include_directories("${SK_CPP}")
 
 # MAC OS DIRECTORY INCLUDES
 if (APPLE)
@@ -257,13 +261,60 @@ if (APPLE)
     include_directories("${SK_EXT}/SDL_image/external/libpng-1.6.2")
 endif()
 
+# INCLUDE LLAMA.CPP
+
+# Included as an external project so that it can be configured
+# as Release, independently of the main project.
+
+# Compiled as CPU only
+# TODO: Decide on minimum architecture requirements
+ExternalProject_Add(
+    llama_ext
+    SOURCE_DIR "${SK_EXT}/llama.cpp"
+    CMAKE_ARGS
+        -DLLAMA_BUILD_TESTS=OFF
+        -DLLAMA_BUILD_TOOLS=OFF
+        -DLLAMA_BUILD_EXAMPLES=OFF
+        -DLLAMA_BUILD_SERVER=OFF
+        -DGGML_BLAS=OFF
+        -DGGML_METAL=OFF
+        -DGGML_VULKAN=OFF
+        -DBUILD_SHARED_LIBS=OFF
+        -DLLAMA_BUILD_COMMON=OFF
+        -DLLAMA_TOOLS_INSTALL=OFF
+        -DCMAKE_BUILD_TYPE=Release
+        -DGGML_STATIC=ON
+        -DGGML_OPENMP=OFF
+        -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+)
+
+ExternalProject_Get_Property(llama_ext INSTALL_DIR)
+
+foreach(lib llama ggml ggml-cpu ggml-base)
+    add_library(${lib} STATIC IMPORTED GLOBAL)
+    if (MSYS AND NOT "${lib}" STREQUAL "llama") # llama still ends up as libllama.a on Windows, unsure why
+        set_target_properties(${lib} PROPERTIES
+            IMPORTED_LOCATION
+                ${INSTALL_DIR}/lib/${lib}.a # no lib prefix
+        )
+    else()
+        set_target_properties(${lib} PROPERTIES
+            IMPORTED_LOCATION
+                ${INSTALL_DIR}/lib/lib${lib}.a # lib prefix
+        )
+    endif()
+    add_dependencies(${lib} llama_ext)
+endforeach()
+
+set(LLAMA_LIB_FLAGS llama ggml ggml-cpu ggml-base)
+
 # MACRO DEFINITIONS #
 add_definitions(-DELPP_THREAD_SAFE)
 
 #### END SETUP ####
 #### SplashKitBackend STATIC LIBRARY ####
 add_library(SplashKitBackend STATIC ${SOURCE_FILES} ${INCLUDE_FILES})
-target_link_libraries(SplashKitBackend ${LIB_FLAGS})
+target_link_libraries(SplashKitBackend ${LIB_FLAGS} ${LLAMA_LIB_FLAGS})
 
 if(RASPBERRY_PI)
     if(RASPBERRY_PI_5)

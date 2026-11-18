@@ -424,10 +424,43 @@ double square_root(int number) {
     double __skreturn = __sklib__square_root__int(__skparam__number);
     return __skadapter__to_double(__skreturn);
 }
+double to_double(const string &text) {
+    const __sklib_string __skparam__text = __skadapter__to_sklib_string(text);
+    double __skreturn = __sklib__to_double__string_ref(__skparam__text);
+    __skadapter__free__sklib_string(__skparam__text);
+    return __skadapter__to_double(__skreturn);
+}
+double to_double(int value) {
+    int __skparam__value = __skadapter__to_int(value);
+    double __skreturn = __sklib__to_double__int(__skparam__value);
+    return __skadapter__to_double(__skreturn);
+}
+int to_integer(const string &text) {
+    const __sklib_string __skparam__text = __skadapter__to_sklib_string(text);
+    int __skreturn = __sklib__to_integer__string_ref(__skparam__text);
+    __skadapter__free__sklib_string(__skparam__text);
+    return __skadapter__to_int(__skreturn);
+}
 string to_lowercase(const string &text) {
     const __sklib_string __skparam__text = __skadapter__to_sklib_string(text);
     __sklib_string __skreturn = __sklib__to_lowercase__string_ref(__skparam__text);
     __skadapter__free__sklib_string(__skparam__text);
+    return __skadapter__to_string(__skreturn);
+}
+string to_string(double value, int precision) {
+    double __skparam__value = __skadapter__to_double(value);
+    int __skparam__precision = __skadapter__to_int(precision);
+    __sklib_string __skreturn = __sklib__to_string__double__int(__skparam__value, __skparam__precision);
+    return __skadapter__to_string(__skreturn);
+}
+string to_string(double value) {
+    double __skparam__value = __skadapter__to_double(value);
+    __sklib_string __skreturn = __sklib__to_string__double(__skparam__value);
+    return __skadapter__to_string(__skreturn);
+}
+string to_string(int value) {
+    int __skparam__value = __skadapter__to_int(value);
+    __sklib_string __skreturn = __sklib__to_string__int(__skparam__value);
     return __skadapter__to_string(__skreturn);
 }
 string to_uppercase(const string &text) {
@@ -2061,6 +2094,10 @@ color color_moccasin() {
     __sklib_color __skreturn = __sklib__color_moccasin();
     return __skadapter__to_color(__skreturn);
 }
+color color_monash_blue() {
+    __sklib_color __skreturn = __sklib__color_monash_blue();
+    return __skadapter__to_color(__skreturn);
+}
 color color_navajo_white() {
     __sklib_color __skreturn = __sklib__color_navajo_white();
     return __skadapter__to_color(__skreturn);
@@ -2685,6 +2722,95 @@ void fill_ellipse_on_window(window destination, color clr, double x, double y, d
     __sklib_drawing_options __skparam__opts = __skadapter__to_sklib_drawing_options(opts);
     __sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options(__skparam__destination, __skparam__clr, __skparam__x, __skparam__y, __skparam__width, __skparam__height, __skparam__opts);
 }
+void conversation_add_message(conversation c, const string &message) {
+    __sklib_conversation __skparam__c = __skadapter__to_sklib_conversation(c);
+    const __sklib_string __skparam__message = __skadapter__to_sklib_string(message);
+    __sklib__conversation_add_message__conversation__string_ref(__skparam__c, __skparam__message);
+    __skadapter__free__sklib_string(__skparam__message);
+}
+string conversation_get_reply(conversation conv) {
+    __sklib_conversation __skparam__conv = __skadapter__to_sklib_conversation(conv);
+    __sklib_string __skreturn = __sklib__conversation_get_reply__conversation(__skparam__conv);
+    return __skadapter__to_string(__skreturn);
+}
+string conversation_get_reply(conversation conv, bool with_thoughts) {
+    __sklib_conversation __skparam__conv = __skadapter__to_sklib_conversation(conv);
+    int __skparam__with_thoughts = __skadapter__to_int(with_thoughts);
+    __sklib_string __skreturn = __sklib__conversation_get_reply__conversation__bool(__skparam__conv, __skparam__with_thoughts);
+    return __skadapter__to_string(__skreturn);
+}
+string conversation_get_reply_piece(conversation c) {
+    __sklib_conversation __skparam__c = __skadapter__to_sklib_conversation(c);
+    __sklib_string __skreturn = __sklib__conversation_get_reply_piece__conversation(__skparam__c);
+    return __skadapter__to_string(__skreturn);
+}
+bool conversation_is_replying(conversation c) {
+    __sklib_conversation __skparam__c = __skadapter__to_sklib_conversation(c);
+    int __skreturn = __sklib__conversation_is_replying__conversation(__skparam__c);
+    return __skadapter__to_bool(__skreturn);
+}
+bool conversation_is_thinking(conversation c) {
+    __sklib_conversation __skparam__c = __skadapter__to_sklib_conversation(c);
+    int __skreturn = __sklib__conversation_is_thinking__conversation(__skparam__c);
+    return __skadapter__to_bool(__skreturn);
+}
+conversation create_conversation() {
+    __sklib_conversation __skreturn = __sklib__create_conversation();
+    return __skadapter__to_conversation(__skreturn);
+}
+conversation create_conversation(language_model model) {
+    int __skparam__model = __skadapter__to_int(model);
+    __sklib_conversation __skreturn = __sklib__create_conversation__language_model(__skparam__model);
+    return __skadapter__to_conversation(__skreturn);
+}
+void free_all_conversations() {
+    __sklib__free_all_conversations();
+}
+void free_conversation(conversation c) {
+    __sklib_conversation __skparam__c = __skadapter__to_sklib_conversation(c);
+    __sklib__free_conversation__conversation(__skparam__c);
+}
+string generate_reply(language_model model, string prompt) {
+    int __skparam__model = __skadapter__to_int(model);
+    __sklib_string __skparam__prompt = __skadapter__to_sklib_string(prompt);
+    __sklib_string __skreturn = __sklib__generate_reply__language_model__string(__skparam__model, __skparam__prompt);
+    __skadapter__free__sklib_string(__skparam__prompt);
+    return __skadapter__to_string(__skreturn);
+}
+string generate_reply(string prompt) {
+    __sklib_string __skparam__prompt = __skadapter__to_sklib_string(prompt);
+    __sklib_string __skreturn = __sklib__generate_reply__string(__skparam__prompt);
+    __skadapter__free__sklib_string(__skparam__prompt);
+    return __skadapter__to_string(__skreturn);
+}
+string generate_text(language_model model, string text) {
+    int __skparam__model = __skadapter__to_int(model);
+    __sklib_string __skparam__text = __skadapter__to_sklib_string(text);
+    __sklib_string __skreturn = __sklib__generate_text__language_model__string(__skparam__model, __skparam__text);
+    __skadapter__free__sklib_string(__skparam__text);
+    return __skadapter__to_string(__skreturn);
+}
+string generate_text(language_model model, string text, int max_tokens) {
+    int __skparam__model = __skadapter__to_int(model);
+    __sklib_string __skparam__text = __skadapter__to_sklib_string(text);
+    int __skparam__max_tokens = __skadapter__to_int(max_tokens);
+    __sklib_string __skreturn = __sklib__generate_text__language_model__string__int(__skparam__model, __skparam__text, __skparam__max_tokens);
+    __skadapter__free__sklib_string(__skparam__text);
+    return __skadapter__to_string(__skreturn);
+}
+string generate_text(string text) {
+    __sklib_string __skparam__text = __skadapter__to_sklib_string(text);
+    __sklib_string __skreturn = __sklib__generate_text__string(__skparam__text);
+    __skadapter__free__sklib_string(__skparam__text);
+    return __skadapter__to_string(__skreturn);
+}
+string generate_text(string text, int max_tokens) {
+    __sklib_string __skparam__text = __skadapter__to_sklib_string(text);
+    int __skparam__max_tokens = __skadapter__to_int(max_tokens);
+    __sklib_string __skreturn = __sklib__generate_text__string__int(__skparam__text, __skparam__max_tokens);
+    __skadapter__free__sklib_string(__skparam__text);
+    return __skadapter__to_string(__skreturn);
+}
 float cosine(float degrees) {
     float __skparam__degrees = __skadapter__to_float(degrees);
     float __skreturn = __sklib__cosine__float(__skparam__degrees);
@@ -3282,6 +3408,11 @@ float number_box(const string &label_text, const float &value, float step) {
     __skadapter__free__sklib_string(__skparam__label_text);
     return __skadapter__to_float(__skreturn);
 }
+void open_panel(const string &name) {
+    const __sklib_string __skparam__name = __skadapter__to_sklib_string(name);
+    __sklib__open_panel__string_ref(__skparam__name);
+    __skadapter__free__sklib_string(__skparam__name);
+}
 void open_popup(const string &name) {
     const __sklib_string __skparam__name = __skadapter__to_sklib_string(name);
     __sklib__open_popup__string_ref(__skparam__name);
@@ -3459,12 +3590,16 @@ bool start_treenode(const string &label_text) {
     __skadapter__free__sklib_string(__skparam__label_text);
     return __skadapter__to_bool(__skreturn);
 }
-string text_box(const string &label_text, const string &value, const rectangle &rect) {
-    const __sklib_string __skparam__label_text = __skadapter__to_sklib_string(label_text);
+string text_box(const string &value) {
+    const __sklib_string __skparam__value = __skadapter__to_sklib_string(value);
+    __sklib_string __skreturn = __sklib__text_box__string_ref(__skparam__value);
+    __skadapter__free__sklib_string(__skparam__value);
+    return __skadapter__to_string(__skreturn);
+}
+string text_box(const string &value, const rectangle &rect) {
     const __sklib_string __skparam__value = __skadapter__to_sklib_string(value);
     const __sklib_rectangle __skparam__rect = __skadapter__to_sklib_rectangle(rect);
-    __sklib_string __skreturn = __sklib__text_box__string_ref__string_ref__rectangle_ref(__skparam__label_text, __skparam__value, __skparam__rect);
-    __skadapter__free__sklib_string(__skparam__label_text);
+    __sklib_string __skreturn = __sklib__text_box__string_ref__rectangle_ref(__skparam__value, __skparam__rect);
     __skadapter__free__sklib_string(__skparam__value);
     return __skadapter__to_string(__skreturn);
 }
@@ -3472,15 +3607,6 @@ string text_box(const string &label_text, const string &value) {
     const __sklib_string __skparam__label_text = __skadapter__to_sklib_string(label_text);
     const __sklib_string __skparam__value = __skadapter__to_sklib_string(value);
     __sklib_string __skreturn = __sklib__text_box__string_ref__string_ref(__skparam__label_text, __skparam__value);
-    __skadapter__free__sklib_string(__skparam__label_text);
-    __skadapter__free__sklib_string(__skparam__value);
-    return __skadapter__to_string(__skreturn);
-}
-string text_box(const string &label_text, const string &value, bool show_label) {
-    const __sklib_string __skparam__label_text = __skadapter__to_sklib_string(label_text);
-    const __sklib_string __skparam__value = __skadapter__to_sklib_string(value);
-    int __skparam__show_label = __skadapter__to_int(show_label);
-    __sklib_string __skreturn = __sklib__text_box__string_ref__string_ref__bool(__skparam__label_text, __skparam__value, __skparam__show_label);
     __skadapter__free__sklib_string(__skparam__label_text);
     __skadapter__free__sklib_string(__skparam__value);
     return __skadapter__to_string(__skreturn);
@@ -5272,6 +5398,98 @@ void remote_raspi_write(connection pi, gpio_pin pin, gpio_pin_value value) {
     int __skparam__pin = __skadapter__to_int(pin);
     int __skparam__value = __skadapter__to_int(value);
     __sklib__remote_raspi_write__connection__gpio_pin__gpio_pin_value(__skparam__pi, __skparam__pin, __skparam__value);
+}
+void close_all_motors() {
+    __sklib__close_all_motors();
+}
+void close_motor(const string &name) {
+    const __sklib_string __skparam__name = __skadapter__to_sklib_string(name);
+    __sklib__close_motor__string_ref(__skparam__name);
+    __skadapter__free__sklib_string(__skparam__name);
+}
+void close_motor(motor_device dev) {
+    __sklib_motor_device __skparam__dev = __skadapter__to_sklib_motor_device(dev);
+    __sklib__close_motor__motor_device(__skparam__dev);
+}
+void free_motor_device(motor_device dev) {
+    __sklib_motor_device __skparam__dev = __skadapter__to_sklib_motor_device(dev);
+    __sklib__free_motor_device__motor_device(__skparam__dev);
+}
+bool has_motor_device(const string &name) {
+    const __sklib_string __skparam__name = __skadapter__to_sklib_string(name);
+    int __skreturn = __sklib__has_motor_device__string_ref(__skparam__name);
+    __skadapter__free__sklib_string(__skparam__name);
+    return __skadapter__to_bool(__skreturn);
+}
+motor_device motor_named(const string &name) {
+    const __sklib_string __skparam__name = __skadapter__to_sklib_string(name);
+    __sklib_motor_device __skreturn = __sklib__motor_named__string_ref(__skparam__name);
+    __skadapter__free__sklib_string(__skparam__name);
+    return __skadapter__to_motor_device(__skreturn);
+}
+motor_device open_motor(const string &name, motor_driver_type type, gpio_pin in1_pin, gpio_pin in2_pin, gpio_pin en_pin) {
+    const __sklib_string __skparam__name = __skadapter__to_sklib_string(name);
+    int __skparam__type = __skadapter__to_int(type);
+    int __skparam__in1_pin = __skadapter__to_int(in1_pin);
+    int __skparam__in2_pin = __skadapter__to_int(in2_pin);
+    int __skparam__en_pin = __skadapter__to_int(en_pin);
+    __sklib_motor_device __skreturn = __sklib__open_motor__string_ref__motor_driver_type__gpio_pin__gpio_pin__gpio_pin(__skparam__name, __skparam__type, __skparam__in1_pin, __skparam__in2_pin, __skparam__en_pin);
+    __skadapter__free__sklib_string(__skparam__name);
+    return __skadapter__to_motor_device(__skreturn);
+}
+void set_motor_direction(motor_device dev, motor_direction dir) {
+    __sklib_motor_device __skparam__dev = __skadapter__to_sklib_motor_device(dev);
+    int __skparam__dir = __skadapter__to_int(dir);
+    __sklib__set_motor_direction__motor_device__motor_direction(__skparam__dev, __skparam__dir);
+}
+void set_motor_speed(motor_device dev, double speed) {
+    __sklib_motor_device __skparam__dev = __skadapter__to_sklib_motor_device(dev);
+    double __skparam__speed = __skadapter__to_double(speed);
+    __sklib__set_motor_speed__motor_device__double(__skparam__dev, __skparam__speed);
+}
+void stop_motor(motor_device dev) {
+    __sklib_motor_device __skparam__dev = __skadapter__to_sklib_motor_device(dev);
+    __sklib__stop_motor__motor_device(__skparam__dev);
+}
+void close_all_servos() {
+    __sklib__close_all_servos();
+}
+void close_servo(const string &name) {
+    const __sklib_string __skparam__name = __skadapter__to_sklib_string(name);
+    __sklib__close_servo__string_ref(__skparam__name);
+    __skadapter__free__sklib_string(__skparam__name);
+}
+void close_servo(servo_device dev) {
+    __sklib_servo_device __skparam__dev = __skadapter__to_sklib_servo_device(dev);
+    __sklib__close_servo__servo_device(__skparam__dev);
+}
+bool has_servo_device(const string &name) {
+    const __sklib_string __skparam__name = __skadapter__to_sklib_string(name);
+    int __skreturn = __sklib__has_servo_device__string_ref(__skparam__name);
+    __skadapter__free__sklib_string(__skparam__name);
+    return __skadapter__to_bool(__skreturn);
+}
+servo_device open_servo(const string &name, gpio_pin control_pin) {
+    const __sklib_string __skparam__name = __skadapter__to_sklib_string(name);
+    int __skparam__control_pin = __skadapter__to_int(control_pin);
+    __sklib_servo_device __skreturn = __sklib__open_servo__string_ref__gpio_pin(__skparam__name, __skparam__control_pin);
+    __skadapter__free__sklib_string(__skparam__name);
+    return __skadapter__to_servo_device(__skreturn);
+}
+servo_device servo_named(const string &name) {
+    const __sklib_string __skparam__name = __skadapter__to_sklib_string(name);
+    __sklib_servo_device __skreturn = __sklib__servo_named__string_ref(__skparam__name);
+    __skadapter__free__sklib_string(__skparam__name);
+    return __skadapter__to_servo_device(__skreturn);
+}
+void set_servo_angle(servo_device dev, double angle_degrees) {
+    __sklib_servo_device __skparam__dev = __skadapter__to_sklib_servo_device(dev);
+    double __skparam__angle_degrees = __skadapter__to_double(angle_degrees);
+    __sklib__set_servo_angle__servo_device__double(__skparam__dev, __skparam__angle_degrees);
+}
+void stop_servo(servo_device dev) {
+    __sklib_servo_device __skparam__dev = __skadapter__to_sklib_servo_device(dev);
+    __sklib__stop_servo__servo_device(__skparam__dev);
 }
 void draw_quad(color clr, const quad &q) {
     __sklib_color __skparam__clr = __skadapter__to_sklib_color(clr);

@@ -16,6 +16,7 @@
 #include <cctype>
 #include <locale>
 #include <cmath>
+#include <iomanip>
 
 namespace splashkit_lib
 {
@@ -148,9 +149,41 @@ namespace splashkit_lib
         return std::stoi(text);
     }
 
+    int to_integer(const string &text)
+    {
+        return std::stoi(text);
+    }
+
     double convert_to_double(const string &text)
     {
         return std::stod(text);
+    }
+
+    double to_double(const string &text)
+    {
+        return std::stod(text);
+    }
+
+    double to_double(int value)
+    {
+        return static_cast<double>(value);
+    }
+
+    string to_string(int value)
+    {
+        return std::to_string(value);
+    }
+
+    string to_string(double value)
+    {
+        return std::to_string(value);
+    }
+
+    string to_string(double value, int precision)
+    {
+        std::stringstream stream;
+        stream << std::fixed << std::setprecision(precision) << value;
+        return stream.str();
     }
 
     bool is_binary(const string &bin_str)
@@ -206,7 +239,24 @@ namespace splashkit_lib
             return 0;
         }
 
-        return stoi(bin_str, nullptr, 2);
+        try
+        {
+            LOG(INFO) << bin_str.length() << " " << sizeof(int) * 8;
+
+            if (bin_str.length() > sizeof(int) * 8)
+            {
+                return std::numeric_limits<unsigned int>::max();
+            }
+            else
+            {
+                return stol(bin_str, nullptr, 2);
+            }
+        }
+        catch (const std::exception &e)
+        {
+            LOG(ERROR) << "Invalid binary string \"" << bin_str << "\" passed to bin_to_dec. Returning 0.";
+            return 0;
+        }
     }
 
     string hex_to_bin(const string &hex_str)
@@ -300,7 +350,7 @@ namespace splashkit_lib
             return 0;
         }
 
-        return stoi(octal_string, nullptr, 8);
+        return stol(octal_string, nullptr, 8);
     }
 
     unsigned int hex_to_dec(const string &hex_string)
@@ -311,7 +361,7 @@ namespace splashkit_lib
             return 0;
         }
 
-        return stoi(hex_string, nullptr, 16);
+        return stol(hex_string, nullptr, 16);
     }
 
     string oct_to_bin(const string &octal_str)

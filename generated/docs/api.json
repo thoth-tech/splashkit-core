@@ -10857,6 +10857,47 @@
         }
       },
       {
+        "signature": "color color_monash_blue();",
+        "name": "color_monash_blue",
+        "method_name": null,
+        "unique_global_name": "color_monash_blue",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Generates a new `color` associated to the color `monash_blue`.",
+        "brief": null,
+        "return": {
+          "type": "color",
+          "description": "A new `color` set to `monash_blue`.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+        },
+        "attributes": {
+          "getter": "monash_blue",
+          "static": "color",
+          "group": "color"
+        },
+        "signatures": {
+          "python": [
+            "def color_monash_blue():"
+          ],
+          "cpp": [
+            "#define COLOR_MONASH_BLUE",
+            "color color_monash_blue()"
+          ],
+          "csharp": [
+            "public static Color Color.MonashBlue { get }",
+            "public static Color SplashKit.ColorMonashBlue();"
+          ],
+          "pascal": [
+            "function ColorMonashBlue(): Color"
+          ]
+        }
+      },
+      {
         "signature": "color color_navajo_white();",
         "name": "color_navajo_white",
         "method_name": null,
@@ -14234,6 +14275,12 @@
         "definition": "color_moccasin()"
       },
       {
+        "name": "COLOR_MONASH_BLUE",
+        "description": "A shorthand macro to the result of calling `color_monash_blue`.",
+        "brief": null,
+        "definition": "color_monash_blue()"
+      },
+      {
         "name": "COLOR_NAVAJO_WHITE",
         "description": "A shorthand macro to the result of calling `color_navajo_white`.",
         "brief": null,
@@ -14521,6 +14568,1040 @@
         "brief": null,
         "definition": "color_yellow_green()"
       }
+    ]
+  },
+  "generative_ai": {
+    "brief": "",
+    "description": "",
+    "functions": [
+      {
+        "signature": "void conversation_add_message(conversation c,const string& message);",
+        "name": "conversation_add_message",
+        "method_name": "add_message",
+        "unique_global_name": "conversation_add_message",
+        "unique_method_name": "conversation.add_message",
+        "suffix_name": null,
+        "description": "Adds a message to a `conversation`, that the language model will begin replying to.\nYou can receive the reply one piece at a time by calling `conversation_get_reply_piece(conversation c)` in a loop",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "c": {
+            "type": "conversation",
+            "description": "The `conversation` object to check",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "message": {
+            "type": "string",
+            "description": "The user message to add to the conversation - the language model will reply to this",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "conversation",
+          "method": "add_message",
+          "self": "c",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def conversation_add_message(c, message):"
+          ],
+          "cpp": [
+            "void conversation_add_message(conversation c, const string &message)"
+          ],
+          "csharp": [
+            "public void Conversation.AddMessage(string message);",
+            "public static void SplashKit.ConversationAddMessage(Conversation c, string message);"
+          ],
+          "pascal": [
+            "procedure ConversationAddMessage(c: Conversation; const message: String)"
+          ]
+        }
+      },
+      {
+        "signature": "string conversation_get_reply(conversation conv);",
+        "name": "conversation_get_reply",
+        "method_name": "get_reply",
+        "unique_global_name": "conversation_get_reply",
+        "unique_method_name": "conversation.get_reply",
+        "suffix_name": null,
+        "description": "Returns a reply from a `conversation`, without any related thoughts.",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The response from the model",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "conv": {
+            "type": "conversation",
+            "description": "The `conversation` to recieve the reply from",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "conversation",
+          "method": "get_reply",
+          "self": "conv",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def conversation_get_reply(conv):"
+          ],
+          "cpp": [
+            "string conversation_get_reply(conversation conv)"
+          ],
+          "csharp": [
+            "public string Conversation.GetReply();",
+            "public static string SplashKit.ConversationGetReply(Conversation conv);"
+          ],
+          "pascal": [
+            "function ConversationGetReply(conv: Conversation): String"
+          ]
+        }
+      },
+      {
+        "signature": "string conversation_get_reply(conversation conv,bool with_thoughts);",
+        "name": "conversation_get_reply",
+        "method_name": "get_reply",
+        "unique_global_name": "conversation_get_reply_with_thoughts",
+        "unique_method_name": "conversation.get_reply_with_thoughts",
+        "suffix_name": null,
+        "description": "Returns a reply from a `conversation`, with the ability to indicate if thoughts should be included.",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The response from the model",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "conv": {
+            "type": "conversation",
+            "description": "The `conversation` to recieve the reply from",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "with_thoughts": {
+            "type": "bool",
+            "description": "A boolean to indicate if thoughts should be included in the reply",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "conversation",
+          "method": "get_reply",
+          "self": "conv",
+          "suffix": "with_thoughts",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def conversation_get_reply_with_thoughts(conv, with_thoughts):"
+          ],
+          "cpp": [
+            "string conversation_get_reply(conversation conv, bool with_thoughts)"
+          ],
+          "csharp": [
+            "public string Conversation.GetReply(bool withThoughts);",
+            "public static string SplashKit.ConversationGetReply(Conversation conv, bool withThoughts);"
+          ],
+          "pascal": [
+            "function ConversationGetReply(conv: Conversation; withThoughts: Boolean): String"
+          ]
+        }
+      },
+      {
+        "signature": "string conversation_get_reply_piece(conversation c);",
+        "name": "conversation_get_reply_piece",
+        "method_name": "get_reply_piece",
+        "unique_global_name": "conversation_get_reply_piece",
+        "unique_method_name": "conversation.get_reply_piece",
+        "suffix_name": null,
+        "description": "Returns a single piece of a reply (generally one word at a time) from the `conversation`\nYou can use a loop while checking `conversation_is_replying` to retrieve the reply as it generates",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "Returns a small piece of the reply (generally 1 word or less)",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "c": {
+            "type": "conversation",
+            "description": "The `conversation` object to recieve the reply from",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "conversation",
+          "method": "get_reply_piece",
+          "self": "c",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def conversation_get_reply_piece(c):"
+          ],
+          "cpp": [
+            "string conversation_get_reply_piece(conversation c)"
+          ],
+          "csharp": [
+            "public string Conversation.GetReplyPiece();",
+            "public static string SplashKit.ConversationGetReplyPiece(Conversation c);"
+          ],
+          "pascal": [
+            "function ConversationGetReplyPiece(c: Conversation): String"
+          ]
+        }
+      },
+      {
+        "signature": "bool conversation_is_replying(conversation c);",
+        "name": "conversation_is_replying",
+        "method_name": "is_replying",
+        "unique_global_name": "conversation_is_replying",
+        "unique_method_name": "conversation.is_replying",
+        "suffix_name": null,
+        "description": "Checks if a language model is currently generating a reply within a `conversation`.\nIf so, you can continue to receive the message with `conversation_get_reply_piece(conversation c)`",
+        "brief": null,
+        "return": {
+          "type": "bool",
+          "description": "Returns whether the language model is still generating a reply",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "c": {
+            "type": "conversation",
+            "description": "The `conversation` object to check",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "conversation",
+          "method": "is_replying",
+          "self": "c",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def conversation_is_replying(c):"
+          ],
+          "cpp": [
+            "bool conversation_is_replying(conversation c)"
+          ],
+          "csharp": [
+            "public bool Conversation.IsReplying();",
+            "public static bool SplashKit.ConversationIsReplying(Conversation c);"
+          ],
+          "pascal": [
+            "function ConversationIsReplying(c: Conversation): Boolean"
+          ]
+        }
+      },
+      {
+        "signature": "bool conversation_is_thinking(conversation c);",
+        "name": "conversation_is_thinking",
+        "method_name": "is_thinking",
+        "unique_global_name": "conversation_is_thinking",
+        "unique_method_name": "conversation.is_thinking",
+        "suffix_name": null,
+        "description": "Checks if a language model is currently \"thinking\" while generating a reply within a `conversation`.\nYou can use this to filter out the \"thoughts\" and display them differently (or hide them entirely)",
+        "brief": null,
+        "return": {
+          "type": "bool",
+          "description": "Returns whether the language model is currently thinking while generating a reply",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "c": {
+            "type": "conversation",
+            "description": "The `conversation` object to check",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "conversation",
+          "method": "is_thinking",
+          "self": "c",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def conversation_is_thinking(c):"
+          ],
+          "cpp": [
+            "bool conversation_is_thinking(conversation c)"
+          ],
+          "csharp": [
+            "public bool Conversation.IsThinking();",
+            "public static bool SplashKit.ConversationIsThinking(Conversation c);"
+          ],
+          "pascal": [
+            "function ConversationIsThinking(c: Conversation): Boolean"
+          ]
+        }
+      },
+      {
+        "signature": "conversation create_conversation();",
+        "name": "create_conversation",
+        "method_name": null,
+        "unique_global_name": "create_conversation",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Creates a new `conversation` object, that uses the default language model.\n\nThe `conversation` object can have messages added to it, and responses streamed back from it via the other Conversation functions and procedures",
+        "brief": null,
+        "return": {
+          "type": "conversation",
+          "description": "Returns a new `conversation` object.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+        },
+        "attributes": {
+          "class": "conversation",
+          "constructor": true,
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def create_conversation():"
+          ],
+          "cpp": [
+            "conversation create_conversation()"
+          ],
+          "csharp": [
+            "public static Conversation SplashKit.CreateConversation();",
+            "public Conversation();"
+          ],
+          "pascal": [
+            "function CreateConversation(): Conversation"
+          ]
+        }
+      },
+      {
+        "signature": "conversation create_conversation(language_model model);",
+        "name": "create_conversation",
+        "method_name": null,
+        "unique_global_name": "create_conversation_with_model",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Creates a new `conversation` object, that uses a chosen language model.\n\nThe `conversation` object can have messages added to it, and responses streamed back from it via the other Conversation functions and procedures",
+        "brief": null,
+        "return": {
+          "type": "conversation",
+          "description": "Returns a new `conversation` object.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "model": {
+            "type": "language_model",
+            "description": "The language model to use",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "conversation",
+          "constructor": true,
+          "suffix": "with_model",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def create_conversation_with_model(model):"
+          ],
+          "cpp": [
+            "conversation create_conversation(language_model model)"
+          ],
+          "csharp": [
+            "public static Conversation SplashKit.CreateConversation(LanguageModel model);",
+            "public Conversation(LanguageModel model);"
+          ],
+          "pascal": [
+            "function CreateConversation(model: LanguageModel): Conversation"
+          ]
+        }
+      },
+      {
+        "signature": "void free_all_conversations();",
+        "name": "free_all_conversations",
+        "method_name": "free_all",
+        "unique_global_name": "free_all_conversations",
+        "unique_method_name": ".free_all",
+        "suffix_name": null,
+        "description": "Releases all of the `conversation` objects which have been loaded.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+        },
+        "attributes": {
+          "method": "free_all",
+          "static": "generative_ai",
+          "group": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def free_all_conversations():"
+          ],
+          "cpp": [
+            "void free_all_conversations()"
+          ],
+          "csharp": [
+            "public static void GenerativeAi.FreeAll();",
+            "public static void SplashKit.FreeAllConversations();"
+          ],
+          "pascal": [
+            "procedure FreeAllConversations()"
+          ]
+        }
+      },
+      {
+        "signature": "void free_conversation(conversation c);",
+        "name": "free_conversation",
+        "method_name": "free",
+        "unique_global_name": "free_conversation",
+        "unique_method_name": "conversation.free",
+        "suffix_name": null,
+        "description": "Frees the resources associated with the `conversation` object.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "c": {
+            "type": "conversation",
+            "description": "The `conversation` object whose resources should be released.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "conversation",
+          "destructor": true,
+          "method": "free",
+          "self": "c",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def free_conversation(c):"
+          ],
+          "cpp": [
+            "void free_conversation(conversation c)"
+          ],
+          "csharp": [
+            "public void Conversation.Free();",
+            "public static void SplashKit.FreeConversation(Conversation c);"
+          ],
+          "pascal": [
+            "procedure FreeConversation(c: Conversation)"
+          ]
+        }
+      },
+      {
+        "signature": "string generate_reply(language_model model,string prompt);",
+        "name": "generate_reply",
+        "method_name": null,
+        "unique_global_name": "generate_reply_with_model",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Generates a reply to a textual prompt by a language model\n\nThe language model will respond to the textual prompt in a chat style format. It will follow instructions and answer questions.\nInstruct or Thinking models are recommended. Base models likely won't output sensible results.",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The generated reply.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "model": {
+            "type": "language_model",
+            "description": "The language model to use",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "prompt": {
+            "type": "string",
+            "description": "The prompt for the language model to reply to.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "with_model",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def generate_reply_with_model(model, prompt):"
+          ],
+          "cpp": [
+            "string generate_reply(language_model model, string prompt)"
+          ],
+          "csharp": [
+            "public static string SplashKit.GenerateReply(LanguageModel model, string prompt);"
+          ],
+          "pascal": [
+            "function GenerateReply(model: LanguageModel; prompt: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "string generate_reply(string prompt);",
+        "name": "generate_reply",
+        "method_name": null,
+        "unique_global_name": "generate_reply",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Generates a reply to a textual prompt by a language model\n\nThe language model will respond to the textual prompt in a chat style format. It will follow instructions and answer questions.\nInstruct or Thinking models are recommended. Base models likely won't output sensible results.",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The generated reply.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "prompt": {
+            "type": "string",
+            "description": "The prompt for the language model to reply to.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def generate_reply(prompt):"
+          ],
+          "cpp": [
+            "string generate_reply(string prompt)"
+          ],
+          "csharp": [
+            "public static string SplashKit.GenerateReply(string prompt);"
+          ],
+          "pascal": [
+            "function GenerateReply(prompt: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "string generate_text(language_model model,string text);",
+        "name": "generate_text",
+        "method_name": null,
+        "unique_global_name": "generate_text_with_model",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Generates text that continues from a prompt, with a maximum of 125 tokens.\n\nThe language model will continue predicting text based on patterns in the prompt - it will not directly follow instructions or answer questions.\nBase models are recommended; Instruct and Thinking models may work.",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The generated reply.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "model": {
+            "type": "language_model",
+            "description": "The language model to use",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "text": {
+            "type": "string",
+            "description": "The input text for the language model to continue.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "with_model",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def generate_text_with_model(model, text):"
+          ],
+          "cpp": [
+            "string generate_text(language_model model, string text)"
+          ],
+          "csharp": [
+            "public static string SplashKit.GenerateText(LanguageModel model, string text);"
+          ],
+          "pascal": [
+            "function GenerateText(model: LanguageModel; text: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "string generate_text(language_model model,string text,int max_tokens);",
+        "name": "generate_text",
+        "method_name": null,
+        "unique_global_name": "generate_text_with_model_and_tokens",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Generates text that continues from a prompt, with a maximum of 125 tokens.\n\nThe language model will continue predicting text based on patterns in the prompt - it will not directly follow instructions or answer questions.\nBase models are recommended; Instruct and Thinking models may work.",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The generated reply.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "model": {
+            "type": "language_model",
+            "description": "The language model to use",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "text": {
+            "type": "string",
+            "description": "The input text for the language model to continue.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "max_tokens": {
+            "type": "int",
+            "description": "The maximum tokens used in response - determining the length of the output and the time taken. Keep this small for reasonable execution times.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "with_model_and_tokens",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def generate_text_with_model_and_tokens(model, text, max_tokens):"
+          ],
+          "cpp": [
+            "string generate_text(language_model model, string text, int max_tokens)"
+          ],
+          "csharp": [
+            "public static string SplashKit.GenerateText(LanguageModel model, string text, int maxTokens);"
+          ],
+          "pascal": [
+            "function GenerateText(model: LanguageModel; text: String; maxTokens: Integer): String"
+          ]
+        }
+      },
+      {
+        "signature": "string generate_text(string text);",
+        "name": "generate_text",
+        "method_name": null,
+        "unique_global_name": "generate_text",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Generates text that continues from a prompt - with default of 125 tokens.\n\nThe language model will continue predicting text based on patterns in the prompt - it will not directly follow instructions or answer questions.\nBase models are recommended; Instruct and Thinking models may work.",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The generated reply.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "text": {
+            "type": "string",
+            "description": "The input text for the language model to continue.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def generate_text(text):"
+          ],
+          "cpp": [
+            "string generate_text(string text)"
+          ],
+          "csharp": [
+            "public static string SplashKit.GenerateText(string text);"
+          ],
+          "pascal": [
+            "function GenerateText(text: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "string generate_text(string text,int max_tokens);",
+        "name": "generate_text",
+        "method_name": null,
+        "unique_global_name": "generate_text_with_tokens",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Generates text that continues from a prompt.\n\nThe language model will continue predicting text based on patterns in the prompt - it will not directly follow instructions or answer questions.\nBase models are recommended; Instruct and Thinking models may work.",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The generated reply.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "text": {
+            "type": "string",
+            "description": "The input text for the language model to continue.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "max_tokens": {
+            "type": "int",
+            "description": "The maximum tokens used in response - determining the length of the output and the time taken. Keep this small for reasonable execution times.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "with_tokens",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": [
+            "def generate_text_with_tokens(text, max_tokens):"
+          ],
+          "cpp": [
+            "string generate_text(string text, int max_tokens)"
+          ],
+          "csharp": [
+            "public static string SplashKit.GenerateText(string text, int maxTokens);"
+          ],
+          "pascal": [
+            "function GenerateText(text: String; maxTokens: Integer): String"
+          ]
+        }
+      }
+    ],
+    "typedefs": [
+      {
+        "signature": "typedef struct sk_conversation *conversation;",
+        "name": "conversation",
+        "description": "The `conversation` type is used to refer to conversations between the user\nand a language model. You can use it to send messages to the language model,\nand stream responses back.\n\n\nAll `conversation` objects are:\n\n\n- created with `create_conversation()`, `create_conversation(language_model model)`\n\n\n- and must be released using `free_conversation()` (to release a specific `conversation` object)\nor `free_all_conversation()` (to release all created `conversation` objects).",
+        "brief": null,
+        "attributes": {
+          "class": "conversation",
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "is_function_pointer": false,
+        "aliased_type": null,
+        "aliased_identifier": null,
+        "is_pointer": false,
+        "new_identifier": null
+      }
+    ],
+    "structs": [
+
+    ],
+    "enums": [
+      {
+        "signature": "enum language_model {QWEN3_0_6B_BASE = 4,QWEN3_0_6B_INSTRUCT = 5,QWEN3_0_6B_THINKING = 6,QWEN3_1_7B_BASE = 8,QWEN3_1_7B_INSTRUCT = 9,QWEN3_1_7B_THINKING = 10,QWEN3_4B_BASE = 12,QWEN3_4B_INSTRUCT = 13,QWEN3_4B_THINKING = 14,GEMMA3_270M_BASE = 16,GEMMA3_270M_INSTRUCT = 17,GEMMA3_1B_BASE = 20,GEMMA3_1B_INSTRUCT = 21,GEMMA3_4B_BASE = 24,GEMMA3_4B_INSTRUCT = 25,};",
+        "name": "language_model",
+        "description": "Language Models:\nChoose between different language models to trade off speed and intelligence\nEach model is scaled to fit within 1~2GB and will be automatically downloaded when needed - feel free to try them out!",
+        "brief": null,
+        "constants": {
+          "QWEN3_0_6B_BASE": {
+            "description": "Qwen3 0.6B Base model - small, extremely fast and good for text completion. Very limited world knowledge.",
+            "number": 4
+          },
+          "QWEN3_0_6B_INSTRUCT": {
+            "description": "Qwen3 0.6B Instruct model (default) - small, extremely fast and can follow simple instructions. Very limited world knowledge.",
+            "number": 5
+          },
+          "QWEN3_0_6B_THINKING": {
+            "description": "Qwen3 0.6B Thinking model - small, extremely fast and can follow more specific instructions, but has a short delay before starting to reply. Very limited world knowledge.",
+            "number": 6
+          },
+          "QWEN3_1_7B_BASE": {
+            "description": "Qwen3 1.7B Base model - decently fast and good for text completion. Limited world knowledge.",
+            "number": 8
+          },
+          "QWEN3_1_7B_INSTRUCT": {
+            "description": "Qwen3 1.7B Instruct model - decently fast and can follow instructions. Limited world knowledge.",
+            "number": 9
+          },
+          "QWEN3_1_7B_THINKING": {
+            "description": "Qwen3 1.7B Thinking model - decently fast and can follow more difficult instructions, but has a delay before starting to reply. Limited world knowledge.",
+            "number": 10
+          },
+          "QWEN3_4B_BASE": {
+            "description": "Qwen3 4B Base model - slower but excellent for text completion/pattern based completion",
+            "number": 12
+          },
+          "QWEN3_4B_INSTRUCT": {
+            "description": "Qwen3 4B Instruct model - slower but can follow complex instructions",
+            "number": 13
+          },
+          "QWEN3_4B_THINKING": {
+            "description": "Qwen3 4B Thinking model - slower but can follow complex and specific instructions, but has a potentially long delay before starting to reply",
+            "number": 14
+          },
+          "GEMMA3_270M_BASE": {
+            "description": "Gemma3 270M Base model - tiny, extremely fast, and good for text completion. Very limited world knowledge.",
+            "number": 16
+          },
+          "GEMMA3_270M_INSTRUCT": {
+            "description": "Gemma3 270M Instruct model - tiny, extremely fast, and good for very simple instructions. Very limited world knowledge.",
+            "number": 17
+          },
+          "GEMMA3_1B_BASE": {
+            "description": "Gemma3 1B Base model - fast and good for text completion. Has decent world knowledge and multilingual abilities.",
+            "number": 20
+          },
+          "GEMMA3_1B_INSTRUCT": {
+            "description": "Gemma3 1B Instruct model - fast and can follow instructions. Has decent world knowledge and multilingual abilities.",
+            "number": 21
+          },
+          "GEMMA3_4B_BASE": {
+            "description": "Gemma3 4B Base model - slower but good for text completion/pattern based completion. Has decent world knowledge and multilingual abilities.",
+            "number": 24
+          },
+          "GEMMA3_4B_INSTRUCT": {
+            "description": "Gemma3 4B Instruct model - slower but can follow complex instructions. Has decent world knowledge and multilingual abilities.",
+            "number": 25
+          }
+        },
+        "attributes": {
+          "group": "generative_ai",
+          "static": "generative_ai"
+        },
+        "signatures": {
+          "python": "public enum {LanguageModel.qwen3_0_6b_base = 4, LanguageModel.qwen3_0_6b_instruct = 5, LanguageModel.qwen3_0_6b_thinking = 6, LanguageModel.qwen3_1_7b_base = 8, LanguageModel.qwen3_1_7b_instruct = 9, LanguageModel.qwen3_1_7b_thinking = 10, LanguageModel.qwen3_4b_base = 12, LanguageModel.qwen3_4b_instruct = 13, LanguageModel.qwen3_4b_thinking = 14, LanguageModel.gemma3_270m_base = 16, LanguageModel.gemma3_270m_instruct = 17, LanguageModel.gemma3_1b_base = 20, LanguageModel.gemma3_1b_instruct = 21, LanguageModel.gemma3_4b_base = 24, LanguageModel.gemma3_4b_instruct = 25}",
+          "cpp": "class language_model {QWEN3_0_6B_BASE = 4, QWEN3_0_6B_INSTRUCT = 5, QWEN3_0_6B_THINKING = 6, QWEN3_1_7B_BASE = 8, QWEN3_1_7B_INSTRUCT = 9, QWEN3_1_7B_THINKING = 10, QWEN3_4B_BASE = 12, QWEN3_4B_INSTRUCT = 13, QWEN3_4B_THINKING = 14, GEMMA3_270M_BASE = 16, GEMMA3_270M_INSTRUCT = 17, GEMMA3_1B_BASE = 20, GEMMA3_1B_INSTRUCT = 21, GEMMA3_4B_BASE = 24, GEMMA3_4B_INSTRUCT = 25};",
+          "csharp": "public enum {LanguageModel.Qwen306BBase = 4, LanguageModel.Qwen306BInstruct = 5, LanguageModel.Qwen306BThinking = 6, LanguageModel.Qwen317BBase = 8, LanguageModel.Qwen317BInstruct = 9, LanguageModel.Qwen317BThinking = 10, LanguageModel.Qwen34BBase = 12, LanguageModel.Qwen34BInstruct = 13, LanguageModel.Qwen34BThinking = 14, LanguageModel.Gemma3270mBase = 16, LanguageModel.Gemma3270mInstruct = 17, LanguageModel.Gemma31BBase = 20, LanguageModel.Gemma31BInstruct = 21, LanguageModel.Gemma34BBase = 24, LanguageModel.Gemma34BInstruct = 25}",
+          "pascal": "public enum {LanguageModel.Qwen306BBase = 4, LanguageModel.Qwen306BInstruct = 5, LanguageModel.Qwen306BThinking = 6, LanguageModel.Qwen317BBase = 8, LanguageModel.Qwen317BInstruct = 9, LanguageModel.Qwen317BThinking = 10, LanguageModel.Qwen34BBase = 12, LanguageModel.Qwen34BInstruct = 13, LanguageModel.Qwen34BThinking = 14, LanguageModel.Gemma3270mBase = 16, LanguageModel.Gemma3270mInstruct = 17, LanguageModel.Gemma31BBase = 20, LanguageModel.Gemma31BInstruct = 21, LanguageModel.Gemma34BBase = 24, LanguageModel.Gemma34BInstruct = 25}"
+        }
+      }
+    ],
+    "defines": [
+
     ]
   },
   "geometry": {
@@ -47966,7 +49047,7 @@
         }
       },
       {
-        "signature": "bool bitmap_button(bitmap bmp,const rectangle& rect);",
+        "signature": "bool bitmap_button(bitmap bmp,const rectangle &rect);",
         "name": "bitmap_button",
         "method_name": null,
         "unique_global_name": "bitmap_button_at_position",
@@ -48031,7 +49112,7 @@
         }
       },
       {
-        "signature": "bool bitmap_button(bitmap bmp,const rectangle& rect,drawing_options opts);",
+        "signature": "bool bitmap_button(bitmap bmp,const rectangle &rect,drawing_options opts);",
         "name": "bitmap_button",
         "method_name": null,
         "unique_global_name": "bitmap_button_at_position_with_options",
@@ -48174,7 +49255,7 @@
         }
       },
       {
-        "signature": "bool bitmap_button(const string& label_text,bitmap bmp);",
+        "signature": "bool bitmap_button(const string &label_text,bitmap bmp);",
         "name": "bitmap_button",
         "method_name": null,
         "unique_global_name": "bitmap_button_labeled",
@@ -48239,7 +49320,7 @@
         }
       },
       {
-        "signature": "bool bitmap_button(const string& label_text,bitmap bmp,drawing_options opts);",
+        "signature": "bool bitmap_button(const string &label_text,bitmap bmp,drawing_options opts);",
         "name": "bitmap_button",
         "method_name": null,
         "unique_global_name": "bitmap_button_labeled_with_options",
@@ -48317,7 +49398,7 @@
         }
       },
       {
-        "signature": "bool button(const string& text,const rectangle& rect);",
+        "signature": "bool button(const string &text,const rectangle &rect);",
         "name": "button",
         "method_name": null,
         "unique_global_name": "button_at_position",
@@ -48382,7 +49463,7 @@
         }
       },
       {
-        "signature": "bool button(const string& text);",
+        "signature": "bool button(const string &text);",
         "name": "button",
         "method_name": null,
         "unique_global_name": "button",
@@ -48433,7 +49514,7 @@
         }
       },
       {
-        "signature": "bool button(const string& label_text,const string& text);",
+        "signature": "bool button(const string &label_text,const string &text);",
         "name": "button",
         "method_name": null,
         "unique_global_name": "button_labeled",
@@ -48498,7 +49579,7 @@
         }
       },
       {
-        "signature": "bool checkbox(const string& text,const bool& value,const rectangle& rect);",
+        "signature": "bool checkbox(const string &text,const bool &value,const rectangle &rect);",
         "name": "checkbox",
         "method_name": null,
         "unique_global_name": "checkbox_at_position",
@@ -48576,7 +49657,7 @@
         }
       },
       {
-        "signature": "bool checkbox(const string& text,const bool& value);",
+        "signature": "bool checkbox(const string &text,const bool &value);",
         "name": "checkbox",
         "method_name": null,
         "unique_global_name": "checkbox",
@@ -48640,7 +49721,7 @@
         }
       },
       {
-        "signature": "bool checkbox(const string& label_text,const string& text,const bool& value);",
+        "signature": "bool checkbox(const string &label_text,const string &text,const bool &value);",
         "name": "checkbox",
         "method_name": null,
         "unique_global_name": "checkbox_labeled",
@@ -48718,7 +49799,7 @@
         }
       },
       {
-        "signature": "color color_slider(const color& clr,const rectangle& rect);",
+        "signature": "color color_slider(const color &clr,const rectangle &rect);",
         "name": "color_slider",
         "method_name": null,
         "unique_global_name": "color_slider_at_position",
@@ -48783,7 +49864,7 @@
         }
       },
       {
-        "signature": "color color_slider(const color& clr);",
+        "signature": "color color_slider(const color &clr);",
         "name": "color_slider",
         "method_name": null,
         "unique_global_name": "color_slider",
@@ -48834,7 +49915,7 @@
         }
       },
       {
-        "signature": "color color_slider(const string& label_text,const color& clr);",
+        "signature": "color color_slider(const string &label_text,const color &clr);",
         "name": "color_slider",
         "method_name": null,
         "unique_global_name": "color_slider_labeled",
@@ -49013,7 +50094,7 @@
         }
       },
       {
-        "signature": "void end_inset(const string& name);",
+        "signature": "void end_inset(const string &name);",
         "name": "end_inset",
         "method_name": null,
         "unique_global_name": "end_inset",
@@ -49064,7 +50145,7 @@
         }
       },
       {
-        "signature": "void end_panel(const string& name);",
+        "signature": "void end_panel(const string &name);",
         "name": "end_panel",
         "method_name": null,
         "unique_global_name": "end_panel",
@@ -49115,7 +50196,7 @@
         }
       },
       {
-        "signature": "void end_popup(const string& name);",
+        "signature": "void end_popup(const string &name);",
         "name": "end_popup",
         "method_name": null,
         "unique_global_name": "end_popup",
@@ -49166,7 +50247,7 @@
         }
       },
       {
-        "signature": "void end_treenode(const string& label_text);",
+        "signature": "void end_treenode(const string &label_text);",
         "name": "end_treenode",
         "method_name": null,
         "unique_global_name": "end_treenode",
@@ -49293,7 +50374,7 @@
         }
       },
       {
-        "signature": "bool header(const string& label_text);",
+        "signature": "bool header(const string &label_text);",
         "name": "header",
         "method_name": null,
         "unique_global_name": "header",
@@ -49344,7 +50425,7 @@
         }
       },
       {
-        "signature": "color hsb_color_slider(const color& clr,const rectangle& rect);",
+        "signature": "color hsb_color_slider(const color &clr,const rectangle &rect);",
         "name": "hsb_color_slider",
         "method_name": null,
         "unique_global_name": "hsb_color_slider_at_position",
@@ -49409,7 +50490,7 @@
         }
       },
       {
-        "signature": "color hsb_color_slider(const color& clr);",
+        "signature": "color hsb_color_slider(const color &clr);",
         "name": "hsb_color_slider",
         "method_name": null,
         "unique_global_name": "hsb_color_slider",
@@ -49460,7 +50541,7 @@
         }
       },
       {
-        "signature": "color hsb_color_slider(const string& label_text,const color& clr);",
+        "signature": "color hsb_color_slider(const string &label_text,const color &clr);",
         "name": "hsb_color_slider",
         "method_name": null,
         "unique_global_name": "hsb_color_slider_labeled",
@@ -49563,7 +50644,7 @@
         }
       },
       {
-        "signature": "void interface_style_panel(const rectangle& initial_rectangle);",
+        "signature": "void interface_style_panel(const rectangle &initial_rectangle);",
         "name": "interface_style_panel",
         "method_name": null,
         "unique_global_name": "interface_style_panel",
@@ -49614,7 +50695,7 @@
         }
       },
       {
-        "signature": "void label_element(const string& text);",
+        "signature": "void label_element(const string &text);",
         "name": "label_element",
         "method_name": null,
         "unique_global_name": "label_element",
@@ -49665,7 +50746,7 @@
         }
       },
       {
-        "signature": "void label_element(const string& text,const rectangle& rect);",
+        "signature": "void label_element(const string &text,const rectangle &rect);",
         "name": "label_element",
         "method_name": null,
         "unique_global_name": "label_element_at_position",
@@ -49844,7 +50925,7 @@
         }
       },
       {
-        "signature": "float number_box(const float& value,float step,const rectangle& rect);",
+        "signature": "float number_box(const float &value,float step,const rectangle &rect);",
         "name": "number_box",
         "method_name": null,
         "unique_global_name": "number_box_at_position",
@@ -49922,7 +51003,7 @@
         }
       },
       {
-        "signature": "float number_box(const float& value,float step);",
+        "signature": "float number_box(const float &value,float step);",
         "name": "number_box",
         "method_name": null,
         "unique_global_name": "number_box",
@@ -49986,7 +51067,7 @@
         }
       },
       {
-        "signature": "float number_box(const string& label_text,const float& value,float step);",
+        "signature": "float number_box(const string &label_text,const float &value,float step);",
         "name": "number_box",
         "method_name": null,
         "unique_global_name": "number_box_labeled",
@@ -50064,7 +51145,58 @@
         }
       },
       {
-        "signature": "void open_popup(const string& name);",
+        "signature": "void open_panel(const string &name);",
+        "name": "open_panel",
+        "method_name": null,
+        "unique_global_name": "open_panel",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Reopens a draggable panel with a title bar.\n\nUse as follows:\n```c++\nif (key_typed(KEY_P))\n{\nopen_panel(\"My panel\");\n}\nif (start_panel(\"My panel\", rectangle_from(0,0,100,100)))\n{\n// Rest of interface goes here\nend_panel(\"My panel\");\n}\n```",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "The name shown in the panel's titlebar",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "interface",
+          "static": "interface"
+        },
+        "signatures": {
+          "python": [
+            "def open_panel(name):"
+          ],
+          "cpp": [
+            "void open_panel(const string &name)"
+          ],
+          "csharp": [
+            "public static void SplashKit.OpenPanel(string name);"
+          ],
+          "pascal": [
+            "procedure OpenPanel(const name: String)"
+          ]
+        }
+      },
+      {
+        "signature": "void open_popup(const string &name);",
         "name": "open_popup",
         "method_name": null,
         "unique_global_name": "open_popup",
@@ -50115,7 +51247,7 @@
         }
       },
       {
-        "signature": "void paragraph(const string& text);",
+        "signature": "void paragraph(const string &text);",
         "name": "paragraph",
         "method_name": null,
         "unique_global_name": "paragraph",
@@ -50166,7 +51298,7 @@
         }
       },
       {
-        "signature": "void paragraph(const string& text,const rectangle& rect);",
+        "signature": "void paragraph(const string &text,const rectangle &rect);",
         "name": "paragraph",
         "method_name": null,
         "unique_global_name": "paragraph_at_position",
@@ -50628,7 +51760,7 @@
         }
       },
       {
-        "signature": "void set_interface_font(const string& fnt);",
+        "signature": "void set_interface_font(const string &fnt);",
         "name": "set_interface_font",
         "method_name": null,
         "unique_global_name": "set_interface_font_font_as_string",
@@ -51358,7 +52490,7 @@
         }
       },
       {
-        "signature": "float slider(const float& value,float min_value,float max_value,const rectangle& rect);",
+        "signature": "float slider(const float &value,float min_value,float max_value,const rectangle &rect);",
         "name": "slider",
         "method_name": null,
         "unique_global_name": "slider_at_position",
@@ -51449,7 +52581,7 @@
         }
       },
       {
-        "signature": "float slider(const float& value,float min_value,float max_value);",
+        "signature": "float slider(const float &value,float min_value,float max_value);",
         "name": "slider",
         "method_name": null,
         "unique_global_name": "slider",
@@ -51526,7 +52658,7 @@
         }
       },
       {
-        "signature": "float slider(const string& label_text,const float& value,float min_value,float max_value);",
+        "signature": "float slider(const string &label_text,const float &value,float min_value,float max_value);",
         "name": "slider",
         "method_name": null,
         "unique_global_name": "slider_labeled",
@@ -51836,7 +52968,7 @@
         }
       },
       {
-        "signature": "void start_inset(const string& name,const rectangle& rect);",
+        "signature": "void start_inset(const string &name,const rectangle &rect);",
         "name": "start_inset",
         "method_name": null,
         "unique_global_name": "start_inset_at_position",
@@ -51901,7 +53033,7 @@
         }
       },
       {
-        "signature": "void start_inset(const string& name,int height);",
+        "signature": "void start_inset(const string &name,int height);",
         "name": "start_inset",
         "method_name": null,
         "unique_global_name": "start_inset",
@@ -51965,7 +53097,7 @@
         }
       },
       {
-        "signature": "bool start_panel(const string& name,rectangle initial_rectangle);",
+        "signature": "bool start_panel(const string &name,rectangle initial_rectangle);",
         "name": "start_panel",
         "method_name": null,
         "unique_global_name": "start_panel",
@@ -52029,7 +53161,7 @@
         }
       },
       {
-        "signature": "bool start_popup(const string& name);",
+        "signature": "bool start_popup(const string &name);",
         "name": "start_popup",
         "method_name": null,
         "unique_global_name": "start_popup",
@@ -52080,7 +53212,7 @@
         }
       },
       {
-        "signature": "bool start_treenode(const string& label_text);",
+        "signature": "bool start_treenode(const string &label_text);",
         "name": "start_treenode",
         "method_name": null,
         "unique_global_name": "start_treenode",
@@ -52131,13 +53263,13 @@
         }
       },
       {
-        "signature": "string text_box(const string& label_text,const string& value,const rectangle& rect);",
+        "signature": "string text_box(const string &value);",
         "name": "text_box",
         "method_name": null,
-        "unique_global_name": "text_box_at_position",
+        "unique_global_name": "text_box",
         "unique_method_name": null,
         "suffix_name": null,
-        "description": "Creates a text entry box at a specific position on screen.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string, rectangle_from(0,0,100,100));\n```",
+        "description": "Creates a text entry box with a label.\nReturns the updated value of the text box.",
         "brief": null,
         "return": {
           "type": "string",
@@ -52148,9 +53280,9 @@
           "type_parameter": null
         },
         "parameters": {
-          "label_text": {
+          "value": {
             "type": "string",
-            "description": "Unique identifier for the text box (not drawn)",
+            "description": "The current value of the text box",
             "is_pointer": false,
             "is_const": true,
             "is_reference": true,
@@ -52160,7 +53292,45 @@
             ],
             "is_vector": false,
             "type_parameter": null
-          },
+          }
+        },
+        "attributes": {
+          "group": "interface",
+          "static": "interface"
+        },
+        "signatures": {
+          "python": [
+            "def text_box(value):"
+          ],
+          "cpp": [
+            "string text_box(const string &value)"
+          ],
+          "csharp": [
+            "public static string SplashKit.TextBox(string value);"
+          ],
+          "pascal": [
+            "function TextBox(const value: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "string text_box(const string &value,const rectangle &rect);",
+        "name": "text_box",
+        "method_name": null,
+        "unique_global_name": "text_box_at_position",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Creates a text entry box at a specific position on screen.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string);\n```",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "The updated value of the text box",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
           "value": {
             "type": "string",
             "description": "The current value of the text box",
@@ -52195,24 +53365,24 @@
         },
         "signatures": {
           "python": [
-            "def text_box_at_position(label_text, value, rect):"
+            "def text_box_at_position(value, rect):"
           ],
           "cpp": [
-            "string text_box(const string &label_text, const string &value, const rectangle &rect)"
+            "string text_box(const string &value, const rectangle &rect)"
           ],
           "csharp": [
-            "public static string SplashKit.TextBox(string labelText, string value, Rectangle rect);"
+            "public static string SplashKit.TextBox(string value, Rectangle rect);"
           ],
           "pascal": [
-            "function TextBox(const labelText: String; const value: String; const rect: Rectangle): String"
+            "function TextBox(const value: String; const rect: Rectangle): String"
           ]
         }
       },
       {
-        "signature": "string text_box(const string& label_text,const string& value);",
+        "signature": "string text_box(const string &label_text,const string &value);",
         "name": "text_box",
         "method_name": null,
-        "unique_global_name": "text_box",
+        "unique_global_name": "text_box_labeled",
         "unique_method_name": null,
         "suffix_name": null,
         "description": "Creates a text entry box with a label.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string);\n```",
@@ -52228,7 +53398,7 @@
         "parameters": {
           "label_text": {
             "type": "string",
-            "description": "Unique identifier for the text box (not drawn)",
+            "description": "The label to show in front of the text box",
             "is_pointer": false,
             "is_const": true,
             "is_reference": true,
@@ -52245,83 +53415,6 @@
             "is_pointer": false,
             "is_const": true,
             "is_reference": true,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          }
-        },
-        "attributes": {
-          "group": "interface",
-          "static": "interface"
-        },
-        "signatures": {
-          "python": [
-            "def text_box(label_text, value):"
-          ],
-          "cpp": [
-            "string text_box(const string &label_text, const string &value)"
-          ],
-          "csharp": [
-            "public static string SplashKit.TextBox(string labelText, string value);"
-          ],
-          "pascal": [
-            "function TextBox(const labelText: String; const value: String): String"
-          ]
-        }
-      },
-      {
-        "signature": "string text_box(const string& label_text,const string& value,bool show_label);",
-        "name": "text_box",
-        "method_name": null,
-        "unique_global_name": "text_box_labeled",
-        "unique_method_name": null,
-        "suffix_name": null,
-        "description": "Creates a text entry box with a label that can be shown.\nReturns the updated value of the text box.\n\nExample usage:\n```c++\nmy_string = text_box(\"Name\", my_string, true);\n```",
-        "brief": null,
-        "return": {
-          "type": "string",
-          "description": "The updated value of the text box",
-          "is_pointer": false,
-          "is_reference": false,
-          "is_vector": false,
-          "type_parameter": null
-        },
-        "parameters": {
-          "label_text": {
-            "type": "string",
-            "description": "Unique identifier for the text box (not drawn)",
-            "is_pointer": false,
-            "is_const": true,
-            "is_reference": true,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "value": {
-            "type": "string",
-            "description": "The current value of the text box",
-            "is_pointer": false,
-            "is_const": true,
-            "is_reference": true,
-            "is_array": false,
-            "array_dimension_sizes": [
-
-            ],
-            "is_vector": false,
-            "type_parameter": null
-          },
-          "show_label": {
-            "type": "bool",
-            "description": "Whether to show the label or not",
-            "is_pointer": false,
-            "is_const": false,
-            "is_reference": false,
             "is_array": false,
             "array_dimension_sizes": [
 
@@ -52337,16 +53430,16 @@
         },
         "signatures": {
           "python": [
-            "def text_box_labeled(label_text, value, show_label):"
+            "def text_box_labeled(label_text, value):"
           ],
           "cpp": [
-            "string text_box(const string &label_text, const string &value, bool show_label)"
+            "string text_box(const string &label_text, const string &value)"
           ],
           "csharp": [
-            "public static string SplashKit.TextBox(string labelText, string value, bool showLabel);"
+            "public static string SplashKit.TextBox(string labelText, string value);"
           ],
           "pascal": [
-            "function TextBox(const labelText: String; const value: String; showLabel: Boolean): String"
+            "function TextBox(const labelText: String; const value: String): String"
           ]
         }
       }
@@ -73095,7 +74188,7 @@
     ]
   },
   "raspberry": {
-    "brief": "Provides support for using an ADC device with the GPIO pins on the Raspberry Pi.Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.",
+    "brief": "Provides support for using an ADC device with the GPIO pins on the Raspberry Pi.Splashkit allows you to read and write to the GPIO pins on the Raspberry Pi.Provides support for using a motor driver with the GPIO pins on the Raspberry Pi.Provides support for using servo motors with the GPIO pins on the Raspberry Pi.",
     "description": "",
     "functions": [
       {
@@ -75611,6 +76704,1023 @@
             "procedure RemoteRaspiWrite(pi: Connection; pin: GpioPin; value: GpioPinValue)"
           ]
         }
+      },
+      {
+        "signature": "void close_all_motors();",
+        "name": "close_all_motors",
+        "method_name": null,
+        "unique_global_name": "close_all_motors",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Closes all opened motor devices.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def close_all_motors():"
+          ],
+          "cpp": [
+            "void close_all_motors()"
+          ],
+          "csharp": [
+            "public static void SplashKit.CloseAllMotors();"
+          ],
+          "pascal": [
+            "procedure CloseAllMotors()"
+          ]
+        }
+      },
+      {
+        "signature": "void close_motor(const string &name);",
+        "name": "close_motor",
+        "method_name": null,
+        "unique_global_name": "close_motor_named",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Closes and frees a motor device by name.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "Name of the motor device.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "named",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def close_motor_named(name):"
+          ],
+          "cpp": [
+            "void close_motor(const string &name)"
+          ],
+          "csharp": [
+            "public static void SplashKit.CloseMotor(string name);"
+          ],
+          "pascal": [
+            "procedure CloseMotor(const name: String)"
+          ]
+        }
+      },
+      {
+        "signature": "void close_motor(motor_device dev);",
+        "name": "close_motor",
+        "method_name": null,
+        "unique_global_name": "close_motor",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Closes and frees resources for a motor device.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "dev": {
+            "type": "motor_device",
+            "description": "The motor device handle.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def close_motor(dev):"
+          ],
+          "cpp": [
+            "void close_motor(motor_device dev)"
+          ],
+          "csharp": [
+            "public static void SplashKit.CloseMotor(MotorDevice dev);"
+          ],
+          "pascal": [
+            "procedure CloseMotor(dev: MotorDevice)"
+          ]
+        }
+      },
+      {
+        "signature": "void free_motor_device(motor_device dev);",
+        "name": "free_motor_device",
+        "method_name": null,
+        "unique_global_name": "free_motor_device",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Free the resources associated with a motor device.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "dev": {
+            "type": "motor_device",
+            "description": "The motor device to be destroyed.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "motor_device",
+          "destructor": true,
+          "group": "raspberry",
+          "static": "raspberry",
+          "self": "dev"
+        },
+        "signatures": {
+          "python": [
+            "def free_motor_device(dev):"
+          ],
+          "cpp": [
+            "void free_motor_device(motor_device dev)"
+          ],
+          "csharp": [
+            "public static void SplashKit.FreeMotorDevice(MotorDevice dev);"
+          ],
+          "pascal": [
+            "procedure FreeMotorDevice(dev: MotorDevice)"
+          ]
+        }
+      },
+      {
+        "signature": "bool has_motor_device(const string &name);",
+        "name": "has_motor_device",
+        "method_name": null,
+        "unique_global_name": "has_motor_device",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Checks if a motor device with the given name is already opened.",
+        "brief": null,
+        "return": {
+          "type": "bool",
+          "description": "true if open, false otherwise.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "Identifier for the motor driver.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def has_motor_device(name):"
+          ],
+          "cpp": [
+            "bool has_motor_device(const string &name)"
+          ],
+          "csharp": [
+            "public static bool SplashKit.HasMotorDevice(string name);"
+          ],
+          "pascal": [
+            "function HasMotorDevice(const name: String): Boolean"
+          ]
+        }
+      },
+      {
+        "signature": "motor_device motor_named(const string &name);",
+        "name": "motor_named",
+        "method_name": null,
+        "unique_global_name": "motor_named",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Retrieves an existing motor device handle by name.",
+        "brief": null,
+        "return": {
+          "type": "motor_device",
+          "description": "motor_device pointer or nullptr.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "Identifier for the motor driver.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def motor_named(name):"
+          ],
+          "cpp": [
+            "motor_device motor_named(const string &name)"
+          ],
+          "csharp": [
+            "public static MotorDevice SplashKit.MotorNamed(string name);"
+          ],
+          "pascal": [
+            "function MotorNamed(const name: String): MotorDevice"
+          ]
+        }
+      },
+      {
+        "signature": "motor_device open_motor(const string &name,motor_driver_type type,gpio_pin in1_pin,gpio_pin in2_pin,gpio_pin en_pin);",
+        "name": "open_motor",
+        "method_name": null,
+        "unique_global_name": "open_motor",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Opens a motor device with the specified parameters.",
+        "brief": null,
+        "return": {
+          "type": "motor_device",
+          "description": "A valid motor_device on success, or nullptr on failure.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "Identifier for the motor driver.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "type": {
+            "type": "motor_driver_type",
+            "description": "Type of motor driver (e.g., L298N).",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "in1_pin": {
+            "type": "gpio_pin",
+            "description": "GPIO pin for IN1.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "in2_pin": {
+            "type": "gpio_pin",
+            "description": "GPIO pin for IN2.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "en_pin": {
+            "type": "gpio_pin",
+            "description": "GPIO pin for ENA.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def open_motor(name, type, in1_pin, in2_pin, en_pin):"
+          ],
+          "cpp": [
+            "motor_device open_motor(const string &name, motor_driver_type type, gpio_pin in1_pin, gpio_pin in2_pin, gpio_pin en_pin)"
+          ],
+          "csharp": [
+            "public static MotorDevice SplashKit.OpenMotor(string name, MotorDriverType type, GpioPin in1Pin, GpioPin in2Pin, GpioPin enPin);"
+          ],
+          "pascal": [
+            "function OpenMotor(const name: String; type: MotorDriverType; in1Pin: GpioPin; in2Pin: GpioPin; enPin: GpioPin): MotorDevice"
+          ]
+        }
+      },
+      {
+        "signature": "void set_motor_direction(motor_device dev,motor_direction dir);",
+        "name": "set_motor_direction",
+        "method_name": null,
+        "unique_global_name": "set_motor_direction",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Sets the motor rotation direction.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "dev": {
+            "type": "motor_device",
+            "description": "The motor device handle.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "dir": {
+            "type": "motor_direction",
+            "description": "Desired rotation direction.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def set_motor_direction(dev, dir):"
+          ],
+          "cpp": [
+            "void set_motor_direction(motor_device dev, motor_direction dir)"
+          ],
+          "csharp": [
+            "public static void SplashKit.SetMotorDirection(MotorDevice dev, MotorDirection dir);"
+          ],
+          "pascal": [
+            "procedure SetMotorDirection(dev: MotorDevice; dir: MotorDirection)"
+          ]
+        }
+      },
+      {
+        "signature": "void set_motor_speed(motor_device dev,double speed);",
+        "name": "set_motor_speed",
+        "method_name": null,
+        "unique_global_name": "set_motor_speed",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Sets the PWM speed of the motor (0-1).",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "dev": {
+            "type": "motor_device",
+            "description": "The motor device handle.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "speed": {
+            "type": "double",
+            "description": "Duty cycle speed (0..1).",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def set_motor_speed(dev, speed):"
+          ],
+          "cpp": [
+            "void set_motor_speed(motor_device dev, double speed)"
+          ],
+          "csharp": [
+            "public static void SplashKit.SetMotorSpeed(MotorDevice dev, double speed);"
+          ],
+          "pascal": [
+            "procedure SetMotorSpeed(dev: MotorDevice; speed: Double)"
+          ]
+        }
+      },
+      {
+        "signature": "void stop_motor(motor_device dev);",
+        "name": "stop_motor",
+        "method_name": null,
+        "unique_global_name": "stop_motor",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Stops the motor immediately (brake).",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "dev": {
+            "type": "motor_device",
+            "description": "The motor device handle.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def stop_motor(dev):"
+          ],
+          "cpp": [
+            "void stop_motor(motor_device dev)"
+          ],
+          "csharp": [
+            "public static void SplashKit.StopMotor(MotorDevice dev);"
+          ],
+          "pascal": [
+            "procedure StopMotor(dev: MotorDevice)"
+          ]
+        }
+      },
+      {
+        "signature": "void close_all_servos();",
+        "name": "close_all_servos",
+        "method_name": null,
+        "unique_global_name": "close_all_servos",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Close *all* servos.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def close_all_servos():"
+          ],
+          "cpp": [
+            "void close_all_servos()"
+          ],
+          "csharp": [
+            "public static void SplashKit.CloseAllServos();"
+          ],
+          "pascal": [
+            "procedure CloseAllServos()"
+          ]
+        }
+      },
+      {
+        "signature": "void close_servo(const string &name);",
+        "name": "close_servo",
+        "method_name": null,
+        "unique_global_name": "close_servo_named",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Closes a servo device given its name.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "The name of the servo device to close.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "named",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def close_servo_named(name):"
+          ],
+          "cpp": [
+            "void close_servo(const string &name)"
+          ],
+          "csharp": [
+            "public static void SplashKit.CloseServo(string name);"
+          ],
+          "pascal": [
+            "procedure CloseServo(const name: String)"
+          ]
+        }
+      },
+      {
+        "signature": "void close_servo(servo_device dev);",
+        "name": "close_servo",
+        "method_name": "close",
+        "unique_global_name": "close_servo",
+        "unique_method_name": "servo_device.close",
+        "suffix_name": null,
+        "description": "Close one servo (by handle) or by name.\nCloses a servo device given its pointer.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "dev": {
+            "type": "servo_device",
+            "description": "The servo device to close.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "servo_device",
+          "destructor": true,
+          "method": "close",
+          "self": "dev",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def close_servo(dev):"
+          ],
+          "cpp": [
+            "void close_servo(servo_device dev)"
+          ],
+          "csharp": [
+            "public void ServoDevice.Close();",
+            "public static void SplashKit.CloseServo(ServoDevice dev);"
+          ],
+          "pascal": [
+            "procedure CloseServo(dev: ServoDevice)"
+          ]
+        }
+      },
+      {
+        "signature": "bool has_servo_device(const string &name);",
+        "name": "has_servo_device",
+        "method_name": null,
+        "unique_global_name": "has_servo_device",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Returns true if a servo with this name is already open.",
+        "brief": null,
+        "return": {
+          "type": "bool",
+          "description": "true if the servo is open, false otherwise.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "Your identifier for this servo.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def has_servo_device(name):"
+          ],
+          "cpp": [
+            "bool has_servo_device(const string &name)"
+          ],
+          "csharp": [
+            "public static bool SplashKit.HasServoDevice(string name);"
+          ],
+          "pascal": [
+            "function HasServoDevice(const name: String): Boolean"
+          ]
+        }
+      },
+      {
+        "signature": "servo_device open_servo(const string &name,gpio_pin control_pin);",
+        "name": "open_servo",
+        "method_name": null,
+        "unique_global_name": "open_servo",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Open (and initialize) a servo on the given board pin.",
+        "brief": null,
+        "return": {
+          "type": "servo_device",
+          "description": "A valid servo_device, or nullptr on failure.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "Your identifier for this servo.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "control_pin": {
+            "type": "gpio_pin",
+            "description": "Board‐numbered GPIO pin for the servo signal line.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "servo_device",
+          "constructor": true,
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def open_servo(name, control_pin):"
+          ],
+          "cpp": [
+            "servo_device open_servo(const string &name, gpio_pin control_pin)"
+          ],
+          "csharp": [
+            "public static ServoDevice SplashKit.OpenServo(string name, GpioPin controlPin);",
+            "public ServoDevice(string name, GpioPin controlPin);"
+          ],
+          "pascal": [
+            "function OpenServo(const name: String; controlPin: GpioPin): ServoDevice"
+          ]
+        }
+      },
+      {
+        "signature": "servo_device servo_named(const string &name);",
+        "name": "servo_named",
+        "method_name": null,
+        "unique_global_name": "servo_named",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Look up an already‐opened servo by name.",
+        "brief": null,
+        "return": {
+          "type": "servo_device",
+          "description": "A valid servo_device, or nullptr if not found.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "name": {
+            "type": "string",
+            "description": "Your identifier for this servo.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def servo_named(name):"
+          ],
+          "cpp": [
+            "servo_device servo_named(const string &name)"
+          ],
+          "csharp": [
+            "public static ServoDevice SplashKit.ServoNamed(string name);"
+          ],
+          "pascal": [
+            "function ServoNamed(const name: String): ServoDevice"
+          ]
+        }
+      },
+      {
+        "signature": "void set_servo_angle(servo_device dev,double angle_degrees);",
+        "name": "set_servo_angle",
+        "method_name": "set_angle",
+        "unique_global_name": "set_servo_angle",
+        "unique_method_name": "servo_device.set_angle",
+        "suffix_name": null,
+        "description": "Convenience: map an angle (0…180°) into the 500…2500 µs range.\nThis is a linear mapping, so it may not be accurate for all servos.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "dev": {
+            "type": "servo_device",
+            "description": "The servo device to control.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "angle_degrees": {
+            "type": "double",
+            "description": "The angle in degrees (0…180).",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "servo_device",
+          "method": "set_angle",
+          "self": "dev",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def set_servo_angle(dev, angle_degrees):"
+          ],
+          "cpp": [
+            "void set_servo_angle(servo_device dev, double angle_degrees)"
+          ],
+          "csharp": [
+            "public void ServoDevice.SetAngle(double angleDegrees);",
+            "public static void SplashKit.SetServoAngle(ServoDevice dev, double angleDegrees);"
+          ],
+          "pascal": [
+            "procedure SetServoAngle(dev: ServoDevice; angleDegrees: Double)"
+          ]
+        }
+      },
+      {
+        "signature": "void stop_servo(servo_device dev);",
+        "name": "stop_servo",
+        "method_name": "stop",
+        "unique_global_name": "stop_servo",
+        "unique_method_name": "servo_device.stop",
+        "suffix_name": null,
+        "description": "Stop sending pulses (servo will hold last position or drift).\nThis is a convenience function that sets the pulse width to 0.",
+        "brief": null,
+        "return": {
+          "type": "void",
+          "description": null,
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "dev": {
+            "type": "servo_device",
+            "description": "The servo device to control.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "class": "servo_device",
+          "method": "stop",
+          "self": "dev",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "signatures": {
+          "python": [
+            "def stop_servo(dev):"
+          ],
+          "cpp": [
+            "void stop_servo(servo_device dev)"
+          ],
+          "csharp": [
+            "public void ServoDevice.Stop();",
+            "public static void SplashKit.StopServo(ServoDevice dev);"
+          ],
+          "pascal": [
+            "procedure StopServo(dev: ServoDevice)"
+          ]
+        }
       }
     ],
     "typedefs": [
@@ -75621,6 +77731,38 @@
         "brief": null,
         "attributes": {
           "class": "adc_device",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "is_function_pointer": false,
+        "aliased_type": null,
+        "aliased_identifier": null,
+        "is_pointer": false,
+        "new_identifier": null
+      },
+      {
+        "signature": "typedef struct _motor_data *motor_device;",
+        "name": "motor_device",
+        "description": "The `motor_device` type is used to refer to motor driver devices that can\nbe managed by the SplashKit motor driver code. Motor devices are:\n\n- checked with `has_motor_device` to see if a motor is already opened,\n\n- accessed using `motor_named` to retrieve an existing motor device by name,\n\n- opened using `open_motor` with specific parameters such as motor type and GPIO pins,\n\n- controlled using `set_motor_direction` to set the rotation direction and\n`set_motor_speed` to adjust the PWM speed,\n\n- stopped immediately using `stop_motor` for braking,\n\n- and must be released using `close_motor` (to release a specific motor device\nby handle or name) or `close_all_motors` (to release all opened motor devices).\n\nMotor devices allow you to control DC motors or similar devices using GPIO pins\nand PWM signals, enabling precise control over speed and direction.\n\nUse `close_motor` or `close_all_motors` to release resources associated with\nmotor devices when they are no longer needed.",
+        "brief": "Opaque handle for an L298N motor driver instance.",
+        "attributes": {
+          "class": "motor_device",
+          "group": "raspberry",
+          "static": "raspberry"
+        },
+        "is_function_pointer": false,
+        "aliased_type": null,
+        "aliased_identifier": null,
+        "is_pointer": false,
+        "new_identifier": null
+      },
+      {
+        "signature": "typedef struct _servo_data *servo_device;",
+        "name": "servo_device",
+        "description": "The `servo_device` type is used to refer to servo driver devices that can\nbe managed by the SplashKit servo driver code. Servo devices are:\nOpaque handle for a single‐pin servo device.\nServo devices are:\n- checked with `has_servo_device` to see if a servo is already opened,\n\n- accessed using `servo_named` to retrieve an existing servo device by name,\n\n- opened using `open_servo` with specific parameters such as a unique name\nand the GPIO pin for the servo signal line,\n\n- controlled using `set_servo_pulsewidth` to send raw pulse-width signals\nor `set_servo_angle` to map an angle (0–180°) into the pulse-width range,\n\n- stopped using `stop_servo` to halt signal pulses while holding the last\nposition or allowing the servo to drift,\n\n- and must be released using `close_servo` (to release a specific servo device\nby handle or name) or `close_all_servos` (to release all opened servo devices).\n\nServo devices allow you to control hobby servos or similar devices using GPIO pins\nand PWM signals, enabling precise control over position and movement.\n\nUse `close_servo` or `close_all_servos` to release resources associated with\nservo devices when they are no longer needed.",
+        "brief": null,
+        "attributes": {
+          "class": "servo_device",
           "group": "raspberry",
           "static": "raspberry"
         },
@@ -91548,6 +93690,50 @@
             },
             "setter": null
           },
+          "monash_blue": {
+            "getter": {
+              "signature": "color color_monash_blue();",
+              "name": "color_monash_blue",
+              "method_name": null,
+              "unique_global_name": "color_monash_blue",
+              "unique_method_name": null,
+              "suffix_name": null,
+              "description": "Generates a new `color` associated to the color `monash_blue`.",
+              "brief": null,
+              "return": {
+                "type": "color",
+                "description": "A new `color` set to `monash_blue`.",
+                "is_pointer": false,
+                "is_reference": false,
+                "is_vector": false,
+                "type_parameter": null
+              },
+              "parameters": {
+              },
+              "attributes": {
+                "getter": "monash_blue",
+                "static": "color",
+                "group": "color"
+              },
+              "signatures": {
+                "python": [
+                  "def color_monash_blue():"
+                ],
+                "cpp": [
+                  "#define COLOR_MONASH_BLUE",
+                  "color color_monash_blue()"
+                ],
+                "csharp": [
+                  "public static Color Color.MonashBlue { get }",
+                  "public static Color SplashKit.ColorMonashBlue();"
+                ],
+                "pascal": [
+                  "function ColorMonashBlue(): Color"
+                ]
+              }
+            },
+            "setter": null
+          },
           "navajo_white": {
             "getter": {
               "signature": "color color_navajo_white();",
@@ -95594,7 +97780,7 @@
         "unique_global_name": "convert_to_double",
         "unique_method_name": null,
         "suffix_name": null,
-        "description": "Convert the passed in string into a double. This can fail in an error if\nthe value is not a number, consider using `is_number` to check before\nconverting a string.",
+        "description": "Note: This function is deprecated. Use `to_double` instead.",
         "brief": null,
         "return": {
           "type": "double",
@@ -95645,7 +97831,7 @@
         "unique_global_name": "convert_to_integer",
         "unique_method_name": null,
         "suffix_name": null,
-        "description": "Convert the passed in string into an integer. This can fail in an error if\nthe value is not an integer, consider using `is_integer` to check before\nconverting a string.",
+        "description": "Note: This function is deprecated. Use `to_integer` instead.",
         "brief": null,
         "return": {
           "type": "int",
@@ -96890,6 +99076,160 @@
         }
       },
       {
+        "signature": "double to_double(const string &text);",
+        "name": "to_double",
+        "method_name": null,
+        "unique_global_name": "to_double",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Convert the passed in string into a double. This can fail in an error if\nthe value is not a number, consider using `is_number` to check before\nconverting a string.",
+        "brief": null,
+        "return": {
+          "type": "double",
+          "description": "The double value read from the text.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "text": {
+            "type": "string",
+            "description": "The text to convert.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "python": [
+            "def to_double(text):"
+          ],
+          "cpp": [
+            "double to_double(const string &text)"
+          ],
+          "csharp": [
+            "public static double SplashKit.ToDouble(string text);"
+          ],
+          "pascal": [
+            "function ToDouble(const text: String): Double"
+          ]
+        }
+      },
+      {
+        "signature": "double to_double(int value);",
+        "name": "to_double",
+        "method_name": null,
+        "unique_global_name": "to_double_from_int",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Convert the passed in integer value into a double (decimal value).",
+        "brief": null,
+        "return": {
+          "type": "double",
+          "description": "The double value.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "value": {
+            "type": "int",
+            "description": "The integer value to convert.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "from_int",
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "python": [
+            "def to_double_from_int(value):"
+          ],
+          "cpp": [
+            "double to_double(int value)"
+          ],
+          "csharp": [
+            "public static double SplashKit.ToDouble(int value);"
+          ],
+          "pascal": [
+            "function ToDouble(value: Integer): Double"
+          ]
+        }
+      },
+      {
+        "signature": "int to_integer(const string &text);",
+        "name": "to_integer",
+        "method_name": null,
+        "unique_global_name": "to_integer",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Convert the passed in string into an integer. This can fail in an error if\nthe value is not an integer, consider using `is_integer` to check before\nconverting a string.",
+        "brief": null,
+        "return": {
+          "type": "int",
+          "description": "The integer value read from the text.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "text": {
+            "type": "string",
+            "description": "The text to convert.",
+            "is_pointer": false,
+            "is_const": true,
+            "is_reference": true,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "python": [
+            "def to_integer(text):"
+          ],
+          "cpp": [
+            "int to_integer(const string &text)"
+          ],
+          "csharp": [
+            "public static int SplashKit.ToInteger(string text);"
+          ],
+          "pascal": [
+            "function ToInteger(const text: String): Integer"
+          ]
+        }
+      },
+      {
         "signature": "string to_lowercase(const string &text);",
         "name": "to_lowercase",
         "method_name": null,
@@ -96937,6 +99277,175 @@
           ],
           "pascal": [
             "function ToLowercase(const text: String): String"
+          ]
+        }
+      },
+      {
+        "signature": "string to_string(double value,int precision);",
+        "name": "to_string",
+        "method_name": null,
+        "unique_global_name": "to_string_from_double_with_precision",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Convert the passed in double to a string, restricting\nthe output the a given number of decimal places. For example\nif value is 3.14159265359 and precision is 2 then the output\nwill be \"3.14\".",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "string containing the double value.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "value": {
+            "type": "double",
+            "description": "the value to convert to a string.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          },
+          "precision": {
+            "type": "int",
+            "description": "the number of decimal places to output.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "from_double_with_precision",
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "python": [
+            "def to_string_from_double_with_precision(value, precision):"
+          ],
+          "cpp": [
+            "string to_string(double value, int precision)"
+          ],
+          "csharp": [
+            "public static string SplashKit.ToString(double value, int precision);"
+          ],
+          "pascal": [
+            "function ToString(value: Double; precision: Integer): String"
+          ]
+        }
+      },
+      {
+        "signature": "string to_string(double value);",
+        "name": "to_string",
+        "method_name": null,
+        "unique_global_name": "to_string_from_double",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Convert the passed in double to a string.",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "string containing the double value.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "value": {
+            "type": "double",
+            "description": "the value to convert to a string.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "from_double",
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "python": [
+            "def to_string_from_double(value):"
+          ],
+          "cpp": [
+            "string to_string(double value)"
+          ],
+          "csharp": [
+            "public static string SplashKit.ToString(double value);"
+          ],
+          "pascal": [
+            "function ToString(value: Double): String"
+          ]
+        }
+      },
+      {
+        "signature": "string to_string(int value);",
+        "name": "to_string",
+        "method_name": null,
+        "unique_global_name": "to_string_from_int",
+        "unique_method_name": null,
+        "suffix_name": null,
+        "description": "Convert the passed in integer to a string.",
+        "brief": null,
+        "return": {
+          "type": "string",
+          "description": "string containing the integer value.",
+          "is_pointer": false,
+          "is_reference": false,
+          "is_vector": false,
+          "type_parameter": null
+        },
+        "parameters": {
+          "value": {
+            "type": "int",
+            "description": "the value to convert to a string.",
+            "is_pointer": false,
+            "is_const": false,
+            "is_reference": false,
+            "is_array": false,
+            "array_dimension_sizes": [
+
+            ],
+            "is_vector": false,
+            "type_parameter": null
+          }
+        },
+        "attributes": {
+          "suffix": "from_int",
+          "group": "utilities",
+          "static": "utilities"
+        },
+        "signatures": {
+          "python": [
+            "def to_string_from_int(value):"
+          ],
+          "cpp": [
+            "string to_string(int value)"
+          ],
+          "csharp": [
+            "public static string SplashKit.ToString(int value);"
+          ],
+          "pascal": [
+            "function ToString(value: Integer): String"
           ]
         }
       },

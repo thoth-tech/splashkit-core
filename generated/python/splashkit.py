@@ -35,6 +35,22 @@ class _sklib_string(Structure):
         bytes = str.encode(s)
         self.str = c_char_p(bytes)
         self.ptr = None
+class LanguageModel(Enum):
+    qwen3_0_6b_base = 4
+    qwen3_0_6b_instruct = 5
+    qwen3_0_6b_thinking = 6
+    qwen3_1_7b_base = 8
+    qwen3_1_7b_instruct = 9
+    qwen3_1_7b_thinking = 10
+    qwen3_4b_base = 12
+    qwen3_4b_instruct = 13
+    qwen3_4b_thinking = 14
+    gemma3_270m_base = 16
+    gemma3_270m_instruct = 17
+    gemma3_1b_base = 20
+    gemma3_1b_instruct = 21
+    gemma3_4b_base = 24
+    gemma3_4b_instruct = 25
 class KeyCode(Enum):
     unknown_key = 0
     backspace_key = 8
@@ -642,6 +658,9 @@ class _PointerWrapper:
     def __init__(self, ptr):
         self._as_parameter_ = ptr
 
+class Conversation(_PointerWrapper):
+    def __init__(self, ptr):
+        super().__init__(ptr)
 class Json(_PointerWrapper):
     def __init__(self, ptr):
         super().__init__(ptr)
@@ -658,6 +677,12 @@ class ServerSocket(_PointerWrapper):
     def __init__(self, ptr):
         super().__init__(ptr)
 class AdcDevice(_PointerWrapper):
+    def __init__(self, ptr):
+        super().__init__(ptr)
+class MotorDevice(_PointerWrapper):
+    def __init__(self, ptr):
+        super().__init__(ptr)
+class ServoDevice(_PointerWrapper):
     def __init__(self, ptr):
         super().__init__(ptr)
 class SoundEffect(_PointerWrapper):
@@ -800,6 +825,14 @@ def __skadapter__to_sklib_unsigned_short(v):
 
 def __skadapter__to_unsigned_short(v):
     return v
+
+def __skadapter__to_language_model(v):
+    if isinstance(v, LanguageModel):
+        return v
+    return LanguageModel(v)
+
+def __skadapter__to_sklib_language_model(v):
+    return c_int(v.value)
 
 def __skadapter__to_key_code(v):
     if isinstance(v, KeyCode):
@@ -1498,6 +1531,12 @@ def __skadapter__to_sklib_ptr(v):
 def __skadapter__to_ptr(v):
     pass
 
+def __skadapter__to_conversation(v):
+    return _find_pointer_resource(v, "Conversation")
+
+def __skadapter__to_sklib_conversation(v):
+    return v
+
 def __skadapter__to_json(v):
     return _find_pointer_resource(v, "Json")
 
@@ -1534,6 +1573,18 @@ def __skadapter__to_adc_device(v):
     return _find_pointer_resource(v, "AdcDevice")
 
 def __skadapter__to_sklib_adc_device(v):
+    return v
+
+def __skadapter__to_motor_device(v):
+    return _find_pointer_resource(v, "MotorDevice")
+
+def __skadapter__to_sklib_motor_device(v):
+    return v
+
+def __skadapter__to_servo_device(v):
+    return _find_pointer_resource(v, "ServoDevice")
+
+def __skadapter__to_sklib_servo_device(v):
     return v
 
 def __skadapter__to_sound_effect(v):
@@ -1749,8 +1800,20 @@ sklib.__sklib__split__string_ref__char.argtypes = [ _sklib_string, c_char ]
 sklib.__sklib__split__string_ref__char.restype = _sklib_vector_string
 sklib.__sklib__square_root__int.argtypes = [ c_int ]
 sklib.__sklib__square_root__int.restype = c_double
+sklib.__sklib__to_double__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__to_double__string_ref.restype = c_double
+sklib.__sklib__to_double__int.argtypes = [ c_int ]
+sklib.__sklib__to_double__int.restype = c_double
+sklib.__sklib__to_integer__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__to_integer__string_ref.restype = c_int
 sklib.__sklib__to_lowercase__string_ref.argtypes = [ _sklib_string ]
 sklib.__sklib__to_lowercase__string_ref.restype = _sklib_string
+sklib.__sklib__to_string__double__int.argtypes = [ c_double, c_int ]
+sklib.__sklib__to_string__double__int.restype = _sklib_string
+sklib.__sklib__to_string__double.argtypes = [ c_double ]
+sklib.__sklib__to_string__double.restype = _sklib_string
+sklib.__sklib__to_string__int.argtypes = [ c_int ]
+sklib.__sklib__to_string__int.restype = _sklib_string
 sklib.__sklib__to_uppercase__string_ref.argtypes = [ _sklib_string ]
 sklib.__sklib__to_uppercase__string_ref.restype = _sklib_string
 sklib.__sklib__trim__string_ref.argtypes = [ _sklib_string ]
@@ -2317,6 +2380,8 @@ sklib.__sklib__color_misty_rose.argtypes = [  ]
 sklib.__sklib__color_misty_rose.restype = _sklib_color
 sklib.__sklib__color_moccasin.argtypes = [  ]
 sklib.__sklib__color_moccasin.restype = _sklib_color
+sklib.__sklib__color_monash_blue.argtypes = [  ]
+sklib.__sklib__color_monash_blue.restype = _sklib_color
 sklib.__sklib__color_navajo_white.argtypes = [  ]
 sklib.__sklib__color_navajo_white.restype = _sklib_color
 sklib.__sklib__color_navy.argtypes = [  ]
@@ -2549,6 +2614,38 @@ sklib.__sklib__fill_ellipse_on_window__window__color__double__double__double__do
 sklib.__sklib__fill_ellipse_on_window__window__color__double__double__double__double.restype = None
 sklib.__sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options.argtypes = [ c_void_p, _sklib_color, c_double, c_double, c_double, c_double, _sklib_drawing_options ]
 sklib.__sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options.restype = None
+sklib.__sklib__conversation_add_message__conversation__string_ref.argtypes = [ c_void_p, _sklib_string ]
+sklib.__sklib__conversation_add_message__conversation__string_ref.restype = None
+sklib.__sklib__conversation_get_reply__conversation.argtypes = [ c_void_p ]
+sklib.__sklib__conversation_get_reply__conversation.restype = _sklib_string
+sklib.__sklib__conversation_get_reply__conversation__bool.argtypes = [ c_void_p, c_int32 ]
+sklib.__sklib__conversation_get_reply__conversation__bool.restype = _sklib_string
+sklib.__sklib__conversation_get_reply_piece__conversation.argtypes = [ c_void_p ]
+sklib.__sklib__conversation_get_reply_piece__conversation.restype = _sklib_string
+sklib.__sklib__conversation_is_replying__conversation.argtypes = [ c_void_p ]
+sklib.__sklib__conversation_is_replying__conversation.restype = c_int32
+sklib.__sklib__conversation_is_thinking__conversation.argtypes = [ c_void_p ]
+sklib.__sklib__conversation_is_thinking__conversation.restype = c_int32
+sklib.__sklib__create_conversation.argtypes = [  ]
+sklib.__sklib__create_conversation.restype = c_void_p
+sklib.__sklib__create_conversation__language_model.argtypes = [ c_int ]
+sklib.__sklib__create_conversation__language_model.restype = c_void_p
+sklib.__sklib__free_all_conversations.argtypes = [  ]
+sklib.__sklib__free_all_conversations.restype = None
+sklib.__sklib__free_conversation__conversation.argtypes = [ c_void_p ]
+sklib.__sklib__free_conversation__conversation.restype = None
+sklib.__sklib__generate_reply__language_model__string.argtypes = [ c_int, _sklib_string ]
+sklib.__sklib__generate_reply__language_model__string.restype = _sklib_string
+sklib.__sklib__generate_reply__string.argtypes = [ _sklib_string ]
+sklib.__sklib__generate_reply__string.restype = _sklib_string
+sklib.__sklib__generate_text__language_model__string.argtypes = [ c_int, _sklib_string ]
+sklib.__sklib__generate_text__language_model__string.restype = _sklib_string
+sklib.__sklib__generate_text__language_model__string__int.argtypes = [ c_int, _sklib_string, c_int ]
+sklib.__sklib__generate_text__language_model__string__int.restype = _sklib_string
+sklib.__sklib__generate_text__string.argtypes = [ _sklib_string ]
+sklib.__sklib__generate_text__string.restype = _sklib_string
+sklib.__sklib__generate_text__string__int.argtypes = [ _sklib_string, c_int ]
+sklib.__sklib__generate_text__string__int.restype = _sklib_string
 sklib.__sklib__cosine__float.argtypes = [ c_float ]
 sklib.__sklib__cosine__float.restype = c_float
 sklib.__sklib__sine__float.argtypes = [ c_float ]
@@ -2765,6 +2862,8 @@ sklib.__sklib__number_box__float_ref__float.argtypes = [ c_float, c_float ]
 sklib.__sklib__number_box__float_ref__float.restype = c_float
 sklib.__sklib__number_box__string_ref__float_ref__float.argtypes = [ _sklib_string, c_float, c_float ]
 sklib.__sklib__number_box__string_ref__float_ref__float.restype = c_float
+sklib.__sklib__open_panel__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__open_panel__string_ref.restype = None
 sklib.__sklib__open_popup__string_ref.argtypes = [ _sklib_string ]
 sklib.__sklib__open_popup__string_ref.restype = None
 sklib.__sklib__paragraph__string_ref.argtypes = [ _sklib_string ]
@@ -2833,12 +2932,12 @@ sklib.__sklib__start_popup__string_ref.argtypes = [ _sklib_string ]
 sklib.__sklib__start_popup__string_ref.restype = c_int32
 sklib.__sklib__start_treenode__string_ref.argtypes = [ _sklib_string ]
 sklib.__sklib__start_treenode__string_ref.restype = c_int32
-sklib.__sklib__text_box__string_ref__string_ref__rectangle_ref.argtypes = [ _sklib_string, _sklib_string, _sklib_rectangle ]
-sklib.__sklib__text_box__string_ref__string_ref__rectangle_ref.restype = _sklib_string
+sklib.__sklib__text_box__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__text_box__string_ref.restype = _sklib_string
+sklib.__sklib__text_box__string_ref__rectangle_ref.argtypes = [ _sklib_string, _sklib_rectangle ]
+sklib.__sklib__text_box__string_ref__rectangle_ref.restype = _sklib_string
 sklib.__sklib__text_box__string_ref__string_ref.argtypes = [ _sklib_string, _sklib_string ]
 sklib.__sklib__text_box__string_ref__string_ref.restype = _sklib_string
-sklib.__sklib__text_box__string_ref__string_ref__bool.argtypes = [ _sklib_string, _sklib_string, c_int32 ]
-sklib.__sklib__text_box__string_ref__string_ref__bool.restype = _sklib_string
 sklib.__sklib__create_json.argtypes = [  ]
 sklib.__sklib__create_json.restype = c_void_p
 sklib.__sklib__create_json__string.argtypes = [ _sklib_string ]
@@ -3463,6 +3562,42 @@ sklib.__sklib__remote_raspi_set_pwm_range__connection__gpio_pin__int.argtypes = 
 sklib.__sklib__remote_raspi_set_pwm_range__connection__gpio_pin__int.restype = None
 sklib.__sklib__remote_raspi_write__connection__gpio_pin__gpio_pin_value.argtypes = [ c_void_p, c_int, c_int ]
 sklib.__sklib__remote_raspi_write__connection__gpio_pin__gpio_pin_value.restype = None
+sklib.__sklib__close_all_motors.argtypes = [  ]
+sklib.__sklib__close_all_motors.restype = None
+sklib.__sklib__close_motor__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__close_motor__string_ref.restype = None
+sklib.__sklib__close_motor__motor_device.argtypes = [ c_void_p ]
+sklib.__sklib__close_motor__motor_device.restype = None
+sklib.__sklib__free_motor_device__motor_device.argtypes = [ c_void_p ]
+sklib.__sklib__free_motor_device__motor_device.restype = None
+sklib.__sklib__has_motor_device__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__has_motor_device__string_ref.restype = c_int32
+sklib.__sklib__motor_named__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__motor_named__string_ref.restype = c_void_p
+sklib.__sklib__open_motor__string_ref__motor_driver_type__gpio_pin__gpio_pin__gpio_pin.argtypes = [ _sklib_string, c_int, c_int, c_int, c_int ]
+sklib.__sklib__open_motor__string_ref__motor_driver_type__gpio_pin__gpio_pin__gpio_pin.restype = c_void_p
+sklib.__sklib__set_motor_direction__motor_device__motor_direction.argtypes = [ c_void_p, c_int ]
+sklib.__sklib__set_motor_direction__motor_device__motor_direction.restype = None
+sklib.__sklib__set_motor_speed__motor_device__double.argtypes = [ c_void_p, c_double ]
+sklib.__sklib__set_motor_speed__motor_device__double.restype = None
+sklib.__sklib__stop_motor__motor_device.argtypes = [ c_void_p ]
+sklib.__sklib__stop_motor__motor_device.restype = None
+sklib.__sklib__close_all_servos.argtypes = [  ]
+sklib.__sklib__close_all_servos.restype = None
+sklib.__sklib__close_servo__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__close_servo__string_ref.restype = None
+sklib.__sklib__close_servo__servo_device.argtypes = [ c_void_p ]
+sklib.__sklib__close_servo__servo_device.restype = None
+sklib.__sklib__has_servo_device__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__has_servo_device__string_ref.restype = c_int32
+sklib.__sklib__open_servo__string_ref__gpio_pin.argtypes = [ _sklib_string, c_int ]
+sklib.__sklib__open_servo__string_ref__gpio_pin.restype = c_void_p
+sklib.__sklib__servo_named__string_ref.argtypes = [ _sklib_string ]
+sklib.__sklib__servo_named__string_ref.restype = c_void_p
+sklib.__sklib__set_servo_angle__servo_device__double.argtypes = [ c_void_p, c_double ]
+sklib.__sklib__set_servo_angle__servo_device__double.restype = None
+sklib.__sklib__stop_servo__servo_device.argtypes = [ c_void_p ]
+sklib.__sklib__stop_servo__servo_device.restype = None
 sklib.__sklib__draw_quad__color__quad_ref.argtypes = [ _sklib_color, _sklib_quad ]
 sklib.__sklib__draw_quad__color__quad_ref.restype = None
 sklib.__sklib__draw_quad__color__quad_ref__drawing_options_ref.argtypes = [ _sklib_color, _sklib_quad, _sklib_drawing_options ]
@@ -4690,9 +4825,34 @@ def square_root ( number ):
     __skparam__number = __skadapter__to_sklib_int(number)
     __skreturn = sklib.__sklib__square_root__int(__skparam__number)
     return __skadapter__to_double(__skreturn)
+def to_double ( text ):
+    __skparam__text = __skadapter__to_sklib_string(text)
+    __skreturn = sklib.__sklib__to_double__string_ref(__skparam__text)
+    return __skadapter__to_double(__skreturn)
+def to_double_from_int ( value ):
+    __skparam__value = __skadapter__to_sklib_int(value)
+    __skreturn = sklib.__sklib__to_double__int(__skparam__value)
+    return __skadapter__to_double(__skreturn)
+def to_integer ( text ):
+    __skparam__text = __skadapter__to_sklib_string(text)
+    __skreturn = sklib.__sklib__to_integer__string_ref(__skparam__text)
+    return __skadapter__to_int(__skreturn)
 def to_lowercase ( text ):
     __skparam__text = __skadapter__to_sklib_string(text)
     __skreturn = sklib.__sklib__to_lowercase__string_ref(__skparam__text)
+    return __skadapter__to_string(__skreturn)
+def to_string_from_double_with_precision ( value, precision ):
+    __skparam__value = __skadapter__to_sklib_double(value)
+    __skparam__precision = __skadapter__to_sklib_int(precision)
+    __skreturn = sklib.__sklib__to_string__double__int(__skparam__value, __skparam__precision)
+    return __skadapter__to_string(__skreturn)
+def to_string_from_double ( value ):
+    __skparam__value = __skadapter__to_sklib_double(value)
+    __skreturn = sklib.__sklib__to_string__double(__skparam__value)
+    return __skadapter__to_string(__skreturn)
+def to_string_from_int ( value ):
+    __skparam__value = __skadapter__to_sklib_int(value)
+    __skreturn = sklib.__sklib__to_string__int(__skparam__value)
     return __skadapter__to_string(__skreturn)
 def to_uppercase ( text ):
     __skparam__text = __skadapter__to_sklib_string(text)
@@ -6036,6 +6196,9 @@ def color_misty_rose (  ):
 def color_moccasin (  ):
     __skreturn = sklib.__sklib__color_moccasin()
     return __skadapter__to_color(__skreturn)
+def color_monash_blue (  ):
+    __skreturn = sklib.__sklib__color_monash_blue()
+    return __skadapter__to_color(__skreturn)
 def color_navajo_white (  ):
     __skreturn = sklib.__sklib__color_navajo_white()
     return __skadapter__to_color(__skreturn)
@@ -6543,6 +6706,72 @@ def fill_ellipse_on_window_with_options ( destination, clr, x, y, width, height,
     __skparam__height = __skadapter__to_sklib_double(height)
     __skparam__opts = __skadapter__to_sklib_drawing_options(opts)
     sklib.__sklib__fill_ellipse_on_window__window__color__double__double__double__double__drawing_options(__skparam__destination, __skparam__clr, __skparam__x, __skparam__y, __skparam__width, __skparam__height, __skparam__opts)
+def conversation_add_message ( c, message ):
+    __skparam__c = __skadapter__to_sklib_conversation(c)
+    __skparam__message = __skadapter__to_sklib_string(message)
+    sklib.__sklib__conversation_add_message__conversation__string_ref(__skparam__c, __skparam__message)
+def conversation_get_reply ( conv ):
+    __skparam__conv = __skadapter__to_sklib_conversation(conv)
+    __skreturn = sklib.__sklib__conversation_get_reply__conversation(__skparam__conv)
+    return __skadapter__to_string(__skreturn)
+def conversation_get_reply_with_thoughts ( conv, with_thoughts ):
+    __skparam__conv = __skadapter__to_sklib_conversation(conv)
+    __skparam__with_thoughts = __skadapter__to_sklib_bool(with_thoughts)
+    __skreturn = sklib.__sklib__conversation_get_reply__conversation__bool(__skparam__conv, __skparam__with_thoughts)
+    return __skadapter__to_string(__skreturn)
+def conversation_get_reply_piece ( c ):
+    __skparam__c = __skadapter__to_sklib_conversation(c)
+    __skreturn = sklib.__sklib__conversation_get_reply_piece__conversation(__skparam__c)
+    return __skadapter__to_string(__skreturn)
+def conversation_is_replying ( c ):
+    __skparam__c = __skadapter__to_sklib_conversation(c)
+    __skreturn = sklib.__sklib__conversation_is_replying__conversation(__skparam__c)
+    return __skadapter__to_bool(__skreturn)
+def conversation_is_thinking ( c ):
+    __skparam__c = __skadapter__to_sklib_conversation(c)
+    __skreturn = sklib.__sklib__conversation_is_thinking__conversation(__skparam__c)
+    return __skadapter__to_bool(__skreturn)
+def create_conversation (  ):
+    __skreturn = sklib.__sklib__create_conversation()
+    return __skadapter__to_conversation(__skreturn)
+def create_conversation_with_model ( model ):
+    __skparam__model = __skadapter__to_sklib_language_model(model)
+    __skreturn = sklib.__sklib__create_conversation__language_model(__skparam__model)
+    return __skadapter__to_conversation(__skreturn)
+def free_all_conversations (  ):
+    sklib.__sklib__free_all_conversations()
+def free_conversation ( c ):
+    __skparam__c = __skadapter__to_sklib_conversation(c)
+    sklib.__sklib__free_conversation__conversation(__skparam__c)
+def generate_reply_with_model ( model, prompt ):
+    __skparam__model = __skadapter__to_sklib_language_model(model)
+    __skparam__prompt = __skadapter__to_sklib_string(prompt)
+    __skreturn = sklib.__sklib__generate_reply__language_model__string(__skparam__model, __skparam__prompt)
+    return __skadapter__to_string(__skreturn)
+def generate_reply ( prompt ):
+    __skparam__prompt = __skadapter__to_sklib_string(prompt)
+    __skreturn = sklib.__sklib__generate_reply__string(__skparam__prompt)
+    return __skadapter__to_string(__skreturn)
+def generate_text_with_model ( model, text ):
+    __skparam__model = __skadapter__to_sklib_language_model(model)
+    __skparam__text = __skadapter__to_sklib_string(text)
+    __skreturn = sklib.__sklib__generate_text__language_model__string(__skparam__model, __skparam__text)
+    return __skadapter__to_string(__skreturn)
+def generate_text_with_model_and_tokens ( model, text, max_tokens ):
+    __skparam__model = __skadapter__to_sklib_language_model(model)
+    __skparam__text = __skadapter__to_sklib_string(text)
+    __skparam__max_tokens = __skadapter__to_sklib_int(max_tokens)
+    __skreturn = sklib.__sklib__generate_text__language_model__string__int(__skparam__model, __skparam__text, __skparam__max_tokens)
+    return __skadapter__to_string(__skreturn)
+def generate_text ( text ):
+    __skparam__text = __skadapter__to_sklib_string(text)
+    __skreturn = sklib.__sklib__generate_text__string(__skparam__text)
+    return __skadapter__to_string(__skreturn)
+def generate_text_with_tokens ( text, max_tokens ):
+    __skparam__text = __skadapter__to_sklib_string(text)
+    __skparam__max_tokens = __skadapter__to_sklib_int(max_tokens)
+    __skreturn = sklib.__sklib__generate_text__string__int(__skparam__text, __skparam__max_tokens)
+    return __skadapter__to_string(__skreturn)
 def cosine ( degrees ):
     __skparam__degrees = __skadapter__to_sklib_float(degrees)
     __skreturn = sklib.__sklib__cosine__float(__skparam__degrees)
@@ -6999,6 +7228,9 @@ def number_box_labeled ( label_text, value, step ):
     __skparam__step = __skadapter__to_sklib_float(step)
     __skreturn = sklib.__sklib__number_box__string_ref__float_ref__float(__skparam__label_text, __skparam__value, __skparam__step)
     return __skadapter__to_float(__skreturn)
+def open_panel ( name ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    sklib.__sklib__open_panel__string_ref(__skparam__name)
 def open_popup ( name ):
     __skparam__name = __skadapter__to_sklib_string(name)
     sklib.__sklib__open_popup__string_ref(__skparam__name)
@@ -7132,22 +7364,19 @@ def start_treenode ( label_text ):
     __skparam__label_text = __skadapter__to_sklib_string(label_text)
     __skreturn = sklib.__sklib__start_treenode__string_ref(__skparam__label_text)
     return __skadapter__to_bool(__skreturn)
-def text_box_at_position ( label_text, value, rect ):
-    __skparam__label_text = __skadapter__to_sklib_string(label_text)
+def text_box ( value ):
+    __skparam__value = __skadapter__to_sklib_string(value)
+    __skreturn = sklib.__sklib__text_box__string_ref(__skparam__value)
+    return __skadapter__to_string(__skreturn)
+def text_box_at_position ( value, rect ):
     __skparam__value = __skadapter__to_sklib_string(value)
     __skparam__rect = __skadapter__to_sklib_rectangle(rect)
-    __skreturn = sklib.__sklib__text_box__string_ref__string_ref__rectangle_ref(__skparam__label_text, __skparam__value, __skparam__rect)
+    __skreturn = sklib.__sklib__text_box__string_ref__rectangle_ref(__skparam__value, __skparam__rect)
     return __skadapter__to_string(__skreturn)
-def text_box ( label_text, value ):
+def text_box_labeled ( label_text, value ):
     __skparam__label_text = __skadapter__to_sklib_string(label_text)
     __skparam__value = __skadapter__to_sklib_string(value)
     __skreturn = sklib.__sklib__text_box__string_ref__string_ref(__skparam__label_text, __skparam__value)
-    return __skadapter__to_string(__skreturn)
-def text_box_labeled ( label_text, value, show_label ):
-    __skparam__label_text = __skadapter__to_sklib_string(label_text)
-    __skparam__value = __skadapter__to_sklib_string(value)
-    __skparam__show_label = __skadapter__to_sklib_bool(show_label)
-    __skreturn = sklib.__sklib__text_box__string_ref__string_ref__bool(__skparam__label_text, __skparam__value, __skparam__show_label)
     return __skadapter__to_string(__skreturn)
 def create_json (  ):
     __skreturn = sklib.__sklib__create_json()
@@ -8529,6 +8758,72 @@ def remote_raspi_write ( pi, pin, value ):
     __skparam__pin = __skadapter__to_sklib_gpio_pin(pin)
     __skparam__value = __skadapter__to_sklib_gpio_pin_value(value)
     sklib.__sklib__remote_raspi_write__connection__gpio_pin__gpio_pin_value(__skparam__pi, __skparam__pin, __skparam__value)
+def close_all_motors (  ):
+    sklib.__sklib__close_all_motors()
+def close_motor_named ( name ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    sklib.__sklib__close_motor__string_ref(__skparam__name)
+def close_motor ( dev ):
+    __skparam__dev = __skadapter__to_sklib_motor_device(dev)
+    sklib.__sklib__close_motor__motor_device(__skparam__dev)
+def free_motor_device ( dev ):
+    __skparam__dev = __skadapter__to_sklib_motor_device(dev)
+    sklib.__sklib__free_motor_device__motor_device(__skparam__dev)
+def has_motor_device ( name ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    __skreturn = sklib.__sklib__has_motor_device__string_ref(__skparam__name)
+    return __skadapter__to_bool(__skreturn)
+def motor_named ( name ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    __skreturn = sklib.__sklib__motor_named__string_ref(__skparam__name)
+    return __skadapter__to_motor_device(__skreturn)
+def open_motor ( name, type, in1_pin, in2_pin, en_pin ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    __skparam__type = __skadapter__to_sklib_motor_driver_type(type)
+    __skparam__in1_pin = __skadapter__to_sklib_gpio_pin(in1_pin)
+    __skparam__in2_pin = __skadapter__to_sklib_gpio_pin(in2_pin)
+    __skparam__en_pin = __skadapter__to_sklib_gpio_pin(en_pin)
+    __skreturn = sklib.__sklib__open_motor__string_ref__motor_driver_type__gpio_pin__gpio_pin__gpio_pin(__skparam__name, __skparam__type, __skparam__in1_pin, __skparam__in2_pin, __skparam__en_pin)
+    return __skadapter__to_motor_device(__skreturn)
+def set_motor_direction ( dev, dir ):
+    __skparam__dev = __skadapter__to_sklib_motor_device(dev)
+    __skparam__dir = __skadapter__to_sklib_motor_direction(dir)
+    sklib.__sklib__set_motor_direction__motor_device__motor_direction(__skparam__dev, __skparam__dir)
+def set_motor_speed ( dev, speed ):
+    __skparam__dev = __skadapter__to_sklib_motor_device(dev)
+    __skparam__speed = __skadapter__to_sklib_double(speed)
+    sklib.__sklib__set_motor_speed__motor_device__double(__skparam__dev, __skparam__speed)
+def stop_motor ( dev ):
+    __skparam__dev = __skadapter__to_sklib_motor_device(dev)
+    sklib.__sklib__stop_motor__motor_device(__skparam__dev)
+def close_all_servos (  ):
+    sklib.__sklib__close_all_servos()
+def close_servo_named ( name ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    sklib.__sklib__close_servo__string_ref(__skparam__name)
+def close_servo ( dev ):
+    __skparam__dev = __skadapter__to_sklib_servo_device(dev)
+    sklib.__sklib__close_servo__servo_device(__skparam__dev)
+def has_servo_device ( name ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    __skreturn = sklib.__sklib__has_servo_device__string_ref(__skparam__name)
+    return __skadapter__to_bool(__skreturn)
+def open_servo ( name, control_pin ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    __skparam__control_pin = __skadapter__to_sklib_gpio_pin(control_pin)
+    __skreturn = sklib.__sklib__open_servo__string_ref__gpio_pin(__skparam__name, __skparam__control_pin)
+    return __skadapter__to_servo_device(__skreturn)
+def servo_named ( name ):
+    __skparam__name = __skadapter__to_sklib_string(name)
+    __skreturn = sklib.__sklib__servo_named__string_ref(__skparam__name)
+    return __skadapter__to_servo_device(__skreturn)
+def set_servo_angle ( dev, angle_degrees ):
+    __skparam__dev = __skadapter__to_sklib_servo_device(dev)
+    __skparam__angle_degrees = __skadapter__to_sklib_double(angle_degrees)
+    sklib.__sklib__set_servo_angle__servo_device__double(__skparam__dev, __skparam__angle_degrees)
+def stop_servo ( dev ):
+    __skparam__dev = __skadapter__to_sklib_servo_device(dev)
+    sklib.__sklib__stop_servo__servo_device(__skparam__dev)
 def draw_quad ( clr, q ):
     __skparam__clr = __skadapter__to_sklib_color(clr)
     __skparam__q = __skadapter__to_sklib_quad(q)

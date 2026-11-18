@@ -89,6 +89,12 @@ unsigned char __sklib__to_unsigned_char(unsigned char v) {
 __sklib_ptr __sklib__to_sklib_ptr(__sklib_ptr v) {
     return v;
 }
+__sklib_ptr __sklib__to_sklib_conversation(splashkit_lib::conversation v) {
+    return static_cast<__sklib_ptr>(v);
+}
+conversation __sklib__to_conversation(__sklib_ptr v) {
+    return static_cast<splashkit_lib::conversation>(v);
+}
 __sklib_ptr __sklib__to_sklib_json(splashkit_lib::json v) {
     return static_cast<__sklib_ptr>(v);
 }
@@ -124,6 +130,18 @@ __sklib_ptr __sklib__to_sklib_adc_device(splashkit_lib::adc_device v) {
 }
 adc_device __sklib__to_adc_device(__sklib_ptr v) {
     return static_cast<splashkit_lib::adc_device>(v);
+}
+__sklib_ptr __sklib__to_sklib_motor_device(splashkit_lib::motor_device v) {
+    return static_cast<__sklib_ptr>(v);
+}
+motor_device __sklib__to_motor_device(__sklib_ptr v) {
+    return static_cast<splashkit_lib::motor_device>(v);
+}
+__sklib_ptr __sklib__to_sklib_servo_device(splashkit_lib::servo_device v) {
+    return static_cast<__sklib_ptr>(v);
+}
+servo_device __sklib__to_servo_device(__sklib_ptr v) {
+    return static_cast<splashkit_lib::servo_device>(v);
 }
 __sklib_ptr __sklib__to_sklib_sound_effect(splashkit_lib::sound_effect v) {
     return static_cast<__sklib_ptr>(v);
@@ -196,6 +214,12 @@ __sklib_ptr __sklib__to_sklib_window(splashkit_lib::window v) {
 }
 window __sklib__to_window(__sklib_ptr v) {
     return static_cast<splashkit_lib::window>(v);
+}
+int __sklib__to_sklib_language_model(language_model v) {
+    return static_cast<int>(v);
+}
+language_model __sklib__to_language_model(int v) {
+    return static_cast<language_model>(v);
 }
 int __sklib__to_sklib_key_code(key_code v) {
     return static_cast<int>(v);
